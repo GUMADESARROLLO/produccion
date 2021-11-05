@@ -29,6 +29,10 @@ Route::get('/productos','User\produccionController@productos')->name('inventario
 Route::get('/maquinas','User\maquinasController@index')->name('maquinas');
 Route::get('/maquina/nueva-maquina','User\maquinasController@nueva')->name('maquina/nueva');
 Route::get('/reporte','User\reporteController@index')->name('maquina/nueva');
+/***** Add by Rodolfo *****/
+Route::get('/costos', 'User\CostoController@costos')->name('costos');
+Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
+
 
 //RUTAS USUARIO
 Route::get('user/nuevo', 'Admin\usuarioController@crear')->name('user/nuevo');
@@ -90,6 +94,19 @@ Route::post('producto/guardar', 'User\produccionController@guardarProducto')->na
 Route::get('producto/editar/{id}', 'User\produccionController@editarProducto')->name('producto/editar/{id}');
 Route::post('producto/actualizar', 'User\produccionController@actualizarProducto')->name('producto/actualizar');
 Route::get('producto/eliminar/{id}', 'User\produccionController@eliminarProducto')->name('producto/eliminar/{id}');
+
+//RUTAS CATALOGO DE COSTOS
+Route::get('costos/nuevo', 'User\CostoController@nuevoCosto')->name('costos/nuevo');
+Route::post('costos/guardar', 'User\CostoController@guardarCosto')->name('costos/guardar');
+Route::get('costos/editar/{id}', 'User\CostoController@editarCosto')->name('costos/editar/{id}');
+Route::post('costos/actualizar', 'User\CostoController@actualizarCosto')->name('costos/actualizar');
+
+//RUTAS COSTOS POR ORDEN
+Route::get('costo-orden/nuevo', 'User\CostoOrdenController@nuevoCosto')->name('costo-orden/nuevo');
+Route::post('costo-orden/guardar', 'User\CostoOrdenController@guardarCosto')->name('costo-orden/guardar');
+Route::get('costo-orden/editar/{id}', 'User\CostoOrdenController@editarCosto')->name('costo-orden/editar/{id}');
+Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCosto')->name('costo-orden/actualizar');
+
 
 //RUTAS REPORTES
 Route::post('guardar-tiempo-pulpeo', 'User\reporteController@guardarTiempoPulpeo')->name('guardar-tiempo-pulpeo');
