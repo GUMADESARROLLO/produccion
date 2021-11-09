@@ -277,10 +277,19 @@ class orden_produccionController extends Controller
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
 
+           // $factor_fibral = 
+
+           // $factor_fibral = $this->calcularFactorFibral($idOP);
+
+
+
             $porcentMermaYankeeDry = ( $mermaYankeeDry->merma/($produccionNeta->produccionNeta+$mermaYankeeDry->merma) )*100;
             $porcentResiduosPulper = ( $residuosPulper->residuo_pulper/ $totalMP->mp_directa)*100;
             $porcentLavadoraTetrapack = ( $lavadoraTetrapack->lav_tetrapack/$totalMPTPACK->total )*100;
 
+            $factorFibral = (($totalMP->mp_directa-$lavadoraTetrapack->lav_tetrapack)/($produccionNeta->produccionNeta+$mermaYankeeDry->merma));
+
+            
 
 
         }else {
@@ -294,9 +303,14 @@ class orden_produccionController extends Controller
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
 
+            //$factor_fibral = $this->calcularFactorFibral($idOP);
+
+
             $porcentMermaYankeeDry = 0;
             $porcentResiduosPulper = 0;
             $porcentLavadoraTetrapack = 0;
+            $factorFibral = (($totalMP->mp_directa-$lavadoraTetrapack->lav_tetrapack)/($produccionNeta->produccionNeta+$mermaYankeeDry->merma));
+
         }
 
         $orden = new orden(
@@ -318,7 +332,9 @@ class orden_produccionController extends Controller
             number_format($porcentResiduosPulper, 2),
             number_format($porcentLavadoraTetrapack, 2),
             $electricidad,
-            $consumo_agua
+            $consumo_agua,
+            number_format($factorFibral, 2)
+
         );
 
         return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa']));
@@ -503,6 +519,8 @@ class orden_produccionController extends Controller
 
         return $merma_yankee_dry + $lavadora_tetrapack + $residuo_pulper;
     }
+
+    
 }
 
 class orden {
@@ -525,8 +543,9 @@ class orden {
     public $porcentLavadoraTetrapack;
     public $electricidad;
     public $consumoAgua;
+    public $factorFibral;
 
-    public function __construct($idOrden,$numOrden,$producto,$usuario,$hrsTrabajadas,$fechaInicio,$fechaFinal,$horaInicio,$horaFinal,$produccionNeta,$produccionReal, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua)
+    public function __construct($idOrden,$numOrden,$producto,$usuario,$hrsTrabajadas,$fechaInicio,$fechaFinal,$horaInicio,$horaFinal,$produccionNeta,$produccionReal, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua,$factorFibral)
     {
         $this->idOrden                      = $idOrden;
         $this->numOrden                     = $numOrden;
@@ -547,5 +566,7 @@ class orden {
         $this->porcentLavadoraTetrapack     = $porcentLavadoraTetrapack;
         $this->electricidad                 = $electricidad;
         $this->consumoAgua                  = $consumoAgua;
+        $this->factorFibral                 = $factorFibral;
+
      }
 }

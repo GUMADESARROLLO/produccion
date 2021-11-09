@@ -63,8 +63,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 text-center">
-                                                <label for="fechaFinal" class="col-sm-6 col-form-label">Horas Trabajadas</label>
+                                            <div class="col-md-3 ">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-sm-6 col-form-label">Horas Trabajadas</label>
+                                                    <div class="col-sm-6">
+                                                        <h6 class="mt-2 text-left">{{ $orden->hrsTrabajadas }}</h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -93,7 +98,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <h6 class="mt-2 text-center">{{ $orden->hrsTrabajadas }}</h6>
+                                                <div class="form-group row">
+                                                    <label for="factorFibral" class="col-sm-6 col-form-label">Factor fibral</label>
+                                                    <div class="col-sm-6">
+                                                        <h6 class="mt-2 text-left">{{ $orden->factorFibral }} %</h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">

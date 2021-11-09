@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-  
+
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -37,20 +37,20 @@
                                         <h5>Edite el nombre</h5>
                                     </div>
                                     @if(session()->has('message-success'))
-                                        <div class="alert alert-success">
-                                            {{ session()->get('message-success') }}
-                                        </div>
+                                    <div class="alert alert-success">
+                                        {{ session()->get('message-success') }}
+                                    </div>
                                     @endif
                                     @if (count($errors) > 0)
-                                        <div class="alert alert-danger">
-                                            <p>Corrige los siguientes errores:</p>
-                                            <ul>
-                                                @foreach ($errors->all() as $message)
-                                                    <li>{{ $message }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif                                    
+                                    <div class="alert alert-danger">
+                                        <p>Corrige los siguientes errores:</p>
+                                        <ul>
+                                            @foreach ($errors->all() as $message)
+                                            <li>{{ $message }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
                                     <div class="card-block">
                                         <form method="post" action="{{url('fibras/actualizar')}}">
                                             {{ csrf_field() }}
@@ -60,14 +60,21 @@
                                                     <div class="form-group">
                                                         <label for="idFibra">Id del Producto</label>
                                                         <input type="text" readonly class="form-control" name="idFibra" id="idFibra" value="{{ $f['idFibra'] }}">
-                                                        <small id="idFibraHelp" class="form-text text-muted" >Id de la Fibra</small>
+                                                        <small id="idFibraHelp" class="form-text text-muted">Id de la Fibra</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-9">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="codigo">Código del producto</label>
+                                                        <input type="text"  class="form-control" name="codigo" id="codigo" value="{{ $f['codigo'] }}">
+                                                        <small id="idFibraHelp" class="form-text text-muted">Código de la Fibra</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="nombre">Nombre del Fibra</label>
                                                         <input type="text" class="form-control text-uppercase" name="nombre" id="nombre" value="{{ $f['descripcion'] }}">
-                                                        <small id="nombreHelp" class="form-text text-muted" >Escriba el nuevo nombre de la Fibra</small>
+                                                        <small id="nombreHelp" class="form-text text-muted">Escriba el nuevo nombre de la Fibra</small>
                                                     </div>
                                                 </div>
                                             </div>

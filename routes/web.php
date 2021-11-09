@@ -33,7 +33,18 @@ Route::get('/reporte','User\reporteController@index')->name('maquina/nueva');
 Route::get('/costos', 'User\CostoController@costos')->name('costos');
 Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
 
+/******Add by Xochilt */
 
+//QUIMICOS
+Route::get('/quimicos', 'User\QuimicoController@index')->name('quimicos');
+Route::get('/quimico/nuevo-quimico', 'User\QuimicoController@nuevoQuimico')->name('quimico/nuevo-quimico');
+Route::get('/quimico/nuevo', 'User\QuimicoController@nuevoQuimico')->name('quimico/nuevo');
+Route::post('/quimico/guardar-quimico', 'User\QuimicoController@guardarQuimico')->name('quimico/guardar-quimico');
+Route::get('/quimico/editar-quimico/{id}', 'User\QuimicoController@editarQuimico')->name('quimico/editar-quimico/{$id}');
+Route::post('/quimico/actualizar-quimico/', 'User\QuimicoController@actualizarQuimico')->name('quimico/actualizar-quimico');
+Route::get('/quimico/eliminar-quimico/{id}', 'User\QuimicoController@eliminarQuimico')->name('quimico/eliminar-quimico/{id}');
+
+//
 //RUTAS USUARIO
 Route::get('user/nuevo', 'Admin\usuarioController@crear')->name('user/nuevo');
 Route::post('usuario/guardar', 'Admin\usuarioController@guardar')->name('usuario/guardar');
@@ -75,7 +86,11 @@ Route::get('insumos/nuevo','User\inventarioController@nuevo')->name('insumos/nue
 Route::post('insumos/guardar', 'User\inventarioController@guardar')->name('insumos/guardar');
 
 //RUTAS FIBRAS
+
+/***Edit by xochilt*/
+
 Route::get('fibras/nueva','User\fibrasController@nuevaFibra')->name('fibras/nueva');
+Route::get('fibras/nueva-fibra', 'User\fibrasController@nuevaFibra')->name('fibras/nueva');
 Route::get('fibras/editar/{id}', 'User\fibrasController@editarFibras')->name('producto/editar/{id}');
 Route::post('fibras/guardar', 'User\fibrasController@guardarFibra')->name('fibras/guardar');
 Route::post('fibras/actualizar', 'User\fibrasController@actualizarFibras')->name('producto/actualizar');

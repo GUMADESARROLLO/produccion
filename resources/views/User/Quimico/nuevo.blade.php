@@ -19,7 +19,7 @@
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
                                     <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/fibras')}}">Fibras</a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/quimicos')}}">Quimico</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Nueva</a></li>
                                 </ul>
                             </div>
@@ -52,21 +52,19 @@
                                     </div>
                                     @endif
                                     <div class="card-body">
-                                        <form method="post" action="{{url('fibras/guardar')}}">
+                                        <form method="post" action="{{url('quimico/guardar-quimico')}}">
                                             {{ csrf_field() }}
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="codigo">Código de la Fibra</label>
+                                                        <label for="codigo">Código del químico</label>
                                                         <input type="text" class="form-control" name="codigo" id="codigo" value="{{old('codigo')}}">
-                                                        <small id="descripcionHelp" class="form-text text-muted">Escriba el código de la nueva Fibra</small>
+                                                        <small id="descripcionHelp" class="form-text text-muted">Escriba el código del químico</small>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="descripcion">Nombre Fibra</label>
+                                                        <label for="descripcion">Nombre del químico</label>
                                                         <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{old('descripcion')}}">
-                                                        <small id="descripcionHelp" class="form-text text-muted">Escriba el nombre de la nueva Fibra</small>
+                                                        <small id="descripcionHelp" class="form-text text-muted">Escriba el nombre del químico</small>
                                                     </div>
                                                 </div>
                                             </div>

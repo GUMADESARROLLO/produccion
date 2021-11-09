@@ -14,13 +14,13 @@
                         <div class="row align-items-center">
                             <div class="col-md-12">
                                 <div class="page-header-title">
-                                    <h5 class="m-b-10">Nueva Fibra</h5>
+                                    <h5 class="m-b-10">Editar Fibra</h5>
                                 </div>
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
                                     <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/fibras')}}">Fibras</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:">Nueva</a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/quimicos')}}">Quimicos</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:">Editar Quimico</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Complete los siguientes campos</h5>
+                                        <h5>Edite el químico</h5>
                                     </div>
                                     @if(session()->has('message-success'))
                                     <div class="alert alert-success">
@@ -51,26 +51,35 @@
                                         </ul>
                                     </div>
                                     @endif
-                                    <div class="card-body">
-                                        <form method="post" action="{{url('fibras/guardar')}}">
+                                    <div class="card-block">
+                                        <form method="post" action="{{url('quimico/actualizar-quimico')}}">
                                             {{ csrf_field() }}
+                                            @foreach ($quimico ?? '' as $q)
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="codigo">Código de la Fibra</label>
-                                                        <input type="text" class="form-control" name="codigo" id="codigo" value="{{old('codigo')}}">
-                                                        <small id="descripcionHelp" class="form-text text-muted">Escriba el código de la nueva Fibra</small>
+                                                        <label for="idQuimico">ID del Químico</label>
+                                                        <input type="text" readonly class="form-control" name="idQuimico" id="idQuimico" value="{{ $q['idQuimico']}}">
+                                                        <small id="idFibraHelp" class="form-text text-muted">ID del quimico</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="descripcion">Nombre Fibra</label>
-                                                        <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{old('descripcion')}}">
-                                                        <small id="descripcionHelp" class="form-text text-muted">Escriba el nombre de la nueva Fibra</small>
+                                                        <label for="codigo">Código del Químico</label>
+                                                        <input type="text"  class="form-control" name="codigo" id="codigo" value="{{ $q['codigo']}}">
+                                                        <small id="idFibraHelp" class="form-text text-muted">Codigo del quimico</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="descripcion">Nombre del Químico</label>
+                                                        <input type="text" class="form-control text-uppercase" name="descripcion" id="descripcion" value="{{$q['descripcion']}}">
+                                                        <small id="nombreHelp" class="form-text text-muted">Escriba el nuevo nombre del químico</small>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary mt-5">Enviar</button>
+                                            @endforeach
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
                                         </form>
                                     </div>
                                 </div>
@@ -83,5 +92,5 @@
         </div>
     </div>
 </div>
-<!-- [ Main Content ] end -->
+<!-- [ Main Content ] end  -->
 @endsection
