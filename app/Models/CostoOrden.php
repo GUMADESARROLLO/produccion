@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CostoOrden extends Model
 {
-    protected $table = "costo_orden";
-    protected $fillable = ['numOrden', 'costo_id','cantidad','costo_unitario'];
     public $timestamps = false;
+    protected $table = "costo_orden";
+    protected $fillable = ['numOrden', 'costo_id', 'cantidad', 'costo_unitario'];
 }
