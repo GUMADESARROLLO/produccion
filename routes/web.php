@@ -12,25 +12,25 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','Auth\LoginController@showLoginForm');
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
+Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function () {
 
 });
 
 //RUTAS MENUS
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/usuario','Admin\usuarioController@index')->name('usuario');
-Route::get('/orden-produccion','User\orden_produccionController@index')->name('orden-produccion');
-Route::get('/configuracion','User\configuracionController@index')->name('configuracion');
-Route::get('/turnos','User\configuracionController@turnos')->name('turnos');
-Route::get('/fibras','User\fibrasController@index')->name('fibras');
-Route::get('/fibras/nueva-fibra','User\fibrasController@index')->name('fibras/nueva');
-Route::get('/productos','User\produccionController@productos')->name('inventario');
-Route::get('/maquinas','User\maquinasController@index')->name('maquinas');
-Route::get('/maquina/nueva-maquina','User\maquinasController@nueva')->name('maquina/nueva');
-Route::get('/reporte','User\reporteController@index')->name('maquina/nueva');
+Route::get('/usuario', 'Admin\usuarioController@index')->name('usuario');
+Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('orden-produccion');
+Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');
+Route::get('/turnos', 'User\configuracionController@turnos')->name('turnos');
+Route::get('/fibras', 'User\fibrasController@index')->name('fibras');
+Route::get('/fibras/nueva-fibra', 'User\fibrasController@index')->name('fibras/nueva');
+Route::get('/productos', 'User\produccionController@productos')->name('inventario');
+Route::get('/maquinas', 'User\maquinasController@index')->name('maquinas');
+Route::get('/maquina/nueva-maquina', 'User\maquinasController@nueva')->name('maquina/nueva');
+Route::get('/reporte', 'User\reporteController@index')->name('maquina/nueva');
 /***** Add by Rodolfo *****/
-Route::get('/costos', 'User\CostoController@costos')->name('costos');
+Route::get('/costos', 'User\CostoController@index')->name('costos');
 Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
 
 
@@ -71,11 +71,11 @@ Route::get('turnos/eliminar/{id}', 'User\configuracionController@eliminarTurno')
 Route::post('turnos/actualizar', 'User\configuracionController@actualizarTurno')->name('turnos/actualizar');
 
 //RUTAS MI INVENTARIO
-Route::get('insumos/nuevo','User\inventarioController@nuevo')->name('insumos/nuevo');
+Route::get('insumos/nuevo', 'User\inventarioController@nuevo')->name('insumos/nuevo');
 Route::post('insumos/guardar', 'User\inventarioController@guardar')->name('insumos/guardar');
 
 //RUTAS FIBRAS
-Route::get('fibras/nueva','User\fibrasController@nuevaFibra')->name('fibras/nueva');
+Route::get('fibras/nueva', 'User\fibrasController@nuevaFibra')->name('fibras/nueva');
 Route::get('fibras/editar/{id}', 'User\fibrasController@editarFibras')->name('producto/editar/{id}');
 Route::post('fibras/guardar', 'User\fibrasController@guardarFibra')->name('fibras/guardar');
 Route::post('fibras/actualizar', 'User\fibrasController@actualizarFibras')->name('producto/actualizar');
@@ -89,7 +89,7 @@ Route::post('maquina/actualizar', 'User\maquinasController@actualizar')->name('m
 Route::get('maquina/eliminar/{id}', 'User\maquinasController@eliminar')->name('maquina/eliminar/{id}');
 
 //RUTAS PRODUCTOS
-Route::get('productos/nuevo','User\produccionController@nuevo')->name('productos/nuevo');
+Route::get('productos/nuevo', 'User\produccionController@nuevo')->name('productos/nuevo');
 Route::post('producto/guardar', 'User\produccionController@guardarProducto')->name('producto/guardar');
 Route::get('producto/editar/{id}', 'User\produccionController@editarProducto')->name('producto/editar/{id}');
 Route::post('producto/actualizar', 'User\produccionController@actualizarProducto')->name('producto/actualizar');
@@ -102,10 +102,10 @@ Route::get('costos/editar/{id}', 'User\CostoController@editarCosto')->name('cost
 Route::post('costos/actualizar', 'User\CostoController@actualizarCosto')->name('costos/actualizar');
 
 //RUTAS COSTOS POR ORDEN
-Route::get('costo-orden/nuevo', 'User\CostoOrdenController@nuevoCosto')->name('costo-orden/nuevo');
-Route::post('costo-orden/guardar', 'User\CostoOrdenController@guardarCosto')->name('costo-orden/guardar');
-Route::get('costo-orden/editar/{id}', 'User\CostoOrdenController@editarCosto')->name('costo-orden/editar/{id}');
-Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCosto')->name('costo-orden/actualizar');
+Route::get('costo-orden/nuevo', 'User\CostoOrdenController@nuevoCostoOrden')->name('costo-orden/nuevo');
+Route::post('costo-orden/guardar', 'User\CostoOrdenController@guardarCostoOrden')->name('costo-orden/guardar');
+Route::get('costo-orden/editar/{id}', 'User\CostoOrdenController@editarCostoOrden')->name('costo-orden/editar/{id}');
+Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCostoOrden')->name('costo-orden/actualizar');
 
 
 //RUTAS REPORTES
