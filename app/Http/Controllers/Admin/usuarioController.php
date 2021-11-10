@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Admin\usuario;
 use App\Models\Admin\Rol;
 use Illuminate\Support\Facades\Validator;
+use Redirect;
+
 
 class usuarioController extends Controller
 {
@@ -93,4 +95,66 @@ class usuarioController extends Controller
         return view('Admin.Admin.Usuario.crear', compact(['rol', 'message']));
 
     }
+
+    public function editarUser($idUser){
+        $user  = usuario::where('id', $idUser)->where('estado', 1)->get()->toArray();
+        $rol = Rol::orderBy('id', 'asc')->get();
+        
+        return view('Admin.Admin.Usuario.editar', compact(['user','rol']));
+    }
+
+    public function actualizarUser(Request $request){
+        
+
+        $user = new usuario();
+
+        usuario::where('id', $request->id_usuario)
+        ->update([
+            'nombres'               => $request->nombre,
+            'apellidos'             => $request->apellido,
+            'username'              => $request->username,
+            'password'              => Hash::make($request->password)
+        ]);
+
+      
+         $user = usuario::findOrFail($request->id_usuario);
+
+         $id= $user->roles()->first()->id;
+
+         $user->roles()->updateExistingPivot($id,['rol_id' => $request->rol_id]);
+
+       //usuario::find($request->id_usuario)->roles()->updateExistingPivot('',['rol_id' => $request->id_rol]);
+        
+        return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
+    }
+
+    public function detalleUser($idUser){
+
+        $user  = usuario::where('id', $idUser)->where('estado', 1)->get()->toArray();
+
+        $userById = usuario::findOrFail($idUser);
+
+        $id_rol = $userById->roles()->first()->id;
+
+        $rol  = Rol::where('id', $id_rol)->get();
+
+        //echo $rol;
+        return view('Admin.Admin.Usuario.detalle', compact(['user','rol']));
+    }
+
+    public function eliminarUser($idUser){
+
+
+        usuario::where('id', $idUser)
+        ->update([
+            'estado' => 0
+        ]);
+
+        return (response()->json(true));
+
+        //echo $rol;
+    }
+
+
+
 }

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('metodosjs')
-  
+    @include('jsViews.js_usuario')
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -68,8 +68,9 @@
                                                             @endif
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="roles/{{ $user['id_categoria'] }}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a>
-                                                            <a href="roles/{{ $user['id_categoria'] }}/edit"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
+                                                            <a href="user/detalle/{{ $user['id']}}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a>
+                                                            <a href="user/edit/{{ $user['id']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
+                                                            <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
                                                         </td>
                                                     </tr>
                                                     @endforeach

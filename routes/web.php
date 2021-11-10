@@ -50,6 +50,15 @@ Route::get('user/nuevo', 'Admin\usuarioController@crear')->name('user/nuevo');
 Route::post('usuario/guardar', 'Admin\usuarioController@guardar')->name('usuario/guardar');
 Route::get('failed-user', 'Admin\usuarioController@guardarUserFailed')->name('failed-user');
 Route::get('success-user', 'Admin\usuarioController@guardarUserSuccess')->name('success-user');
+Route::get('user/edit/{id}', 'Admin\usuarioController@editarUser')->name('user/edit/{id}');
+Route::post('usuario/actualizar', 'Admin\usuarioController@actualizarUser')->name('usuario/actualizar');
+Route::get('user/detalle/{id}', 'Admin\usuarioController@detalleUser')->name('user/detalle/{id}');
+Route::get('user/eliminar/{id}', 'Admin\usuarioController@eliminarUser')->name('user/eliminar/{id}');
+
+
+
+
+
 
 //RUTAS ROLES
 Route::get('/rol', 'Admin\RolController@index')->name('rol');
