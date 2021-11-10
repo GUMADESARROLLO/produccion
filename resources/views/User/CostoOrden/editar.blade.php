@@ -17,10 +17,13 @@
                                         <h5 class="m-b-10">Editar Detalle del Costo </h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Costos Orden</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:">Editar Detalle de Costo</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Costos Orden</a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Editar Detalle de Costo</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -35,7 +38,6 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Editar Orden</h5>
-                                            <button class="btn btn-danger float-right" id="btnactualizar">Actualizar</button>
                                         </div>
                                         @if(session()->has('message-success'))
                                             <div class="alert alert-success">
@@ -57,29 +59,41 @@
                                             <hr>
                                             <form method="post" action="{{url('costo-orden/actualizar')}}">
                                                 {{ csrf_field() }}
+                                                @foreach ($costoOrden as $cor)
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="id">Id del Costo de la Orden</label>
+                                                            <input type="text" readonly class="form-control" name="id" id="id" value="{{ $cor['id'] }}">
+                                                            <small id="idcostoordenHelp" class="form-text text-muted" >Id del Costo de la orden</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
                                                         <div class="form-group">
                                                             <label for="num_Orden"># de la orden</label>
-                                                            <select class="form-control" name="orden" id="orden">
+                                                            <select class="form-control" name="num_Orden" id="num_Orden">
                                                                 @foreach($ordenes as $o)
-                                                                    <option value="{{ $o['numOrden'] }}">{{ $o['numOrden'] }}</option>
+                                                                    <option
+                                                                        value="{{ $o['numOrden'] }}">{{ $o['numOrden'] }}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <small id="num_OrdenHelp" class="form-text text-muted">Escriba el # de la orden</small>
+                                                            <small id="num_OrdenHelp" class="form-text text-muted">Escriba
+                                                                el # de la orden</small>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <label for="costo">T</label>
-                                                            <select class="form-control" name="costo" id="costo">
+                                                            <label for="costo_orden">Tipo de costo</label>
+                                                            <select class="form-control" name="costo_orden" id="costo_orden">
                                                                 @foreach($costos as $co)
-                                                                    <option value="{{ $co['costo_id'] }}">{{ $co['descripcion'] }}</option>
+                                                                    <option
+                                                                        value="{{ $co['id'] }}">{{ $co['descripcion'] }}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <small id="codigoHelp" class="form-text text-muted">Escriba la descripcion del costo</small>
+                                                            <small id="costo_ordenHelp" class="form-text text-muted">Escriba
+                                                                la descripcion del costo</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -88,8 +102,10 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="cantidad">Cantidad</label>
-                                                            <input type="text" class="form-control" name="cantidad" id="cantidad" value="{{old('cantidad')}}">
-                                                            <small id="cantidadHelp" class="form-text text-muted">Escriba la cantidad</small>
+                                                            <input type="text" class="form-control" name="cantidad"
+                                                                   id="cantidad" value="{{old('cantidad')}}">
+                                                            <small id="cantidadHelp" class="form-text text-muted">Escriba
+                                                                la cantidad</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,11 +113,15 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="costo_unitario">Costo Unitario</label>
-                                                            <input type="text" class="form-control" name="costo_unitario" id="costo_unitario" value="{{old('costo_unitario')}}">
-                                                            <small id="costo_unitarioHelp" class="form-text text-muted">Escriba el costo unitario</small>
+                                                            <input type="text" class="form-control"
+                                                                   name="costo_unitario" id="costo_unitario"
+                                                                   value="{{old('costo_unitario')}}">
+                                                            <small id="costo_unitarioHelp" class="form-text text-muted">Escriba
+                                                                el costo unitario</small>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endforeach
                                                 <button type="submit" class="btn btn-primary mt-5">Enviar</button>
                                             </form>
                                         </div>
