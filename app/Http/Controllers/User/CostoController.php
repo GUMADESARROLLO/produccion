@@ -7,56 +7,69 @@ use App\Models\Costo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+
 //use Redirect;
 
 class CostoController extends Controller
 {
-    public function costos() {
-        $costo   = costo::where('estado', 1)->orderBy('id', 'asc')->get();
+    public function index()
+    {
+        $costo = costo::where('estado', 1)->orderBy('id', 'asc')->get();
         return view('User.Costo.index', compact('costo'));
     }
 
-    public function nuevoCosto() {
+    public function nuevoCosto()
+    {
         return view('User.Costo.nuevo');
     }
 
-    public function guardarCosto(Request $request) {
+    public function guardarCosto(Request $request)
+    {
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => ':attribute es un campo requerido',
+            'numeric' => 'El :attribute campo debe ser númerico',
+            'digits_between'  => 'El valor de :attribute debe ser estar entre 1 y 11 digitos'
+
         );
 
-        /*$validator = Validator::make($request->all(), [
-            'descripcion' => 'required',
-            'unidad_medida' => 'required',
+        $validator = Validator::make($request->all(), [
+            'codigocosto' => 'required|numeric|digits_between:1,11',
+            'descripcioncosto' => 'required',
+            'unidadmedidacosto' => 'required'
         ], $messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
-        }*/
+        }
 
         $costo = new costo();
-        $costo->codigo  = $request->codigocosto;
-        $costo->descripcion  = $request->descripcioncosto;
-        $costo->unidad_medida  = $request->unidadmedidacosto;
-        $costo->estado  = 1;
+        $costo->codigo = $request->codigocosto;
+        $costo->descripcion = $request->descripcioncosto;
+        $costo->unidad_medida = $request->unidadmedidacosto;
+        $costo->estado = 1;
         $costo->save();
 
         return redirect()->back()->with('message-success', 'Se guardo con exito :)');
     }
 
-    public function editarCosto($id) {
-        $costo  = costo::where('id', $id)->where('estado', 1)->get()->toArray();
+    public function editarCosto($id)
+    {
+        $costo = costo::where('id', $id)->where('estado', 1)->get()->toArray();
         return view('User.Costo.editar', compact(['costo']));
     }
 
-    public function actualizarCosto(Request $request) {
+    public function actualizarCosto(Request $request)
+    {
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => ':attribute es un campo requerido',
+            'digits_between'  => 'El campo debe ser númerico y estar entre 1 y 11 digitos'
+
         );
 
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
+            'codigo' => 'required|digits_between:1,11',
             'descripcion' => 'required',
+            'unidad_medida' => 'required|digits_between:1,11'
         ], $messages);
 
         if ($validator->fails()) {
@@ -65,7 +78,9 @@ class CostoController extends Controller
 
         costo::where('id', $request->id)
             ->update([
-                'descripcion'          => $request->descripcion
+                'codigo' => $request-> codigo,
+                'descripcion' => $request->descripcion,
+                'unidad_medida' => $request->unidad_medida
             ]);
 
         return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');

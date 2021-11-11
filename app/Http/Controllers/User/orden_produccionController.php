@@ -116,7 +116,7 @@ class orden_produccionController extends Controller
         $validator = Validator::make($request->all(), [
             'numOrden' => 'required|unique:orden_produccion',
             'producto' => 'required',
-            'fecha01' => 'required',
+            'fecha01' => 'required|date',
             'hora01' => 'required'
         ], $messages);
 

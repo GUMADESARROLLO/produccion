@@ -17,7 +17,8 @@
                                         <h5 class="m-b-10">Nuevo Costo</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
                                         <li class="breadcrumb-item"><a href="{{url('/costos')}}">Costos</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Nuevo</a></li>
@@ -58,8 +59,10 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="codigocosto">Codigo del costo</label>
-                                                            <input type="text" class="form-control" name="codigocosto" id="codigocosto" value="{{old('codigocosto')}}">
-                                                            <small id="codigoHelp" class="form-text text-muted">Escriba el codigo del nuevo costo</small>
+                                                            <input type="text" class="form-control" name="codigocosto"
+                                                                   id="codigocosto" value="{{old('codigocosto')}}">
+                                                            <small id="codigoHelp" class="form-text text-muted">Escriba
+                                                                el codigo del nuevo costo</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,17 +70,24 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="descripcioncosto">Descripcion del costo</label>
-                                                            <input type="text" class="form-control" name="descripcioncosto" id="descripcioncosto" value="{{old('descripcioncosto')}}">
-                                                            <small id="descripcionHelp" class="form-text text-muted">Escriba la descripcion del nuevo costo</small>
+                                                            <input type="text" class="form-control"
+                                                                   name="descripcioncosto" id="descripcioncosto"
+                                                                   value="{{old('descripcioncosto')}}">
+                                                            <small id="descripcionHelp" class="form-text text-muted">Escriba
+                                                                la descripcion del nuevo costo</small>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <label for="unidadmedidacosto">Unidad de Medida del costo</label>
-                                                            <input type="text" class="form-control" name="unidadmedidacosto" id="unidadmedidacosto" value="{{old('unidadmedidacosto')}}">
-                                                            <small id="unidadmedidaHelp" class="form-text text-muted">Escriba la unidad de medida del nuevo costo</small>
+                                                            <label for="unidadmedidacosto">Unidad de Medida del
+                                                                costo</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="unidadmedidacosto" id="unidadmedidacosto"
+                                                                   value="{{old('unidadmedidacosto')}}">
+                                                            <small id="unidadmedidaHelp" class="form-text text-muted">Escriba
+                                                                la unidad de medida del nuevo costo</small>
                                                         </div>
                                                     </div>
                                                 </div>

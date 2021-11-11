@@ -17,13 +17,15 @@
                                         <h5 class="m-b-10">Costos</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Costos</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo Costo</a>
+                                    <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo
+                                        Costo</a>
                                 </div>
                             </div>
                         </div>
@@ -68,8 +70,10 @@
                                                                 @endif
                                                             </td>
                                                             <td class="dt-center">
-                                                                <a href="#!" onclick="deleteCostoOrden({{$co->id}})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
-                                                                <a href="costo-orden/editar/{{ $co->id }}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
+                                                                <a href="#!" onclick="deleteCostoOrden({{$co->id}})"><i
+                                                                        class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
+                                                                <a href="costo-orden/editar/{{ $co->id }}"><i
+                                                                        class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
