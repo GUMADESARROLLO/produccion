@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('metodosjs')
-  @include('jsViews.js_usuario')
+@include('jsViews.js_usuario')
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -61,11 +61,11 @@
                                                 <input type="text" class="form-control" name="password" id="password">
                                                 <small id="passwordHelp" class="form-text text-muted">Escriba su contraseña</small>
                                             </div>
-                                            <!--<div class="form-group">
+                                            <div class="form-group">
                                                 <label for="fechaNac">Fecha nacimiento</label>
-                                                <input type="text" class="input-fecha" name="fechaNac" id="fechaNac">
+                                                <input type="date" class="input-fecha form-control" name="fechaNac" id="fechaNac">
                                                 <small id="fechaNacHelp" class="form-text text-muted">Indique su fecha de nacimiento</small>
-                                            </div>-->
+                                            </div>
                                             <div class="form-group">
                                                 <label for="rol">Seleccione un rol</label>
                                                 <select class="form-control" id="rol_id" name="rol_id">
@@ -74,8 +74,8 @@
                                                     <option value="{{ $rol['id'] }}">{{ $rol['descripcion'] }}</option>
                                                     @endforeach
                                                 </select>
-                                                <small id="fechaNacHelp" class="form-text text-muted">Indique su fecha de nacimiento</small>
                                             </div>
+
                                             <button type="submit" class="btn btn-primary">Enviar</button>
                                         </form>
                                     </div>

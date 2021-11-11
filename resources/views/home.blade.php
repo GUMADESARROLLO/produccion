@@ -128,7 +128,7 @@
                                                         <td class="dt-center"> 7,765.00</td>
                                                         <td class="dt-center">C$ 225,518.64</td>
                                                         <td class="dt-center">
-                                                            <a href="orden-produccion/detalle/4448"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>
+                                                            <a href="{{ route('descargarPDF') }}" target="_blank"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>
                                                         </td>
 
                                                     </tr>

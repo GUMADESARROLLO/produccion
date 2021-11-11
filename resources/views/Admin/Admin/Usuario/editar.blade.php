@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="username">Nombre de usuario</label>
-                                                <input type="text" class="form-control" name="username" id="username" value="{{ $user['username']}}">
+                                                <input type="text" readonly disabled class="form-control" name="username" id="username" value="{{ $user['username']}}">
                                                 <small id="usernameHelp" class="form-text text-muted">Escriba un nombre de usuario</small>
                                             </div>
                                             <div class="form-group">
@@ -62,7 +62,6 @@
                                                 <input type="text" class="form-control" type="password" name="password" id="password" value="">
                                                 <small id="passwordHelp" class="form-text text-muted">Escriba su nueva contraseña</small>
                                             </div>
-
                                             @endforeach
                                             <div class="form-group">
                                                 <label for="rol">Seleccione un rol</label>

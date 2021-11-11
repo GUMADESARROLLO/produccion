@@ -54,6 +54,8 @@ Route::get('user/edit/{id}', 'Admin\usuarioController@editarUser')->name('user/e
 Route::post('usuario/actualizar', 'Admin\usuarioController@actualizarUser')->name('usuario/actualizar');
 Route::get('user/detalle/{id}', 'Admin\usuarioController@detalleUser')->name('user/detalle/{id}');
 Route::get('user/eliminar/{id}', 'Admin\usuarioController@eliminarUser')->name('user/eliminar/{id}');
+Route::get('user/activar/{id}', 'Admin\usuarioController@activarUser')->name('user/activar/{id}');
+
 
 
 
@@ -145,6 +147,9 @@ Route::post('guardar-jumboroll', 'User\reporteController@guardarJumboRoll')->nam
 Route::post('guardar-inventario', 'User\reporteController@guardarInventario')->name('guardar-inventario');
 Route::get('dataJROLL/{idTurno}/{codigo}', 'User\reporteController@getDataJumboRoll')->name('dataJROLL/{idTurno}/{codigo}');
 Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventario')->name('getDtaInventario/{codigo}');
+
+//PDF
+Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
 
 
 Auth::routes();

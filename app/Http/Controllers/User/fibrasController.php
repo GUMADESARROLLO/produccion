@@ -60,6 +60,7 @@ class fibrasController extends Controller {
     }
 
     public function actualizarFibras(Request $request) {
+        
         $messages = array(
             'required' => 'El :attribute es un campo requerido'
         );

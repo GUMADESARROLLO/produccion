@@ -70,7 +70,13 @@
                                                         <td class="text-center">
                                                             <a href="user/detalle/{{ $user['id']}}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a>
                                                             <a href="user/edit/{{ $user['id']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                            <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
+                                                            @if ( $user->estado )
+                                                           <!-- <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a> -->
+                                                           <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="fas fa-toggle-on text-c-success f-30 m-r-10"></i></a>
+                                                            @endif
+                                                            @if ( $user->estado == 0)
+                                                                <a href="#!" onclick="activeUser({{ $user['id'] }})" ><i class="fas fa-toggle-on text-c-red f-30 m-r-10"></i></a>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @endforeach
