@@ -73,7 +73,7 @@
                                                             @endforeach
                                                         </select>
                                                         <small id="productoHelp" class="form-text text-muted">Seleccione un Producto</small>
-                                                    </div>
+                                                    </diFv>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">

@@ -30,8 +30,8 @@ class fibrasController extends Controller {
         );
 
         $validator = Validator::make($request->all(), [
-            'descripcion' => 'required',
-            'codigo'        => 'required|digits_between:1,20'
+            'descripcion' => 'required|max:100',
+            'codigo'        => 'required|max:20'
         ], $messages);
 
         if ($validator->fails()) {
@@ -67,7 +67,7 @@ class fibrasController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'idFibra' => 'required',
-            'codigo' => 'required|digits_between:1,20',
+            'codigo' => 'required|max:20',
             'nombre' => 'required|max:100'
         ], $messages);
 

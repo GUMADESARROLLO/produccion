@@ -117,7 +117,10 @@ class orden_produccionController extends Controller
             'numOrden' => 'required|unique:orden_produccion',
             'producto' => 'required',
             'fecha01' => 'required|date',
-            'hora01' => 'required'
+            'fecha02' => 'required|date',
+            'hora01' => 'required',
+            'hora02' => 'required',
+            'hrsTrabajadas' => 'required|digits_between:1,9'
         ], $messages);
 
         if ($validator->fails()) {
@@ -191,11 +194,14 @@ class orden_produccionController extends Controller
         );
 
         $validator = Validator::make($request->all(), [
-            'numOrden' => 'required',
+            'numOrden' => 'required|unique:orden_produccion',
             'producto' => 'required',
-            'fecha01' => 'required',
-            'hora01' => 'required'
-        ], $messages);
+            'fecha01' => 'required|date',
+            'fecha02' => 'required|date',
+            'hora01' => 'required',
+            'hora02' => 'required',
+            'hrsTrabajadas' => 'required|digits_between:1,9'
+        ],$messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();

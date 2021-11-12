@@ -61,10 +61,10 @@ class configuracionController extends Controller
         );
 
         $validator = Validator::make($request->all(), [
-            'nombre'        => 'required',
+            'nombre'        => 'required|max:255',
             'horaInicio'    => 'required',
             'horaFin'       => 'required',
-            'descripcion'   => 'required'
+            'descripcion'   => 'required|max:255'
         ], $messages);
 
         if ($validator->fails()) {
@@ -114,7 +114,7 @@ class configuracionController extends Controller
 
         $validatedData = $request->validate([
             'idTurno' => 'required',
-            'nombre' => 'required',
+            'nombre' => 'required|max:255',
             'horaInicio' => 'required',
             'horaFin' => 'required'
         ]);

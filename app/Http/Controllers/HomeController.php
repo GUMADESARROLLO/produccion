@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models;
+use App\Models\DetalleOrden;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $detalle_orden = DetalleOrden::all();
+        //dd($detalle_orden);
+        return view('home',compact(['detalle_orden']));
     }
 }

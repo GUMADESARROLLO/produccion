@@ -149,7 +149,9 @@ Route::get('dataJROLL/{idTurno}/{codigo}', 'User\reporteController@getDataJumboR
 Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventario')->name('getDtaInventario/{codigo}');
 
 //PDF
-Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
+//Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
+Route::get('/detalleOrdenPDF/{numOrden}','PDFController@detalleOrdenPDF')->name('detalleOrdenPDF/{numOrden}');
+
 
 
 Auth::routes();

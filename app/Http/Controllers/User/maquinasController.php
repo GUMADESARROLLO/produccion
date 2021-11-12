@@ -28,7 +28,7 @@ class maquinasController extends Controller {
         );
 
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
+            'nombre' => 'required|max:100',
         ], $messages);
 
         if ($validator->fails()) {
@@ -55,7 +55,7 @@ class maquinasController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'idMaquina' => 'required',
-            'nombre' => 'required'
+            'nombre' => 'required|max:100'
         ], $messages);
 
         if ($validator->fails()) {
