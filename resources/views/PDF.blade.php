@@ -18,6 +18,7 @@
         .cell-color {
             background-color: #c6e0b4;
             /* border: 2px solid black !important;*/
+            
         }
 
         .table-style {
@@ -37,6 +38,11 @@
         .table-format {
             font-size: 10px !important;
         }
+        /*@media only screen and (min-width: 1200px) {
+            table .problem-table{
+                width:450px !important
+            }
+        } */
     </style>
     <div class="title text-center">
         <h5>INNOVA INDUSTRIAS S.A</h5>
@@ -60,20 +66,20 @@
                 </tr>
             </table>
         </div>
-        <div class="col-12">
-            <table class="table table-sm table-bordered" style="border: 2px solid black;margin-bottom: 0rem; margin-left: 31.5rem ;margin-right:2.5px;">
+        <div class="col-6" >
+            <table  class="table table-sm table-bordered problem-table" style="border: 2px solid black;margin-bottom: 0rem; margin-left: 31.5rem; width:450px !important">
                 <tr class="cell-border">
                     <th class="cell-border text-right" colspan="2">Razon MP vs Producto Terminado</th>
                     <th class="cell-border text-right" style="background-color:#F4CCCC; color:red;">{{ number_format($do->factor_fibral,2)}}</th>
                 </tr>
                 <tr>
-                    <th class="cell-border cell-color text-center">PRODUCCIÓN</th>
-                    <th class="cell-border cell-color text-center">TOTAL</th>
-                    <th class="cell-border cell-color text-center">No.DE BOBINAS</th>
+                    <th  WIDTH="200px"class="cell-border cell-color text-center">PRODUCCIÓN</th>
+                    <th  WIDTH="105px" class="cell-border cell-color text-center">TOTAL</th>
+                    <th  WIDTH="105px" class="cell-border cell-color text-center">No.DE BOBINAS</th>
                 </tr>
                 <tbody>
                     <tr>
-                        <td class="text-uppercase text-left">{{ $do->nombre}}</td>
+                        <td" class="text-uppercase text-left">{{ $do->nombre}}</td>
                         <td class="text-right">{{ number_format($do->prod_real,2)}}</td>
                         <td></td>
                     </tr>
@@ -121,7 +127,7 @@
             </table>
         </div>
         <div class="col-4">
-            <table class="table table-sm table-bordere" style="border: 2px solid black; margin-left: 18rem; margin-top:-10rem  ">
+            <table class="table table-sm table-bordere" style="border: 2px solid black; margin-left: 16rem; margin-top:-10rem  ">
                 <tr>
                     <th class="text-center" style="border: 2px solid black;" colspan="3">HORAS PRODUCTIVAS</th>
                 </tr>
