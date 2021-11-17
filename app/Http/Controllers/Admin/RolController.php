@@ -64,7 +64,9 @@ class RolController extends Controller
      */
     public function editar($id)
     {
-        //
+        $rol = Rol::where('id', $id)->get();
+
+        return view('Admin.Rol.editar', compact(['rol']));
     }
 
     /**
@@ -74,9 +76,15 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(Request $request)
     {
-        //
+        Rol::where('id', $request->id)
+            ->update([
+                'descripcion' => $request->descripcion,
+                'updated_at'   => date("Y-m-d H:i:s")
+            ]);
+
+        return redirect()->back()->with('message-success', 'Se actualizo el rol con exito :)');
     }
 
     /**

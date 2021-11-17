@@ -126,7 +126,6 @@ class usuarioController extends Controller
         
         $validator = Validator::make($request->all(), [
             'rol_id'   => 'required',
-            'username' => 'required|unique:users|max:100',
             'password' => 'required|max:255',
             'nombre'   => 'required|max:255',
             'apellido' => 'required|max:255'
@@ -140,10 +139,8 @@ class usuarioController extends Controller
 
         usuario::where('id', $request->id_usuario)
             ->update([
-                
                 'nombres'               => $request->nombre,
                 'apellidos'             => $request->apellido,
-                'username'              => $request->username,
                 'password'              => Hash::make($request->password)
             ]);
 
@@ -156,7 +153,7 @@ class usuarioController extends Controller
 
         //usuario::find($request->id_usuario)->roles()->updateExistingPivot('',['rol_id' => $request->id_rol]);
 
-        return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
+        return redirect()->back()->with('message-success', 'Se actualizo el usuario con exito :)');
     }
 
 

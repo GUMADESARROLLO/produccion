@@ -38,7 +38,7 @@
                                         <h5>Editar Usuario</h5>
                                     </div>
                                     <div class="card-block">
-                                        <form method="post" action="{{url('usuario/actualizar')}}">
+                                        <form method="post" action="{{ url('usuario/actualizar') }}">
                                             {{ csrf_field() }}
                                             @foreach ($user as $user)
                                             <input type="hidden" name="id_usuario" id="id_usuario" value="{{ $user['id'] }}">
@@ -59,7 +59,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="password">Password</label>
-                                                <input type="text" class="form-control" type="password" name="password" id="password" value="">
+                                                <input type="text" class="form-control" type="password" name="password" id="password">
                                                 <small id="passwordHelp" class="form-text text-muted">Escriba su nueva contraseña</small>
                                             </div>
                                             @endforeach

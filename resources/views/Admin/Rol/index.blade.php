@@ -54,8 +54,8 @@
                                                         <td>{{ $rol['id'] }}</td>
                                                         <td>{{ $rol['descripcion'] }}</td>
                                                         <td class="text-center">
-                                                            <a href="rol/{{ $rol['id_categoria'] }}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a>
-                                                            <a href="rol/{{ $rol['id_categoria'] }}/edit"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
+                                                            <!-- <a href="rol/{{ $rol['id'] }}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a> -->
+                                                            <a href="rol/edit/{{$rol['id']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
                                                         </td>
                                                     </tr>
                                                     @endforeach
