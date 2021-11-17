@@ -28,6 +28,7 @@ class produccionController extends Controller {
         );
 
         $validator = Validator::make($request->all(), [
+            'codigo' => 'required',
             'nombre' => 'required',
         ], $messages);
 
@@ -36,9 +37,10 @@ class produccionController extends Controller {
         }
 
         $productos = new productos();
+        $productos->codigo  = $request->codigo;
         $productos->nombre  = $request->nombre;
         $productos->estado  = 1;
-        $productos->save(); 
+        $productos->save();
 
         return redirect()->back()->with('message-success', 'Se guardo con exito :)');
     }
@@ -64,6 +66,7 @@ class produccionController extends Controller {
 
         productos::where('idProducto', $request->idProducto)
         ->update([
+            'codigo'          => $request->codigo,
             'nombre'          => $request->nombre
         ]);
 

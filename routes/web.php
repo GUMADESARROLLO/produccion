@@ -151,7 +151,7 @@ Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventari
 //PDF
 //Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
 Route::get('/detalleOrdenPDF/{numOrden}','PDFController@detalleOrdenPDF')->name('detalleOrdenPDF/{numOrden}');
-
+Route::get('/home/detalle/{numOrden}', 'HomeController@detail')->name('/home/detalle/{numOrden}');
 
 
 Auth::routes();
