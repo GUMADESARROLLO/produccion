@@ -72,6 +72,8 @@ Route::get('menu-rol', 'Admin\MenuRolController@index')->name('menu-rol');
 Route::post('menu-rol', 'Admin\MenuRolController@guardar')->name('guardar_menu_rol');
 Route::post('menu/guardar', 'Admin\menu_controller@guardar')->name('menu/guardar');
 Route::post('menu/guardar-orden', 'Admin\menu_controller@guardarOrden')->name('guardar-orden');
+Route::get('rol/edit/{id}','Admin\RolController@editar')->name('rol/edit/{id}');
+Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actualizar');
 
 //RUTAS PRODUCCION
 Route::get('orden-produccion/nueva', 'User\orden_produccionController@crear')->name('produccion/nueva');

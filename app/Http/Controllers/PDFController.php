@@ -18,7 +18,7 @@ class PDFController extends Controller
         $costo_orden_subTotal = CostoOrdenSubTotal::where('numOrden',$numOrden)->orderBy('costo_id', 'asc')->get();
         
 
-        $pdf = \PDF::loadView('prueba',compact(['detalle_orden','costo_orden_subTotal']))->setPaper('a4', 'landscape');
+        $pdf = \PDF::loadView('PDF',compact(['detalle_orden','costo_orden_subTotal']))->setPaper('a4', 'landscape');
         return $pdf->stream('prueba.pdf');
     }
 
