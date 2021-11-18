@@ -20,7 +20,7 @@
                                         <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Costos Orden</a>
+                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de ordenes</a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="javascript:">Editar Detalle de Costo</a>
                                         </li>
@@ -63,20 +63,16 @@
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="id">Id del Costo de la Orden</label>
+                                                            <label for="id">Tipo de Costo de la Orden</label>
                                                             <input type="text" readonly class="form-control" name="id" id="id" value="{{ $cor['id'] }}">
-                                                            <small id="idcostoordenHelp" class="form-text text-muted" >Id del Costo de la orden</small>
+                                                            <small id="idcostoordenHelp" class="form-text text-muted" >Tipo de Costo </small>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="form-group">
                                                             <label for="num_Orden"># de la orden</label>
-                                                            <select class="form-control" name="num_Orden" id="num_Orden">
-                                                                @foreach($ordenes as $o)
-                                                                    <option
-                                                                        value="{{ $o['numOrden'] }}">{{ $o['numOrden'] }}</option>
-                                                                @endforeach
-                                                            </select>
+                                                            <input type="text" readonly class="form-control" name="num_Orden" id="num_Orden" value="{{ $cor['numOrden'] }}">
+
                                                             <small id="num_OrdenHelp" class="form-text text-muted">Escriba
                                                                 el # de la orden</small>
                                                         </div>

@@ -31,7 +31,7 @@ Route::get('/maquina/nueva-maquina', 'User\maquinasController@nueva')->name('maq
 Route::get('/reporte', 'User\reporteController@index')->name('maquina/nueva');
 /***** Add by Rodolfo *****/
 Route::get('/costos', 'User\CostoController@index')->name('costos');
-Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
+
 
 /******Add by Xochilt */
 
@@ -130,9 +130,11 @@ Route::get('costos/editar/{id}', 'User\CostoController@editarCosto')->name('cost
 Route::post('costos/actualizar', 'User\CostoController@actualizarCosto')->name('costos/actualizar');
 
 //RUTAS COSTOS POR ORDEN
+Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
 Route::get('costo-orden/nuevo', 'User\CostoOrdenController@nuevoCostoOrden')->name('costo-orden/nuevo');
 Route::post('costo-orden/guardar', 'User\CostoOrdenController@guardarCostoOrden')->name('costo-orden/guardar');
-Route::get('costo-orden/editar/{id}', 'User\CostoOrdenController@editarCostoOrden')->name('costo-orden/editar/{id}');
+Route::get('costo-orden/detalle/{numOrden}', 'User\CostoOrdenController@detalleCostoOrden')->name('costo-orden/detalle/{numOrden}');
+Route::get('costo-orden/detalle/editar/{id}', 'User\CostoOrdenController@editarCostoOrden')->name('costo-orden/detalle/editar/{id}');
 Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCostoOrden')->name('costo-orden/actualizar');
 
 
