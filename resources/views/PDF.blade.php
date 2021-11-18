@@ -300,7 +300,7 @@
                         <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
                     </tr>
                     <tr>
-                        <td class="text-right" colspan="5"> <strong>COSTO TOTAL</strong> </td>
+                        <td class="text-right" colspan="5" > <strong>COSTO TOTAL</strong> </td>
                         <td class="text-right">C$ {{number_format($do->costo_total),2}}</td>
                     </tr>
                     @endforeach
