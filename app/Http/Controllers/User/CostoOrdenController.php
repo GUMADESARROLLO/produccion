@@ -5,7 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Costo;
 use App\Models\CostoOrden;
+use App\Models\DetalleOrden;
 use App\Models\orden_produccion;
+use App\Models\productos;
 use Illuminate\Http\Request;
 use Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -15,8 +17,34 @@ class CostoOrdenController extends Controller
 {
     public function index()
     {
-        $costoOrden = costoOrden::where('estado', 1)->orderBy('id', 'asc')->get();
-        return view('User.CostoOrden.index', compact('costoOrden'));
+        //$costoOrden = costoOrden::where('estado', 1)->orderBy('id', 'asc')->get();
+        //return view('User.CostoOrden.index', compact('costoOrden'));
+        //$orden_costo = DetalleCostoSubtotal::all()->sum('subtotal');
+        $array = array();
+        $i=0;
+        $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'desc')->get();
+
+        if ( count($ord_produccion)>0 ) {
+            foreach ($ord_produccion as $key) {
+                $array[$i]['idOrden'] = $key['idOrden'];
+                $array[$i]['numOrden'] = $key['numOrden'];
+                $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
+
+                $array[$i]['producto'] = $fibra->nombre;
+                $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
+                $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
+                $array[$i]['estado'] = $key['estado'];
+                $i++;
+            }
+        }
+        return view('User.CostoOrden.index', compact(['array']));
+    }
+
+    public function detalleCostoOrden($idOP)
+    {
+        $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
+        //dd($costoOrden);
+        return view('User.CostoOrden.detalle', compact(['costoOrden']));
     }
 
     public function nuevoCostoOrden()
@@ -42,6 +70,13 @@ class CostoOrdenController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
+        if(CostoOrden::where('numOrden', '=', $request['num_Orden'])
+                        ->where('costo_id', '=', $request['costo_orden'])->first())
+        {
+            return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
+        }
+        else{
+
         $costoOrden = new costoOrden();
         $costoOrden->numOrden = $request->num_Orden;
         $costoOrden->costo_id = $request->costo_orden;
@@ -50,7 +85,17 @@ class CostoOrdenController extends Controller
         $costoOrden->estado = 1;
         $costoOrden->save();
 
+        /*$array = [
+        'numOrden' => $request->num_Orden,
+        'costo_id' => $request->costo_orden,
+        'cantidad' => $request->cantidad,
+        'costo_unitario' => $request->costo_unitario,
+            'estado' => 1
+    ];
+        CostoOrden::insertOrIgnore($array);*/
+
         return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+        }
     }
 
     public function editarCostoOrden($id)
