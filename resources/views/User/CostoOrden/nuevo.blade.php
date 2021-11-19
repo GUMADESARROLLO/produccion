@@ -20,7 +20,8 @@
                                         <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Costos Orden</a>
+
+                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de ordenes</a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="javascript:">Nuevo</a></li>
                                     </ul>
@@ -41,6 +42,11 @@
                                         @if(session()->has('message-success'))
                                             <div class="alert alert-success">
                                                 {{ session()->get('message-success') }}
+                                            </div>
+                                        @endif
+                                        @if(session()->has('message-failed'))
+                                            <div class="alert alert-danger">
+                                                {{ session()->get('message-failed') }}
                                             </div>
                                         @endif
                                         @if (count($errors) > 0)
