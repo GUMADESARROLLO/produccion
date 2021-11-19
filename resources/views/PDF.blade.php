@@ -136,7 +136,7 @@
                     </tr>
                     <tr>
                         <td class="cell-color text-right">TOTAL PRODUCIDO</td>
-                        <td class="text-right"> {{ number_format($do->prod_real,2)}}</td>
+                        <td class="text-right"> {{  number_format(($do->prod_real + $do->merma_total),2)}}</td>
                         <td class="text-right">100%</td>
                     </tr>
                 </tbody>
@@ -219,91 +219,11 @@
                         <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
                         <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
                     </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
-                    <tr class="unread text-center">
-                        <td class="dt-center">{{ $co->codigo}}</td>
-                        <td class="dt-center text-left">{{ $co->descripcion }}</td>
-                        <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
-                    </tr>
+                    @endforeach
                     <tr>
                         <td class="text-right" colspan="5" > <strong>COSTO TOTAL</strong> </td>
-                        <td class="text-right">C$ {{number_format($do->costo_total),2}}</td>
+                        <td class="text-right">C$ {{number_format($do->costo_total,2)}}</td>
                     </tr>
-                    @endforeach
                 </tbody>
             </table>
         </div>
