@@ -49,9 +49,10 @@
 
                                                         <th># ORDEN</th>
                                                         <th>COSTO ID</th>
+                                                        <th>DESCRIPCION</th>
                                                         <th>CANTIDAD</th>
                                                         <th>COSTO UNITARIO</th>
-                                                        <th>ESTADO</th>
+
                                                         <th></th>
                                                     </tr>
                                                     </thead>
@@ -59,21 +60,16 @@
                                                     @foreach ($costoOrden as $key => $co)
                                                         <tr class="unread">
 
-                                                            <td class="dt-center">{{ $co['numOrden'] }}</td>
-                                                            <td class="dt-center">{{ $co['costo_id'] }}</td>
-                                                            <td class="dt-center">{{ $co['cantidad'] }}</td>
-                                                            <td class="dt-center">{{ $co['costo_unitario'] }}</td>
-                                                            <td class="dt-center">
-                                                                @if ( $co['estado'] )
-                                                                    <span class="badge badge-success">Activo</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Inactivo</span>
-                                                                @endif
-                                                            </td>
+                                                            <td class="dt-center">{{ $co->numOrden  }}</td>
+                                                            <td class="dt-center">{{ $co->costo_id }}</td>
+                                                            <td class="dt-center">{{ $co->descripcion }}</td>
+                                                            <td class="dt-center">{{ $co->cantidad }}</td>
+                                                            <td class="dt-center">{{ $co->costo_unitario }}</td>
+
                                                             <td class="dt-center">
                                                                 <a href="#!" onclick="deleteCostoOrden()"><i
                                                                         class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
-                                                                <a href="editar/{{ $co['id'] }}" target="_blank">
+                                                                <a href="editar/{{ $co->id }}" target="_blank">
                                                                     <i class="feather icon-edit text-c-blue f-30 m-r-10"></i>
                                                                 </a>
                                                             </td>

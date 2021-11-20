@@ -9,6 +9,7 @@ use App\Models\DetalleOrden;
 use App\Models\orden_produccion;
 use App\Models\productos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -42,7 +43,18 @@ class CostoOrdenController extends Controller
 
     public function detalleCostoOrden($idOP)
     {
-        $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
+        /*$costoOrden = CostoOrden::join('costo', 'CostoOrden.costo_id', 'costo.id')
+                            ->select('CostoOrden.numOrden', 'CostoOrden.costo_id', 'costo.descripcion',
+                                    'CostoOrden.cantidad', 'CostoOrden.costo_unitario')
+                            ->where('CostoOrden.numOrden', $idOP)
+                        ->orderBy('id', 'asc')->get();*/
+        $costoOrden = DB::select('select costo_orden.id, costo_orden.numOrden, costo_orden.costo_id, costo.descripcion,
+                                    costo_orden.cantidad, costo_orden.costo_unitario
+                                    from costo_orden
+                                    inner join costo on costo_orden.costo_id = costo.id
+                                    where costo_orden.numOrden = 4453
+                                    order by costo_id asc');
+
         //dd($costoOrden);
         return view('User.CostoOrden.detalle', compact(['costoOrden']));
     }
