@@ -46,7 +46,7 @@
     });
 
 
- 
+
 
     $(document).on('click', '.add-row-dt-mp', function() {
         var numOrden = $("#numOrden").val();
@@ -74,7 +74,7 @@
                 indicador_1,
                 `<select class="mb-3 form-control" id="maquina-` + indicador_1 + `">` + option2 + `</select>`,
                 `<select class="mb-3 form-control" id="fibras-` + indicador_1 + `">` + option1 + `</select>`,
-                `<input class="input-dt" type="number" pattern="[0-9]+" min="1"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `">`,
+                `<input class="input-dt" type="text"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `">`,
             ]).draw(false);
         })
     });
@@ -95,6 +95,51 @@
         })
 
     }
+
+    function soloNumeros(caracter, e, numeroVal) {
+        var numero = numeroVal;
+        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+            console.log("primer if");
+            e.preventDefault();
+        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+            console.log("segundo if");
+            e.preventDefault();
+        } else {
+            const soloNumeros = new RegExp("^[0-9]+$");
+            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+                console.log("tercer if");
+
+                e.preventDefault();
+            }
+        }
+    }
+
+    $('#hrsTrabajadas').on('keypress', function(e) {
+          soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
+    });
+
+    $('#cantidad-1').on('keypress', function(e) {
+          soloNumeros(e.keyCode, e, $('#cantidad').val());
+    });
+
+    /*function solonumeros(e){
+        key = e.keyCode||e.which;
+        teclado = String.fromCharCode(key);
+        numeros = "0123456789";
+        especiales = "8-37-38-46";
+        teclado_especial =false;
+
+        for(var i in especiales){
+            if(key==especiales[i]){
+                teclado_especial = true;
+            }
+        }
+
+        if(numeros.indexOf(teclado)==-1 && !teclado_especial){
+            return false;
+        }
+    }*/
+
 
     $(document).on('click', '#btnguardar', function() {
         codigo = $('#numOrden').val();
@@ -152,5 +197,6 @@
 
             }
         }
+
     });
 </script>
