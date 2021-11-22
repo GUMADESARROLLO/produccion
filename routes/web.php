@@ -86,6 +86,7 @@ Route::get('data-mp', 'User\orden_produccionController@getDataMateriaPrima')->na
 Route::post('eliminar-mp', 'User\orden_produccionController@eliminarMateriaPrima')->name('eliminar-mp');
 Route::get('orden-produccion/reporte/{id}', 'User\reporteController@reporte')->name('orden-produccion/editar/{id}');
 Route::post('guardar-costos-indirectos-fab', 'User\orden_produccionController@guardarCostosIndirectosFabricacion')->name('guardar-costos-indirectos-fab');
+Route::post('cargarmp-directa', 'User\orden_produccionController@cargarMateriaPrimadirecta')->name('cargarmp-directa');
 
 //RUTAS CONFIGURACIONES
 Route::get('turnos/crear', 'User\configuracionController@crearTurno')->name('turnos/crear');
