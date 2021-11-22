@@ -72,12 +72,16 @@ class orden_produccionController extends Controller
         $idOrd      = orden_produccion::latest('numOrden')->first();
         $fibras     = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
         $maquinas   = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
-        $mp_directa = mp_directa::where('numOrden', intval($idOrd->numOrden))->get();
+        //$mp_directa = mp_directa::where('numOrden', intval($idOrd->numOrden + 1))->get();
         $productos  = productos::where('estado', 1)->get()->toArray();
         $usuarios   = usuario::usuarioByRole();
 
-        //$lastId = intval($idOrd) + 1;
-       // $this->cargarMateriaPrimadirecta(4458);
+        $mp_directa = mp_directa::select('mp_directa.*', 'fibras.descripcion', 'maquinas.nombre', 'fibras.idFibra', 'maquinas.idMaquina')
+            ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
+            ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('mp_directa.numOrden', intval($idOrd->numOrden + 1))
+            ->get();
+
 
         return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios', 'idOrd', 'fibras', 'maquinas', 'mp_directa']));
     }
@@ -88,21 +92,13 @@ class orden_produccionController extends Controller
         $mp_directa_exist = "";
         $maquinas_exist = "";
         $fibras_exist = "";
-        $mp_directa = mp_directa::where('numOrden', 4458)->get(); // obtengo la cantidad de materia prima
+        $mp_directa_ = mp_directa::where('numOrden', 4458)->get(); // obtengo la cantidad de materia prima
         $maquinas   = maquinas::where([['nombre', 'yankee'], ['estado', 1]])->get(); // obtengo la maquina seleccionada
-        $fibras = fibras::where([['idfibra',1], ['estado', 1]])->get(); //obtengo la fibra seleccionada
+        $fibras = fibras::where([['idfibra', 1], ['estado', 1]])->get(); //obtengo la fibra seleccionada
 
-        if (count($mp_directa)) {
-            $mp_directa_exist = $mp_directa;
-        }
-        if (count($maquinas)){
-            $maquinas_exist = $maquinas;
-        }
-        if(count($fibras)){
-            $fibras_exist=$fibras;
-        }
 
-        return view('User.Orden_Produccion.crear', compact(['mp_directa_exist', 'fibras_exist', 'fibras_exist']));
+
+        return view('User.Orden_Produccion.crear', compact(['mp_directa_', 'maquinas', 'fibras']));
     }
 
     public function eliminarMateriaPrima(Request $request)
@@ -274,13 +270,14 @@ class orden_produccionController extends Controller
             $array = array();
 
             foreach ($request->input('data') as $key) {
-                $array[$i]['numOrden']       = $key['orden'];
-                $array[$i]['idMaquina']      = $key['maquina'];
-                $array[$i]['idFibra']        = $key['fibra'];
-                $array[$i]['cantidad']       = $key['cantidad'];
-                $i++;
+                if ($key['maquina'] !== 'undefined' &&  $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                    $array[$i]['numOrden']       = $key['orden'];
+                    $array[$i]['idMaquina']      = $key['maquina'];
+                    $array[$i]['idFibra']        = $key['fibra'];
+                    $array[$i]['cantidad']       = $key['cantidad'];
+                    $i++;
+                }
             }
-
             if (count($array) > 0) {
                 mp_directa::where('numOrden', $numOrden)->delete();
                 $response = mp_directa::insert($array);

@@ -36,17 +36,18 @@
             dtMPD.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
+        $('#tbody-mp tr td').children().each(function(i) {
+            $(this).on('keypress', function(e) {
+                soloNumeros(e.keyCode, e, $(this).val());
+            });
+        });
     });
 
     $(document).on('click', '#quitRowdtBATH', function() {
         var select_row = dtMPD.row(".selected").data();
         indexData = select_row[0];
-
         dtMPD.row('.selected').remove().draw(false);
     });
-
-
-
 
     $(document).on('click', '.add-row-dt-mp', function() {
         var numOrden = $("#numOrden").val();
@@ -69,12 +70,11 @@
             $.each(json['dataMaquinas'], function(i, item) {
                 option2 += `<option value='` + item['idMaquina'] + `'>` + item['nombre'] + `</option>`
             })
-
             dtMPD.row.add([
                 indicador_1,
-                `<select class="mb-3 form-control" id="maquina-` + indicador_1 + `">` + option2 + `</select>`,
+                `<select class="mb-3 form-control " id="maquina-` + indicador_1 + `">` + option2 + `</select>`,
                 `<select class="mb-3 form-control" id="fibras-` + indicador_1 + `">` + option1 + `</select>`,
-                `<input class="input-dt" type="text"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `">`,
+                `<input class="input-dt mp-cant" type="text"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `" onpaste="return false">`,
             ]).draw(false);
         })
     });
@@ -89,60 +89,88 @@
             },
             type: 'post',
             async: true,
-            success: function(resultado) {
-
-            }
+            success: function(resultado) {}
         })
-
     }
+
+    //$(document).ready(resaltar);
+
 
     function soloNumeros(caracter, e, numeroVal) {
         var numero = numeroVal;
         if (String.fromCharCode(caracter) === "." && numero.length === 0) {
-            console.log("primer if");
             e.preventDefault();
+            // alert('No puedes iniciar con un punto');
         } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
-            console.log("segundo if");
             e.preventDefault();
+            //  alert('No puede haber mas de dos puntos');
         } else {
             const soloNumeros = new RegExp("^[0-9]+$");
             if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
-                console.log("tercer if");
-
                 e.preventDefault();
+                //   alert('solo se permiten datos númericos');
             }
         }
     }
 
     $('#hrsTrabajadas').on('keypress', function(e) {
-          soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
+        soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
     });
 
-    $('#cantidad-1').on('keypress', function(e) {
-          soloNumeros(e.keyCode, e, $('#cantidad').val());
-    });
-
-    /*function solonumeros(e){
-        key = e.keyCode||e.which;
-        teclado = String.fromCharCode(key);
-        numeros = "0123456789";
-        especiales = "8-37-38-46";
-        teclado_especial =false;
-
-        for(var i in especiales){
-            if(key==especiales[i]){
-                teclado_especial = true;
+    $('#dtMPD tbody').on('click', 'tr', function() {
+        var array = new Array();
+        var codigo = "";
+        $('#tbody-mp tr td').children().each(function(i) {
+            var item = $(this).val();
+            var maquina = "";
+            var fibra = "";
+            var cantidad = "";
+            if (item != "" && item != null) {
+                codigo = $('#numOrden').val();
+                maquina = $('#maquina-prev-' + i).val();
+                fibra = $('#fibras-prev-' + i).val();
+                cantidad = $('#cantidad-prev-' + i).val();
+                if (maquina != "" && fibra != "" && cantidad != "") {
+                    array[i] = {
+                        orden: codigo,
+                        maquina: maquina,
+                        fibra: fibra,
+                        cantidad: cantidad
+                    };
+                }
             }
-        }
+        });
+        /*array2 = array.filter(function(dato) {
+            return dato != undefined
+        });*/
 
-        if(numeros.indexOf(teclado)==-1 && !teclado_especial){
-            return false;
-        }
-    }*/
+        console.log(array);
+        $.ajax({
+            url: "../guardarmp-directa",
+            data: {
+                data: array,
+                codigo: codigo
+            },
+            type: 'post',
+            async: true,
+            success: function(resultado) {
 
+            }
+        }).done(function(data) {
+            $("#formdataord").submit();
+        });
+
+        // console.log(i + " " + array);
+    });
 
     $(document).on('click', '#btnguardar', function() {
         codigo = $('#numOrden').val();
+
+        /* var maquina_previous = $('#maquina-prev').val();
+         var fibras_previous = $('#fibras-prev').val();
+         var fibras_previous = $('#fibras-prev').val();*/
+
+
         var last_row = dtMPD.row(":last").data();
         var array = new Array();
         var i = 0;
@@ -154,6 +182,9 @@
             if (horaInicio == '') {
                 mensaje("Ingrese una hora de inicio", "error");
             } else {
+
+
+
                 dtMPD.rows().eq(0).each(function(index) {
                     var row = dtMPD.row(index);
                     var data = row.data();
@@ -178,7 +209,6 @@
 
                     i++;
                 });
-
                 $.ajax({
                     url: "../guardarmp-directa",
                     data: {
@@ -193,10 +223,7 @@
                 }).done(function(data) {
                     $("#formdataord").submit();
                 });
-
-
             }
         }
-
     });
 </script>

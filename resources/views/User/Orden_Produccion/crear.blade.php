@@ -92,9 +92,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <div class="form-group"> 
+                                                    <div class="form-group">
                                                         <label for="numOrden">Horas Trabajadas</label>
-                                                        <input type="text" class="form-control" name="hrsTrabajadas" id="hrsTrabajadas" value="{{ old('hrsTrabajadas') }}"  onpaste="return false">
+                                                        <input type="text" class="form-control" name="hrsTrabajadas" id="hrsTrabajadas" value="{{ old('hrsTrabajadas') }}" onpaste="return false">
                                                         <small id="hrsTrabajadasHelp" class="form-text text-muted">Especifique
                                                             las hras trabajadas</small>
                                                     </div>
@@ -157,15 +157,26 @@
                                                                     <th class="text-center">CANTIDAD</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id="tbody-mp">
+                                                                @foreach($mp_directa as $key => $mp)
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td><select disabled class="mb-3 form-control " id="maquina-prev-{{ $key }}">
+                                                                            <option  selected value="{{ $mp->idFibra }}">{{ $mp->nombre }}</option>
+                                                                        </select></td>
+                                                                    <td><select disabled class="mb-3 form-control" id="fibras-prev-{{ $key }}">
+                                                                            <option  selected value="{{ $mp->idMaquina }}">{{ $mp->descripcion}}</option>
+                                                                        </select></td>
+                                                                    <td><input class="input-dt mp-cant" type="text" placeholder="" id="cantidad-prev-{{ $key }}" onpaste="return false" value="{{ $mp->cantidad}}"></td>
+                                                                </tr>
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
-
                                                     <button class="btn btn-danger float-right" id="quitRowdtBATH">
                                                         Quitar
                                                     </button>
-                                                    <button class="btn btn-light add-row-dt-mp float-right">
+                                                    <button class="btn btn-light add-row-dt-mp float-right" id="btn-agregar">
                                                         Agregar
                                                     </button>
                                                 </div>
