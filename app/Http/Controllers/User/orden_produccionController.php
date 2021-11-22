@@ -33,7 +33,7 @@ class orden_produccionController extends Controller
     {
         $array = array();
         $i = 0;
-        $ord_produccion = orden_produccion::where('estado', 1)->get();
+        $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
 
         if (count($ord_produccion) > 0) {
             foreach ($ord_produccion as $key) {
@@ -72,11 +72,33 @@ class orden_produccionController extends Controller
         $idOrd      = orden_produccion::latest('numOrden')->first();
         $fibras     = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
         $maquinas   = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
-        $mp_directa = mp_directa::where('numOrden', intval($idOrd->numOrden))->get();
+        //$mp_directa = mp_directa::where('numOrden', intval($idOrd->numOrden + 1))->get();
         $productos  = productos::where('estado', 1)->get()->toArray();
         $usuarios   = usuario::usuarioByRole();
 
+        $mp_directa = mp_directa::select('mp_directa.*', 'fibras.descripcion', 'maquinas.nombre', 'fibras.idFibra', 'maquinas.idMaquina')
+            ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
+            ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('mp_directa.numOrden', intval($idOrd->numOrden + 1))
+            ->get();
+
+
         return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios', 'idOrd', 'fibras', 'maquinas', 'mp_directa']));
+    }
+
+    public function cargarMateriaPrimadirecta($idOrd)
+    {
+        $array = array();
+        $mp_directa_exist = "";
+        $maquinas_exist = "";
+        $fibras_exist = "";
+        $mp_directa_ = mp_directa::where('numOrden', 4458)->get(); // obtengo la cantidad de materia prima
+        $maquinas   = maquinas::where([['nombre', 'yankee'], ['estado', 1]])->get(); // obtengo la maquina seleccionada
+        $fibras = fibras::where([['idfibra', 1], ['estado', 1]])->get(); //obtengo la fibra seleccionada
+
+
+
+        return view('User.Orden_Produccion.crear', compact(['mp_directa_', 'maquinas', 'fibras']));
     }
 
     public function eliminarMateriaPrima(Request $request)
@@ -128,12 +150,22 @@ class orden_produccionController extends Controller
             'fecha02' => 'required|date',
             'hora01' => 'required',
             'hora02' => 'required',
-            'hrsTrabajadas' => 'required|digits_between:1,9'
+            'hrsTrabajadas' => 'required|digits_between:1,9|regex:/^[-0-9\+]+$/'
         ], $messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
+        if ($request->hrsTrabajadas < 0) {
+            return Redirect::back()->withErrors("Las horas trabajados no pueden ser menores a 0")->withInput();
+        }
+        if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
+            return Redirect::back()->withErrors("La fecha final no puede ser menor a la fecha inicial")->withInput();
+        }
+        if (date("H:i", strtotime($request->hora02)) <  date("H:i", strtotime($request->hora01))) {
+            return Redirect::back()->withErrors("La hora final no puede ser menor a la hora inicial")->withInput();
+        }
+
 
         $ordProd                    = new orden_produccion();
         $ordProd->producto          = $request->producto;
@@ -199,11 +231,10 @@ class orden_produccionController extends Controller
     {
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
-            'unique' => 'Ya existe una orden de trabajo para este turno'
         );
 
         $validator = Validator::make($request->all(), [
-            'numOrden' => 'required|unique:orden_produccion',
+            'numOrden' => 'required',
             'producto' => 'required',
             'fecha01' => 'required|date',
             'fecha02' => 'required|date',
@@ -239,13 +270,14 @@ class orden_produccionController extends Controller
             $array = array();
 
             foreach ($request->input('data') as $key) {
-                $array[$i]['numOrden']       = $key['orden'];
-                $array[$i]['idMaquina']      = $key['maquina'];
-                $array[$i]['idFibra']        = $key['fibra'];
-                $array[$i]['cantidad']       = $key['cantidad'];
-                $i++;
+                if ($key['maquina'] !== 'undefined' &&  $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                    $array[$i]['numOrden']       = $key['orden'];
+                    $array[$i]['idMaquina']      = $key['maquina'];
+                    $array[$i]['idFibra']        = $key['fibra'];
+                    $array[$i]['cantidad']       = $key['cantidad'];
+                    $i++;
+                }
             }
-
             if (count($array) > 0) {
                 mp_directa::where('numOrden', $numOrden)->delete();
                 $response = mp_directa::insert($array);
@@ -294,31 +326,34 @@ class orden_produccionController extends Controller
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
 
-            if(is_numeric($mermaYankeeDry) >0 && is_numeric($produccionNeta)>0){
+            if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
                 $porcentMermaYankeeDry = ($mermaYankeeDry->merma / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma)) * 100;
-            }else{
+            } else {
                 $porcentMermaYankeeDry = 0;
             }
-            if (is_numeric($lavadoraTetrapack) >0 && is_numeric($totalMPTPACK)>0)
-            {
+            if ($lavadoraTetrapack->lav_tetrapack > 0 && $totalMPTPACK->total > 0) {
                 $porcentLavadoraTetrapack = ($lavadoraTetrapack->lav_tetrapack / $totalMPTPACK->total) * 100;
-            }  else{
+            } else {
                 $porcentLavadoraTetrapack = 0;
             }
-            if(is_numeric($produccionNeta)>0 && is_numeric($mermaYankeeDry)>0){
-                $factorFibral = 0;
-            }else{
+            if ($residuosPulper->residuo_pulper > 0 && $totalMP->mp_directa > 0) {
+
+                $porcentResiduosPulper = ($residuosPulper->residuo_pulper / $totalMP->mp_directa) * 100;
+            } else {
+                $porcentResiduosPulper = 0;
+            }
+            if ($produccionNeta->produccionNeta > 0 && $mermaYankeeDry->merma > 0 &&  $produccionNeta->produccionNeta) {
+                $factorFibral = (($totalMP->mp_directa - $lavadoraTetrapack->lav_tetrapack) / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma));
+            } else {
                 $factorFibral = 0;
             }
-            if(is_numeric($residuosPulper)>0){
-                    $porcentResiduosPulper = ($residuosPulper->residuo_pulper / $totalMP->mp_directa) * 100;
-            }else{
-                $porcentResiduosPulper =0;
-            }
-            /*$porcentResiduosPulper = ($residuosPulper->residuo_pulper / $totalMP->mp_directa) * 100;
+
+
+
+            /*$porcentMermaYankeeDry = ( $mermaYankeeDry->merma/($produccionNeta->produccionNeta+$mermaYankeeDry->merma) )*100;
+            $porcentResiduosPulper = ($residuosPulper->residuo_pulper / $totalMP->mp_directa) * 100;
             $porcentLavadoraTetrapack = ($lavadoraTetrapack->lav_tetrapack / $totalMPTPACK->total) * 100;
             $factorFibral = (($totalMP->mp_directa - $lavadoraTetrapack->lav_tetrapack) / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma));*/
-        
         } else {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
             $produccionBruta_ = $this->calcularProduccionBruta($idOP);
@@ -454,21 +489,21 @@ class orden_produccionController extends Controller
         try{
             DB::insert(...);
         }*/
-        $t_pulpeo = tiempo_pulpeo::select(DB::raw('SUM(cant_dia) as cantDia, SUM(cant_noche) as cantNoche, tiempoPulpeo'))
+
+        $t_pulpeo = tiempo_pulpeo::select(DB::raw('COALESCE(SUM(cant_dia),0) as cantDia, COALESCE(SUM(cant_noche),0) as cantNoche,  COALESCE(tiempoPulpeo,0) as tiempoPulpeo'))
             ->where('numOrden', $idOP)
             ->groupBy('tiempoPulpeo')
             ->get()->first();
 
 
-        $t_lavado = tiempo_lavado::select(DB::raw('SUM(cant_dia) as cantDia, SUM(cant_noche) as cantNoche, tiempoLavado'))
+        $t_lavado = tiempo_lavado::select(DB::raw('COALESCE(SUM(cant_dia),0)as cantDia, COALESCE(SUM(cant_noche),0) as cantNoche, COALESCE(tiempoLavado,0)'))
             ->where('numOrden', $idOP)
             ->groupBy('tiempoLavado')
             ->get()->first();
 
-        $t_muertos = tiempos_muertos::select(DB::raw('SUM(y1_dia) as cantDiaY1, SUM(y2_dia) as cantDiaY2, SUM(y1_noche) as cantNocheY1, SUM(y2_noche) as cantNocheY2'))
+        $t_muertos = tiempos_muertos::select(DB::raw('COALESCE(SUM(y1_dia),0) as cantDiaY1, COALESCE(SUM(y2_dia),0) as cantDiaY2, COALESCE(SUM(y1_noche),0) as cantNocheY1, COALESCE(SUM(y2_noche),0)as cantNocheY2'))
             ->where('numOrden', $idOP)
             ->get()->first();
-
 
         $hrsTrabajadas = orden_produccion::select('hrsTrabajadas')->where('numOrden', $idOP)->get()->first();
         $hrsTrabajadas = $hrsTrabajadas->hrsTrabajadas / 2;
