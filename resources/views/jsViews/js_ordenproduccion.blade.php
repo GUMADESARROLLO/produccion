@@ -44,7 +44,32 @@
     });
 
     $(document).on('click', '#quitRowdtBATH', function() {
+        var numOrden = $("#numOrden").val();
         var select_row = dtMPD.row(".selected").data();
+        $('#tbody-mp tr').each(function(i) {
+
+            if ($(this).hasClass('selected')) {
+                id = $(this).find($('#id-mp'));
+                var id_selected = id.val();
+                console.log(id_selected);
+                $.ajax({
+                    url: "../eliminar-mp",
+                    data: {
+                        id: id_selected,
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(resultado) {
+
+                    }
+                }).done(function(data) {
+                    alert('La materia prima ha sido eliminada');
+                });
+            } else {
+                console.log('Esta clase no esta seleccionada');
+            }
+        });
+
         indexData = select_row[0];
         dtMPD.row('.selected').remove().draw(false);
     });
@@ -74,26 +99,10 @@
                 indicador_1,
                 `<select class="mb-3 form-control " id="maquina-` + indicador_1 + `">` + option2 + `</select>`,
                 `<select class="mb-3 form-control" id="fibras-` + indicador_1 + `">` + option1 + `</select>`,
-                `<input class="input-dt mp-cant" type="text"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `" onpaste="return false">`,
+                `<input class="input-dt" type="text"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `" onpaste="return false">`,
             ]).draw(false);
         })
     });
-
-    function verfifyExistRegister() {
-        codigo = $('#numOrden').val();
-        $.ajax({
-            url: "../cargarmp-directa",
-            data: {
-                data: array,
-                codigo: codigo
-            },
-            type: 'post',
-            async: true,
-            success: function(resultado) {}
-        })
-    }
-
-    //$(document).ready(resaltar);
 
 
     function soloNumeros(caracter, e, numeroVal) {
@@ -117,64 +126,15 @@
         soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
     });
 
-    $('#dtMPD tbody').on('click', 'tr', function() {
-        var array = new Array();
-        var codigo = "";
-        $('#tbody-mp tr td').children().each(function(i) {
-            var item = $(this).val();
-            var maquina = "";
-            var fibra = "";
-            var cantidad = "";
-            if (item != "" && item != null) {
-                codigo = $('#numOrden').val();
-                maquina = $('#maquina-prev-' + i).val();
-                fibra = $('#fibras-prev-' + i).val();
-                cantidad = $('#cantidad-prev-' + i).val();
-                if (maquina != "" && fibra != "" && cantidad != "") {
-                    array[i] = {
-                        orden: codigo,
-                        maquina: maquina,
-                        fibra: fibra,
-                        cantidad: cantidad
-                    };
-                }
-            }
-        });
-        /*array2 = array.filter(function(dato) {
-            return dato != undefined
-        });*/
-
-        console.log(array);
-        $.ajax({
-            url: "../guardarmp-directa",
-            data: {
-                data: array,
-                codigo: codigo
-            },
-            type: 'post',
-            async: true,
-            success: function(resultado) {
-
-            }
-        }).done(function(data) {
-            $("#formdataord").submit();
-        });
-
-        // console.log(i + " " + array);
-    });
-
     $(document).on('click', '#btnguardar', function() {
         codigo = $('#numOrden').val();
-
-        /* var maquina_previous = $('#maquina-prev').val();
-         var fibras_previous = $('#fibras-prev').val();
-         var fibras_previous = $('#fibras-prev').val();*/
-
-
         var last_row = dtMPD.row(":last").data();
         var array = new Array();
+        var array2 = new Array();
+
         var i = 0;
         var horaInicio = $("#hora01").val();
+        var cant_prev = $('#cantidad-prev-' + i).val();
 
         if (typeof(last_row) === "undefined") {
             mensaje("Ingrese al menos un registro en la tabla de Materia Prima Directa", "error")
@@ -182,8 +142,6 @@
             if (horaInicio == '') {
                 mensaje("Ingrese una hora de inicio", "error");
             } else {
-
-
 
                 dtMPD.rows().eq(0).each(function(index) {
                     var row = dtMPD.row(index);
@@ -209,6 +167,38 @@
 
                     i++;
                 });
+
+                $('#tbody-mp tr td').children().each(function(i) {
+                    var item = $(this).val();
+                    var maquina = "";
+                    var fibra = "";
+                    var cantidad = "";
+                    console.log(i);
+                    if (item != "" && item != null) {
+                        codigo = $('#numOrden').val();
+                        maquina = $('#maquina-prev-' + i).val();
+                        fibra = $('#fibras-prev-' + i).val();
+                        cantidad = $('#cantidad-prev-' + i).val();
+                        if (maquina != "" && fibra != "" && cantidad != "") {
+                            array2[i] = {
+                                orden: codigo,
+                                maquina: maquina,
+                                fibra: fibra,
+                                cantidad: cantidad
+                            };
+                        }
+                    }
+                });
+
+                array3 = array2.filter(function(dato) {
+                    return dato.maquina != undefined
+                });
+
+                array3.forEach(element => {
+                    array.push(element);
+                });
+                console.log(array);
+                //array4 =  array.push(array3);
                 $.ajax({
                     url: "../guardarmp-directa",
                     data: {
