@@ -159,7 +159,8 @@
                                                             </thead>
                                                             <tbody id="tbody-mp">
                                                                 @foreach($mp_directa as $key => $mp)
-                                                                <tr>
+                                                                <tr id="{{ $key }}">
+                                                                    <input type="hidden" id="id-mp" value="{{$mp->id}}">
                                                                     <td></td>
                                                                     <td><select disabled class="mb-3 form-control " id="maquina-prev-{{ $key }}">
                                                                             <option  selected value="{{ $mp->idFibra }}">{{ $mp->nombre }}</option>
