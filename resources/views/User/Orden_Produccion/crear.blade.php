@@ -184,6 +184,51 @@
                                         </div>
                                         <!-- [ Tabla Materia Prima Directa ] end -->
                                     </div>
+                                    <div class="row mt-3">
+                                        <!-- [ Tabla Quimicos por Maquina ] start -->
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5>Quimicos por Maquina</h5>
+                                                </div>
+                                                <div class="card-block table-border-style">
+                                                    <div class="table-responsive">
+                                                        <table class="table" id="dtMPDQ" cellspacing="0" width="100%">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>MAQUINA</th>
+                                                                <th>QUIMICO</th>
+                                                                <th class="text-center">CANTIDAD</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="tbody-mp">
+                                                            @foreach($quimico_maquina as $key => $qm)
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td><select disabled class="mb-3 form-control " id="maquina-prev-{{ $key }}">
+                                                                            <option  selected value="{{ $qm->idQuimico }}">{{ $qm->nombre }}</option>
+                                                                        </select></td>
+                                                                    <td><select disabled class="mb-3 form-control" id="quimicos-prev-{{ $key }}">
+                                                                            <option  selected value="{{ $qm->idMaquina }}">{{ $qm->descripcion}}</option>
+                                                                        </select></td>
+                                                                    <td><input class="input-dt qm-cant" type="text" placeholder="" id="cantidad-prev-{{ $key }}" onpaste="return false" value="{{ $qm->cantidad}}"></td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <button class="btn btn-danger float-right" id="quitRowdtBATHQ">
+                                                        Quitar
+                                                    </button>
+                                                    <button class="btn btn-light add-row-dt-mp float-right" id="btn-agregarQ">
+                                                        Agregar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- [ Tabla Quimicos por Maquina ] end -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
