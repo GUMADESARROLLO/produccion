@@ -897,6 +897,66 @@ class orden_produccionController extends Controller
             return response()->json($response);
         }
     }
+
+    public function guardarQM(Request $request)
+    {
+        $i = 0;
+        $numOrden = intval($request->input('codigo'));
+
+        if ($request->isMethod('post')) {
+            $array = array();
+
+            foreach ($request->input('data') as $key) {
+                if ($key['maquina'] !== 'undefined' && $key['quimico'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                    $array[$i]['numOrden'] = $key['orden'];
+                    $array[$i]['idMaquina'] = $key['maquina'];
+                    $array[$i]['idQuimico'] = $key['quimico'];
+                    $array[$i]['cantidad'] = $key['cantidad'];
+                    $i++;
+                }
+            }
+            if (count($array) > 0) {
+                QuimicoMaquina::where('numOrden', $numOrden)->delete();
+                $response = QuimicoMaquina::insert($array);
+            } else {
+                return response()->json(false);
+            }
+
+            return response()->json($response);
+        }
+    }
+
+    public function getDataQuimico()
+    {
+        $array = array();
+
+        $quimicos = Quimicos::where('estado', 1)
+            ->get()->toArray();
+
+        $maquinas = maquinas::where('estado', 1)
+            ->get()->toArray();
+
+        $array = array(
+            'dataQuimicos' => $quimicos,
+            'dataMaquinas' => $maquinas
+        );
+
+        return response()->json($array);
+    }
+
+    public function cargarQuimico($idOrd)
+    {
+        $array = array();
+        $qm_directa_exist = "";
+        $maquinas_exist = "";
+        $quimicos_exist = "";
+        $qm_directa_ = QuimicoMaquina::where('numOrden', $idOrd)->get(); // obtengo la cantidad de materia prima
+        $maquinas = maquinas::where([['nombre', 'yankee'], ['estado', 1]])->get(); // obtengo la maquina seleccionada
+        $quimicos = Quimicos::where([['idQuimico', 1], ['estado', 1]])->get(); //obtengo el quimico seleccionado
+
+
+        return view('User.Orden_Produccion.crear', compact(['qm_directa_', 'maquinas', 'quimicos']));
+    }
 }
 
 class orden
