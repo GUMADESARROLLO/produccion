@@ -17,7 +17,7 @@
             "bfilter": false,
             "searching": false,
             "language": {
-                "emptyTable": `<p class="text-center">Agrega una fecha</p>`
+                "emptyTable": `<p class="text-center">Agrega una fibra</p>`
             },
             "columnDefs": [{
                 "targets": [0],
