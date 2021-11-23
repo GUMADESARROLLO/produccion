@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('metodosjs')
 @include('jsViews.js_ordenproduccion')
+@include('jsViews.js_ordenproduccionbk')
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -193,7 +194,7 @@
                                                 </div>
                                                 <div class="card-block table-border-style">
                                                     <div class="table-responsive">
-                                                        <table class="table" id="dtMPDQ" cellspacing="0" width="100%">
+                                                        <table class="table" id="dtQM" cellspacing="0" width="100%">
                                                             <thead>
                                                             <tr>
                                                                 <th>#</th>
@@ -202,17 +203,17 @@
                                                                 <th class="text-center">CANTIDAD</th>
                                                             </tr>
                                                             </thead>
-                                                            <tbody id="tbody-mp">
+                                                            <tbody id="tbody-qm">
                                                             @foreach($quimico_maquina as $key => $qm)
                                                                 <tr>
                                                                     <td></td>
-                                                                    <td><select disabled class="mb-3 form-control " id="maquina-prev-{{ $key }}">
+                                                                    <td><select disabled class="mb-3 form-control " id="maquinaq-prev-{{ $key }}">
                                                                             <option  selected value="{{ $qm->idQuimico }}">{{ $qm->nombre }}</option>
                                                                         </select></td>
                                                                     <td><select disabled class="mb-3 form-control" id="quimicos-prev-{{ $key }}">
                                                                             <option  selected value="{{ $qm->idMaquina }}">{{ $qm->descripcion}}</option>
                                                                         </select></td>
-                                                                    <td><input class="input-dt qm-cant" type="text" placeholder="" id="cantidad-prev-{{ $key }}" onpaste="return false" value="{{ $qm->cantidad}}"></td>
+                                                                    <td><input class="input-dt qm-cant" type="text" placeholder="" id="cantidadq-prev-{{ $key }}" onpaste="return false" value="{{ $qm->cantidad}}"></td>
                                                                 </tr>
                                                             @endforeach
                                                             </tbody>
@@ -221,7 +222,7 @@
                                                     <button class="btn btn-danger float-right" id="quitRowdtBATHQ">
                                                         Quitar
                                                     </button>
-                                                    <button class="btn btn-light add-row-dt-mp float-right" id="btn-agregarQ">
+                                                    <button class="btn btn-light add-row-dt-qm float-right" id="btn-agregarQ">
                                                         Agregar
                                                     </button>
                                                 </div>

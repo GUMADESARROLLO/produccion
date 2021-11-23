@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    var dtMPD;
+    var dtQM;
     var indicador_1 = 0;
 
     $(document).ready(function() {
@@ -9,7 +9,7 @@
             });
         });
 
-        dtMPD = $('#dtMPD').DataTable({
+        dtQM = $('#dtQM').DataTable({
             "destroy": true,
             "ordering": false,
             "info": false,
@@ -17,7 +17,7 @@
             "bfilter": false,
             "searching": false,
             "language": {
-                "emptyTable": `<p class="text-center">Agrega una fibra</p>`
+                "emptyTable": `<p class="text-center">Agrega un Quimico</p>`
             },
             "columnDefs": [{
                 "targets": [0],
@@ -29,32 +29,32 @@
         inicializaControlFecha();
     });
 
-    $('#dtMPD tbody').on('click', 'tr', function() {
+    $('#dtQM tbody').on('click', 'tr', function() {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
         } else {
-            dtMPD.$('tr.selected').removeClass('selected');
+            dtQM.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
-        $('#tbody-mp tr td').children().each(function(i) {
+        $('#tbody-qm tr td').children().each(function(i) {
             $(this).on('keypress', function(e) {
                 soloNumeros(e.keyCode, e, $(this).val());
             });
         });
     });
 
-    $(document).on('click', '#quitRowdtBATH', function() {
-        var select_row = dtMPD.row(".selected").data();
+    $(document).on('click', '#quitRowdtBATHQ', function() {
+        var select_row = dtQM.row(".selected").data();
         indexData = select_row[0];
-        dtMPD.row('.selected').remove().draw(false);
+        dtQM.row('.selected').remove().draw(false);
     });
 
-    $(document).on('click', '.add-row-dt-mp', function() {
+    $(document).on('click', '.add-row-dt-qm', function() {
         var numOrden = $("#numOrden").val();
         var option1 = '';
         var option2 = '';
 
-        var last_row = dtMPD.row(":last").data();
+        var last_row = dtQM.row(":last").data();
 
         if (typeof(last_row) === "undefined") {
             indicador_1 = 1;
@@ -62,19 +62,19 @@
             indicador_1 = parseInt(last_row[0]) + 1
         }
 
-        $.getJSON("../data-mp", function(json) {
-            $.each(json['dataFibras'], function(i, item) {
-                option1 += `<option value='` + item['idFibra'] + `'>` + item['descripcion'] + `</option>`
+        $.getJSON("../data-qm", function(json) {
+            $.each(json['dataQuimicos'], function(i, item) {
+                option1 += `<option value='` + item['idQuimico'] + `'>` + item['descripcion'] + `</option>`
             })
 
             $.each(json['dataMaquinas'], function(i, item) {
                 option2 += `<option value='` + item['idMaquina'] + `'>` + item['nombre'] + `</option>`
             })
-            dtMPD.row.add([
+            dtQM.row.add([
                 indicador_1,
-                `<select class="mb-3 form-control " id="maquina-` + indicador_1 + `">` + option2 + `</select>`,
-                `<select class="mb-3 form-control" id="fibras-` + indicador_1 + `">` + option1 + `</select>`,
-                `<input class="input-dt mp-cant" type="text"  placeholder="Cantidad" id="cantidad-` + indicador_1 + `" onpaste="return false">`,
+                `<select class="mb-3 form-control " id="maquinaq-` + indicador_1 + `">` + option2 + `</select>`,
+                `<select class="mb-3 form-control" id="quimicos-` + indicador_1 + `">` + option1 + `</select>`,
+                `<input class="input-dt mp-cant" type="text"  placeholder="Cantidad" id="cantidadq-` + indicador_1 + `" onpaste="return false">`,
             ]).draw(false);
         })
     });
@@ -82,7 +82,7 @@
     function verfifyExistRegister() {
         codigo = $('#numOrden').val();
         $.ajax({
-            url: "../cargarmp-directa",
+            url: "../cargarqm-directa",
             data: {
                 data: array,
                 codigo: codigo
@@ -113,28 +113,28 @@
         }
     }
 
-    $('#hrsTrabajadas').on('keypress', function(e) {
+    /*$('#hrsTrabajadas').on('keypress', function(e) {
         soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
-    });
+    });*/
 
-    $('#dtMPD tbody').on('click', 'tr', function() {
+    $('#dtQM tbody').on('click', 'tr', function() {
         var array = new Array();
         var codigo = "";
-        $('#tbody-mp tr td').children().each(function(i) {
+        $('#tbody-qm tr td').children().each(function(i) {
             var item = $(this).val();
             var maquina = "";
-            var fibra = "";
+            var quimico = "";
             var cantidad = "";
             if (item != "" && item != null) {
                 codigo = $('#numOrden').val();
-                maquina = $('#maquina-prev-' + i).val();
-                fibra = $('#fibras-prev-' + i).val();
-                cantidad = $('#cantidad-prev-' + i).val();
-                if (maquina != "" && fibra != "" && cantidad != "") {
+                maquina = $('#maquinaq-prev-' + i).val();
+                quimico = $('#quimicos-prev-' + i).val();
+                cantidad = $('#cantidadq-prev-' + i).val();
+                if (maquina != "" && quimico != "" && cantidad != "") {
                     array[i] = {
                         orden: codigo,
                         maquina: maquina,
-                        fibra: fibra,
+                        quimico: quimico,
                         cantidad: cantidad
                     };
                 }
@@ -146,7 +146,7 @@
 
         console.log(array);
         $.ajax({
-            url: "../guardarmp-directa",
+            url: "../guardarqm-directa",
             data: {
                 data: array,
                 codigo: codigo
@@ -166,18 +166,18 @@
     $(document).on('click', '#btnguardar', function() {
         codigo = $('#numOrden').val();
 
-        /* var maquina_previous = $('#maquina-prev').val();
-         var fibras_previous = $('#fibras-prev').val();
-         var fibras_previous = $('#fibras-prev').val();*/
+        /* var maquina_previous = $('#maquinaq-prev').val();
+         var fibras_previous = $('#quimicos-prev').val();
+         var fibras_previous = $('#quimicos-prev').val();*/
 
 
-        var last_row = dtMPD.row(":last").data();
+        var last_row = dtQM.row(":last").data();
         var array = new Array();
         var i = 0;
         var horaInicio = $("#hora01").val();
 
         if (typeof(last_row) === "undefined") {
-            mensaje("Ingrese al menos un registro en la tabla de Materia Prima Directa", "error")
+            mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error")
         } else {
             if (horaInicio == '') {
                 mensaje("Ingrese una hora de inicio", "error");
@@ -185,32 +185,32 @@
 
 
 
-                dtMPD.rows().eq(0).each(function(index) {
-                    var row = dtMPD.row(index);
+                dtQM.rows().eq(0).each(function(index) {
+                    var row = dtQM.row(index);
                     var data = row.data();
                     var pos = data[0];
 
-                    var maquina = ($('#maquina-' + pos + ' option:selected').val() == "") ? 0 : $('#maquina-' + pos + ' option:selected').val();
-                    var fibra = ($('#fibras-' + pos + ' option:selected').val() == "") ? 0 : $('#fibras-' + pos + ' option:selected').val();
-                    var cantidad = ($('#cantidad-' + pos).val() == "") ? 0 : $('#cantidad-' + pos).val();
+                    var maquina = ($('#maquinaq-' + pos + ' option:selected').val() == "") ? 0 : $('#maquinaq-' + pos + ' option:selected').val();
+                    var quimico = ($('#quimicos-' + pos + ' option:selected').val() == "") ? 0 : $('#quimicos-' + pos + ' option:selected').val();
+                    var cantidad = ($('#cantidadq-' + pos).val() == "") ? 0 : $('#cantidadq-' + pos).val();
 
                     if (parseFloat(cantidad) > 0) {
                         parseFloat(cantidad)
                     } else {
-                        mensaje("la cantidad de materia prima debe ser mayor a 0");
+                        mensaje("la cantidad de quimico debe ser mayor a 0");
                         return;
                     }
                     array[i] = {
                         orden: codigo,
                         maquina: maquina,
-                        fibra: fibra,
+                        quimico: quimico,
                         cantidad: cantidad
                     };
 
                     i++;
                 });
                 $.ajax({
-                    url: "../guardarmp-directa",
+                    url: "../guardarqm-directa",
                     data: {
                         data: array,
                         codigo: codigo
