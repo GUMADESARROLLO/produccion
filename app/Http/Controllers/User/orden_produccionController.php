@@ -70,21 +70,30 @@ class orden_produccionController extends Controller
 
     public function crear()
     {
-        $idOrd      = orden_produccion::latest('numOrden')->first();
-        $fibras     = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
-        $maquinas   = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
+        $idOrd = orden_produccion::latest('numOrden')->first();
+        $fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
+        $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
         //$mp_directa = mp_directa::where('numOrden', intval($idOrd->numOrden + 1))->get();
-        $productos  = productos::where('estado', 1)->get()->toArray();
-        $usuarios   = usuario::usuarioByRole();
+        $productos = productos::where('estado', 1)->get()->toArray();
+        $usuarios = usuario::usuarioByRole();
 
-        $mp_directa = mp_directa::select('mp_directa.*', 'fibras.descripcion', 'maquinas.nombre', 'fibras.idFibra', 'maquinas.idMaquina','mp_directa.cantidad')
-        ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
-        ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
-        ->where('mp_directa.numOrden', intval($idOrd->numOrden + 1))
-        ->get();
+        $mp_directa = mp_directa::select('mp_directa.*', 'fibras.descripcion',
+            'maquinas.nombre', 'fibras.idFibra', 'maquinas.idMaquina')
+            ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
+            ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('mp_directa.numOrden', intval($idOrd->numOrden + 1))
+            ->get();
 
+        $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
+        $quimico_maquina = QuimicoMaquina::select('quimico_maquina.*', 'quimicos.descripcion',
+            'maquinas.nombre', 'quimicos.idQuimico', 'maquinas.idMaquina')
+            ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
+            ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('quimico_maquina.numOrden', intval($idOrd->numOrden + 1))
+            ->get();
 
-        return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios', 'idOrd', 'fibras', 'maquinas', 'mp_directa']));
+        return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios',
+            'idOrd', 'fibras', 'maquinas', 'mp_directa', 'quimicos', 'quimico_maquina']));
     }
 
     public function cargarMateriaPrimadirecta($idOrd)
