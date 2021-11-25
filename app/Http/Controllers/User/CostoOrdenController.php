@@ -21,10 +21,10 @@ class CostoOrdenController extends Controller
         //return view('User.CostoOrden.index', compact('costoOrden'));
         //$orden_costo = DetalleCostoSubtotal::all()->sum('subtotal');
         $array = array();
-        $i=0;
+        $i = 0;
         $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'desc')->get();
 
-        if ( count($ord_produccion)>0 ) {
+        if (count($ord_produccion) > 0) {
             foreach ($ord_produccion as $key) {
                 $array[$i]['idOrden'] = $key['idOrden'];
                 $array[$i]['numOrden'] = $key['numOrden'];
@@ -43,7 +43,7 @@ class CostoOrdenController extends Controller
     public function detalleCostoOrden($idOP)
     {
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
-        $ordenes = orden_produccion::where('estado', 1)->orderBy('idOrden', 'asc')->get();
+        $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         //dd($costoOrden);
         return view('User.CostoOrden.detalle', compact(['costoOrden', 'ordenes']));
     }
@@ -71,22 +71,21 @@ class CostoOrdenController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        if(CostoOrden::where('numOrden', '=', $request['num_Orden'])
-                        ->where('costo_id', '=', $request['costo_orden'])->first())
-        {
+        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])
+            ->where('costo_id', '=', $request['costo_orden'])->first()
+        ) {
             return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
-        }
-        else{
+        } else {
 
-        $costoOrden = new costoOrden();
-        $costoOrden->numOrden = $request->num_Orden;
-        $costoOrden->costo_id = $request->costo_orden;
-        $costoOrden->cantidad = $request->cantidad;
-        $costoOrden->costo_unitario = $request->costo_unitario;
-        $costoOrden->estado = 1;
-        $costoOrden->save();
+            $costoOrden = new costoOrden();
+            $costoOrden->numOrden = $request->num_Orden;
+            $costoOrden->costo_id = $request->costo_orden;
+            $costoOrden->cantidad = $request->cantidad;
+            $costoOrden->costo_unitario = $request->costo_unitario;
+            $costoOrden->estado = 1;
+            $costoOrden->save();
 
-        /*$array = [
+            /*$array = [
         'numOrden' => $request->num_Orden,
         'costo_id' => $request->costo_orden,
         'cantidad' => $request->cantidad,
@@ -95,7 +94,7 @@ class CostoOrdenController extends Controller
     ];
         CostoOrden::insertOrIgnore($array);*/
 
-        return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+            return redirect()->back()->with('message-success', 'Se guardo con exito :)');
         }
     }
 
@@ -137,28 +136,42 @@ class CostoOrdenController extends Controller
 
     public function guardarHrasProd(Request $request)
     {
-       
+
         $numOrden = intval($request->input('codigo'));
 
-       /* $validator = Validator::make($request->all(), [
-            'horaJY1' => 'required',
-            'horaJY2' => 'required',
-            'horaLY1' => 'required',
-            'horaLY2' => 'required',
+        echo $numOrden;
+        orden_produccion::where('numOrden', $numOrden)
+            ->update([
+                'horaJY1'    => intval($request->input('horaJY1')),
+                'horaJY2'    => intval($request->input('horaJY2')),
+                'horaLY1'    => intval($request->input('horaLY1')),
+                'horaLY2'    => intval($request->input('horaLY2'))
+            ]);
+
+        return redirect()->back()->with('message-success', 'Se agregaron las horas producidas :)');
+    }
+
+    public function guardarComment(Request $request)
+    {
+        $messages = array(
+            'required' => 'El :attribute es un campo requerido',
+        );
+
+        $validator = Validator::make($request->all(), [
+            'Orden' => 'required',
+            'comentario' => 'required|max:200',
         ], $messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
-        }*/
-        echo $numOrden ;
-        orden_produccion::where('numOrden', $numOrden)
+        }
+
+        orden_produccion::where('numOrden', $request->Orden)
             ->update([
-                'horaJY1'    =>intval($request->input('horaJY1')),
-                'horaJY2'    =>intval($request->input('horaJY2')),
-                'horaLY1'    =>intval($request->input('horaLY1')),
-                'horaLY2'    =>intval($request->input('horaLY2'))
+                'numOrden'      => $request->Orden,
+                'comentario'    => $request->comentario
             ]);
-         
-        return redirect()->back()->with('message-success', 'Se agregaron las horas producidas :)');
+
+        return redirect()->back()->with('message-success', 'Comnetario agregado exitosamente)');
     }
 }

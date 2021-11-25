@@ -110,8 +110,8 @@
                                                         <td class="dt-center">{{ $key+1 }}</td>
                                                         <td class="dt-center">{{ $d->numOrden }}</td>
                                                         <td class="dt-center">{{ strtoupper($d->nombre) }}</td>
-                                                        <td class="dt-center">{{ $d->prod_real }}</td>
-                                                        <td class="dt-center">{{ $d->costo_total }}</td>
+                                                        <td class="dt-center">{{ number_format($d->prod_real,2 )}}</td>
+                                                        <td class="dt-center">{{ number_format($d->costo_total,2)}}</td>
                                                         <td class="dt-center">
                                                             <a href="home/detalle/{{ $d->numOrden }}" target="_blank"><i class="feather icon-eye text-c  f-30 m-r-10"></i></a>
                                                             <a href="detalleOrdenPDF/{{$d->numOrden}}" target="_blank"><i class="far fa-file-pdf text-c-red f-30 m-r-10"></i></a>

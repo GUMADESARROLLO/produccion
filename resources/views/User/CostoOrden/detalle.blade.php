@@ -148,6 +148,41 @@
                             </div>
                             <!-- [ Tabla Categorias ] end -->
                         </div>
+                        <div class="row">
+                            <!-- [ Tabla Categorias ] start -->
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>OBSERVACIONES</h5>
+                                    </div>
+                                    <div class="card-block table-border-style">
+                                        <form method="post" action="{{ url('costo-orden/add-comment')}}">
+                                            {{ csrf_field() }}
+                                            @foreach ($ordenes as $key => $opc)
+                                            <input class="input-dt text-left" type="hidden" name="Orden" id="Orden" value="{{ $op->numOrden }}">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @if(is_null($opc->comentario))
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4"></textarea>
+                                                    </div>
+                                                    @else
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4">{{ $opc->comentario }}</textarea>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                <button class="btn btn-primary add-row-dt-hp float-right" id="btnguardar-comment" type="submit">
+                                                    Guardar
+                                                </button>
+                                            </div>
+                                            @endforeach
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ Tabla Categorias ] end -->
+                        </div>
                     </div>
                 </div>
             </div>
