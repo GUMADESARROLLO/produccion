@@ -64,7 +64,7 @@
                                                     <label for="merma-yankee-dry" class="col-sm-6 col-form-label">Merma
                                                         Yankee Dry (kg):</label>
                                                     <div class="col-sm-6">
-                                                        <h6 class="mt-2">{{ number_format($orden->mermaYankeeDry,2) }} <span class="float-right">{{ $orden->porcentMermaYankeeDry }} %</span>
+                                                        <h6 class="mt-2">{{ number_format($orden->mermaYankeeDry,2) }} kg<span class="float-right">{{ $orden->porcentMermaYankeeDry }} %</span>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -74,7 +74,7 @@
                                                     <label for="" class="col-sm-6 col-form-label">Horas
                                                         Trabajadas</label>
                                                     <div class="col-sm-6">
-                                                        <h6 class="mt-2 text-left">{{ $orden->hrsTrabajadas }}</h6>
+                                                        <h6 class="mt-2 text-left">{{ $orden->hrsTrabajadas }} hrs</h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                                     <label for="residuos-pulper" class="col-sm-6 col-form-label">Residuos
                                                         del Pulper (kg):</label>
                                                     <div class="col-sm-6">
-                                                        <h6 class="mt-2">{{ number_format($orden->residuosPulper,2) }} <span class="float-right">{{ $orden->porcentResiduosPulper }} %</span>
+                                                        <h6 class="mt-2">{{ number_format($orden->residuosPulper,2) }} kg<span class="float-right">{{ $orden->porcentResiduosPulper }} %</span>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -124,7 +124,7 @@
                                                     <label for="produccionNeta" class="col-sm-6 col-form-label">PROD.
                                                         REAL (kg):</label>
                                                     <div class="col-sm-6">
-                                                        <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($orden->produccionNeta,2) }}">
+                                                        <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($orden->produccionNeta,2) }} kg">
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,7 +133,7 @@
                                                     <label for="produccionReal" class="col-sm-6 col-form-label">PROD.
                                                         TOTAL (kg):</label>
                                                     <div class="col-sm-6">
-                                                        <input type="text" readonly class="form-control-plaintext" id="produccionReal" value="{{ number_format($orden->produccionReal,2) }}">
+                                                        <input type="text" readonly class="form-control-plaintext" id="produccionReal" value="{{ number_format($orden->produccionReal,2) }} kg">
                                                     </div>
                                                 </div>
                                             </div>
@@ -142,7 +142,7 @@
                                                     <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora
                                                         de Tetrapack (kg):</label>
                                                     <div class="col-sm-6">
-                                                        <h6 class="mt-2">{{ number_format($orden->lavadoraTetrapack,2) }} <span class="float-right">{{ $orden->porcentLavadoraTetrapack }} %</span>
+                                                        <h6 class="mt-2">{{ number_format($orden->lavadoraTetrapack,2) }} kg <span class="float-right">{{ $orden->porcentLavadoraTetrapack }} %</span>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -177,7 +177,7 @@
                                                     <tr class="unread">
                                                         <td class="dt-center">{{ $mp->nombre }}</td>
                                                         <td class="dt-center">{{ $mp->descripcion }}</td>
-                                                        <td class="dt-center">{{ number_format($mp->cantidad,2) }}</td>
+                                                        <td class="dt-center">{{ number_format($mp->cantidad,2) }} kg</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -209,9 +209,9 @@
                                                     @foreach ($mo_directa as $key)
                                                     <tr class="unread">
                                                         <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                        <td class="dt-center">{{ $key['dia'] }}</td>
-                                                        <td class="dt-center">{{ $key['noche'] }}</td>
-                                                        <td class="dt-center">{{ number_format($key['total'],2) }}</td>
+                                                        <td class="dt-center">{{ $key['dia'] }} hrs</td>
+                                                        <td class="dt-center">{{ $key['noche'] }} hrs</td>
+                                                        <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -271,7 +271,7 @@
                                                     @foreach ($mo_directa as $key)
                                                     <tr class="unread">
                                                         <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                        <td class="dt-center">{{ number_format($key['total'],2) }}</td>
+                                                        <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -292,7 +292,7 @@
                                                 <h5 class="mb-0">Electricidad Kwh</h5>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ $orden->electricidad['total'] }}</h3>
+                                                <h3>{{ $orden->electricidad['total'] }} Kwh</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +303,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-3">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['inicial'],2) }}
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['inicial'],2) }} Kwh
                                                 </h6>
                                             </div>
                                             <div class="col-3">
@@ -311,7 +311,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-3">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['final'],2) }}
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['final'],2) }} Kwh
                                                 </h6>
                                             </div>
                                         </div>
@@ -326,10 +326,10 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h5 class="mb-0">Consumo Agua</h5>
+                                                <h5 class="mb-0">Consumo Agua m3</h5>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ $orden->consumoAgua['total']}}</h3>
+                                                <h3>{{ $orden->consumoAgua['total']}} m3</h3>
 
                                             </div>
                                         </div>
@@ -341,7 +341,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-3">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['inicial'],2) }}
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['inicial'],2) }} m3
                                                 </h6>
                                             </div>
                                             <div class="col-3">
@@ -349,7 +349,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-3">
-                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['final'],2) }}
+                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['final'],2) }} m3
                                                 </h6>
                                             </div>
                                         </div>
