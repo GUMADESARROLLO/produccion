@@ -18,10 +18,10 @@ use App\Models\Quimicos;
 use App\Models\tiempo_lavado;
 use App\Models\tiempo_pulpeo;
 use App\Models\tiempos_muertos;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
 
 class orden_produccionController extends Controller
 {
@@ -295,7 +295,7 @@ class orden_produccionController extends Controller
         $mo_directa = $this->calcularManoObraDirecta($idOP);
 
         $ord_produccion = orden_produccion::where('numOrden', $idOP)->get()->first();
-        $fibra = productos::select('nombre')->where('idProducto', $ord_produccion->producto)->get()->first();
+        $producto = productos::select('nombre')->where('idProducto', $ord_produccion->producto)->get()->first();
         $usuario = usuario::select('nombres', 'apellidos')->where('id', $ord_produccion->idUsuario)->get()->first();
         $idTetra = fibras::select('idFibra')->where('descripcion', 'like', '%Tetrapack%')->get()->first();
 
@@ -312,6 +312,12 @@ class orden_produccionController extends Controller
             ->where('idFibra', $idTetra->idFibra)
             ->where('numOrden', $idOP)
             ->get()->first();
+
+        $quimico_maquina = QuimicoMaquina::select('quimico_maquina.*', 'quimicos.descripcion', 'maquinas.nombre')
+            ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.idQuimico')
+            ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('quimico_maquina.numOrden', $idOP)
+            ->get();
 
         if (count($mp_directa) > 0 && $totalMPTPACK->total != '') {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
@@ -375,7 +381,7 @@ class orden_produccionController extends Controller
         $orden = new orden(
             $ord_produccion->idOrden,
             $ord_produccion->numOrden,
-            $fibra->nombre,
+            $producto->nombre,
             $usuario->nombres . ' ' . $usuario->apellidos,
             $ord_produccion->hrsTrabajadas,
             date('d/m/Y', strtotime($ord_produccion->fechaInicio)),
@@ -396,7 +402,7 @@ class orden_produccionController extends Controller
 
         );
 
-        return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa']));
+        return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina']));
     }
 
     public function crear()
@@ -408,23 +414,35 @@ class orden_produccionController extends Controller
         $productos = productos::where('estado', 1)->get()->toArray();
         $usuarios = usuario::usuarioByRole();
 
-        $mp_directa = mp_directa::select('mp_directa.*', 'fibras.descripcion',
-            'maquinas.nombre', 'fibras.idFibra', 'maquinas.idMaquina')
+        $mp_directa = mp_directa::select(
+            'mp_directa.*',
+            'fibras.descripcion',
+            'maquinas.nombre',
+            'fibras.idFibra',
+            'maquinas.idMaquina'
+        )
             ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
             ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
             ->where('mp_directa.numOrden', intval($idOrd->numOrden + 1))
             ->get();
 
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
-        $quimico_maquina = QuimicoMaquina::select('quimico_maquina.*', 'quimicos.descripcion',
-            'maquinas.nombre', 'quimicos.idQuimico', 'maquinas.idMaquina')
+        $quimico_maquina = QuimicoMaquina::select(
+            'quimico_maquina.*',
+            'quimicos.descripcion',
+            'maquinas.nombre',
+            'quimicos.idQuimico',
+            'maquinas.idMaquina'
+        )
             ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
             ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
             ->where('quimico_maquina.numOrden', intval($idOrd->numOrden + 1))
             ->get();
 
-        return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios',
-            'idOrd', 'fibras', 'maquinas', 'mp_directa', 'quimicos', 'quimico_maquina']));
+        return view('User.Orden_Produccion.crear', compact([
+            'productos', 'usuarios',
+            'idOrd', 'fibras', 'maquinas', 'mp_directa', 'quimicos', 'quimico_maquina'
+        ]));
     }
 
     public function guardar(Request $request)
@@ -485,10 +503,29 @@ class orden_produccionController extends Controller
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
         $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
         $mp_directa = mp_directa::where('numOrden', $idOP)->get();
-        $quimico_maquina = QuimicoMaquina::where('numOrden', $idOP)->get();
+        //$quimico_maquina = QuimicoMaquina::where('numOrden', $idOP)->get();
+        $quimico_maquina = QuimicoMaquina::select(
+            'quimico_maquina.*',
+            'quimicos.descripcion',
+            'maquinas.nombre',
+            'quimicos.idQuimico',
+            'maquinas.idMaquina'
+        )
+            ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
+            ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('quimico_maquina.numOrden', $idOP)
+            ->get();
 
-        return view('User.Orden_Produccion.editar', compact('orden', 'mp_directa',
-            'usuarios', 'fibras', 'productos', 'maquinas', 'quimicos', 'quimico_maquina'));
+        return view('User.Orden_Produccion.editar', compact(
+            'orden',
+            'mp_directa',
+            'usuarios',
+            'fibras',
+            'productos',
+            'maquinas',
+            'quimicos',
+            'quimico_maquina'
+        ));
     }
 
     public function actualizar(Request $request)
@@ -956,6 +993,15 @@ class orden_produccionController extends Controller
 
 
         return view('User.Orden_Produccion.crear', compact(['qm_directa_', 'maquinas', 'quimicos']));
+    }
+
+    public function eliminarQuimico(Request $request)
+    {
+        $id = intval($request->input('id'));
+
+        $response = QuimicoMaquina::where('id', $id)->delete();
+
+        return response()->json($response);
     }
 }
 
