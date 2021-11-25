@@ -143,6 +143,7 @@ Route::post('costo-orden/guardar', 'User\CostoOrdenController@guardarCostoOrden'
 Route::get('costo-orden/detalle/{numOrden}', 'User\CostoOrdenController@detalleCostoOrden')->name('costo-orden/detalle/{numOrden}');
 Route::get('costo-orden/detalle/editar/{id}', 'User\CostoOrdenController@editarCostoOrden')->name('costo-orden/detalle/editar/{id}');
 Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCostoOrden')->name('costo-orden/actualizar');
+Route::post('costo-orden/guardarhrs-producidas', 'User\CostoOrdenController@guardarHrasProd')->name('costo-orden/guardarhrs-producidas');
 
 
 //RUTAS REPORTES

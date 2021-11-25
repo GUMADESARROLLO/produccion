@@ -40,6 +40,7 @@ class CostoOrdenController extends Controller
 
     public function detalleCostoOrden($idOP)
     {
+
         /*$costoOrden = CostoOrden::join('costo', 'CostoOrden.costo_id', 'costo.id')
                             ->select('CostoOrden.numOrden', 'CostoOrden.costo_id', 'costo.descripcion',
                                     'CostoOrden.cantidad', 'CostoOrden.costo_unitario')
@@ -52,8 +53,11 @@ class CostoOrdenController extends Controller
                                     inner join costo on costo_orden.costo_id = costo.id
                                     where costo_orden.numOrden = :orden
                                     order by costo_id asc'), array('orden' => $idOP));
+
+        $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
+        $ordenes = orden_produccion::where('estado', 1)->orderBy('idOrden', 'asc')->get();
         //dd($costoOrden);
-        return view('User.CostoOrden.detalle', compact(['costoOrden']));
+        return view('User.CostoOrden.detalle', compact(['costoOrden', 'ordenes']));
     }
 
     public function nuevoCostoOrden()
@@ -146,5 +150,32 @@ class CostoOrdenController extends Controller
         //return redirect()->intended();
         //return redirect::to('costo-orden/detalle/{numOrden}');
         return redirect::to('costo-orden/detalle/' . $orden);
+    }
+
+    public function guardarHrasProd(Request $request)
+    {
+       
+        $numOrden = intval($request->input('codigo'));
+
+       /* $validator = Validator::make($request->all(), [
+            'horaJY1' => 'required',
+            'horaJY2' => 'required',
+            'horaLY1' => 'required',
+            'horaLY2' => 'required',
+        ], $messages);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }*/
+        echo $numOrden ;
+        orden_produccion::where('numOrden', $numOrden)
+            ->update([
+                'horaJY1'    =>intval($request->input('horaJY1')),
+                'horaJY2'    =>intval($request->input('horaJY2')),
+                'horaLY1'    =>intval($request->input('horaLY1')),
+                'horaLY2'    =>intval($request->input('horaLY2'))
+            ]);
+         
+        return redirect()->back()->with('message-success', 'Se agregaron las horas producidas :)');
     }
 }
