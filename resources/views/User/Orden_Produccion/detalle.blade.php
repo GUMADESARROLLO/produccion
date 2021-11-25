@@ -59,26 +59,27 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group row">
-                                                    <label for="merma-yankee-dry" class="col-sm-6 col-form-label">Merma
-                                                        Yankee Dry (kg):</label>
-                                                    <div class="col-sm-6">
-                                                        <h6 class="mt-2">{{ number_format($orden->mermaYankeeDry,2) }} kg<span class="float-right">{{ $orden->porcentMermaYankeeDry }} %</span>
-                                                        </h6>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="merma-yankee-dry" class="col-sm-6 col-form-label">Merma
+                                                            Yankee Dry (kg):</label>
+                                                        <div class="col-sm-6">
+                                                            <h6 class="mt-2">{{ number_format($orden->mermaYankeeDry,2) }} kg<span class="float-right">{{ $orden->porcentMermaYankeeDry }} %</span>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 ">
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-6 col-form-label">Horas
+                                                            Trabajadas</label>
+                                                        <div class="col-sm-6">
+                                                            <h6 class="mt-2 text-left">{{ $orden->hrsTrabajadas }} hrs</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 ">
-                                                <div class="form-group row">
-                                                    <label for="" class="col-sm-6 col-form-label">Horas
-                                                        Trabajadas</label>
-                                                    <div class="col-sm-6">
-                                                        <h6 class="mt-2 text-left">{{ $orden->hrsTrabajadas }} hrs</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group row">
@@ -98,14 +99,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group row">
-                                                    <label for="residuos-pulper" class="col-sm-6 col-form-label">Residuos
-                                                        del Pulper (kg):</label>
-                                                    <div class="col-sm-6">
-                                                        <h6 class="mt-2">{{ number_format($orden->residuosPulper,2) }} kg <span class="float-right">{{ $orden->porcentResiduosPulper }} %</span>
-                                                        </h6>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="residuos-pulper" class="col-sm-6 col-form-label">Residuos
+                                                            del Pulper (kg):</label>
+                                                        <div class="col-sm-6">
+                                                            <h6 class="mt-2">{{ number_format($orden->residuosPulper,2) }} kg <span class="float-right">{{ $orden->porcentResiduosPulper }} %</span>
+                                                            </h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -118,6 +119,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
@@ -319,8 +321,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- [ Consumo Electricidad ] end -->
-
+                            </div>
+                            <!-- [ Consumo Electricidad ] end -->
                             <!-- [ Consumo Agua ] start -->
                             <div class="col-xl-6 col-md-6">
                                 <div class="card card-social">
@@ -331,8 +333,6 @@
                                             </div>
                                             <div class="col text-right">
                                                 <h3>{{ $orden->consumoAgua['total']}} M3</h3>
-
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -357,8 +357,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- [ Consumo Agua ] end -->
+
                             </div>
+                            <!-- [ Consumo Agua ] end -->
                         </div>
                     </div>
                 </div>

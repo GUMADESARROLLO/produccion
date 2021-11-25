@@ -30,18 +30,18 @@
                                     <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo
                                         Costo</a>
                                 </div>
-                                <ul class="breadcrumb">
+                            <!--<ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                     </li>
-                                    <!--<li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
                                     <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de ordenes</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:"> Lista de Costos por Orden</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-2">
-                                <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo
+                                <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm float-right">Nuevo
                                     Costo</a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
