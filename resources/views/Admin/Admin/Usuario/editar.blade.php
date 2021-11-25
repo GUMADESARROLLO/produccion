@@ -71,7 +71,7 @@
                                                     <option value="{{ $rol['id'] }}">{{ $rol['descripcion'] }}</option>
                                                     @endforeach
                                                 </select>
-                                                <small id="fechaNacHelp" class="form-text text-muted">Seleccione su rol</small>
+                                                <small id="rolHelp" class="form-text text-muted">Escriba su nuevo rol</small>
                                             </div>
                                             <button type="submit" class="btn btn-primary">Enviar</button>
                                         </form>

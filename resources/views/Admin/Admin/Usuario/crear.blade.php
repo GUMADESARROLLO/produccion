@@ -62,11 +62,6 @@
                                                 <small id="passwordHelp" class="form-text text-muted">Escriba su contraseña</small>
                                             </div>
                                             <div class="form-group">
-                                                <label for="fechaNac">Fecha nacimiento</label>
-                                                <input type="date" class="input-fecha form-control" name="fechaNac" id="fechaNac">
-                                                <small id="fechaNacHelp" class="form-text text-muted">Indique su fecha de nacimiento</small>
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="rol">Seleccione un rol</label>
                                                 <select class="form-control" id="rol_id" name="rol_id">
                                                     <option>Seleccione un rol</option>
