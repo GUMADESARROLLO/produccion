@@ -74,7 +74,7 @@
                 indicador_1,
                 `<select class="mb-3 form-control " id="maquinaq-` + indicador_1 + `">` + option2 + `</select>`,
                 `<select class="mb-3 form-control" id="quimicos-` + indicador_1 + `">` + option1 + `</select>`,
-                `<input class="input-dt mp-cant" type="text"  placeholder="Cantidad" id="cantidadq-` + indicador_1 + `" onpaste="return false">`,
+                `<input class="input-dt qm-cant" type="text"  placeholder="Cantidad" id="cantidadq-` + indicador_1 + `" onpaste="return false">`,
             ]).draw(false);
         })
     });

@@ -97,7 +97,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="card Monthly-sales mb-0">
                                                                 <div class="card-block">
-                                                                    <h6 class="mb-4 font-weight-bold">Consumo Agua</h6>
+                                                                    <h6 class="mb-4 font-weight-bold">Consumo Agua m3</h6>
                                                                     <div class="row d-flex align-items-center">
                                                                         <div class="col-12">
                                                                         @if( is_null($consumo_agua) )
@@ -155,13 +155,13 @@
                                         <div class="card-block border-bottom">
                                             <div class="row align-items-center justify-content-center">
                                                 <div class="col-6">
-                                                    <h5 class="m-0">Tiempo de Pulpeo</h5>
+                                                    <h5 class="m-0">Tiempo de Pulpeo (min)</h5>
                                                 </div>
                                                 <div class="col-6">
                                                     @if( is_null($pulpeo) )
                                                     <input value="" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                     @else
-                                                    <input value="{{ $pulpeo->tiempoPulpeo }}" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
+                                                    <input value="{{ $pulpeo->tiempoPulpeo }} min" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                     @endif                                                    
                                                 </div>
                                             </div> 
@@ -210,13 +210,13 @@
                                         <div class="card-block border-bottom">
                                             <div class="row align-items-center justify-content-center">
                                                 <div class="col-6">
-                                                    <h5 class="m-0">Tiempo de Lavado</h5>
+                                                    <h5 class="m-0">Tiempo de Lavado (min)</h5>
                                                 </div>
                                                 <div class="col-6">
                                                     @if( is_null($lavado) )
                                                     <input value="" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                     @else
-                                                    <input value="{{ $lavado->tiempoLavado }}" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
+                                                    <input value="{{ $lavado->tiempoLavado }} min" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                     @endif  
                                                 </div>
                                             </div> 
@@ -265,7 +265,7 @@
                                         <div class="card-block border-bottom">
                                             <div class="row align-items-center justify-content-center">
                                                 <div class="col-12">
-                                                    <h5 class="m-0">Tiempos Muertos</h5>
+                                                    <h5 class="m-0">Tiempos Muertos (min)</h5>
                                                 </div>
                                             </div> 
                                         </div>
@@ -300,16 +300,16 @@
                                                             <input type="text" class="input-fecha-dos form-control" id="fch-tm-{{ $tm->id }}" value="{{ $tm->fecha }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-dia-{{ $tm->id }}" value="{{ $tm->y1_dia }}">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-dia-{{ $tm->id }}" value="{{ $tm->y1_dia }} min">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-dia-{{ $tm->id }}" value="{{ $tm->y2_dia }}">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-dia-{{ $tm->id }}" value="{{ $tm->y2_dia }} min">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-noc-{{ $tm->id }}" value="{{ $tm->y1_noche }}">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-noc-{{ $tm->id }}" value="{{ $tm->y1_noche }} min">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-noc-{{ $tm->id }}" value="{{ $tm->y2_noche }}">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-noc-{{ $tm->id }}" value="{{ $tm->y2_noche }} min">
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -325,7 +325,7 @@
                                 <!-- [ Tiempos Muertos ] end -->
 
                                 <!-- [ Inventario ] start -->
-                                <div class="col-xl-12 col-md-6">
+                                <!-- <div class="col-xl-12 col-md-6">
                                   <div class="card">
                                     <div class="card-header">
                                         <h5>Inventarios</h5>
@@ -337,7 +337,7 @@
                                         <button class="btn btn-danger float-right" id="quitRowdtJROLL">Quitar</button>
                                         <button class="btn btn-light add-row-dt-inventarios float-right">Agregar</button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- [ JUMBO ROLL ] end -->
 
                                 <!-- [ JUMBO ROLL ] start -->
