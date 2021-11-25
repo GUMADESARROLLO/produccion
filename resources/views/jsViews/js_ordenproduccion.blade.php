@@ -47,9 +47,11 @@
         var numOrden = $("#numOrden").val();
         var select_row = dtMPD.row(".selected").data();
         $('#tbody-mp tr').each(function(i) {
-
+           //    console.log($(this))
             if ($(this).hasClass('selected')) {
-                id = $(this).find($('#id-mp'));
+               // console.log($(this))
+
+                id = $(this).children().first();
                 var id_selected = id.val();
                 console.log(id_selected);
                 $.ajax({
@@ -60,7 +62,6 @@
                     type: 'post',
                     async: true,
                     success: function(resultado) {
-
                     }
                 }).done(function(data) {
                     alert('La materia prima ha sido eliminada');
