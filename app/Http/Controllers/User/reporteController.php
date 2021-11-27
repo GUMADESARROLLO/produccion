@@ -27,9 +27,10 @@ class reporteController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() {
-        $array=array();
-        $i=0;        
+    public function index()
+    {
+        $array = array();
+        $i = 0;
         $orden = orden_produccion::where('estado', 1)->get()->first();
         $producto = productos::where('idProducto', $orden->producto)->get()->first();
         $tiempoPulpeo = tiempo_pulpeo::where('numOrden', $orden->numOrden)->orderBy('fecha', 'asc')->get();
@@ -42,14 +43,17 @@ class reporteController extends Controller
         $consumo_agua = consumo_agua::where('numOrden', $orden->numOrden)->get()->first();
         $electricidad = electricidad::where('numOrden', $orden->numOrden)->get()->first();
         $jumboroll = jumboroll::where('numOrden', $orden->numOrden)->where('idTurno', $turnos[0]['idTurno'])->get();
+        $jumborollDT = jumboroll::where('numOrden', $orden->numOrden)->distinct()->get()->first();
+
         $usuarios   = usuario::usuarioByRole();
 
-        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto', 'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'consumo_agua', 'electricidad']));
+        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto', 'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'electricidad']));
     }
 
-    public function reporte($numOrden) {
-        $array=array();
-        $i=0;        
+    public function reporte($numOrden)
+    {
+        $array = array();
+        $i = 0;
         $orden = orden_produccion::where('numOrden', $numOrden)->get()->first();
         $producto = productos::where('idProducto', $orden->producto)->get()->first();
         $tiempoPulpeo = tiempo_pulpeo::where('numOrden', $orden->numOrden)->orderBy('fecha', 'asc')->get();
@@ -62,20 +66,23 @@ class reporteController extends Controller
         $consumo_agua = consumo_agua::where('numOrden', $orden->numOrden)->get()->first();
         $electricidad = electricidad::where('numOrden', $orden->numOrden)->get()->first();
         $jumboroll = jumboroll::where('numOrden', $orden->numOrden)->where('idTurno', $turnos[0]['idTurno'])->get();
+
+        $jumborollDT = jumboroll::where('numOrden', $orden->numOrden)->get();
         $usuarios   = usuario::usuarioByRole();
 
-        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto', 'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'consumo_agua', 'electricidad']));
+        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto', 'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'electricidad']));
     }
 
-    public function guardarTiempoPulpeo(Request $request) {
-        $i=0;
+    public function guardarTiempoPulpeo(Request $request)
+    {
+        $i = 0;
         $numOrden = intval($request->input('codigo'));
 
         tiempo_pulpeo::where('numOrden', $numOrden)->delete();
 
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $array = array();
-            foreach ( $request->input('data') as $key ) {
+            foreach ($request->input('data') as $key) {
                 $array[$i]['numOrden']      = $key['orden'];
                 $array[$i]['tiempoPulpeo']  = $key['tiempo_pulpeo'];
                 $array[$i]['fecha']         = date('Y-m-d', strtotime($key['fecha']));
@@ -84,21 +91,22 @@ class reporteController extends Controller
                 $i++;
             }
 
-            $response = tiempo_pulpeo::insert( $array );
+            $response = tiempo_pulpeo::insert($array);
 
             return response()->json(true);
         }
     }
 
-    public function guardarTiempoLavado(Request $request) {
-        $i=0;
+    public function guardarTiempoLavado(Request $request)
+    {
+        $i = 0;
         $numOrden = intval($request->input('codigo'));
 
         tiempo_lavado::where('numOrden', $numOrden)->delete();
 
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $array = array();
-            foreach ( $request->input('data') as $key ) {
+            foreach ($request->input('data') as $key) {
                 $array[$i]['numOrden']      = $key['orden'];
                 $array[$i]['tiempoLavado']  = $key['tiempo_lavado'];
                 $array[$i]['fecha']         = date('Y-m-d', strtotime($key['fecha']));
@@ -113,15 +121,16 @@ class reporteController extends Controller
         }
     }
 
-    public function guardarTiemposMuertos(Request $request) {
-        $i=0;
+    public function guardarTiemposMuertos(Request $request)
+    {
+        $i = 0;
         $numOrden = intval($request->input('codigo'));
 
         tiempos_muertos::where('numOrden', $numOrden)->delete();
 
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $array = array();
-            foreach ( $request->input('data') as $key ) {
+            foreach ($request->input('data') as $key) {
                 $array[$i]['numOrden']      = $key['orden'];
                 $array[$i]['fecha']         = date('Y-m-d', strtotime($key['dia']));
                 $array[$i]['y1_dia']        = $key['y1M'];
@@ -137,8 +146,9 @@ class reporteController extends Controller
         }
     }
 
-    public function guardarInventario(Request $request) {
-        if($request->isMethod('post')) { 
+    public function guardarInventario(Request $request)
+    {
+        if ($request->isMethod('post')) {
             $numOrden = $request->input('codigo');
             $fibra = $request->input('fibra');
             $cantidad = $request->input('cantidad');
@@ -153,10 +163,11 @@ class reporteController extends Controller
         }
     }
 
-    public function guardarInventarioAjax(Request $request) {
+    public function guardarInventarioAjax(Request $request)
+    {
         $array = array();
-        $i=0;
-        if($request->isMethod('post')) { 
+        $i = 0;
+        if ($request->isMethod('post')) {
             $data = $request->input('data');
             $codigo = $request->input('codigo');
 
@@ -171,7 +182,7 @@ class reporteController extends Controller
                 foreach ($key['cantidades'] as $k => $value) {
 
                     $inv_sol = new inventario_solicitud();
-                    
+
                     $inv_sol->numOrden    = $numOrden;
                     $inv_sol->idFibra = $idFibra->idFibra;
                     $inv_sol->cantidad  = floatval($value);
@@ -184,17 +195,18 @@ class reporteController extends Controller
         }
     }
 
-    public function getDataInventario($numOrden) {
+    public function getDataInventario($numOrden)
+    {
         $fibras = fibras::where('estado', 1)->get()->toArray();
         $data = array();
         $columns = 0;
-        $i=0;
+        $i = 0;
 
         foreach ($fibras as $key) {
             $inventario = inventario_solicitud::where('idFibra', $key['idFibra'])->where('numOrden', $numOrden)->get()->toArray();
 
-            if ( count($inventario)>0 ) {
-                if ( ( count($inventario)>$columns ) ) {
+            if (count($inventario) > 0) {
+                if ((count($inventario) > $columns)) {
                     $columns = count($inventario);
                 }
             }
@@ -203,7 +215,7 @@ class reporteController extends Controller
         foreach ($fibras as $key) {
             $inventario = inventario_solicitud::where('idFibra', $key['idFibra'])->where('numOrden', $numOrden)->orderBy('id', 'asc')->get()->toArray();
 
-            if ( count($inventario)>0 ) {
+            if (count($inventario) > 0) {
                 $data[$i]['fibra'] = $key['descripcion'];
                 $data[$i]['data'] = $inventario;
                 $data[$i]['columns'] = $columns;
@@ -214,60 +226,57 @@ class reporteController extends Controller
         return response()->json($data);
     }
 
-    public function guardarJumboRoll(Request $request) {
-        $id=0;
-        $i=0;
-        if($request->isMethod('post')) {
-            $numOrden = intval($request->input('codigo'));
-            $idTurno = intval($request->input('turno'));
-            $idJefe = intval($request->input('jefe'));
-            $fechaInicio = date('Y-m-d', strtotime($request->input('fechaInicio')));
-            $fechaFinal = date('Y-m-d', strtotime($request->input('fechaFinal')));
-            
-            $residuo_pulper = $request->input('resPulper');
-            $lavadora_tetrapack = $request->input('lavTetrapack');
-            $merma_yankee_dry_1 = $request->input('mermaYDRY1');
-            $merma_yankee_dry_2 = $request->input('mermaYDRY2');
+    public function guardarJumboRoll(Request $request)
+    {
+        $id = 0;
+        $i = 0;
+        $numOrden = intval($request->input('codigo')); // numero de orden
 
-            $validate = jumboroll::where('numOrden', $numOrden)->where('idTurno', $idTurno)->get();
+        $orden = orden_produccion::where([['numOrden', $request->input('codigo')], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
+        $fechaInicio = date('Y-m-d');
+        $fechaFinal =  date('Y-m-d');
+        $idTurno = 0;
+        $idJefe = 0;
+        
+        $validate = jumboroll::where('numOrden', $numOrden)->get();
+        if ($request->isMethod('post')) {
 
-            
-            if ( count($validate)>0 ) {
-                jumboroll::where('numOrden', $numOrden)->where('idTurno', $idTurno)
-                ->update([
-                    'idUsuario' => $idJefe,
-                    'fechaInicio' => $fechaInicio,
-                    'fechaFinal' => $fechaFinal,
-                    'residuo_pulper' => $residuo_pulper,
-                    'lavadora_tetrapack' => $lavadora_tetrapack,
-                    'merma_yankee_dry_1' => $merma_yankee_dry_1,
-                    'merma_yankee_dry_2' => $merma_yankee_dry_2
-                ]);
+            if (count($validate) > 0) {
 
-                $jumboroll_ = jumboroll::select('id')->where('numOrden', $numOrden)->where('idTurno', $idTurno)->get()->first();
+                $jumboroll_ = jumboroll::select('id')->where('numOrden', $numOrden)->get()->first();
                 $id = $jumboroll_->id;
-            }else {
+
+                jumboroll_detalle::where('idJumboroll', $id)->delete();
+
+                foreach ($request->input('data') as $key) {
+                    $array[$i]['vinieta']       = $key['vinieta'];
+                    $array[$i]['kg']            = $key['kg'];
+                    $array[$i]['gsm']           = $key['gsm'];
+                    $array[$i]['yankee']        = $key['yankee'];
+                    $array[$i]['idJumboroll']   = $id;
+                    $i++;
+                }
+
+                $response = jumboroll_detalle::insert($array);
+            } else {
+                //echo'estoy en el else';
                 $jumboroll = new jumboroll();
                 $jumboroll->numOrden    = $numOrden;
                 $jumboroll->fechaInicio = $fechaInicio;
                 $jumboroll->fechaFinal  = $fechaFinal;
-
-                $jumboroll->residuo_pulper = $residuo_pulper;
-                $jumboroll->lavadora_tetrapack = $lavadora_tetrapack;
-                $jumboroll->merma_yankee_dry_1 = $merma_yankee_dry_1;
-                $jumboroll->merma_yankee_dry_2 = $merma_yankee_dry_2;
-
+                /*$jumboroll->residuo_pulper =        '';
+                $jumboroll->lavadora_tetrapack =    '';
+                $jumboroll->merma_yankee_dry_1 =    '';
+                $jumboroll->merma_yankee_dry_2 =    '';*/
                 $jumboroll->idTurno     = $idTurno;
                 $jumboroll->idUsuario   = $idJefe;
                 $jumboroll->save();
 
-                $id = jumboroll::latest('id')->first();
-            }
+                //$id = jumboroll::latest('id')->first();
+                $jumboroll_ = jumboroll::select('id')->where('numOrden', $numOrden)->get()->first();
+                $id = $jumboroll_->id;
 
-            if ( $id != 0 ) {
-                jumboroll_detalle::where('idJumboroll', $id)->delete();
-
-                foreach ( $request->input('data') as $key ) {
+                foreach ($request->input('data') as $key) {
                     $array[$i]['vinieta']       = $key['vinieta'];
                     $array[$i]['kg']            = $key['kg'];
                     $array[$i]['gsm']           = $key['gsm'];
@@ -278,11 +287,11 @@ class reporteController extends Controller
 
                 $response = jumboroll_detalle::insert($array);
             }
-
         }
     }
 
-    public function eliminarTiempoPulpeo(Request $request) {
+    public function eliminarTiempoPulpeo(Request $request)
+    {
         $id = intval($request->input('id'));
 
         $response = tiempo_pulpeo::where('id', $id)->delete();
@@ -290,38 +299,86 @@ class reporteController extends Controller
         return response()->json($response);
     }
 
-    public function eliminarTiempoLavado(Request $request) {
+    public function eliminarTiempoLavado(Request $request)
+    {
         $id = intval($request->input('id'));
-        
+
         $response = tiempo_lavado::where('id', $id)->delete();
 
         return response()->json($response);
     }
 
-    public function eliminarTiemposMuertos(Request $request) {
+    public function eliminarTiemposMuertos(Request $request)
+    {
         $id = intval($request->input('id'));
-        
+
         $response = tiempos_muertos::where('id', $id)->delete();
 
         return response()->json($response);
     }
 
-    public function eliminarVinietaJRoll(Request $request) {
+    public function eliminarVinietaJRoll(Request $request)
+    {
         $id = intval($request->input('id'));
-        
+
         $response = jumboroll_detalle::where('id', $id)->delete();
 
         return response()->json($response);
     }
 
-    public function getDataJumboRoll($idTurno, $codigo) {
-        $data = jumboroll_detalle::select('jumboroll.*', 'jumboroll_detalle.id','jumboroll_detalle.vinieta','jumboroll_detalle.kg','jumboroll_detalle.gsm','jumboroll_detalle.yankee')
-                    ->join('jumboroll', 'jumboroll_detalle.idJumboroll', '=', 'jumboroll.id')
-                    ->where('jumboroll.idTurno', $idTurno)
-                    ->where('jumboroll.numOrden', $codigo)
-                    ->orderBy('jumboroll_detalle.id', 'asc')
-                    ->get();
-        
+    public function getDataJumboRoll($idTurno, $codigo)
+    {
+        $data = jumboroll_detalle::select('jumboroll.*', 'jumboroll_detalle.id', 'jumboroll_detalle.vinieta', 'jumboroll_detalle.kg', 'jumboroll_detalle.gsm', 'jumboroll_detalle.yankee')
+            ->join('jumboroll', 'jumboroll_detalle.idJumboroll', '=', 'jumboroll.id')
+            ->where('jumboroll.idTurno', $idTurno)
+            ->where('jumboroll.numOrden', $codigo)
+            ->orderBy('jumboroll_detalle.id', 'asc')
+            ->get();
+
         return response()->json($data);
     }
+
+    public function guardarDetailJR(Request $request)
+    {
+        $numOrden = intval($request->input('codigo'));
+        $validate = jumboroll::where('numOrden', $numOrden)->get();
+
+        if($request->isMethod('post')){
+            $resPulper      = floatval($request->input('resPulper'));
+            $lavTetrapack   = floatval($request->input('lavTetrapack'));
+            $mermaYDRY1     = floatval($request->input('mermaYDRY1'));
+            $mermaYDRY2     = floatval($request->input('mermaYDRY2'));
+            if(count($validate)>0){
+                $response = jumboroll::where('numOrden', $numOrden)
+                ->update([
+                    'residuo_pulper'        => $resPulper,
+                    'lavadora_tetrapack'    => $lavTetrapack,
+                    'merma_yankee_dry_1'    => $mermaYDRY1,
+                    'merma_yankee_dry_2'    => $mermaYDRY2
+                ]);
+            }else{
+                $jumboroll = new jumboroll();
+                $jumboroll->numOrden    = $numOrden;
+                $jumboroll->fechaInicio = date('Y-m-d');
+                $jumboroll->fechaFinal  = date('Y-m-d');
+                $jumboroll->residuo_pulper =        $resPulper   ;
+                $jumboroll->lavadora_tetrapack =    $lavTetrapack;
+                $jumboroll->merma_yankee_dry_1 =    $mermaYDRY1  ;
+                $jumboroll->merma_yankee_dry_2 =    $mermaYDRY2  ;
+                $jumboroll->idTurno     = 0;
+                $jumboroll->idUsuario   = 0;
+                $response = $jumboroll->save();
+            }
+        }
+    
+        return response()->json($response);
+    }
+
+    public function getDataJRDetail($codigo)
+    {
+
+        $data = jumboroll::where('numOrden', $codigo)->get();
+        return response()->json($data);
+    }
+
 }

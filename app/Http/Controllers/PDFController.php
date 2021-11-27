@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use DB;
 use App\Models\DetalleOrden;
 use App\Models\CostoOrdenSubTotal;
 use App\Models\jumboroll;
+use App\Models\jumboroll_detalle;
 
 class PDFController extends Controller
 {
@@ -15,8 +17,8 @@ class PDFController extends Controller
 
         $detalle_orden = DetalleOrden::where('numOrden',$numOrden)->get();
         $costo_orden_subTotal = CostoOrdenSubTotal::where('numOrden',$numOrden)->orderBy('costo_id', 'asc')->get();
-        $jumborrol = jumboroll::select('COUNT(jd.idJumboroll)')
-            ->join('jumboroll_detalle', 'jumboroll_detalle.idJumboroll', '=', 'jumboroll.id')
+        $jumborrol = jumboroll_detalle::select(DB::raw('count(*) as bobinas'))
+            ->join('jumboroll', 'jumboroll_detalle.idJumboroll', '=', 'jumboroll.id')
             ->where('jumboroll.numOrden', $numOrden)
             ->get();
 

@@ -139,7 +139,6 @@ class CostoOrdenController extends Controller
 
         $numOrden = intval($request->input('codigo'));
 
-        echo $numOrden;
         orden_produccion::where('numOrden', $numOrden)
             ->update([
                 'horaJY1'    => intval($request->input('horaJY1')),

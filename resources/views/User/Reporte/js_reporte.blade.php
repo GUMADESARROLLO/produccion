@@ -97,7 +97,11 @@
         inicializaControlFecha2();
         inicializaControlFecha();
         addRowsInventario();
+        getDataJRDetail();
+        //verifyDataJRdetail();
+
         /********INICIALIZANDO FUNCIONES - END********/
+
     });
 
     function addRowsInventario() {
@@ -165,14 +169,15 @@
     function addRowsJumboroll() {
         var turno = $("#turno option:selected").val();
         var numOrden = $("#numOrden").text();
-
+        var i = 0;
         dtJRoll.clear().draw();
+        $('#totalJR').val(0);
 
         $.getJSON(base_url + "dataJROLL/" + turno + "/" + numOrden, function(json) {
             if (json.length > 0) {
                 $.each(json, function(i, item) {
                     indicador_4 = item['id'];
-
+                    i++;
                     $("#jefe option:selected").removeAttr("selected");
                     $("#jefe option[value='" + item['idUsuario'] + "']").attr("selected", true);
                     $('#fecha01').val(item['fechaInicio'])
@@ -189,7 +194,9 @@
                         `<input class="input-dt" value="` + item['gsm'] + `" type="text" placeholder="Cantidad" id="cant-gsm-` + indicador_4 + `">`,
                         `<input class="input-dt" value="` + item['yankee'] + `" type="text" placeholder="Cantidad" id="yankee-` + indicador_4 + `">`,
                     ]).draw(false);
+                   
                 })
+                $('#totalJR').val(json.length);
             }
         })
     }
@@ -751,40 +758,79 @@
         });
     });
 
+    /********INICIANDO GUARDADO DE JUMBO ROLL RP, MY *****/
+
     $(document).on('click', '#btnJRdetail', function() {
 
-        var residuo_pulper_dia = $("#rp-dia").val();
-        var lavadora_tetrapack_dia = $('#lt-dia').text();
-        var merma_yankee1_dia = $('#mr-y1-dia').text();
-        var merma_yankee2_dia = $("#mr-y2-dia").val();
+        var codigo = $('#numOrden').text();
 
-        var residuo_pulper_noche = $("#rp-noche").val();
-        var lavadora_tetrapack_noche = $('#lt-noche').text();
-        var merma_yankee1_noche = $('#mr-y1-noche').text();
-        var merma_yankee2_noche = $("#mr-y2-noche").val();
+        var resPulper = $("#rp").val();
+        var lavTetrapack = $('#lt').val();
+        var mermaYDRY1 = $('#mr-y1').val();
+        var mermaYDRY2 = $("#mr-y2").val();
 
         $.ajax({
-            url: base_url + "guardar-inventario",
+            url: base_url + "guardar-detailJR",
             type: 'post',
             async: true,
             data: {
-                residuo_pulper_dia: residuo_pulper_dia,
-                cantidad: lavadora_tetrapack_dia,
-                mermaYDRY1: merma_yankee1_dia,
-                codigo: merma_yankee2_dia,
-                residuo_pulper_noche: residuo_pulper_noche,
-                cantidad: lavadora_tetrapack_noche,
-                codigo: merma_yankee1_noche,
-                codigo: merma_yankee2_noche,
-
+                codigo: codigo,
+                resPulper: resPulper,
+                lavTetrapack: lavTetrapack,
+                mermaYDRY1: mermaYDRY1,
+                mermaYDRY2: mermaYDRY2,
             },
             success: function(json) {
-                addRowsInventario();
-                $('#mdInventarioSolicitado').modal('hide');
+                mensaje('Se guardo con exito :)', 'success')
             }
+        }).done(function(data) {
+
         });
     });
 
+    function getDataJRDetail() {
+        var numOrden = $("#numOrden").text();
+        //dtJRollDtl.clear().draw();
+        $.getJSON(base_url + "getDataJRDetail/" + numOrden, function(json) {
+            if (json.length > 0) {
+                $.each(json, function(i, item) {
+                    indicador_4 = item['id'];
+                    $('#rp').val(item['residuo_pulper'])
+                    $('#lt').val(item['lavadora_tetrapack'])
+                    $('#mr-y1').val(item['merma_yankee_dry_1'])
+                    $('#mr-y2').val(item['merma_yankee_dry_2'])
+                })
+            } else {
+                dtJRollDtl.row.add([
+                    indicador_4,
+                    `<input class="input-dt" type="text" placeholder="Cantidad" id="rp">`,
+                    `<input class="input-dt" type="text" placeholder="Cantidad" id="lt">`,
+                    `<input class="input-dt" type="text" placeholder="Cantidad" id="mr-y1">`,
+                    `<input class="input-dt" type="text" placeholder="Cantidad" id="mr-y2">`,
+                ]).draw(false);
+            }
+        });
+    };
+
+
+    /*function verifyDataJRdetail() {
+        var numOrden = $("#numOrden").text();
+
+        $.getJSON(base_url + "getDataJRDetail/" + numOrden, function(json) {
+            if (json.length <= 0) {
+               
+                $("#rp").attr('disabled','disabled');
+                $("#lt").attr('disabled','disabled');
+                $("#mr-y1").attr('disabled','disabled');
+                $("#mr-y2").attr('disabled','disabled');
+            } 
+        });
+    }*/
+
+
+
+
+    /***END */
     /********INICIALIZANDO CONTROL FECHA - START********/
     function inicializaControlFecha2() {
         $('input[class="input-fecha-dos form-control"]').daterangepicker({
@@ -826,6 +872,8 @@
         });
     }
     /********INICIALIZANDO CONTROL FECHA - END********/
+
+
 
     $("#turno").change(function() {
         addRowsJumboroll();

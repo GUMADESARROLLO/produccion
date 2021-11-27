@@ -122,22 +122,25 @@
                     <tr>
                         <td class="text-uppercase text-left">{{ $do->nombre}}</td>
                         <td class="text-right">{{ number_format($do->prod_real,2)}}</td>
-                        <td></td>
+                        <td class="text-right">@foreach ($jumborrol as $key => $jb)  {{ $jb->bobinas }}  @endforeach</td>
                     </tr>
                     <tr>
                         <td class="cell-color text-right">TOTAL</td>
                         <td class="text-right">{{ number_format($do->prod_real,2)}}</td>
-                        <td class="text-right">100%</td>
+                        <td class="text-right">{{ number_format(($do->prod_real/($do->prod_real + $do->merma_total))*100,2)}} %</td>
                     </tr>
                     <tr>
                         <td class="cell-color text-right">MERMA</td>
                         <td class="text-right"> {{ number_format($do->merma_total,2)}} </td>
-                        <td class="text-right">16</td>
+                        <td class="text-right">{{ number_format(($do->merma_total/($do->prod_real + $do->merma_total))*100,2)}} %</td>
                     </tr>
                     <tr>
                         <td class="cell-color text-right">TOTAL PRODUCIDO</td>
                         <td class="text-right"> {{  number_format(($do->prod_real + $do->merma_total),2)}}</td>
-                        <td class="text-right">100%</td>
+                        <td class="text-right">
+                        {{ number_format((($do->prod_real/($do->prod_real + $do->merma_total))
+                             + ($do->merma_total/($do->prod_real + $do->merma_total)))*100,2)}} %
+                        </td>
                     </tr>
                 </tbody>
             </table>

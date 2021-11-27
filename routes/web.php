@@ -154,6 +154,10 @@ Route::post('guardar-jumboroll', 'User\reporteController@guardarJumboRoll')->nam
 Route::post('guardar-inventario', 'User\reporteController@guardarInventario')->name('guardar-inventario');
 Route::get('dataJROLL/{idTurno}/{codigo}', 'User\reporteController@getDataJumboRoll')->name('dataJROLL/{idTurno}/{codigo}');
 Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventario')->name('getDtaInventario/{codigo}');
+Route::get('getDataJRDetail/{codigo}', 'User\reporteController@getDataJRDetail')->name('getDataJRDetail/{codigo}');
+Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name('guardar-detailJR');
+
+
 
 //PDF
 //Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
