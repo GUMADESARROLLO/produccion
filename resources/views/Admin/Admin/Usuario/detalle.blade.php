@@ -54,10 +54,6 @@
                                             <label for="username">Nombre de usuario</label>
                                             <input type="text" readonly class="form-control" name="username" id="username" value="{{ $user['username']}}">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                                            <input type="text" readonly class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ $user['fecha_nacimiento']}}">
-                                        </div>
                                         @endforeach
                                         <div class="form-group">
                                             <label for="rol">Rol asignado</label>
