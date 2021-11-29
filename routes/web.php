@@ -144,6 +144,7 @@ Route::get('costo-orden/detalle/{numOrden}', 'User\CostoOrdenController@detalleC
 Route::get('costo-orden/detalle/editar/{id}', 'User\CostoOrdenController@editarCostoOrden')->name('costo-orden/detalle/editar/{id}');
 Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCostoOrden')->name('costo-orden/actualizar');
 Route::post('costo-orden/guardarhrs-producidas', 'User\CostoOrdenController@guardarHrasProd')->name('costo-orden/guardarhrs-producidas');
+Route::post('costo-orden/add-comment', 'User\CostoOrdenController@guardarComment')->name('costo-orden/add-comment');
 
 
 //RUTAS REPORTES
@@ -159,6 +160,10 @@ Route::post('guardar-jumboroll', 'User\reporteController@guardarJumboRoll')->nam
 Route::post('guardar-inventario', 'User\reporteController@guardarInventario')->name('guardar-inventario');
 Route::get('dataJROLL/{idTurno}/{codigo}', 'User\reporteController@getDataJumboRoll')->name('dataJROLL/{idTurno}/{codigo}');
 Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventario')->name('getDtaInventario/{codigo}');
+Route::get('getDataJRDetail/{codigo}', 'User\reporteController@getDataJRDetail')->name('getDataJRDetail/{codigo}');
+Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name('guardar-detailJR');
+
+
 
 //PDF
 //Route::get('/pdf','PDFController@PDF')->name('descargarPDF');

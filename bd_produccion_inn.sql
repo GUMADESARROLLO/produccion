@@ -295,3 +295,5 @@ INSERT INTO `usuario_rol` VALUES (12, 5, 30, NULL);
 INSERT INTO `usuario_rol` VALUES (13, 5, 31, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
