@@ -214,10 +214,21 @@ class orden_produccionController extends Controller
 
     public function guardar(Request $request)
     {
+        //dd($request);
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
             'unique' => 'Ya existe una orden de trabajo para este turno'
         );
+
+        /*$validator = Validator::make($request->all(), [
+            'numOrden' => 'required|unique:orden_produccion',
+            'producto' => 'required',
+            'fecha01' => 'required|date',
+            'fecha02' => 'required|date',
+            'hora01' => 'required',
+            'hora02' => 'required',
+            'hrsTrabajadas' => 'required|digits_between:1,9|regex:/^[-0-9\+]+$/'
+        ], $messages);*/
 
         $validator = Validator::make($request->all(), [
             'numOrden' => 'required|unique:orden_produccion',
@@ -226,7 +237,7 @@ class orden_produccionController extends Controller
             'fecha02' => 'required|date',
             'hora01' => 'required',
             'hora02' => 'required',
-            'hrsTrabajadas' => 'required|digits_between:1,9|regex:/^[-0-9\+]+$/'
+            'hrsTrabajadas' => 'required|regex:/^[-0-9\+]+$/'
         ], $messages);
 
         if ($validator->fails()) {
@@ -238,10 +249,38 @@ class orden_produccionController extends Controller
         if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
             return Redirect::back()->withErrors("La fecha final no puede ser menor a la fecha inicial")->withInput();
         }
-        if (date("H:i", strtotime($request->hora02)) < date("H:i", strtotime($request->hora01))) {
+        /*if (date("H:i", strtotime($request->hora02)) < date("H:i", strtotime($request->hora01))) {
             return Redirect::back()->withErrors("La hora final no puede ser menor a la hora inicial")->withInput();
-        }
+        }*/
 
+        /*DB::transaction(function () use ($request){
+
+        });*/
+        /*$success = false; //flag
+        db::beginTransaction();
+        try {
+                $ordProd = new orden_produccion();
+                $ordProd->producto = $request->producto;
+                $ordProd->numOrden = $request->numOrden;
+                $ordProd->idUsuario = $request->jefe;
+                $ordProd->hrsTrabajadas = $request->hrsTrabajadas;
+                $ordProd->fechaInicio = date("Y-m-d", strtotime($request->fecha01));
+                $ordProd->fechaFinal = date("Y-m-d", strtotime($request->fecha02));
+                $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
+                $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
+                $ordProd->estado = 1;
+                $ordProd->save();
+
+                $success = true;
+                if ($success) {
+                    DB::commit();
+                }
+        } catch (\Exception $e){
+            DB::rollback();
+            $success = false;
+            return ["error" => $e->getMessage()];
+
+        }*/
 
         $ordProd = new orden_produccion();
         $ordProd->producto = $request->producto;
@@ -255,6 +294,29 @@ class orden_produccionController extends Controller
         $ordProd->estado = 1;
         $ordProd->save();
 
+        /*$lastOrden = orden_produccion::latest('idOrden')->first()->numOrden;
+        foreach ($request-> all() as $req)
+        {
+            mp_directa::create([
+                'idMaquina' => $request['maquina'],
+                'idFibra' => $request['fibras'],
+                'numOrden' => $lastOrden,
+                'cantidad' => $request['cantidad']
+            ]);
+        }
+
+        foreach ($request-> all() as $req)
+        {
+            QuimicoMaquina::create([
+                'idMaquina' => $request['maquinaq'],
+                'idFibra' => $request['quimicos'],
+                'numOrden' => $lastOrden,
+                'cantidad' => $request['cantidadq']
+            ]);
+        }*/
+
+
+        //return ["success" => "Data Inserted"];
         return redirect()->route('orden-produccion');
     }
 

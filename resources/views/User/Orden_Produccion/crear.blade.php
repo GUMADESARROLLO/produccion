@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('metodosjs')
 @include('jsViews.js_ordenproduccion')
-@include('jsViews.js_ordenproduccionbk')
+
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
