@@ -26,7 +26,7 @@ $(document).ready(function() {
                 }
             ]
     });
-    
+
     inicializaControlFecha();
 });
 
@@ -36,7 +36,7 @@ $(document).on('click','#quitRowdtMP',function() {
 
     $.ajax({
         url: "../../eliminar-mp",
-        data: {            
+        data: {
             id : indexData
         },
         type: 'post',
@@ -46,7 +46,7 @@ $(document).on('click','#quitRowdtMP',function() {
         }
     }).done(function(data) {
         dtMPD.row('.selected').remove().draw( false );
-    });    
+    });
 } );
 
 $('#dtMPD tbody').on( 'click', 'tr', function () {
@@ -72,9 +72,9 @@ function deleteORDP(idORD) {
     }).then((result) => {
       mensaje('Actualizado con exito', 'success');
       if (result.value) {
-        $.getJSON("fibras/eliminar/"+idFibra, function(json) { 
+        $.getJSON("fibras/eliminar/"+idFibra, function(json) {
             if (json==true) {
-                location.reload();                
+                location.reload();
             }
         })
       }
@@ -130,7 +130,7 @@ $(document).on('click','#btnactualizar',function() {
             var maquina = ($('#maquina-'+pos+' option:selected').val()=="")?0:$('#maquina-'+pos+' option:selected').val();
             var fibra = ($('#fibras-'+pos+' option:selected').val()=="")?0:$('#fibras-'+pos+' option:selected').val();
             var cantidad = ( $('#cantidad-'+pos).val()=="" )?0:$('#cantidad-'+pos).val();
-            
+
             array[i] = {
                 orden       : codigo,
                 maquina     : maquina,
@@ -150,13 +150,35 @@ $(document).on('click','#btnactualizar',function() {
             type: 'post',
             async: true,
             success: function (resultado) {
-                
+
             }
         }).done(function(data) {
             $("#formdataord").submit();
         });
-        
+
     }
+});
+
+
+function soloNumeros(caracter, e, numeroVal) {
+    var numero = numeroVal;
+    if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+        e.preventDefault();
+        mensaje('No puedes iniciar con un punto', 'warning');
+    } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+        e.preventDefault();
+        mensaje('No puede haber mas de dos puntos', 'warning');
+    } else {
+        const soloNumeros = new RegExp("^[0-9]+$");
+        if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+            e.preventDefault();
+            mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
+        }
+    }
+}
+
+$('#hrsTrabajadas').on('keypress', function (e) {
+    soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
 });
 
 

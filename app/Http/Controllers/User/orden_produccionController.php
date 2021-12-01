@@ -220,16 +220,6 @@ class orden_produccionController extends Controller
             'unique' => 'Ya existe una orden de trabajo para este turno'
         );
 
-        /*$validator = Validator::make($request->all(), [
-            'numOrden' => 'required|unique:orden_produccion',
-            'producto' => 'required',
-            'fecha01' => 'required|date',
-            'fecha02' => 'required|date',
-            'hora01' => 'required',
-            'hora02' => 'required',
-            'hrsTrabajadas' => 'required|digits_between:1,9|regex:/^[-0-9\+]+$/'
-        ], $messages);*/
-
         $validator = Validator::make($request->all(), [
             'numOrden' => 'required|unique:orden_produccion',
             'producto' => 'required',
@@ -237,7 +227,7 @@ class orden_produccionController extends Controller
             'fecha02' => 'required|date',
             'hora01' => 'required',
             'hora02' => 'required',
-            'hrsTrabajadas' => 'required|regex:/^[-0-9\+]+$/'
+            'hrsTrabajadas' => 'required|'
         ], $messages);
 
         if ($validator->fails()) {
@@ -370,7 +360,7 @@ class orden_produccionController extends Controller
             'fecha02' => 'required|date',
             'hora01' => 'required',
             'hora02' => 'required',
-            'hrsTrabajadas' => 'required|digits_between:1,9'
+            'hrsTrabajadas' => 'required'
         ], $messages);
 
         if ($validator->fails()) {
@@ -450,7 +440,7 @@ class orden_produccionController extends Controller
             $y2_jumboroll_noche = 0;
             $y2_jumboroll_total = 0;
         }
-        
+
         $array[0]['actividad'] = 'Pulper 1 - Pasta Reciclada';
         $array[0]['dia'] = number_format($t_pulpeo_dia, 2);
         $array[0]['noche'] = number_format($t_pulpeo_noche, 2);
