@@ -450,20 +450,7 @@ class orden_produccionController extends Controller
             $y2_jumboroll_noche = 0;
             $y2_jumboroll_total = 0;
         }
-        /*$t_pulpeo_dia = ($t_pulpeo->cantDia * $t_pulpeo->tiempoPulpeo) / 60;
-        $t_pulpeo_noche = ($t_pulpeo->cantNoche * $t_pulpeo->tiempoPulpeo) / 60;
-
-        $t_lavado_dia = ($t_lavado->cantDia * $t_pulpeo->tiempoPulpeo) / 60;
-        $t_lavado_noche = ($t_lavado->cantNoche * $t_pulpeo->tiempoPulpeo) / 60;
-
-        $y1_jumboroll_dia = $hrsTrabajadas - ($t_muertos->cantDiaY1 / 60);
-        $y1_jumboroll_noche = $hrsTrabajadas - ($t_muertos->cantNocheY1 / 60);
-        $y1_jumboroll_total = $y1_jumboroll_dia + $y1_jumboroll_noche;
-
-        $y2_jumboroll_dia = $hrsTrabajadas - ($t_muertos->cantDiaY2 / 60);
-        $y2_jumboroll_noche = $hrsTrabajadas - ($t_muertos->cantNocheY2 / 60);
-        $y2_jumboroll_total = $y2_jumboroll_dia + $y2_jumboroll_noche;*/
-
+        
         $array[0]['actividad'] = 'Pulper 1 - Pasta Reciclada';
         $array[0]['dia'] = number_format($t_pulpeo_dia, 2);
         $array[0]['noche'] = number_format($t_pulpeo_noche, 2);

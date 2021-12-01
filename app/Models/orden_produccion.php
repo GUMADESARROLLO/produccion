@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class orden_produccion extends Model
 {
     protected $table = "orden_produccion";
-    protected $primaryKey = 'idOrden';
+    protected $primaryKey = "idOrden";
     protected $fillable = ['numOrden', 'producto','idUsuario','hrsTrabajadas','fechaInicio','fechaFinal','horaInicio','horaFinal','estado','horaJY1','horaJY2','horaLY1','horaLY2'];
     //protected $guarded = ['idOrden'];
     public $timestamps = false;
