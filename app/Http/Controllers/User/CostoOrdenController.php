@@ -89,7 +89,7 @@ class CostoOrdenController extends Controller
             $costoOrden->costo_unitario = $request->costo_unitario;
             $costoOrden->estado = 1;
             $costoOrden->save();
-            return redirect::to('costo-orden/detalle/' . $orden)->with('message-success', 'Se guardo con exito :)');
+            return redirect()->back()->with('message-success', 'Se guardo con exito :)');
         }
     }
 
