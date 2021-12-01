@@ -86,10 +86,10 @@ class CostoOrdenController extends Controller
             $costoOrden->save();
 
             /*$array = [
-        'numOrden' => $request->num_Orden,
-        'costo_id' => $request->costo_orden,
-        'cantidad' => $request->cantidad,
-        'costo_unitario' => $request->costo_unitario,
+            'numOrden' => $request->num_Orden,
+            'costo_id' => $request->costo_orden,
+            'cantidad' => $request->cantidad,
+            'costo_unitario' => $request->costo_unitario,
             'estado' => 1
     ];
         CostoOrden::insertOrIgnore($array);*/

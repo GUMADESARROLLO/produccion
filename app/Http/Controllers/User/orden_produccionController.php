@@ -148,7 +148,7 @@ class orden_produccionController extends Controller
             'fecha02' => 'required|date',
             'hora01' => 'required',
             'hora02' => 'required',
-            'hrsTrabajadas' => 'required|digits_between:1,9|regex:/^[-0-9\+]+$/'
+            'hrsTrabajadas' => 'required|regex:/^[-0-9\+]+$/'
         ], $messages);
 
         if ($validator->fails()) {
@@ -160,9 +160,9 @@ class orden_produccionController extends Controller
         if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
             return Redirect::back()->withErrors("La fecha final no puede ser menor a la fecha inicial")->withInput();
         }
-        if (date("H:i", strtotime($request->hora02)) <  date("H:i", strtotime($request->hora01))) {
+        /*if (date("H:i", strtotime($request->hora02)) <  date("H:i", strtotime($request->hora01))) {
             return Redirect::back()->withErrors("La hora final no puede ser menor a la hora inicial")->withInput();
-        }
+        }*/
 
 
         $ordProd                    = new orden_produccion();
@@ -238,13 +238,18 @@ class orden_produccionController extends Controller
             'fecha02' => 'required|date',
             'hora01' => 'required',
             'hora02' => 'required',
-            'hrsTrabajadas' => 'required|digits_between:1,9'
+            'hrsTrabajadas' => 'required|numeric'
         ], $messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-
+        if ($request->hrsTrabajadas < 0) {
+            return Redirect::back()->withErrors("Las horas trabajados no pueden ser menores a 0")->withInput();
+        }
+        if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
+            return Redirect::back()->withErrors("La fecha final no puede ser menor a la fecha inicial")->withInput();
+        }
         orden_produccion::where('numOrden', $request->numOrden)
             ->update([
                 'producto'      => $request->producto,

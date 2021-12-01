@@ -82,9 +82,9 @@
                                                             @endif
                                                         </td>  
                                                         <td class="dt-center">
-                                                            <a href="orden-produccion/reporte/{{ $key['numOrden'] }}"><i class="feather icon-edit-1 text-c-red f-30 m-r-10"></i></a>
-                                                            <a href="orden-produccion/editar/{{ $key['numOrden'] }}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                            <a href="orden-produccion/detalle/{{ $key['numOrden'] }}"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>
+                                                            <a href="orden-produccion/reporte/{{ $key['numOrden'] }}" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>
+                                                            <a href="orden-produccion/editar/{{ $key['numOrden'] }}" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>
+                                                            <a href="orden-produccion/detalle/{{ $key['numOrden'] }}" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>
                                                         </td>
                                                     </tr>
                                                     @endforeach

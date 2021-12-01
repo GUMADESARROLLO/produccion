@@ -182,18 +182,18 @@
                 </tr>
                 <tr>
                     <th class="cell-color">HORAS JORNADAS</th>
-                    <td class="text-center">20.33</td>
-                    <td class="text-center">20.33</td>
+                    <td class="text-center">{{ $do->horaJY1 }}</td>
+                    <td class="text-center">{{ $do->horaJY2 }}</td>
                 </tr>
                 <tr>
                     <th class="cell-color">HORAS LABORALES</th>
-                    <td class="text-center"> 20.33</td>
-                    <td class="text-center"> 20.33</td>
+                    <td class="text-center"> {{ $do->horaLY1 }}</td>
+                    <td class="text-center"> {{ $do->horaLY2 }}</td>
                 </tr>
                 <tr>
                     <th class="text-left cell-color">TIEMPO MUERTO</th>
-                    <td class="text-center">0</td>
-                    <td class="text-center"> - </td>
+                    <td class="text-center">{{ $do->horaJY1 -  $do->horaLY1 }}</td>
+                    <td class="text-center">{{ $do->horaJY2 -  $do->horaLY2 }} </td>
                 </tr>
             </table>
         </div>
@@ -242,8 +242,8 @@
                 <tbody class="">
                     <tr>
                         <td width="500px">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, reiciendis? </p>
+                            <p > 
+                            {{ $do->comentario}} </p>
                         </td>
                     </tr>
                 </tbody>
