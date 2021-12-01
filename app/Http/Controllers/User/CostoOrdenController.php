@@ -40,13 +40,7 @@ class CostoOrdenController extends Controller
 
     public function detalleCostoOrden($idOP)
     {
-
-        /*$costoOrden = CostoOrden::join('costo', 'CostoOrden.costo_id', 'costo.id')
-                            ->select('CostoOrden.numOrden', 'CostoOrden.costo_id', 'costo.descripcion',
-                                    'CostoOrden.cantidad', 'CostoOrden.costo_unitario')
-                            ->where('CostoOrden.numOrden', $idOP)
-                        ->orderBy('id', 'asc')->get();*/
-        $costoOrden = DB::select(('select costo_orden.id, costo_orden.numOrden, costo_orden.costo_id,
+        $costoOrdenL = DB::select(('select costo_orden.id, costo_orden.numOrden, costo_orden.costo_id,
                                     costo.unidad_medida,  costo.descripcion, costo_orden.cantidad,
                                     costo_orden.costo_unitario
                                     from costo_orden
@@ -57,7 +51,7 @@ class CostoOrdenController extends Controller
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
         $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         //dd($costoOrden);
-        return view('User.CostoOrden.detalle', compact(['costoOrden', 'ordenes']));
+        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden']));
     }
 
     public function nuevoCostoOrden()
@@ -70,14 +64,15 @@ class CostoOrdenController extends Controller
     public function guardarCostoOrden(Request $request)
     {
         $orden = $request['num_Orden'];
+
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
             'numeric' => ':attribute debe ser un valor númerico'
         );
 
         $validator = Validator::make($request->all(), [
-            'cantidad' => 'required|numeric|digits_between:1,9',
-            'costo_unitario' => 'required|numeric|digits_between:1,9'
+            'cantidad' => 'required|numeric',
+            'costo_unitario' => 'required|numeric'
         ], $messages);
 
         if ($validator->fails()) {
@@ -94,17 +89,6 @@ class CostoOrdenController extends Controller
             $costoOrden->costo_unitario = $request->costo_unitario;
             $costoOrden->estado = 1;
             $costoOrden->save();
-
-            $array = [
-                'numOrden' => $request->num_Orden,
-                'costo_id' => $request->costo_orden,
-                'cantidad' => $request->cantidad,
-                'costo_unitario' => $request->costo_unitario,
-                    'estado' => 1
-            ];
-            CostoOrden::insertOrIgnore($array);
-
-
             return redirect::to('costo-orden/detalle/' . $orden)->with('message-success', 'Se guardo con exito :)');
         }
     }
@@ -140,11 +124,6 @@ class CostoOrdenController extends Controller
                 'cantidad' => $request->cantidad,
                 'costo_unitario' => $request->costo_unitario
             ]);
-
-        //->with('message-success', 'Se actualizo el costo de la orden con exito :)')
-        //return redirect()->back()->withInput();
-        //return redirect()->intended();
-        //return redirect::to('costo-orden/detalle/{numOrden}');
         return redirect::to('costo-orden/detalle/' . $orden);
     }
 
@@ -185,6 +164,6 @@ class CostoOrdenController extends Controller
                 'comentario'    => $request->comentario
             ]);
 
-        return redirect()->back()->with('message-success', 'Comnetario agregado exitosamente)');
+        return redirect()->back()->with('message-success', 'Comentario agregado exitosamente)');
     }
 }
