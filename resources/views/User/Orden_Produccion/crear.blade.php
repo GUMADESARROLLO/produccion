@@ -63,7 +63,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="numOrden">Orden de Producción No.</label>
-                                                        <input type="text" readonly class="form-control" name="numOrden" id="numOrden" value="{{ $idOrd['numOrden']+1 }}">
+                                                        <input type="text" class="form-control" name="numOrden" id="numOrden" value="{{ $idOrd['numOrden']+1 }}">
                                                         <small id="numordenHelp" class="form-text text-muted">Escriba
                                                             el No. de Orden de Producción</small>
                                                     </div>
