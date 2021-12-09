@@ -104,7 +104,7 @@
         })
     });*/
 
-    function verfifyExistRegister() {
+    /*function verfifyExistRegister() {
         codigo = $('#numOrden').val();
         $.ajax({
             url: "../cargarqm-directa",
@@ -116,7 +116,7 @@
             async: true,
             success: function(resultado) {}
         })
-    }
+    }*/
 
     //$(document).ready(resaltar);
 
@@ -169,7 +169,7 @@
         // console.log(i + " " + array);
     });*/
 
-    $(document).on('click', '#btnguardar', function() {
+    /*$(document).on('click', '#btnguardar', function() {
         e.preventDefault();
 
         codigo = $('#numOrden').val();
@@ -222,5 +222,80 @@
                 $("#formdataord").submit();
             });
         }
+    });*/
+
+
+    /********** funciones extras para validacion ***********/
+    function soloNumeros(caracter, e, numeroVal) {
+        var numero = numeroVal;
+        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+            e.preventDefault();
+            mensaje('No puedes iniciar con un punto', 'warning');
+        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+            e.preventDefault();
+            mensaje('No puede haber mas de dos puntos', 'warning');
+        } else {
+            const soloNumeros = new RegExp("^[0-9]+$");
+            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+                e.preventDefault();
+                mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
+            }
+        }
+    }
+
+    $('#hrsTrabajadas').on('keypress', function (e) {
+        soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
     });
+
+    function validarForm(e) {
+        e.preventDefault();
+        var fecha1 = $("#fecha01").val();
+        var fecha2 = $("#fecha02").val();
+        var horaInicio = $("#hora01").val();
+        var horaFin = $("#hora02").val();
+        var horasT = $("#hrsTrabajadas").val();
+        var last_row = dtMPD.row(":last").data();
+        var last_rowq = dtQM.row(":last").data();
+
+        if (typeof (last_row) === "undefined") {
+            //e.preventDefault();
+            mensaje("Ingrese al menos un registro en la tabla de Materia Prima Directa", "error");
+            return false;
+
+        } else if (typeof (last_rowq) === "undefined") {
+            //e.preventDefault();
+            mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error");
+            return false;
+
+        } else if (fecha1 === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una fecha inicial para la orden", "error");
+            return false;
+
+        } else if (fecha2 === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una fecha final para la orden", "error");
+            return false;
+
+        } else if (horaInicio === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una hora inicial para la orden", "error");
+            return false;
+
+        } else if (horaFin === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una hora final para la orden", "error");
+            return false;
+
+        } else if (horasT === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una horas trabajadas de la orden", "error");
+            return false;
+        }
+        return true;
+    }
+    /********** funciones extras para validacion ***********/
+
+
 </script>
+

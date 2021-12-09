@@ -205,52 +205,87 @@
 
     /********** Enviar informacion de fibras y quimicos ***********/
     $(document).on('click', '#btnguardar', function (e) {
+
+
+        /*var table_qm = $('#dtQM').DataTable();
+        var form_data_qm  = table_qm.rows().data().toArray();
+        $.each( form_data_qm, function( key, item ) {
+            var id_txt = $(item[3]).attr('id')
+            var xd = $("#" + id_txt).val();
+
+            console.log(xd);
+        });*/
+
+
         e.preventDefault();
         codigo = $('#numOrden').val();
         var i = 0;
-        /********** Fibras ***********/
-        var last_row = dtMPD.row(":last").data();
+        /********** variables de Fibras ***********/
+        //var last_row = dtMPD.row(":last").data();
         var arrayf = [];
         var array2f = [];
         var array3f =[];
-        /********** Fibras ***********/
+        /********** variables de Fibras ***********/
+        /********** variables de Quimicos ***********/
+        //var last_rowq = dtQM.row(":last").data();
+        var arrayq = [];
+        var array2q = [];
+        var array3q =[];
+        /********** variables de Quimicos ***********/
 
         if (validarForm(e) !== true) {
-
             return false
-
-        } else {
+        }
+        else
+        {
             /********** Fibras ***********/
-            dtMPD.rows().eq(0).each(function (index) {
+            dtMPD.rows().eq(0).each(function (index)
+            {
                 var rowf = dtMPD.row(index);
                 var dataf = rowf.data();
                 var posf = dataf[0];
 
-                var maquinaf = ($('#maquinaf-prev' + posf + ' option:selected').val() == "") ? 0 : $('#maquinaf-prev' + posf + ' option:selected').val();
-                var fibra = ($('#fibras-' + posf + ' option:selected').val() == "") ? 0 : $('#fibras-' + posf + ' option:selected').val();
-                var cantidadf = ($('#cantidadf-prev-' + posf).val() == "") ? 0 : $('#cantidadf-prev-' + posf).val();
+                var maquinaf = ($('#maquinaf-prev' + posf + ' option:selected').val() === "") ? 0 : $('#maquinaf-prev' + posf + ' option:selected').val();
+                var fibra = ($('#fibras-' + posf + ' option:selected').val() === "") ? 0 : $('#fibras-' + posf + ' option:selected').val();
+                //var cantidadf = ($('#cantidadf-prev-' + posf).val() == "") ? 0 : $('#cantidadf-prev-' + posf).val();
 
-                if (parseFloat(cantidadf) > 0) {
+                $('#cantidadf-prev-').on('keypress', function (e) {
+                    soloNumeros(e.keyCode, e, $('#cantidadq-prev-').val());
+                });
+                var cantidadf = $('#cantidadf-prev-' + posf).val();
+                if (cantidadf === '')
+                {
+                    mensaje("La cantidad no puede estar vacia en la tabla de Materias Primas", "error");
+                    return false;
+                }
+                /*if (parseFloat(cantidadf) > 0) {
                     parseFloat(cantidadf)
                 } else {
                     mensaje("La cantidad de materia prima debe ser mayor a 0");
                     return false;
-                }
+                }*/
                 arrayf[i] = {orden: codigo, maquina: maquinaf, fibra: fibra, cantidad: cantidadf};
+                console.log(arrayf)
                 i++;
             });
-            $('#tbody-mp tr td').children().each(function (i) {
+            $('#tbody-mp tr td').children().each(function (i)
+            {
                 var item = $(this).val();
+                console.log(item);
                 var maquinaf = "";
                 var fibra = "";
                 var cantidadf = "";
-                console.log(i);
-                if (item !== "" && item != null) {
+                //console.log(i);
+                if (item !== "" && item != null)
+                {
                     codigo = $('#numOrden').val();
                     maquinaf = $('#maquinaf-prev-' + i).val();
                     fibra = $('#fibras-prev-' + i).val();
                     cantidadf = $('#cantidadf-prev-' + i).val();
-                    if (maquinaf !== "" && fibra !== "" && cantidadf !== "") {
+                    if (maquinaf === "" && fibra === "" && cantidadf === "")
+                    {
+                        return false;
+                    }else {
                         array2f[i] = {
                             orden: codigo,
                             maquina: maquinaf,
@@ -260,16 +295,78 @@
                     }
                 }
             });
-
+            console.log(array2f);
             array3f = array2f.filter(function (dato) {
                 return dato.maquina !== undefined
             });
-
+            console.log(array3f);
             array3f.forEach(element => {
                 arrayf.push(element);
             });
             console.log(arrayf);
             //array4 =  array.push(array3);
+            /********** Fibras ***********/
+            //}
+            /********** Quimicos ***********/
+            dtQM.rows().eq(0).each(function (index) {
+                var rowq = dtQM.row(index);
+                var dataq = rowq.data();
+                var posq = dataq[0];
+
+                var maquinaq = ($('#maquinaq-' + posq + ' option:selected').val() === "") ? 0 : $('#maquinaq-' + posq + ' option:selected').val();
+                var quimico = ($('#quimicos-' + posq + ' option:selected').val() === "") ? 0 : $('#quimicos-' + posq + ' option:selected').val();
+                //var cantidadq = ($('#cantidadq-prev-' + posq).val() == "") ? 0 : $('#cantidadq-prev-' + posq).val();
+
+                $('#cantidadq-prev-').on('keypress', function (e) {
+                    soloNumeros(e.keyCode, e, $('#cantidadq-prev-').val());
+                });
+
+                var cantidadq = $('#cantidadq-prev-' + i).val();
+                if (cantidadq === '') {
+                    mensaje("Debe ingresar la cantidad en la tabla de Quimicos", "error");
+                    return false;
+                }
+                /*if (parseFloat(cantidadq) > 0) {
+                    parseFloat(cantidadq)
+                } else {
+                    mensaje("la cantidad de quimico debe ser mayor a 0");
+                    return false;
+                }*/
+                arrayq[i] = { orden: codigo, maquina: maquinaq, quimico: quimico, cantidad: cantidadq };
+                i++;
+            });
+            $('#tbody-qm tr td').children().each(function(i) {
+                var item = $(this).val();
+                var maquinaq = "";
+                var quimico = "";
+                var cantidadq = "";
+                //console.log(i);
+                if (item !== "" && item != null) {
+                    codigo = $('#numOrden').val();
+                    maquinaq = $('#maquinaq-prev-' + i).val();
+                    quimico = $('#quimicos-prev-' + i).val();
+                    cantidadq = $('#cantidadq-prev-' + i).val();
+                    if (maquinaq !== "" && quimico !== "" && cantidadq !== "") {
+                        array2q[i] = {
+                            orden: codigo,
+                            maquina: maquinaq,
+                            quimico: quimico,
+                            cantidad: cantidadq
+                        };
+                    }
+                }
+            });
+            console.log(array2q);
+            array3q = array2q.filter(function (dato) {
+                return dato.maquina !== undefined
+            });
+            console.log(array3q);
+            array3q.forEach(element => {
+                arrayq.push(element);
+            });
+            console.log(arrayq);
+            /********** Quimicos ***********/
+            /********** Ajax de Fibras ***********/
             $.ajax({
                 url: "../guardarmp-directa",
                 data: {
@@ -280,68 +377,13 @@
                 async: true,
                 success: function (resultado) {
                     mensaje('Exito en guardar fibras', 'success');
-                }
-            }).done(function (data) {
-                $("#formdataord").submit();
-            });
-            /********** Fibras ***********/
-            //}
-            /********** Quimicos ***********/
-
-            /********** Quimicos ***********/
-            var last_rowq = dtQM.row(":last").data();
-            var arrayq = [];
-            var array2q = [];
-            var array3q =[];
-            /********** Quimicos ***********/
-
-            dtQM.rows().eq(0).each(function (index) {
-                var rowq = dtQM.row(index);
-                var dataq = rowq.data();
-                var posq = dataq[0];
-
-                var maquinaq = ($('#maquinaq-' + posq + ' option:selected').val() == "") ? 0 : $('#maquinaq-' + posq + ' option:selected').val();
-                var quimico = ($('#quimicos-' + posq + ' option:selected').val() == "") ? 0 : $('#quimicos-' + posq + ' option:selected').val();
-                var cantidadq = ($('#cantidadq-prev-' + posq).val() == "") ? 0 : $('#cantidadq-prev-' + posq).val();
-
-                if (parseFloat(cantidadq) > 0) {
-                    parseFloat(cantidadq)
-                } else {
-                    mensaje("la cantidad de quimico debe ser mayor a 0");
-                    return false;
-                }
-                arrayq[i] = { orden: codigo, maquina: maquinaq, quimico: quimico, cantidad: cantidadq };
-                i++;
-            });
-            $('#tbody-qm tr td').children().each(function(i) {
-                var item = $(this).val();
-                var maquinaq = "";
-                var quimico = "";
-                var cantidadq = "";
-                console.log(i);
-                if (item != "" && item != null) {
-                    codigo = $('#numOrden').val();
-                    maquinaq = $('#maquinaq-prev-' + i).val();
-                    quimico = $('#quimicos-prev-' + i).val();
-                    cantidadq = $('#cantidadq-prev-' + i).val();
-                    if (maquinaq != "" && quimico != "" && cantidadq != "") {
-                        array2q[i] = {
-                            orden: codigo,
-                            maquina: maquinaq,
-                            quimico: quimico,
-                            cantidad: cantidadq
-                        };
-                    }
+                },
+                error: function() {
+                    mensaje("error en ajax de Fibras 1", "error");
                 }
             });
-            array3q = array2q.filter(function (dato) {
-                return dato.maquina !== undefined
-            });
-
-            array3q.forEach(element => {
-                arrayq.push(element);
-            });
-            console.log(arrayq);
+            /********** Ajax de Fibras ***********/
+            /********** Ajax de Quimicos ***********/
             $.ajax({
                 url: "../guardarqm-directa",
                 data: {
@@ -352,16 +394,20 @@
                 async: true,
                 success: function (resultado) {
                     mensaje('Exito en guardar quimicos', 'success');
+                },
+                error: function() {
+                    mensaje("error en ajax de Quimicos 1", "error");
                 }
             }).done(function (data) {
                 $("#formdataord").submit();
+
             });
-            /********** Quimicos ***********/
+            /********** Ajax de Quimicos ***********/
+
         }
     });
 
-    /********** funciones extras ***********/
-
+    /********** funciones extras para validacion ***********/
     function soloNumeros(caracter, e, numeroVal) {
         var numero = numeroVal;
         if (String.fromCharCode(caracter) === "." && numero.length === 0) {
@@ -384,17 +430,12 @@
     });
 
     function validarForm(e) {
-
         e.preventDefault();
-
         var fecha1 = $("#fecha01").val();
         var fecha2 = $("#fecha02").val();
         var horaInicio = $("#hora01").val();
         var horaFin = $("#hora02").val();
         var horasT = $("#hrsTrabajadas").val();
-        var i = 0;
-        var cantidadf = $('#cantidadf-prev-' + i).val();
-        var cantidadq = $('#cantidadq-prev-' + i).val();
         var last_row = dtMPD.row(":last").data();
         var last_rowq = dtQM.row(":last").data();
 
@@ -406,16 +447,6 @@
         } else if (typeof (last_rowq) === "undefined") {
             //e.preventDefault();
             mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error");
-            return false;
-
-        } else if (cantidadf === '') {
-            //e.preventDefault();
-            mensaje("La cantidad no puede estar vacia en la tabla de Quimicos directos", "error");
-            return false;
-
-        } else if (cantidadq === '') {
-            //e.preventDefault();
-            mensaje("La cantidad no puede estar vacia en la tabla de Quimicos directos", "error");
             return false;
 
         } else if (fecha1 === '') {
@@ -445,5 +476,6 @@
         }
         return true;
     }
+    /********** funciones extras para validacion ***********/
 
 </script>
