@@ -88,14 +88,15 @@ class orden_produccionController extends Controller
 
         if (count($mp_directa) > 0 && $totalMPTPACK->total != '') {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
-            $produccionBruta_ = $this->calcularProduccionBruta($idOP);
-            $produccion_bruta = $produccionBruta_ + $produccionNeta->produccionNeta;
+            //$produccionBruta_ = $this->calcularProduccionBruta($idOP);
+            //$produccion_bruta = $produccionBruta_ + $produccionNeta->produccionNeta;
             $mermaYankeeDry = $this->calcularMermaYankeeDry($idOP);
             $residuosPulper = $this->calcularResiduosPulper($idOP);
             $lavadoraTetrapack = $this->calcularLavadoraTetrapack($idOP);
             $totalMP = $this->calcularTotalMP($idOP);
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
+            $produccion_bruta = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
 
             if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
                 $porcentMermaYankeeDry = ($mermaYankeeDry->merma / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma)) * 100;
@@ -126,14 +127,15 @@ class orden_produccionController extends Controller
             $factorFibral = (($totalMP->mp_directa - $lavadoraTetrapack->lav_tetrapack) / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma));*/
         } else {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
-            $produccionBruta_ = $this->calcularProduccionBruta($idOP);
-            $produccion_bruta = $produccionBruta_ + $produccionNeta->produccionNeta;
+            //$produccionBruta_ = $this->calcularProduccionBruta($idOP);
+            //$produccion_bruta = $produccionBruta_ + $produccionNeta->produccionNeta;
             $mermaYankeeDry = $this->calcularMermaYankeeDry($idOP);
             $residuosPulper = $this->calcularResiduosPulper($idOP);
             $lavadoraTetrapack = $this->calcularLavadoraTetrapack($idOP);
             $totalMP = $this->calcularTotalMP($idOP);
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
+            $produccion_bruta = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
 
             //$factor_fibral = $this->calcularFactorFibral($idOP);
 
@@ -512,7 +514,8 @@ class orden_produccionController extends Controller
         $lavadora_tetrapack = $lav_tp->lav_tetrapack;
         $residuo_pulper = $res_pulper->residuo_pulper;
 
-        return $merma_yankee_dry + $lavadora_tetrapack + $residuo_pulper;
+        //return $merma_yankee_dry + $lavadora_tetrapack + $residuo_pulper;
+       //return $merma_yankee_dry;
     }
 
     public function calcularMermaYankeeDry($numOrden)
