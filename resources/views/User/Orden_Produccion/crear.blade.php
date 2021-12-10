@@ -138,28 +138,38 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </form>
                                     </div>
+
                                     <div class="row mt-3">
                                         <!-- [ Tabla Materia Prima Directa ] start -->
                                         <div class="col-xl-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h5>Materia Prima Directa (M.P.)</h5>
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <h5>Materia Prima Directa (M.P.)</h5>
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <button class="btn btn-success float-right" id="btnGFibras">Guardar</button>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="card-block table-border-style">
                                                     <div class="table-responsive">
                                                         <table class="table" id="dtMPD" cellspacing="0" width="100%">
                                                             <thead>
-                                                                <tr>
-                                                                    <th>#</th>
-                                                                    <th>MAQUINA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th class="text-center">CANTIDAD</th>
-                                                                </tr>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>MAQUINA</th>
+                                                                <th>DESCRIPCION</th>
+                                                                <th class="text-center">CANTIDAD</th>
+                                                            </tr>
                                                             </thead>
                                                             <tbody id="tbody-mp">
-                                                                @foreach($mp_directa as $key => $mp)
+                                                            @foreach($mp_directa as $key => $mp)
                                                                 <tr id="{{ $key }}">
                                                                     <input type="hidden" id="id-mp" value="{{$mp->id}}">
                                                                     <td></td>
@@ -171,7 +181,7 @@
                                                                         </select></td>
                                                                     <td><input class="input-dt mp-cant" type="text" placeholder="" id="cantidad-prev-{{ $key }}" onpaste="return false" value="{{ $mp->cantidad}}"></td>
                                                                 </tr>
-                                                                @endforeach
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -191,7 +201,15 @@
                                         <div class="col-xl-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h5>Quimicos por Maquina</h5>
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <h5>Quimicos por Maquina</h5>
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <button class="btn btn-success float-right" id="btnGQuimicos">Guardar</button>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="card-block table-border-style">
                                                     <div class="table-responsive">
