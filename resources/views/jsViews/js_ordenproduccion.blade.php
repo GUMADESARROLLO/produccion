@@ -321,11 +321,12 @@
             },
             type: 'post',
             async: true,
-            success: function (resultado) {
-                console.log('Exito en guardar fibras');
+            success: function (response) {
+                //console.log('Exito en guardar fibras');
+                mensaje(response.responseText, 'success');
             },
-            error: function() {
-                console.log("error en ajax de Fibras");
+            error: function(response) {
+                mensaje(response.responseText, 'error');
             }
         });
         /********** Ajax de Fibras ***********/
@@ -413,11 +414,13 @@
             },
             type: 'post',
             async: true,
-            success: function (resultado) {
-                console.log('Exito en guardar quimicos');
+            success: function (response) {
+                //console.log('Exito en guardar quimicos');
+                console.log(response.responseText);
             },
-            error: function() {
-                console.log("error en ajax de Quimicos");
+            error: function(response) {
+                //console.log("error en ajax de Quimicos");
+                mensaje(response.responseText, 'error');
             }
         });
         /********** Ajax de Quimicos ***********/

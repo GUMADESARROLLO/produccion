@@ -742,11 +742,14 @@ class orden_produccionController extends Controller
                     return response()->json(false);
                 }
 
-                return response()->json($response);
+                //return response()->json($response);
+                return response("El registro de fibras en la orden ha sido exitoso :)", 200);
             }
+            //return response("El registro de fibras en la orden ha sido exitoso :)", 200);
         }
         else{
-            return response("Error al guardar las fibras", 400);
+            return response("Error al guardar las fibras, la orden no existe,
+            por favor cree la orden antes de agregar las fibras :(", 400);
         }
     }
 
@@ -775,11 +778,14 @@ class orden_produccionController extends Controller
                     return response()->json(false);
                 }
 
-                return response()->json($response);
+                //return response()->json($response);
+                return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
             }
+            //return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
         }
         else{
-            return response("Error al guardar los quimicos", 400);
+            return response("Error al guardar los quimicos, la orden no existe,
+            por favor cree la orden antes de agregar los quimicos :(", 400);
         }
 
 
