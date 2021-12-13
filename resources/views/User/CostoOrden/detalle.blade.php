@@ -3,31 +3,45 @@
 @include('jsViews.js_costo_orden')
 @endsection
 @section('content')
-<!-- [ Main Content ] start -->
-<div class="pcoded-main-container">
-    <div class="pcoded-wrapper">
-        <div class="pcoded-content">
-            <div class="pcoded-inner-content">
-                <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-10">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Lista Costos por Orden</h5>
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-10">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Lista Costos por Orden</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        </li>
+                                    <!--<li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
+                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de
+                                                ordenes</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:"> Lista de Costos por Orden</a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <ul class="breadcrumb">
+                                <div class="col-md-2">
+                                    <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo
+                                        Costo</a>
+                                </div>
+                            <!--<ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                     </li>
-                                    <!--<li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
                                     <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de ordenes</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:"> Lista de Costos por Orden</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-2">
-                                <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo
+                                <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm float-right">Nuevo
                                     Costo</a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -48,11 +62,12 @@
                                                 <thead>
                                                     <tr class="text-center">
 
-                                                        <th># ORDEN</th>
-                                                        <th>COSTO ID</th>
+                                                        <th>ID</th>
+                                                        <th>DESCRIPCION</th>
+                                                        <th>UNIDAD DE MEDIDA</th>
                                                         <th>CANTIDAD</th>
                                                         <th>COSTO UNITARIO</th>
-                                                        <th>ESTADO</th>
+
                                                         <th></th>
                                                     </tr>
                                                 </thead>

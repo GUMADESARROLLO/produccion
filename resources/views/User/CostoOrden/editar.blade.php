@@ -20,7 +20,8 @@
                                         <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de ordenes</a>
+                                        <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de
+                                                ordenes</a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="javascript:">Editar Detalle de Costo</a>
                                         </li>
@@ -60,63 +61,70 @@
                                             <form method="post" action="{{url('costo-orden/actualizar')}}">
                                                 {{ csrf_field() }}
                                                 @foreach ($costoOrden as $cor)
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="id">Tipo de Costo de la Orden</label>
-                                                            <input type="text" readonly class="form-control" name="id" id="id" value="{{ $cor['id'] }}">
-                                                            <small id="idcostoordenHelp" class="form-text text-muted" >Tipo de Costo </small>
+                                                    <div class="row" hidden>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="id">Id del Costo de la Orden</label>
+                                                                <input type="text" readonly class="form-control"
+                                                                       name="id" id="id" value="{{ $cor['id'] }}">
+                                                                <small id="idcostoordenHelp"
+                                                                       class="form-text text-muted">Tipo de
+                                                                    Costo </small>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-8">
-                                                        <div class="form-group">
-                                                            <label for="num_Orden"># de la orden</label>
-                                                            <input type="text" readonly class="form-control" name="num_Orden" id="num_Orden" value="{{ $cor['numOrden'] }}">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="num_Orden"># de la orden</label>
+                                                                <input type="text" readonly class="form-control"
+                                                                       name="num_Orden" id="num_Orden"
+                                                                       value="{{ $cor['numOrden'] }}">
+                                                                <small id="num_OrdenHelp" class="form-text text-muted">Escriba
+                                                                    el # de la orden</small>
+                                                            </div>
+                                                        </div>
 
-                                                            <small id="num_OrdenHelp" class="form-text text-muted">Escriba
-                                                                el # de la orden</small>
+                                                        <div class="col-md-8">
+                                                            <div class="form-group">
+                                                                <label for="costo_orden">Tipo de costo</label>
+                                                                <select class="form-control" name="costo_orden"
+                                                                        id="costo_orden">
+                                                                    @foreach($costos as $co)
+                                                                        <option
+                                                                            value="{{ $co['id'] }}">{{ $co['descripcion'] }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <small id="costo_ordenHelp"
+                                                                       class="form-text text-muted">Escriba
+                                                                    la descripcion del costo</small>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="costo_orden">Tipo de costo</label>
-                                                            <select class="form-control" name="costo_orden" id="costo_orden">
-                                                                @foreach($costos as $co)
-                                                                    <option
-                                                                        value="{{ $co['id'] }}">{{ $co['descripcion'] }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <small id="costo_ordenHelp" class="form-text text-muted">Escriba
-                                                                la descripcion del costo</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="cantidad">Cantidad</label>
-                                                            <input type="text" class="form-control" name="cantidad"
-                                                                   id="cantidad" value="{{old('cantidad')}}">
-                                                            <small id="cantidadHelp" class="form-text text-muted">Escriba
-                                                                la cantidad</small>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="cantidad">Cantidad</label>
+                                                                <input type="text" class="form-control" name="cantidad"
+                                                                       id="cantidad" value="{{old('cantidad')}}">
+                                                                <small id="cantidadHelp" class="form-text text-muted">Escriba
+                                                                    la cantidad</small>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="costo_unitario">Costo Unitario</label>
+                                                                <input type="text" class="form-control"
+                                                                       name="costo_unitario" id="costo_unitario"
+                                                                       value="{{old('costo_unitario')}}">
+                                                                <small id="costo_unitarioHelp"
+                                                                       class="form-text text-muted">Escriba
+                                                                    el costo unitario</small>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="costo_unitario">Costo Unitario</label>
-                                                            <input type="text" class="form-control"
-                                                                   name="costo_unitario" id="costo_unitario"
-                                                                   value="{{old('costo_unitario')}}">
-                                                            <small id="costo_unitarioHelp" class="form-text text-muted">Escriba
-                                                                el costo unitario</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 @endforeach
                                                 <button type="submit" class="btn btn-primary mt-5">Enviar</button>
                                             </form>

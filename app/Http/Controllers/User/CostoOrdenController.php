@@ -5,13 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Costo;
 use App\Models\CostoOrden;
-use App\Models\DetalleOrden;
 use App\Models\orden_produccion;
 use App\Models\productos;
 use Illuminate\Http\Request;
-use Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class CostoOrdenController extends Controller
 {
@@ -29,7 +28,6 @@ class CostoOrdenController extends Controller
                 $array[$i]['idOrden'] = $key['idOrden'];
                 $array[$i]['numOrden'] = $key['numOrden'];
                 $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
-
                 $array[$i]['producto'] = $fibra->nombre;
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
@@ -42,6 +40,20 @@ class CostoOrdenController extends Controller
 
     public function detalleCostoOrden($idOP)
     {
+
+        /*$costoOrden = CostoOrden::join('costo', 'CostoOrden.costo_id', 'costo.id')
+                            ->select('CostoOrden.numOrden', 'CostoOrden.costo_id', 'costo.descripcion',
+                                    'CostoOrden.cantidad', 'CostoOrden.costo_unitario')
+                            ->where('CostoOrden.numOrden', $idOP)
+                        ->orderBy('id', 'asc')->get();*/
+        $costoOrden = DB::select(('select costo_orden.id, costo_orden.numOrden, costo_orden.costo_id,
+                                    costo.unidad_medida,  costo.descripcion, costo_orden.cantidad,
+                                    costo_orden.costo_unitario
+                                    from costo_orden
+                                    inner join costo on costo_orden.costo_id = costo.id
+                                    where costo_orden.numOrden = :orden
+                                    order by costo_id asc'), array('orden' => $idOP));
+
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
         $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         //dd($costoOrden);
@@ -57,6 +69,7 @@ class CostoOrdenController extends Controller
 
     public function guardarCostoOrden(Request $request)
     {
+        $orden = $request['num_Orden'];
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
             'numeric' => ':attribute debe ser un valor númerico'
@@ -71,12 +84,9 @@ class CostoOrdenController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])
-            ->where('costo_id', '=', $request['costo_orden'])->first()
-        ) {
+        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])->where('costo_id', '=', $request['costo_orden'])->first()){
             return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
-        } else {
-
+        }else{
             $costoOrden = new costoOrden();
             $costoOrden->numOrden = $request->num_Orden;
             $costoOrden->costo_id = $request->costo_orden;
@@ -85,16 +95,17 @@ class CostoOrdenController extends Controller
             $costoOrden->estado = 1;
             $costoOrden->save();
 
-            /*$array = [
-            'numOrden' => $request->num_Orden,
-            'costo_id' => $request->costo_orden,
-            'cantidad' => $request->cantidad,
-            'costo_unitario' => $request->costo_unitario,
-            'estado' => 1
-    ];
-        CostoOrden::insertOrIgnore($array);*/
+            $array = [
+                'numOrden' => $request->num_Orden,
+                'costo_id' => $request->costo_orden,
+                'cantidad' => $request->cantidad,
+                'costo_unitario' => $request->costo_unitario,
+                    'estado' => 1
+            ];
+            CostoOrden::insertOrIgnore($array);
 
-            return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+
+            return redirect::to('costo-orden/detalle/' . $orden)->with('message-success', 'Se guardo con exito :)');
         }
     }
 
@@ -108,17 +119,16 @@ class CostoOrdenController extends Controller
 
     public function actualizarCostoOrden(Request $request)
     {
+        $orden = $request['num_Orden'];
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
             'numeric' => ':attribute debe ser un valor númerico'
 
         );
-
         $validator = Validator::make($request->all(), [
             'cantidad' => 'required|numeric|digits_between:1,9',
             'costo_unitario' => 'required|numeric|digits_between:1,9'
         ], $messages);
-
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
@@ -131,7 +141,11 @@ class CostoOrdenController extends Controller
                 'costo_unitario' => $request->costo_unitario
             ]);
 
-        return redirect()->back()->with('message-success', 'Se actualizo el costo de la orden con exito :)');
+        //->with('message-success', 'Se actualizo el costo de la orden con exito :)')
+        //return redirect()->back()->withInput();
+        //return redirect()->intended();
+        //return redirect::to('costo-orden/detalle/{numOrden}');
+        return redirect::to('costo-orden/detalle/' . $orden);
     }
 
     public function guardarHrasProd(Request $request)

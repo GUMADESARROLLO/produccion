@@ -63,7 +63,6 @@ class usuarioController extends Controller
             'password' => 'required|max:255',
             'nombre'   => 'required|max:255',
             'apellido' => 'required|max:255',
-            'fechaNac' => 'required|date',
             'rol_id'   => 'required'
         ], $messages);
 
@@ -76,7 +75,6 @@ class usuarioController extends Controller
         $user->apellidos = $request->apellido;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
-        $user->fecha_nacimiento = $request->fechaNac;
         $user->image = 'none';
         $user->estado = true;
         $user->id_grupo = 0;
@@ -109,7 +107,7 @@ class usuarioController extends Controller
         return view('Admin.Admin.Usuario.crear', compact(['rol', 'message']));
     }
 
-    
+
     public function editarUser($idUser)
     {
         $user  = usuario::where('id', $idUser)->where('estado', 1)->get()->toArray();
@@ -123,7 +121,7 @@ class usuarioController extends Controller
          $messages = array(
             'required' => 'El :attribute es un campo requerido'
         );
-        
+
         $validator = Validator::make($request->all(), [
             'rol_id'   => 'required',
             'password' => 'required|max:255',
@@ -200,5 +198,5 @@ class usuarioController extends Controller
 
         //echo $rol;
     }
-    
+
 }
