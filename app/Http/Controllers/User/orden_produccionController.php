@@ -310,7 +310,7 @@ class orden_produccionController extends Controller
 
         //return ["success" => "Data Inserted"];
         //return redirect()->route('orden-produccion');
-        return response($ordProd, 200);
+        return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
     }
 
     public function editar($idOP)
@@ -722,28 +722,33 @@ class orden_produccionController extends Controller
         $i = 0;
         $numOrden = intval($request->input('codigo'));
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
+        $arrayFibra = $request->input('data');
         if ($numOrdenE != null){
             if ($request->isMethod('post')) {
                 $array = array();
-
-                foreach ($request->input('data') as $key) {
-                    if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
-                        $array[$i]['numOrden'] = $key['orden'];
-                        $array[$i]['idMaquina'] = $key['maquina'];
-                        $array[$i]['idFibra'] = $key['fibra'];
-                        $array[$i]['cantidad'] = $key['cantidad'];
-                        $i++;
+                if(is_null($arrayFibra)){
+                 return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
+               }else{
+                    foreach ($request->input('data') as $key) {
+                        if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                            $array[$i]['numOrden'] = $key['orden'];
+                            $array[$i]['idMaquina'] = $key['maquina'];
+                            $array[$i]['idFibra'] = $key['fibra'];
+                            $array[$i]['cantidad'] = $key['cantidad'];
+                            $i++;
+                        }
                     }
-                }
-                if (count($array) > 0) {
-                    mp_directa::where('numOrden', $numOrden)->delete();
-                    $response = mp_directa::insert($array);
-                } else {
-                    return response()->json(false);
-                }
-
-                //return response()->json($response);
-                return response("El registro de fibras en la orden ha sido exitoso :)", 200);
+                    if (count($array) > 0) {
+                        mp_directa::where('numOrden', $numOrden)->delete();
+                        $response = mp_directa::insert($array);
+                    } else {
+                        return response()->json(false);
+                    }
+    
+                    //return response()->json($response);
+                    return response("El registro de fibras en la orden ha sido exitoso :)", 200);
+               }
+                
             }
             //return response("El registro de fibras en la orden ha sido exitoso :)", 200);
         }
@@ -758,28 +763,31 @@ class orden_produccionController extends Controller
         $i = 0;
         $numOrden = intval($request->input('codigo'));
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
+        $arrayQuimico = $request->input('data');
         if ($numOrdenE != null){
             if ($request->isMethod('post')) {
                 $array = array();
-
-                foreach ($request->input('data') as $key) {
-                    if ($key['maquina'] !== 'undefined' && $key['quimico'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
-                        $array[$i]['numOrden'] = $key['orden'];
-                        $array[$i]['idMaquina'] = $key['maquina'];
-                        $array[$i]['idQuimico'] = $key['quimico'];
-                        $array[$i]['cantidad'] = $key['cantidad'];
-                        $i++;
+                if(is_null($arrayQuimico)){
+                    return response("Por favor ingrese Quimico,los datos estan vacios)", 400);
+                }else{
+                    foreach ($request->input('data') as $key) {
+                        if ($key['maquina'] !== 'undefined' && $key['quimico'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                            $array[$i]['numOrden'] = $key['orden'];
+                            $array[$i]['idMaquina'] = $key['maquina'];
+                            $array[$i]['idQuimico'] = $key['quimico'];
+                            $array[$i]['cantidad'] = $key['cantidad'];
+                            $i++;
+                        }
                     }
+                    if (count($array) > 0) {
+                        QuimicoMaquina::where('numOrden', $numOrden)->delete();
+                        $response = QuimicoMaquina::insert($array);
+                    } else {
+                        return response()->json(false);
+                    }
+                    //return response()->json($response);
+                    return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
                 }
-                if (count($array) > 0) {
-                    QuimicoMaquina::where('numOrden', $numOrden)->delete();
-                    $response = QuimicoMaquina::insert($array);
-                } else {
-                    return response()->json(false);
-                }
-
-                //return response()->json($response);
-                return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
             }
             //return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
         }
@@ -787,8 +795,6 @@ class orden_produccionController extends Controller
             return response("Error al guardar los quimicos, la orden no existe,
             por favor cree la orden antes de agregar los quimicos :(", 400);
         }
-
-
     }
 
     public function getDataQuimico()
