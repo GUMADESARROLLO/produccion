@@ -196,7 +196,7 @@ class orden_produccionController extends Controller
         )
             ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
             ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
-            ->where('mp_directa.numOrden', intval($idOrd->numOrden + 1))
+            ->where('mp_directa.numOrden', intval($idOrd->numOrden))
             ->get();
 
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
@@ -209,7 +209,7 @@ class orden_produccionController extends Controller
         )
             ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
             ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
-            ->where('quimico_maquina.numOrden', intval($idOrd->numOrden + 1))
+            ->where('quimico_maquina.numOrden', intval($idOrd->numOrden))
             ->get();
 
         return view('User.Orden_Produccion.crear', compact([
@@ -680,9 +680,10 @@ class orden_produccionController extends Controller
     public function eliminarMateriaPrima(Request $request)
     {
         $id = intval($request->input('id'));
-
-        $response = mp_directa::where('id', $id)->delete();
-
+        $response = mp_directa::where('id', $id)
+        ->update([
+            'estado' => 0
+        ]);
         return response()->json($response);
     }
 
@@ -779,6 +780,8 @@ class orden_produccionController extends Controller
     {
         $i = 0;
         $numOrden = intval($request->input('codigo'));
+        $id = intval($request->input('id'));
+
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayFibra = $request->input('data');
         if ($numOrdenE != null){
@@ -793,12 +796,30 @@ class orden_produccionController extends Controller
                             $array[$i]['idMaquina'] = $key['maquina'];
                             $array[$i]['idFibra'] = $key['fibra'];
                             $array[$i]['cantidad'] = $key['cantidad'];
+                            $array[$i]['estado'] = 1;
                             $i++;
                         }
                     }
                     if (count($array) > 0) {
-                        mp_directa::where('numOrden', $numOrden)->delete();
-                        $response = mp_directa::insert($array);
+                        //mp_directa::where('numOrden', $numOrden)->delete();
+                        foreach($array as $data){
+                            $mpE = mp_directa::where('numOrden', '=', $data['numOrden'])->where('estado', 1)->where('id', $id)->first();
+                            if($mpE == null){
+                               mp_directa::insert($data);
+                            }else{
+                                 mp_directa::where('numOrden', $numOrden)->where('id', $id)
+                                ->update([
+                                    'idMaquina' => $data['idMaquina'],
+                                    'idFibra' => $data['idFibra'],
+                                    'cantidad' => $data['cantidad'],
+                                ]);
+                            }
+                        }
+                        /*mp_directa::where('numOrden', $numOrden)
+                        ->update([
+                            'estado' => 0
+                        ]);*/
+            
                     } else {
                         return response()->json(false);
                     }
@@ -834,11 +855,15 @@ class orden_produccionController extends Controller
                             $array[$i]['idMaquina'] = $key['maquina'];
                             $array[$i]['idQuimico'] = $key['quimico'];
                             $array[$i]['cantidad'] = $key['cantidad'];
+                            $array[$i]['estado'] = 1;
                             $i++;
                         }
                     }
                     if (count($array) > 0) {
-                        QuimicoMaquina::where('numOrden', $numOrden)->delete();
+                        QuimicoMaquina::where('numOrden', $numOrden)
+                        ->update([
+                            'estado' => 0
+                        ]);
                         $response = QuimicoMaquina::insert($array);
                     } else {
                         return response()->json(false);
@@ -890,9 +915,10 @@ class orden_produccionController extends Controller
     public function eliminarQuimico(Request $request)
     {
         $id = intval($request->input('id'));
-
-        $response = QuimicoMaquina::where('id', $id)->delete();
-
+        $response = QuimicoMaquina::where('id', $id)
+        ->update([
+            'estado' => 0
+        ]);
         return response()->json($response);
     }
 }

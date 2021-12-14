@@ -170,17 +170,18 @@
                                                             </thead>
                                                             <tbody id="tbody-mp">
                                                             @foreach($mp_directa as $key => $mp)
-                                                                <tr id="{{ $key }}">
-                                                                    <input type="hidden" id="id-mp" value="{{$mp->id}}">
-                                                                    <td></td>
-                                                                    <td><select disabled class="mb-3 form-control " id="maquina-prev-{{ $key }}">
-                                                                            <option  selected value="{{ $mp->idFibra }}">{{ $mp->nombre }}</option>
-                                                                        </select></td>
-                                                                    <td><select disabled class="mb-3 form-control" id="fibras-prev-{{ $key }}">
-                                                                            <option  selected value="{{ $mp->idMaquina }}">{{ $mp->descripcion}}</option>
-                                                                        </select></td>
-                                                                    <td><input class="input-dt mp-cant" type="text" placeholder="" id="cantidad-prev-{{ $key }}" onpaste="return false" value="{{ $mp->cantidad}}"></td>
-                                                                </tr>
+                                                                @if($mp->estado == 1)
+                                                                     <tr >
+                                                                         <td>{{ $mp->id }}</td>
+                                                                         <td><select disabled class="mb-3 form-control " id="maquinaf-prev-{{ $mp->id }}">
+                                                                                 <option  selected value="{{ $mp->idFibra }}">{{ $mp->nombre }}</option>
+                                                                             </select></td>
+                                                                         <td><select disabled class="mb-3 form-control" id="fibras-prev-{{ $mp->id }}">
+                                                                                 <option  selected value="{{ $mp->idMaquina }}">{{ $mp->descripcion}}</option>
+                                                                             </select></td>
+                                                                         <td><input class="input-dt mp-cant" type="text" placeholder="" id="cantidadf-prev-{{ $mp->id }}" onpaste="return false" value="{{ $mp->cantidad}}"></td>
+                                                                     </tr>
+                                                                @endif
                                                             @endforeach
                                                             </tbody>
                                                         </table>
@@ -224,16 +225,18 @@
                                                             </thead>
                                                             <tbody id="tbody-qm">
                                                             @foreach($quimico_maquina as $key => $qm)
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td><select disabled class="mb-3 form-control " id="maquinaq-prev-{{ $key }}">
+                                                            @if($qm->estado == 1)
+                                                                <tr >
+                                                                    <td>{{ $qm->id }}</td>
+                                                                    <td><select disabled class="mb-3 form-control " id="maquinaq-prev-{{ $qm->id }}">
                                                                             <option  selected value="{{ $qm->idQuimico }}">{{ $qm->nombre }}</option>
                                                                         </select></td>
-                                                                    <td><select disabled class="mb-3 form-control" id="quimicos-prev-{{ $key }}">
+                                                                    <td><select disabled class="mb-3 form-control" id="quimicos-prev-{{ $qm->id }}">
                                                                             <option  selected value="{{ $qm->idMaquina }}">{{ $qm->descripcion}}</option>
                                                                         </select></td>
-                                                                    <td><input class="input-dt qm-cant" type="text" placeholder="" id="cantidadq-prev-{{ $key }}" onpaste="return false" value="{{ $qm->cantidad}}"></td>
+                                                                    <td><input class="input-dt qm-cant" type="text" placeholder="" id="cantidadq-prev-{{ $qm->id }}" onpaste="return false" value="{{ $qm->cantidad}}"></td>
                                                                 </tr>
+                                                            @endif
                                                             @endforeach
                                                             </tbody>
                                                         </table>

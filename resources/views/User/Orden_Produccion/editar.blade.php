@@ -205,6 +205,7 @@
                                                                 <tbody>
                                                                 @if (count($mp_directa) > 0)
                                                                     @foreach ($mp_directa as $key => $mp)
+                                                                        @if($mp->estado == 1)
                                                                         <tr>
                                                                             <td>{{ $mp->id }}</td>
                                                                             <td>
@@ -251,6 +252,7 @@
                                                                                        placeholder="Ingrese la cantidad"
                                                                                        value="{{ $mp->cantidad }}"></td>
                                                                         </tr>
+                                                                    @endif
                                                                     @endforeach
 
                                                                 @endif
@@ -290,6 +292,7 @@
                                                                 <tbody id="tbody-qm">
                                                                 @if (count($quimico_maquina) > 0)
                                                                     @foreach ($quimico_maquina as $key => $qm)
+                                                                    @if($qm->estado == 1)
                                                                         <tr>
                                                                             <td>{{ $qm->id }}</td>
                                                                             <td>
@@ -337,6 +340,7 @@
                                                                                        onpaste="return false"
                                                                                        value="{{ $qm->cantidad }}"></td>
                                                                         </tr>
+                                                                        @endif
                                                                     @endforeach
                                                                 @endif
                                                                 </tbody>

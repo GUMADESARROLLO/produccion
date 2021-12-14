@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class mp_directa extends Model
 {
     protected $table = "mp_directa";
-    protected $fillable = ['id', 'idMaquina', 'idFibra', 'numOrden','cantidad'];
+    protected $fillable = ['id', 'idMaquina', 'idFibra', 'numOrden','cantidad','estado'];
     public $timestamps = false;
 }
