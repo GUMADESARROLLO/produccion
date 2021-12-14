@@ -722,6 +722,8 @@ class orden_produccionController extends Controller
     {
         $i = 0;
         $numOrden = intval($request->input('codigo'));
+        $id = intval($request->input('id'));
+
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayFibra = $request->input('data');
         if ($numOrdenE != null){
@@ -742,11 +744,23 @@ class orden_produccionController extends Controller
                     }
                     if (count($array) > 0) {
                         //mp_directa::where('numOrden', $numOrden)->delete();
-                        mp_directa::where('numOrden', $numOrden)
+                        foreach($array as $data){
+                            $mpE = mp_directa::where('numOrden', '=', $data['numOrden'])->where('estado', 1)->where('id', $id)->first();
+                            if($mpE == null){
+                               mp_directa::insert($data);
+                            }else{
+                                 mp_directa::where('numOrden', $numOrden)->where('id', $id)
+                                ->update([
+                                    'idMaquina' => $data['idMaquina'],
+                                    'idFibra' => $data['idFibra'],
+                                    'cantidad' => $data['cantidad'],
+                                ]);
+                            }
+                        }
+                        /*mp_directa::where('numOrden', $numOrden)
                         ->update([
                             'estado' => 0
-                        ]);
-                        $response = mp_directa::insert($array);
+                        ]);*/
             
                     } else {
                         return response()->json(false);

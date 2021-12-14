@@ -5,7 +5,7 @@
 
     /******** Cargar funcion al inicio del DOM ************/
     $(document).ready(function() {
-        $(function() {  
+        $(function() {
             $('.datetimepicker_').datetimepicker({
                 format: 'LT'
             });
@@ -86,62 +86,38 @@
     $(document).on('click', '#quitRowdtBATH', function() {
         var numOrden = $("#numOrden").val();
         var select_row = dtMPD.row(".selected").data();
-        
-        $('#tbody-mp tr').each(function(i) {
-            //    console.log($(this))
-            if ($(this).hasClass('selected')) {
-                // console.log($(this))
-                id = $(this).children().first();
-                var id_selected = id.val();
-                console.log(id_selected);
-                $.ajax({
-                    url: "../eliminar-mp",
-                    data: {
-                        id: id_selected,
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(resultado) {}
-                }).done(function(data) {
-                    alert('La materia prima ha sido eliminada');
-                });
-            } else {
-                console.log('Esta clase no esta seleccionada');
-            }
-        });
-
         indexData = select_row[0];
-        dtMPD.row('.selected').remove().draw(false);
+        console.log(indexData);
+        $.ajax({
+            url: "../eliminar-mp",
+            data: {
+                id: indexData,
+            },
+            type: 'post',
+            async: true,
+            success: function(resultado) {}
+        }).done(function(data) {
+            alert('La materia prima ha sido eliminada');
+        });
     });
 
     /********** Quimicos - Eliminar registro de la bd ***********/
     $(document).on('click', '#quitRowdtBATHQ', function() {
         var numOrden = $("#numOrden").val();
         var select_rowq = dtQM.row(".selected").data();
-        $('#tbody-qm tr').each(function(i) {
-            if ($(this).hasClass('selected')) {
-                // console.log($(this))
-                id = $(this).children().first();
-                var id_selected = id.val();
-                console.log(id_selected);
-                $.ajax({
-                    url: "../eliminar-qm",
-                    data: {
-                        id: id_selected,
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(resultado) {}
-                }).done(function(data) {
-                    alert('El quimico ha sido eliminado');
-                });
-            } else {
-                console.log('Esta clase no esta seleccionada');
-            }
-        });
-
         indexData = select_rowq[0];
-        dtQM.row('.selected').remove().draw(false);
+        console.log(indexData);
+        $.ajax({
+            url: "../eliminar-qm",
+            data: {
+                id: indexData,
+            },
+            type: 'post',
+            async: true,
+            success: function(resultado) {}
+        }).done(function(data) {
+            alert('El quimico ha sido eliminado');
+        });
     });
 
     /********** Fibras - Obtener lista de maquinas y fibras ***********/
@@ -155,10 +131,9 @@
         console.log(Object.values(typeof(last_row)));
         if (typeof(last_row) === "undefined") {
             indicador_1 = 1;
-        }else if(typeof(last_row) === Object ){
+        } else if (typeof(last_row) === Object) {
             indicador_1 = $('#num_mp').val() + 1;
-        } 
-        else {
+        } else {
             indicador_1 = parseInt(last_row[0]) + 1
         }
         $.getJSON("../data-mp", function(json) {
@@ -229,7 +204,6 @@
 
     /********** Guardar informacion de fibras ***********/
     $(document).on('click', '#btnGFibras', function(e) {
-
         e.preventDefault();
         codigo = $('#numOrden').val();
         var i = 0;
@@ -244,8 +218,8 @@
             var rowf = dtMPD.row(index);
             var dataf = rowf.data();
             var posf = dataf[0];
-            console.log(index);
-            console.log(dataf);
+            console.log(posf);
+            var idf =  posf;
             var maquinaf = ($('#maquinaf-prev-' + posf + ' option:selected').val() === "") ? 0 : $('#maquinaf-prev-' + posf + ' option:selected').val();
             var fibra = ($('#fibras-prev-' + posf + ' option:selected').val() === "") ? 0 : $('#fibras-prev-' + posf + ' option:selected').val();
             var cantidadf = ($('#cantidadf-prev-' + posf).val() === "") ? 0 : $('#cantidadf-prev-' + posf).val();
@@ -254,6 +228,7 @@
                 soloNumeros(e.keyCode, e, $('#cantidadf-prev-').val());
             });
             arrayf[i] = {
+                id : idf,
                 orden: codigo,
                 maquina: maquinaf,
                 fibra: fibra,
@@ -263,7 +238,7 @@
             i++;
         });
 
-       
+
         console.log(arrayf);
         /********** Fibras ***********/
         /********** Ajax de Fibras ***********/
