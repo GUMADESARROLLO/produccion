@@ -68,7 +68,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="numOrden">Orden de Producción No.</label>
-                                                                <input type="text" readonly class="form-control"
+                                                                <input type="text" class="form-control"
                                                                        name="numOrden"
                                                                        id="numOrden" value="{{ $ord->numOrden }}">
                                                                 <small id="numordenHelp" class="form-text text-muted">Escriba

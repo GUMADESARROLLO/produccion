@@ -20,6 +20,8 @@
                                         <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
                                         <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/orden-produccion')}}">Ordenes
+                                                Produccion</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Detalle</a></li>
                                     </ul>
                                 </div>

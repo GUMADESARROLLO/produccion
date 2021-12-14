@@ -3,7 +3,7 @@
     var indicador_1 = 0;
 
     $(document).ready(function() {
-        $(function() {
+        /*$(function() {
             $('.datetimepicker_').datetimepicker({
                 format: 'LT'
             });
@@ -26,10 +26,10 @@
             }]
         });
 
-        inicializaControlFecha();
+        inicializaControlFecha();*/
     });
 
-    $('#dtQM tbody').on('click', 'tr', function() {
+    /*$('#dtQM tbody').on('click', 'tr', function() {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
         } else {
@@ -41,15 +41,40 @@
                 soloNumeros(e.keyCode, e, $(this).val());
             });
         });
-    });
+    });*/
 
-    $(document).on('click', '#quitRowdtBATHQ', function() {
+    /*$(document).on('click', '#quitRowdtBATHQ', function() {
+        var numOrden = $("#numOrden").val();
         var select_row = dtQM.row(".selected").data();
+        $('#tbody-qm tr').each(function (i){
+            if ($(this).hasClass('selected')) {
+                // console.log($(this))
+
+                id = $(this).children().first();
+                var id_selected = id.val();
+                console.log(id_selected);
+                $.ajax({
+                    url: "../eliminar-qm",
+                    data: {
+                        id: id_selected,
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(resultado) {
+                    }
+                }).done(function(data) {
+                    alert('El quimico ha sido eliminado');
+                });
+            } else {
+                console.log('Esta clase no esta seleccionada');
+            }
+        });
+
         indexData = select_row[0];
         dtQM.row('.selected').remove().draw(false);
-    });
+    });*/
 
-    $(document).on('click', '.add-row-dt-qm', function() {
+    /*$(document).on('click', '.add-row-dt-qm', function() {
         var numOrden = $("#numOrden").val();
         var option1 = '';
         var option2 = '';
@@ -74,12 +99,12 @@
                 indicador_1,
                 `<select class="mb-3 form-control " id="maquinaq-` + indicador_1 + `">` + option2 + `</select>`,
                 `<select class="mb-3 form-control" id="quimicos-` + indicador_1 + `">` + option1 + `</select>`,
-                `<input class="input-dt qm-cant" type="text"  placeholder="Cantidad" id="cantidadq-` + indicador_1 + `" onpaste="return false">`,
+                `<input class="input-dt qm-cant" type="text"  placeholder="Cantidad" id="cantidadq-prev-` + indicador_1 + `" onpaste="return false">`,
             ]).draw(false);
         })
-    });
+    });*/
 
-    function verfifyExistRegister() {
+    /*function verfifyExistRegister() {
         codigo = $('#numOrden').val();
         $.ajax({
             url: "../cargarqm-directa",
@@ -91,12 +116,11 @@
             async: true,
             success: function(resultado) {}
         })
-    }
+    }*/
 
     //$(document).ready(resaltar);
 
-
-    function soloNumeros(caracter, e, numeroVal) {
+    /*function soloNumeros(caracter, e, numeroVal) {
         var numero = numeroVal;
         if (String.fromCharCode(caracter) === "." && numero.length === 0) {
             e.preventDefault();
@@ -111,14 +135,14 @@
                 //   alert('solo se permiten datos númericos');
             }
         }
-    }
+    }*/
 
     /*$('#hrsTrabajadas').on('keypress', function(e) {
         soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
     });*/
 
-    $('#dtQM tbody').on('click', 'tr', function() {
-        var array = new Array();
+    /*$('#dtQM tbody').on('click', 'tr', function() {
+        var arrayq = new Array();
         var codigo = "";
         $('#tbody-qm tr td').children().each(function(i) {
             var item = $(this).val();
@@ -131,7 +155,7 @@
                 quimico = $('#quimicos-prev-' + i).val();
                 cantidad = $('#cantidadq-prev-' + i).val();
                 if (maquina != "" && quimico != "" && cantidad != "") {
-                    array[i] = {
+                    arrayq[i] = {
                         orden: codigo,
                         maquina: maquina,
                         quimico: quimico,
@@ -140,90 +164,138 @@
                 }
             }
         });
-        /*array2 = array.filter(function(dato) {
-            return dato != undefined
-        });*/
-
-        console.log(array);
-        $.ajax({
-            url: "../guardarqm-directa",
-            data: {
-                data: array,
-                codigo: codigo
-            },
-            type: 'post',
-            async: true,
-            success: function(resultado) {
-
-            }
-        }).done(function(data) {
-            $("#formdataord").submit();
-        });
+        console.log(arrayq);
 
         // console.log(i + " " + array);
-    });
+    });*/
 
-    $(document).on('click', '#btnguardar', function() {
+    /*$(document).on('click', '#btnguardar', function() {
+        e.preventDefault();
+
         codigo = $('#numOrden').val();
-
-        /* var maquina_previous = $('#maquinaq-prev').val();
-         var fibras_previous = $('#quimicos-prev').val();
-         var fibras_previous = $('#quimicos-prev').val();*/
-
-
-        var last_row = dtQM.row(":last").data();
-        var array = new Array();
+        var last_rowq = dtQM.row(":last").data();
+        var arrayq = new Array();
         var i = 0;
         var horaInicio = $("#hora01").val();
 
-        if (typeof(last_row) === "undefined") {
+        if (typeof(last_rowq) === "undefined") {
             mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error")
+        }
+        else
+        {
+            dtQM.rows().eq(0).each(function(index) {
+                var rowq = dtQM.row(index);
+                var dataq = rowq.data();
+                var posq = dataq[0];
+
+                var maquinaq = ($('#maquinaq-' + posq + ' option:selected').val() == "") ? 0 : $('#maquinaq-' + posq + ' option:selected').val();
+                var quimico = ($('#quimicos-' + posq + ' option:selected').val() == "") ? 0 : $('#quimicos-' + posq + ' option:selected').val();
+                var cantidadq = ($('#cantidadq-prev-' + posq).val() == "") ? 0 : $('#cantidadq-prev-' + posq).val();
+
+                if (parseFloat(cantidadq) > 0) {
+                    parseFloat(cantidadq)
+                } else {
+                    mensaje("la cantidad de quimico debe ser mayor a 0");
+                    return;
+                }
+                arrayq[i] = {
+                    orden: codigo,
+                    maquina: maquinaq,
+                    quimico: quimico,
+                    cantidad: cantidadq
+                };
+
+                i++;
+            });
+            $.ajax({
+                url: "../guardarqm-directa",
+                data: {
+                    data: arrayq,
+                    codigo: codigo
+                },
+                type: 'post',
+                async: true,
+                success: function(resultado) {
+
+                }
+            }).done(function(data) {
+                $("#formdataord").submit();
+            });
+        }
+    });*/
+
+
+    /********** funciones extras para validacion ***********/
+    function soloNumeros(caracter, e, numeroVal) {
+        var numero = numeroVal;
+        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+            e.preventDefault();
+            mensaje('No puedes iniciar con un punto', 'warning');
+        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+            e.preventDefault();
+            mensaje('No puede haber mas de dos puntos', 'warning');
         } else {
-            if (horaInicio == '') {
-                mensaje("Ingrese una hora de inicio", "error");
-            } else {
-
-
-
-                dtQM.rows().eq(0).each(function(index) {
-                    var row = dtQM.row(index);
-                    var data = row.data();
-                    var pos = data[0];
-
-                    var maquina = ($('#maquinaq-' + pos + ' option:selected').val() == "") ? 0 : $('#maquinaq-' + pos + ' option:selected').val();
-                    var quimico = ($('#quimicos-' + pos + ' option:selected').val() == "") ? 0 : $('#quimicos-' + pos + ' option:selected').val();
-                    var cantidad = ($('#cantidadq-' + pos).val() == "") ? 0 : $('#cantidadq-' + pos).val();
-
-                    if (parseFloat(cantidad) > 0) {
-                        parseFloat(cantidad)
-                    } else {
-                        mensaje("la cantidad de quimico debe ser mayor a 0");
-                        return;
-                    }
-                    array[i] = {
-                        orden: codigo,
-                        maquina: maquina,
-                        quimico: quimico,
-                        cantidad: cantidad
-                    };
-
-                    i++;
-                });
-                $.ajax({
-                    url: "../guardarqm-directa",
-                    data: {
-                        data: array,
-                        codigo: codigo
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(resultado) {
-
-                    }
-                }).done(function(data) {
-                    $("#formdataord").submit();
-                });
+            const soloNumeros = new RegExp("^[0-9]+$");
+            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+                e.preventDefault();
+                mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
             }
         }
+    }
+
+    $('#hrsTrabajadas').on('keypress', function (e) {
+        soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
     });
+
+    function validarForm(e) {
+        e.preventDefault();
+        var fecha1 = $("#fecha01").val();
+        var fecha2 = $("#fecha02").val();
+        var horaInicio = $("#hora01").val();
+        var horaFin = $("#hora02").val();
+        var horasT = $("#hrsTrabajadas").val();
+        var last_row = dtMPD.row(":last").data();
+        var last_rowq = dtQM.row(":last").data();
+
+        if (typeof (last_row) === "undefined") {
+            //e.preventDefault();
+            mensaje("Ingrese al menos un registro en la tabla de Materia Prima Directa", "error");
+            return false;
+
+        } else if (typeof (last_rowq) === "undefined") {
+            //e.preventDefault();
+            mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error");
+            return false;
+
+        } else if (fecha1 === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una fecha inicial para la orden", "error");
+            return false;
+
+        } else if (fecha2 === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una fecha final para la orden", "error");
+            return false;
+
+        } else if (horaInicio === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una hora inicial para la orden", "error");
+            return false;
+
+        } else if (horaFin === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una hora final para la orden", "error");
+            return false;
+
+        } else if (horasT === '') {
+            //e.preventDefault();
+            mensaje("Debe ingresar una horas trabajadas de la orden", "error");
+            return false;
+        }
+        return true;
+    }
+    /********** funciones extras para validacion ***********/
+
+
 </script>
+

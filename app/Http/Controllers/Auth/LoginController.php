@@ -40,7 +40,10 @@ class LoginController extends Controller
                 return 'home';
             break;
             case '5':
-                return 'reporte';
+                return 'orden-produccion';
+            break;
+            case '3':
+                return 'costos';
             break;
             default:
                 return '/login'; 
@@ -66,7 +69,7 @@ class LoginController extends Controller
         
         $this->validateLogin($request);//valida los campos del formulario del login
 
-        if ($this->hasTooManyLoginAttempts($request)) {//si se ha hecho arios intentos se bloquea por 1 minuto
+        if ($this->hasTooManyLoginAttempts($request)) {//si se ha hecho varios intentos se bloquea por 1 minuto
 
             $this->fireLockoutEvent($request);
 

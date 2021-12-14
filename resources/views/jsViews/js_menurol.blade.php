@@ -26,6 +26,7 @@ $('.menu_rol').on('change', function() {
 		rol_id: $(this).val(),
 		_token: $('input[name=_token]').val()
 	}
+	//console.log( $(this).data('menuid'));
 
 	if ($(this).is(':checked')) {
 		data.estado = 1
@@ -40,10 +41,14 @@ function ajaxRequest(url, data) {
 		url: url,
 		type: 'post',
 		data: data,
-		success: function( respuesta ) {
-			//alert('El rol se asigno correctamente')
-		}
-	})
+		success: function(response) {
+                    //console.log('Exito en guardar fibras');
+                    mensaje(response.responseText, 'success');
+                },
+                error: function(response) {
+                    mensaje(response.responseText, 'error');
+                }
+	});
 }
 
 
