@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConsumoGas;
 use Illuminate\Http\Request;
 use App\Models\orden_produccion;
 use App\Models\tiempo_pulpeo;
@@ -18,7 +19,7 @@ use App\Models\inventario_solicitud;
 use App\Models\jumboroll_detalle;
 use App\Models\Admin\usuario;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
 
 class reporteController extends Controller
 {
@@ -42,12 +43,14 @@ class reporteController extends Controller
         $lavado = tiempo_lavado::where('numOrden', $orden->numOrden)->distinct()->get()->first();
         $consumo_agua = consumo_agua::where('numOrden', $orden->numOrden)->get()->first();
         $electricidad = electricidad::where('numOrden', $orden->numOrden)->get()->first();
+        $consumo_gas = ConsumoGas::where('numOrden', $orden->numOrden)->get()->first();
         $jumboroll = jumboroll::where('numOrden', $orden->numOrden)->where('idTurno', $turnos[0]['idTurno'])->get();
         $jumborollDT = jumboroll::where('numOrden', $orden->numOrden)->distinct()->get()->first();
 
         $usuarios   = usuario::usuarioByRole();
 
-        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto', 'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'electricidad']));
+        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
+            'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'consumo_gas', 'electricidad']));
     }
 
     public function reporte($numOrden)
@@ -65,12 +68,14 @@ class reporteController extends Controller
         $lavado = tiempo_lavado::where('numOrden', $orden->numOrden)->distinct()->get()->first();
         $consumo_agua = consumo_agua::where('numOrden', $orden->numOrden)->get()->first();
         $electricidad = electricidad::where('numOrden', $orden->numOrden)->get()->first();
+        $consumo_gas = ConsumoGas::where('numOrden', $orden->numOrden)->get()->first();
         $jumboroll = jumboroll::where('numOrden', $orden->numOrden)->where('idTurno', $turnos[0]['idTurno'])->get();
 
         $jumborollDT = jumboroll::where('numOrden', $orden->numOrden)->get();
         $usuarios   = usuario::usuarioByRole();
 
-        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto', 'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'electricidad']));
+        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
+            'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'consumo_gas', 'electricidad']));
     }
 
     public function guardarTiempoPulpeo(Request $request)
@@ -237,7 +242,7 @@ class reporteController extends Controller
         $fechaFinal =  date('Y-m-d');
         $idTurno = 0;
         $idJefe = 0;
-        
+
         $validate = jumboroll::where('numOrden', $numOrden)->get();
         if ($request->isMethod('post')) {
 
@@ -370,7 +375,7 @@ class reporteController extends Controller
                 $response = $jumboroll->save();
             }
         }
-    
+
         return response()->json($response);
     }
 

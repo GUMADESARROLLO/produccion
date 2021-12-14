@@ -194,7 +194,7 @@
                         `<input class="input-dt" value="` + item['gsm'] + `" type="text" placeholder="Cantidad" id="cant-gsm-` + indicador_4 + `">`,
                         `<input class="input-dt" value="` + item['yankee'] + `" type="text" placeholder="Cantidad" id="yankee-` + indicador_4 + `">`,
                     ]).draw(false);
-                   
+
                 })
                 $('#totalJR').val(json.length);
             }
@@ -560,6 +560,8 @@
         consumoFinalElec = $('#consumoFinalElec').val();
         consumoInicialAgua = $('#consumoInicialAgua').val();
         consumoFinalAgua = $('#consumoFinalAgua').val();
+        consumoInicialGas = $('#consumoInicialGas').val();
+        consumoFinalGas = $('#consumoFinalGas').val();
 
         if (codigo == '') {
             mensaje("No hay datos que guardar :(", "error")
@@ -571,6 +573,8 @@
                     consumoFinalElec: consumoFinalElec,
                     consumoInicialAgua: consumoInicialAgua,
                     consumoFinalAgua: consumoFinalAgua,
+                    consumoInicialGas: consumoInicialGas,
+                    consumoFinalGas: consumoFinalGas,
                     codigo: codigo
                 },
                 type: 'post',
@@ -653,7 +657,7 @@
 
             console.log(index)
 
-            
+
         });*/
     })
 
@@ -818,12 +822,12 @@
 
         $.getJSON(base_url + "getDataJRDetail/" + numOrden, function(json) {
             if (json.length <= 0) {
-               
+
                 $("#rp").attr('disabled','disabled');
                 $("#lt").attr('disabled','disabled');
                 $("#mr-y1").attr('disabled','disabled');
                 $("#mr-y2").attr('disabled','disabled');
-            } 
+            }
         });
     }*/
 

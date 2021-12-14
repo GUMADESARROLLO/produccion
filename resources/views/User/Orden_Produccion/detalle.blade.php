@@ -230,6 +230,9 @@
                                 <!-- [ Tabla Quimicos ] start-->
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card card-event">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Materia Prima Directa Quimicos</h5>
+                                        </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
                                                 <table class="table table-hover" id="dtBachadasxdias">
@@ -289,70 +292,37 @@
                             <!-- [ Tabla Materia Prima ] end -->
                         </div>
                         <div class="row">
-                            <!-- [ Consumo Electricidad ] start -->
-                            <div class="col-xl-6 col-md-6">
-                                <div class="card card-social">
-                                    <div class="card-block border-bottom">
-                                        <div class="row align-items-center justify-content-center">
-                                            <div class="col-auto">
-                                                <h5 class="mb-0">Electricidad Kwh</h5>
-                                            </div>
-                                            <div class="col text-right">
-                                                <h3>{{ $orden->electricidad['total'] }} Kwh</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-block">
-                                        <div class="row align-items-center justify-content-center card-active">
-                                            <div class="col-3">
-                                                <h6 class="text-left m-b-10"><span class="text-muted m-r-5">Inicial:</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-3">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['inicial'],2) }} Kwh
-                                                </h6>
-                                            </div>
-                                            <div class="col-3">
-                                                <h6 class="text-left m-b-10"><span class="text-muted m-r-5">Final:</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-3">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['final'],2) }} Kwh
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- [ Consumo Electricidad ] end -->
                             <!-- [ Consumo Agua ] start -->
-                            <div class="col-xl-6 col-md-6">
+                            <div class="col-xl-4 col-md-4">
                                 <div class="card card-social">
+                                    <div class="card-header text-center">
+                                        <h5 class="m-0">Agua</h5>
+                                    </div>
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h5 class="mb-0">Consumo Agua M3</h5>
+                                                <h6 class="mb-0">Consumo en M3</h6>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ $orden->consumoAgua['total']}} M3</h3>
+                                                <h6>{{ $orden->consumoAgua['total']}} M3</h6>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-block">
                                         <div class="row align-items-center justify-content-center card-active">
-                                            <div class="col-3">
+                                            <div class="col-2 m-0 p-0">
                                                 <h6 class="text-left m-b-10"><span class="text-muted m-r-5">Inicial:</span>
                                                 </h6>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-4 m-0 p-0">
                                                 <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['inicial'],2) }} M3
                                                 </h6>
                                             </div>
-                                            <div class="col-3">
-                                                <h6 class="text-left  m-b-10"><span class="text-muted m-r-5">Final:</span>
+                                            <div class="col-2 m-0 p-0">
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5">Final:</span>
                                                 </h6>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-4 m-0 p-0">
                                                 <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['final'],2) }} M3
                                                 </h6>
                                             </div>
@@ -362,6 +332,93 @@
 
                             </div>
                             <!-- [ Consumo Agua ] end -->
+                            <!-- [ Consumo Electricidad ] start -->
+                            <div class="col-xl-4 col-md-4">
+                                <div class="card card-social">
+                                    <div class="card-header text-center">
+                                        <h5 class="m-0">Electricidad</h5>
+                                    </div>
+                                    <div class="card-block border-bottom">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-auto">
+                                                <h6 class="mb-0">Consumo en C$</h6>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h6>{{ $orden->electricidad['totalCordobas'] }} C$</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-auto">
+                                                <h6 class="mb-0">Consumo en Kw/Hrs</h6>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h6>{{ $orden->electricidad['totalConsumo'] }} Kw/Hrs</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="row align-items-center justify-content-center card-active">
+                                            <div class="col-2 m-0 p-0">
+                                                <h6 class="text-left m-b-10"><span class="text-muted m-r-5">Inicial:</span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-4 m-0 p-0">
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['inicial'],2) }} Kwh
+                                                </h6>
+                                            </div>
+                                            <div class="col-2 m-0 p-0">
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5">Final:</span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-4 m-0 p-0">
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->electricidad['final'],2) }} Kwh
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>-
+                                </div>
+                            </div>
+                            <!-- [ Consumo Electricidad ] end -->
+                            <!-- [ Consumo Gas ] start -->
+                            <div class="col-xl-4 col-md-4">
+                                <div class="card card-social">
+                                    <div class="card-header text-center">
+                                        <h5 class="m-0">Gas Butano</h5>
+                                    </div>
+                                    <div class="card-block border-bottom">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-auto">
+                                                <h6 class="mb-0">Consumo en M3</h6>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h6>{{ $orden->consumoGas['total']}} M3</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="row align-items-center justify-content-center card-active">
+                                            <div class="col-2 m-0 p-0">
+                                                <h6 class="text-left m-b-10"><span class="text-muted m-r-5">Inicial:</span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-4 m-0 p-0">
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['inicial'],2) }} M3
+                                                </h6>
+                                            </div>
+                                            <div class="col-2 m-0 p-0">
+                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5">Final:</span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-4 m-0 p-0">
+                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['final'],2) }} M3
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- [ Consumo Gas ] end -->
                         </div>
                     </div>
                 </div>

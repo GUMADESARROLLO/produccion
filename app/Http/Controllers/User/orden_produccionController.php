@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\usuario;
 use App\Models\consumo_agua;
+use App\Models\ConsumoGas;
 use App\Models\electricidad;
 use App\Models\fibras;
 use App\Models\jumboroll;
@@ -96,6 +97,7 @@ class orden_produccionController extends Controller
             $totalMP = $this->calcularTotalMP($idOP);
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
+            $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_bruta = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
 
             if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
@@ -135,6 +137,7 @@ class orden_produccionController extends Controller
             $totalMP = $this->calcularTotalMP($idOP);
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
+            $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_bruta = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
 
             //$factor_fibral = $this->calcularFactorFibral($idOP);
@@ -167,6 +170,7 @@ class orden_produccionController extends Controller
             number_format($porcentLavadoraTetrapack, 2),
             $electricidad,
             $consumo_agua,
+            $consumo_gas,
             number_format($factorFibral, 2)
 
         );
@@ -576,12 +580,14 @@ class orden_produccionController extends Controller
             $data = array(
                 'inicial' => $inicial,
                 'final' => $final,
-                'total' => number_format(($final - $inicial) * 560, 2)
+                'totalConsumo' => number_format(($final - $inicial), 2),
+                'totalCordobas' => number_format(($final - $inicial) * 560, 2)
             );
         } else {
             $data = array(
                 'inicial' => 0,
                 'final' => 0,
+                'totalConsumo' => number_format(0),
                 'total' => number_format(0)
             );
         }
@@ -599,6 +605,40 @@ class orden_produccionController extends Controller
         if ($consumo_agua) {
             $inicial = ($consumo_agua->inicial == '') ? 0 : $consumo_agua->inicial;
             $final = ($consumo_agua->final == '') ? 0 : $consumo_agua->final;
+        } else {
+            $inicial = 0;
+            $final = 0;
+        }
+
+        $total = 0;
+
+        if ($final > 0) {
+            $data = array(
+                'inicial' => $inicial,
+                'final' => $final,
+                'total' => number_format(($final - $inicial), 2)
+            );
+        } else {
+            $data = array(
+                'inicial' => 0,
+                'final' => 0,
+                'total' => number_format(0)
+            );
+        }
+
+        return $data;
+    }
+
+    public function calcularConsumoGas($numOrden)
+    {
+        $data = array();
+        $consumo_gas = ConsumoGas::select('inicial', 'final')
+            ->where('numOrden', $numOrden)
+            ->get()->first();
+
+        if ($consumo_gas) {
+            $inicial = ($consumo_gas->inicial == '') ? 0 : $consumo_gas->inicial;
+            $final = ($consumo_gas->final == '') ? 0 : $consumo_gas->final;
         } else {
             $inicial = 0;
             $final = 0;
@@ -680,9 +720,12 @@ class orden_produccionController extends Controller
             $consumoFinalElec = ($request->input('consumoFinalElec') == '') ? 0 : $request->input('consumoFinalElec');
             $consumoInicialAgua = ($request->input('consumoInicialAgua') == '') ? 0 : $request->input('consumoInicialAgua');
             $consumoFinalAgua = ($request->input('consumoFinalAgua') == '') ? 0 : $request->input('consumoFinalAgua');
+            $consumoInicialGas = ($request->input('consumoInicialGas') == '') ? 0 : $request->input('consumoInicialGas');
+            $consumoFinalGas = ($request->input('consumoFinalGas') == '') ? 0 : $request->input('consumoFinalGas');
 
             $electricidad = electricidad::where('numOrden', $numOrden)->get()->toArray();
             $consumoAgua = consumo_agua::where('numOrden', $numOrden)->get()->toArray();
+            $consumoGas = ConsumoGas::where('numOrden', $numOrden)->get()->toArray();
 
             if (count($electricidad) > 0) {
                 $response = electricidad::where('numOrden', $numOrden)
@@ -711,6 +754,21 @@ class orden_produccionController extends Controller
                 $consumo_agua->final = $consumoFinalAgua;
                 $consumo_agua->numOrden = $numOrden;
                 $response = $consumo_agua->save();
+            }
+
+            if (count($consumoGas) > 0) {
+
+                $response = ConsumoGas::where('numOrden', $numOrden)
+                    ->update([
+                        'inicial' => $consumoInicialGas,
+                        'final' => $consumoFinalGas
+                    ]);
+            } else {
+                $consumo_gas = new ConsumoGas();
+                $consumo_gas->inicial = $consumoInicialGas;
+                $consumo_gas->final = $consumoFinalGas;
+                $consumo_gas->numOrden = $numOrden;
+                $response = $consumo_gas->save();
             }
         }
 
@@ -744,11 +802,11 @@ class orden_produccionController extends Controller
                     } else {
                         return response()->json(false);
                     }
-    
+
                     //return response()->json($response);
                     return response("El registro de fibras en la orden ha sido exitoso :)", 200);
                }
-                
+
             }
             //return response("El registro de fibras en la orden ha sido exitoso :)", 200);
         }
@@ -860,9 +918,10 @@ class orden
     public $porcentLavadoraTetrapack;
     public $electricidad;
     public $consumoAgua;
+    public $consumoGas;
     public $factorFibral;
 
-    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionReal, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $factorFibral)
+    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionReal, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral)
     {
         $this->idOrden = $idOrden;
         $this->numOrden = $numOrden;
@@ -883,6 +942,7 @@ class orden
         $this->porcentLavadoraTetrapack = $porcentLavadoraTetrapack;
         $this->electricidad = $electricidad;
         $this->consumoAgua = $consumoAgua;
+        $this->consumoGas = $consumoGas;
         $this->factorFibral = $factorFibral;
     }
 }

@@ -52,7 +52,7 @@
                                 <div class="card card-event">
                                     <div class="card-block">
                                         <div class="row ">
-                                            <div class="col-6 border-right">
+                                            <div class="col-12 border-right">
                                                 <div class="card card-event" id="card-JRDetail">
                                                     <div class="card-block p-2 ">
                                                         <div class="row align-items-center justify-content-center">
@@ -104,91 +104,135 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-12">
                                                 <div class="row align-items-center justify-content-center">
                                                     <div class="col">
                                                         <h5 class="m-0">Costos Indirectos de Fabricacion</h5>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-0">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="card Monthly-sales mb-0">
                                                             <div class="card-block">
                                                                 <h6 class="mb-4 font-weight-bold">Electricidad Kwh</h6>
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($electricidad) )
-                                                                        <form>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoInicialElec" class="col-sm-5 col-form-label">{{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" class="form-control" id="consumoInicialElec">
+                                                                            <form>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoInicialElec" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoInicialElec">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoFinalElec" class="col-sm-5 col-form-label">{{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" class="form-control" id="consumoFinalElec">
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoFinalElec" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoFinalElec">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </form>
+                                                                            </form>
                                                                         @else
-                                                                        <form>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoInicialElec" class="col-sm-5 col-form-label">{{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" value="{{ $electricidad->inicial }}" class="form-control" id="consumoInicialElec">
+                                                                            <form>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoInicialElec" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" value="{{ $electricidad->inicial }}" class="form-control" id="consumoInicialElec">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoFinalElec" class="col-sm-5 col-form-label">{{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" value="{{ $electricidad->final }}" class="form-control" id="consumoFinalElec">
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoFinalElec" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" value="{{ $electricidad->final }}" class="form-control" id="consumoFinalElec">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </form>
+                                                                            </form>
                                                                         @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="card Monthly-sales mb-0">
                                                             <div class="card-block">
                                                                 <h6 class="mb-4 font-weight-bold">Consumo Agua m3</h6>
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($consumo_agua) )
-                                                                        <form>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" class="form-control" id="consumoInicialAgua">
+                                                                            <form>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoInicialAgua">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" class="form-control" id="consumoFinalAgua">
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoFinalAgua">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </form>
+                                                                            </form>
                                                                         @else
-                                                                        <form>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" class="form-control" id="consumoInicialAgua" value="{{ $consumo_agua->inicial }}">
+                                                                            <form>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoInicialAgua" value="{{ $consumo_agua->inicial }}">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="form-group row">
-                                                                                <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final : </label>
-                                                                                <div class="col-sm-7">
-                                                                                    <input type="number" value="{{ $consumo_agua->final }}" class="form-control" id="consumoFinalAgua">
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" value="{{ $consumo_agua->final }}" class="form-control" id="consumoFinalAgua">
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </form>
+                                                                            </form>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="card Monthly-sales mb-0">
+                                                            <div class="card-block">
+                                                                <h6 class="mb-4 font-weight-bold">Consumo Gas m3</h6>
+                                                                <div class="row d-flex align-items-center">
+                                                                    <div class="col-12">
+                                                                        @if( is_null($consumo_gas) )
+                                                                            <form>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoInicialGas">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoFinalGas">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        @else
+                                                                            <form>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" class="form-control" id="consumoInicialGas" value="{{ $consumo_gas->inicial }}">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="number" value="{{ $consumo_gas->final }}" class="form-control" id="consumoFinalGas">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
                                                                         @endif
                                                                     </div>
                                                                 </div>
