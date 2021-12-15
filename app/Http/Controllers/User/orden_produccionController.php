@@ -592,8 +592,7 @@ class orden_produccionController extends Controller
                 'inicial' => 0,
                 'final' => 0,
                 'totalConsumo' => number_format(0),
-                'totalCordobas' => number_format(0),
-                'total' => number_format(0)
+                'totalCordobas' => number_format(0)
             );
         }
 

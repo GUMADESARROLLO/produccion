@@ -138,7 +138,7 @@ Route::post('costos/actualizar', 'User\CostoController@actualizarCosto')->name('
 
 //RUTAS COSTOS POR ORDEN
 Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
-Route::get('costo-orden/nuevo', 'User\CostoOrdenController@nuevoCostoOrden')->name('costo-orden/nuevo');
+Route::get('costo-orden/nuevo/{numOrden}', 'User\CostoOrdenController@nuevoCostoOrden')->name('costo-orden/nuevo/{numOrden}');
 Route::post('costo-orden/guardar', 'User\CostoOrdenController@guardarCostoOrden')->name('costo-orden/guardar');
 Route::get('costo-orden/detalle/{numOrden}', 'User\CostoOrdenController@detalleCostoOrden')->name('costo-orden/detalle/{numOrden}');
 Route::get('costo-orden/detalle/editar/{id}', 'User\CostoOrdenController@editarCostoOrden')->name('costo-orden/detalle/editar/{id}');

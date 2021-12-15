@@ -27,7 +27,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo
+                                    <a href="{{url('costo-orden/nuevo')}}" class="btn btn-primary btn-sm text-right" id="btnNuevoCostoO">Nuevo
                                         Costo</a>
                                 </div>
                         </div>
@@ -70,8 +70,8 @@
 
 
                                                         <td class="dt-center">
-                                                            <a href="#!" onclick="deleteCostoOrden()"><i
-                                                                    class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
+                                                            <a href="#!" onclick="deleteCostoOrden()" ><i
+                                                                    class="feather icon-x-circle text-c-red f-30 m-r-10" ></i></a>
                                                             <a href="editar/{{ $co->id }}" target="_blank">
                                                                 <i class="feather icon-edit text-c-blue f-30 m-r-10"></i>
                                                             </a>
@@ -111,26 +111,26 @@
                                                     <tr>
                                                         <td>
                                                         </td>
-                                                        <td><input class="input-dt text-left unread" type="text" value="YANKEE 1" placeholder="maquina" id=""></td>
+                                                        <td><input class="input-dt text-left unread" readonly type="text" value="YANKEE 1" placeholder="maquina" id=""></td>
                                                         <td><input class="input-dt text-left" type="text" placeholder="horas" id="horaJY1"></td>
                                                         <td><input class="input-dt text-left" type="text" placeholder="horas" id="horaLY1"></td>
                                                     </tr>
                                                     <tr>
                                                         <td></td>
-                                                        <td><input class="input-dt text-left unread" type="text" value="YANKEE 2" placeholder="maquina" id=""></td>
+                                                        <td><input class="input-dt text-left unread" readonly type="text" value="YANKEE 2" placeholder="maquina" id=""></td>
                                                         <td><input class="input-dt text-left" type="text" placeholder="horas" id="horaJY2"></td>
                                                         <td><input class="input-dt text-left" type="text" placeholder="horas" id="horaLY2"></td>
                                                     </tr>
                                                     @else
                                                     <tr>
                                                         <td></td>
-                                                        <td><input class="input-dt text-left" type="text" value="YANKEE 1" placeholder="maquina" id="1"></td>
+                                                        <td><input class="input-dt text-left" type="text" readonly value="YANKEE 1" placeholder="maquina" id="1"></td>
                                                         <td><input class="input-dt text-left" type="text" value="{{ $op->horaJY1 }}" placeholder="horas" id="horaJY1"></td>
                                                         <td><input class="input-dt text-left" type="text" value="{{ $op->horaLY1 }}" placeholder="horas" id="horaLY1"></td>
                                                     </tr>
                                                     <tr>
                                                         <td></td>
-                                                        <td><input class="input-dt text-left" type="text" value="YANKEE 2" placeholder="maquina" id="2"></td>
+                                                        <td><input class="input-dt text-left" type="text" readonly value="YANKEE 2" placeholder="maquina" id="2"></td>
                                                         <td><input class="input-dt text-left" type="text" value="{{ $op->horaJY2 }}" placeholder="horas" id="horaJY2"></td>
                                                         <td><input class="input-dt text-left" type="text" value="{{ $op->horaLY2 }}" placeholder="horas" id="horaLY2"></td>
                                                     </tr>

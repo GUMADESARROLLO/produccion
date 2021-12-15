@@ -54,9 +54,9 @@ class CostoOrdenController extends Controller
         return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden']));
     }
 
-    public function nuevoCostoOrden()
+    public function nuevoCostoOrden($idOP)
     {
-        $ordenes = orden_produccion::where('estado', 1)->orderBy('idOrden', 'asc')->get();
+        $ordenes = orden_produccion::where('estado', 1)->where('numOrden',$idOP)->orderBy('idOrden', 'asc')->get();
         $costos = costo::where('estado', 1)->orderBy('id', 'asc')->get();
         return view('User.CostoOrden.nuevo', compact(['ordenes', 'costos']));
     }
@@ -89,7 +89,9 @@ class CostoOrdenController extends Controller
             $costoOrden->costo_unitario = $request->costo_unitario;
             $costoOrden->estado = 1;
             $costoOrden->save();
-            return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+            //return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+            return redirect('/costo-orden/detalle/' . $request->num_Orden);
+
         }
     }
 

@@ -20,8 +20,16 @@
     });
 
     $("#numOrden").hide();
-   
-    $(document).on('click', '#btnguardar', function() {
+    $(document).on('click', '#btnNuevoCostoO', function () {
+        var numOrden = $("#numOrden").val();
+        const  URLlast = "/produccion/costo-orden/nuevo/" + numOrden;
+        $('#btnNuevoCostoO').attr('href', "/produccion/costo-orden/nuevo/" + numOrden);
+        console.log(URLlast);
+    });
+
+
+
+    $(document).on('click', '#btnguardar', function () {
         var numOrden = $("#numOrden").val();
         var array = new Array();
 
@@ -43,10 +51,10 @@
                 },
                 type: 'post',
                 async: true,
-                success: function(resultado) {
+                success: function (resultado) {
                     alert("Las horas han sido agregadas correctamente");
                 }
-            }).done(function(data) {
+            }).done(function (data) {
                 $("#formdataord").submit();
             });
         } else {
