@@ -50,6 +50,17 @@
         inicializaControlFecha();
     });
 
+    $('#numOrden').on('change', function(){
+        $('#tbody-mp tr').each(function(i) {
+            $(this).addClass('selected');
+            dtMPD.row('.selected').remove().draw( false );
+            //$(this).remove();
+        });
+        $('#tbody-qm tr').each(function(i) {
+            $(this).addClass('selected');
+            dtQM.row('.selected').remove().draw( false );
+        });
+    });
     /****** Fibras - Añadir o remover filas ******/
     $('#dtMPD tbody').on('click', 'tr', function(e) {
         e.preventDefault();
@@ -95,10 +106,12 @@
             },
             type: 'post',
             async: true,
-            success: function(resultado) {}
+            success: function(resultado) {
+                mensaje('Se elimino con exito con exito :)', 'success')
+            }
         }).done(function(data) {
-            alert('La materia prima ha sido eliminada');
-        });
+        dtMPD.row('.selected').remove().draw( false );
+    });
     });
 
     /********** Quimicos - Eliminar registro de la bd ***********/
@@ -114,9 +127,11 @@
             },
             type: 'post',
             async: true,
-            success: function(resultado) {}
+            success: function(resultado) {
+                mensaje('Se elimino con exito con exito :)', 'success')
+            }
         }).done(function(data) {
-            alert('El quimico ha sido eliminado');
+            dtQM.row('.selected').remove().draw( false );
         });
     });
 
@@ -259,11 +274,10 @@
                 error: function(response) {
                     mensaje(response.responseText, 'error');
                 }
-            });
-        } else {
+            }).done(function(data) { location.reload(); });
             //console.log('El arreglo esta vacio :(');
             return mensaje('Los datos en materia prima estan vacios :(', 'error');
-
+           
         }
 
         /********** Ajax de Quimicos ***********/
@@ -287,7 +301,8 @@
             var rowq = dtQM.row(index);
             var dataq = rowq.data();
             var posq = dataq[0];
-
+            console.log(posq);
+            var idq =  posq;
             var maquinaq = ($('#maquinaq-prev-' + posq + ' option:selected').val() === "") ? 0 : $('#maquinaq-prev-' + posq + ' option:selected').val();
             var quimico = ($('#quimicos-prev-' + posq + ' option:selected').val() === "") ? 0 : $('#quimicos-prev-' + posq + ' option:selected').val();
             var cantidadq = ($('#cantidadq-prev-' + posq).val() === "") ? 0 : $('#cantidadq-prev-' + posq).val();
@@ -297,6 +312,7 @@
             });
 
             arrayq[i] = {
+                id : idq,
                 orden: codigo,
                 maquina: maquinaq,
                 quimico: quimico,
@@ -329,7 +345,7 @@
                     //console.log("error en ajax de Quimicos");
                     mensaje(response.responseText, 'error');
                 }
-            });
+            }).done(function(data) { location.reload(); });
         } else {
             //console.log('El arreglo esta vacio :(');
             return mensaje('Los datos en quimicos estan vacios :(', 'error');
@@ -406,6 +422,7 @@
 
         } else if (horasT === '') {
             //e.preventDefault();
+            
             mensaje("Debe ingresar una horas trabajadas de la orden", "error");
             return false;
         } else if (codigo === '') {

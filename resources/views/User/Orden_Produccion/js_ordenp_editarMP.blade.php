@@ -126,12 +126,13 @@ $(document).on('click','#btnactualizar',function() {
             var row = dtMPD.row(index);
             var data = row.data();
             var pos = data[0];
-
+            var idf =  pos;
             var maquina = ($('#maquina-'+pos+' option:selected').val()=="")?0:$('#maquina-'+pos+' option:selected').val();
             var fibra = ($('#fibras-'+pos+' option:selected').val()=="")?0:$('#fibras-'+pos+' option:selected').val();
             var cantidad = ( $('#cantidad-'+pos).val()=="" )?0:$('#cantidad-'+pos).val();
 
             array[i] = {
+                id : idf,
                 orden       : codigo,
                 maquina     : maquina,
                 fibra       : fibra,
@@ -180,6 +181,7 @@ function soloNumeros(caracter, e, numeroVal) {
 $('#hrsTrabajadas').on('keypress', function (e) {
     soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
 });
+
 
 
 </script>

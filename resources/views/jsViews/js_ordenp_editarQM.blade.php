@@ -126,12 +126,14 @@
                 var row = dtQM.row(index);
                 var data = row.data();
                 var pos = data[0];
-    
+                var idq =  pos;
+
                 var maquina = ($('#maquinaq-'+pos+' option:selected').val()=="")?0:$('#maquinaq-'+pos+' option:selected').val();
                 var quimico = ($('#quimicos-'+pos+' option:selected').val()=="")?0:$('#quimicos-'+pos+' option:selected').val();
                 var cantidad = ( $('#cantidadq-'+pos).val()=="" )?0:$('#cantidadq-'+pos).val();
                 
                 array[i] = {
+                    id : idq,
                     orden       : codigo,
                     maquina     : maquina,
                     quimico       : quimico,

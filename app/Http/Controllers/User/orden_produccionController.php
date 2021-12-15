@@ -174,7 +174,7 @@ class orden_produccionController extends Controller
             number_format($factorFibral, 2)
 
         );
-
+        
         return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina']));
     }
 
@@ -356,10 +356,14 @@ class orden_produccionController extends Controller
 
     public function actualizar(Request $request)
     {
+        if($request->hrsTrabajadas == ''){
+            return Redirect::back()->withErrors("Las horas trabajadas no pueden estar vacias")->withInput();
+        }
+        
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
         );
-
+       
         $validator = Validator::make($request->all(), [
             'numOrden' => 'required',
             'producto' => 'required',
@@ -520,7 +524,7 @@ class orden_produccionController extends Controller
         $residuo_pulper = $res_pulper->residuo_pulper;
 
         //return $merma_yankee_dry + $lavadora_tetrapack + $residuo_pulper;
-       //return $merma_yankee_dry;
+        //return $merma_yankee_dry;
     }
 
     public function calcularMermaYankeeDry($numOrden)
@@ -588,6 +592,7 @@ class orden_produccionController extends Controller
                 'inicial' => 0,
                 'final' => 0,
                 'totalConsumo' => number_format(0),
+                'totalCordobas' => number_format(0),
                 'total' => number_format(0)
             );
         }
@@ -681,9 +686,9 @@ class orden_produccionController extends Controller
     {
         $id = intval($request->input('id'));
         $response = mp_directa::where('id', $id)
-        ->update([
-            'estado' => 0
-        ]);
+            ->update([
+                'estado' => 0
+            ]);
         return response()->json($response);
     }
 
@@ -780,18 +785,17 @@ class orden_produccionController extends Controller
     {
         $i = 0;
         $numOrden = intval($request->input('codigo'));
-        $id = intval($request->input('id'));
-
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayFibra = $request->input('data');
-        if ($numOrdenE != null){
+        if ($numOrdenE != null) {
             if ($request->isMethod('post')) {
                 $array = array();
-                if(is_null($arrayFibra)){
-                 return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
-               }else{
+                if (is_null($arrayFibra)) {
+                    return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
+                } else {
                     foreach ($request->input('data') as $key) {
                         if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                            $array[$i]['id'] = $key['id'];
                             $array[$i]['numOrden'] = $key['orden'];
                             $array[$i]['idMaquina'] = $key['maquina'];
                             $array[$i]['idFibra'] = $key['fibra'];
@@ -802,36 +806,47 @@ class orden_produccionController extends Controller
                     }
                     if (count($array) > 0) {
                         //mp_directa::where('numOrden', $numOrden)->delete();
-                        foreach($array as $data){
-                            $mpE = mp_directa::where('numOrden', '=', $data['numOrden'])->where('estado', 1)->where('id', $id)->first();
-                            if($mpE == null){
-                               mp_directa::insert($data);
-                            }else{
-                                 mp_directa::where('numOrden', $numOrden)->where('id', $id)
-                                ->update([
-                                    'idMaquina' => $data['idMaquina'],
-                                    'idFibra' => $data['idFibra'],
-                                    'cantidad' => $data['cantidad'],
+                        foreach ($array as $dataMP) {
+                            $mpE = mp_directa::where([
+                                ['numOrden', '=',  $numOrden],
+                                ['id', '=', $dataMP['id']],
+                                ['estado', '=', 1]
+                            ])->first();
+                            if ($mpE != null) {
+                                mp_directa::where([
+                                    ['numOrden', '=',  $numOrden],
+                                    ['id', '=', $dataMP['id']],
+                                    ['estado', '=', 1]
+                                ])->update([
+                                    'idMaquina' => $dataMP['idMaquina'],
+                                    'idFibra' => $dataMP['idFibra'],
+                                    'cantidad' => $dataMP['cantidad'],
+                                    'estado' => 1,
                                 ]);
+                            } else {
+                                $mpd = new mp_directa();
+                                $mpd->idMaquina = $dataMP['idMaquina'];
+                                $mpd->idFibra = $dataMP['idFibra'];
+                                $mpd->numOrden = $dataMP['numOrden'];
+                                $mpd->cantidad = $dataMP['cantidad'];
+                                $mpd->estado = 1;
+                                $mpd->save();
                             }
                         }
                         /*mp_directa::where('numOrden', $numOrden)
                         ->update([
                             'estado' => 0
                         ]);*/
-            
                     } else {
                         return response()->json(false);
                     }
 
                     //return response()->json($response);
                     return response("El registro de fibras en la orden ha sido exitoso :)", 200);
-               }
-
+                }
             }
             //return response("El registro de fibras en la orden ha sido exitoso :)", 200);
-        }
-        else{
+        } else {
             return response("Error al guardar las fibras, la orden no existe,
             por favor cree la orden antes de agregar las fibras :(", 400);
         }
@@ -843,14 +858,15 @@ class orden_produccionController extends Controller
         $numOrden = intval($request->input('codigo'));
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayQuimico = $request->input('data');
-        if ($numOrdenE != null){
+        if ($numOrdenE != null) {
             if ($request->isMethod('post')) {
                 $array = array();
-                if(is_null($arrayQuimico)){
+                if (is_null($arrayQuimico)) {
                     return response("Por favor ingrese Quimico,los datos estan vacios)", 400);
-                }else{
+                } else {
                     foreach ($request->input('data') as $key) {
                         if ($key['maquina'] !== 'undefined' && $key['quimico'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
+                            $array[$i]['id'] = $key['id'];
                             $array[$i]['numOrden'] = $key['orden'];
                             $array[$i]['idMaquina'] = $key['maquina'];
                             $array[$i]['idQuimico'] = $key['quimico'];
@@ -860,11 +876,33 @@ class orden_produccionController extends Controller
                         }
                     }
                     if (count($array) > 0) {
-                        QuimicoMaquina::where('numOrden', $numOrden)
-                        ->update([
-                            'estado' => 0
-                        ]);
-                        $response = QuimicoMaquina::insert($array);
+                        foreach ($array as $dataQM) {
+                            $qmE = QuimicoMaquina::where([
+                                ['numOrden', '=',  $numOrden],
+                                ['id', '=', $dataQM['id']],
+                                ['estado', '=', 1]
+                            ])->first();
+                            if ($qmE != null) {
+                                QuimicoMaquina::where([
+                                    ['numOrden', '=',  $numOrden],
+                                    ['id', '=', $dataQM['id']],
+                                    ['estado', '=', 1]
+                                ])->update([
+                                    'idMaquina' => $dataQM['idMaquina'],
+                                    'idQuimico' => $dataQM['idQuimico'],
+                                    'cantidad' => $dataQM['cantidad'],
+                                    'estado' => 1,
+                                ]);
+                            } else {
+                                $qm = new QuimicoMaquina();
+                                $qm->idMaquina = $dataQM['idMaquina'];
+                                $qm->idQuimico = $dataQM['idQuimico'];
+                                $qm->numOrden  =  $dataQM['numOrden'];
+                                $qm->cantidad  =  $dataQM['cantidad'];
+                                $qm->estado = 1;
+                                $qm->save();
+                            }
+                        }
                     } else {
                         return response()->json(false);
                     }
@@ -873,8 +911,7 @@ class orden_produccionController extends Controller
                 }
             }
             //return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
-        }
-        else{
+        } else {
             return response("Error al guardar los quimicos, la orden no existe,
             por favor cree la orden antes de agregar los quimicos :(", 400);
         }
@@ -916,9 +953,9 @@ class orden_produccionController extends Controller
     {
         $id = intval($request->input('id'));
         $response = QuimicoMaquina::where('id', $id)
-        ->update([
-            'estado' => 0
-        ]);
+            ->update([
+                'estado' => 0
+            ]);
         return response()->json($response);
     }
 }
