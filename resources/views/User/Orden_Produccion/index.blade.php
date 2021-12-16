@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-  
+
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -37,7 +37,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>Orden de Produccion</h5>
-                                    </div>  
+                                    </div>
                                     <div class="card-block px-0 py-3">
                                         <div class="table-responsive">
                                             <table class="table table-hover">
@@ -47,8 +47,8 @@
                                                         <th>PRODUCTO</th>
                                                         <th>FECHA INICIO</th>
                                                         <th>FECHA FINAL</th>
-                                                        <th>HORA INICIO</th>
-                                                        <th>HORA FINAL</th>
+                                                        <th>PROD.REAL(kg)</th>
+                                                        <th>PROD.TOTAL(kg)</th>
                                                         <th>ESTADO</th>
                                                         <th></th>
                                                     </tr>
@@ -69,10 +69,10 @@
                                                             <h6>{{ $key['fechaFinal'] }}</h6>
                                                         </td>
                                                         <td class="dt-center">
-                                                            <h6>{{ $key['horaInicio'] }}</h6>
+                                                            <h6>{{ number_format($key['prod_real'],2) }}</h6>
                                                         </td>
                                                         <td class="dt-center">
-                                                            <h6>{{ $key['horaFinal'] }}</h6>
+                                                            <h6>{{ number_format($key['prod_real'] + $key['merma_total'], 2)}}</h6>
                                                         </td>
                                                         <td class="dt-center">
                                                             @if ( $key['estado'] )
@@ -80,7 +80,7 @@
                                                             @else
                                                             <span class="badge badge-danger">Inactivo</span>
                                                             @endif
-                                                        </td>  
+                                                        </td>
                                                         <td class="dt-center">
                                                             <a href="orden-produccion/reporte/{{ $key['numOrden'] }}" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>
                                                             <a href="orden-produccion/editar/{{ $key['numOrden'] }}" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>

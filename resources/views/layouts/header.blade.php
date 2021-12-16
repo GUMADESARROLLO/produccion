@@ -21,7 +21,7 @@
     </ul>
     <ul class="navbar-nav ml-auto">
         <li>
-            <div class="dropdown">
+            <!--<div class="dropdown">
                 <a class="dropdown-toggle" href="javascript:" data-toggle="dropdown"><i class="icon feather icon-bell"></i></a>
                 <div class="dropdown-menu dropdown-menu-right notification">
                     <div class="noti-head">
@@ -63,10 +63,10 @@
                         <a href="javascript:">Ver todas</a>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </li>
         <li>
-            <div class="dropdown drp-user">
+            <!--<div class="dropdown drp-user">
                 <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="icon feather icon-settings"></i>
                 </a>
@@ -85,7 +85,7 @@
                         <li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
                     </ul>
                 </div>
-            </div>
+            </div>-->
         </li>
     </ul>
 </div>

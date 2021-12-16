@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -39,14 +39,14 @@ class LoginController extends Controller
             case '1':
                 return 'home';
             break;
-            case '5':
-                return 'orden-produccion';
-            break;
             case '3':
                 return 'costos';
             break;
+            case '5':
+                return 'orden-produccion';
+                break;
             default:
-                return '/login'; 
+                return '/login';
             break;
         }
     }
@@ -66,7 +66,7 @@ class LoginController extends Controller
     }
 
     public function login(Request $request) {
-        
+
         $this->validateLogin($request);//valida los campos del formulario del login
 
         if ($this->hasTooManyLoginAttempts($request)) {//si se ha hecho varios intentos se bloquea por 1 minuto
@@ -78,7 +78,7 @@ class LoginController extends Controller
 
 
         $user = $request->username;//obtener el username
-        $queryResult = DB::table('users')->where('username', $user)->pluck('id');// consulta para obtener el id del usuario a logearse de existir el username       
+        $queryResult = DB::table('users')->where('username', $user)->pluck('id');// consulta para obtener el id del usuario a logearse de existir el username
 
         if (!$queryResult->isEmpty()) {//si queryResult no esta vacio existe el usuario
             if ($this->attemptLogin($request)) {

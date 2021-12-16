@@ -38,13 +38,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-group text-left">
-                            <div class="checkbox checkbox-fill d-inline">
-                                <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="">
-                                <label for="checkbox-fill-a1" class="cr"> Save Details</label>
-                            </div>
-                        </div>
-                        
                         <button type="submit" class="btn btn-primary shadow-2 mb-4">
                             {{ __('Siguiente') }}
                         </button>

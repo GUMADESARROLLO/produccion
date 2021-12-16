@@ -75,7 +75,6 @@ class usuarioController extends Controller
         $user->apellidos = $request->apellido;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
-        $user->fecha_nacimiento = date('Y-m-d');
         $user->image = 'none';
         $user->estado = true;
         $user->id_grupo = 0;

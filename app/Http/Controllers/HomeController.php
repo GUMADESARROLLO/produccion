@@ -35,7 +35,7 @@ class HomeController extends Controller
     {
         $detalle_costo_subtotal = DetalleCostoSubtotal::where('numOrden', $idOP)->get();
         $detalle_orden = DetalleOrden::where('numOrden', $idOP)->get()->first();
-        
+
         //dd($detalle_orden, $detalle_costo_subtotal);
         return view('homed',compact('detalle_orden','detalle_costo_subtotal'));
     }

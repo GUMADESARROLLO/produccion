@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\usuario;
 use App\Models\consumo_agua;
 use App\Models\ConsumoGas;
+use App\Models\DetalleProduccion;
 use App\Models\electricidad;
 use App\Models\fibras;
 use App\Models\jumboroll;
@@ -37,17 +38,35 @@ class orden_produccionController extends Controller
         $i = 0;
         $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
 
-        if (count($ord_produccion) > 0) {
-            foreach ($ord_produccion as $key) {
+
+        if (count($ord_produccion) > 0)
+        {
+            foreach ($ord_produccion as $key)
+            {
                 $array[$i]['idOrden'] = $key['idOrden'];
                 $array[$i]['numOrden'] = $key['numOrden'];
                 $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
-
                 $array[$i]['producto'] = $fibra->nombre;
+                $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_prod_real) || $detalle_prod_real === '' ){
+                    $array[$i]['prod_real'] = 0;
+                }else{
+                    $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
+                }
+
+                $detalle_merma_total = DetalleProduccion::select('merma_total')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_merma_total) || $detalle_merma_total == ''){
+                    $array[$i]['merma_total'] = 0;
+                }else{
+                    $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
+                }
+                //$array[$i]['prod_total'] = $detalle_prod_real->prod_real + $detalle_merma_total->merma_total;
+
+
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
                 $array[$i]['horaInicio'] = date('g:i a', strtotime($key['horaInicio']));
-                $array[$i]['horaFinal'] = date('g:i a', strtotime($key['horaFinal']));
+                //$array[$i]['horaFinal'] = date('g:i a', strtotime($key['horaFinal']));
                 $array[$i]['estado'] = $key['estado'];
                 $i++;
             }
@@ -174,7 +193,7 @@ class orden_produccionController extends Controller
             number_format($factorFibral, 2)
 
         );
-        
+
         return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina']));
     }
 
@@ -359,11 +378,11 @@ class orden_produccionController extends Controller
         if($request->hrsTrabajadas == ''){
             return Redirect::back()->withErrors("Las horas trabajadas no pueden estar vacias")->withInput();
         }
-        
+
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
         );
-       
+
         $validator = Validator::make($request->all(), [
             'numOrden' => 'required',
             'producto' => 'required',

@@ -121,40 +121,40 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group row">
-                                                    <label for="produccionNeta" class="col-sm-6 col-form-label">PROD.
-                                                        REAL (kg):</label>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($orden->produccionNeta,2) }} kg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group row">
-                                                    <label for="produccionReal" class="col-sm-6 col-form-label">PROD.
-                                                        TOTAL (kg):</label>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" readonly class="form-control-plaintext" id="produccionReal" value="{{ number_format($orden->produccionReal,2) }} kg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group row">
-                                                    <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora
-                                                        de Tetrapack (kg):</label>
-                                                    <div class="col-sm-6">
-                                                        <h6 class="mt-2">{{ number_format($orden->lavadoraTetrapack,2) }} kg <span class="float-right">{{ $orden->porcentLavadoraTetrapack }} %</span>
-                                                        </h6>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="produccionNeta" class="col-sm-6 col-form-label">PROD.
+                                                            REAL (kg):</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($orden->produccionNeta,2) }} kg">
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="produccionReal" class="col-sm-6 col-form-label">PROD.
+                                                            TOTAL (kg):</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" readonly class="form-control-plaintext" id="produccionReal" value="{{ number_format($orden->produccionReal,2) }} kg">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group row">
+                                                        <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora
+                                                            de Tetrapack (kg):</label>
+                                                        <div class="col-sm-6">
+                                                            <h6 class="mt-2">{{ number_format($orden->lavadoraTetrapack,2) }} kg <span class="float-right">{{ $orden->porcentLavadoraTetrapack }} %</span>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                                 <!-- [ Header orden produccion ] end -->
@@ -164,7 +164,7 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card card-event">
                                         <div class="card-header">
-                                            <h5 class="m-0">Materia Prima Directa (M. P.)</h5>
+                                            <h5 class="m-0">1. Materia Prima Directa (M. P.)</h5>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
@@ -196,7 +196,7 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card card-event">
                                         <div class="card-header">
-                                            <h5 class="m-0">Mano de Obra Directa</h5>
+                                            <h5 class="m-0">2. Mano de Obra Directa</h5>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
@@ -231,7 +231,7 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card card-event">
                                         <div class="card-header">
-                                            <h5 class="m-0">Materia Prima Directa Quimicos</h5>
+                                            <h5 class="m-0">3. Materia Prima Directa Quimicos</h5>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
@@ -263,7 +263,7 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card card-event">
                                         <div class="card-header">
-                                            <h5 class="m-0">Costos indirectos de Fabricación</h5>
+                                            <h5 class="m-0">4. Costos indirectos de Fabricación</h5>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
@@ -296,15 +296,15 @@
                             <div class="col-xl-4 col-md-4">
                                 <div class="card card-social">
                                     <div class="card-header text-center">
-                                        <h5 class="m-0">Agua</h5>
+                                        <h5 class="m-0">5. Agua</h5>
                                     </div>
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h6 class="mb-0">Consumo en M3</h6>
+                                                <h6 class="mb-0">Consumo en m<sup>3</sup></h6>
                                             </div>
                                             <div class="col text-right">
-                                                <h6>{{ $orden->consumoAgua['total']}} M3</h6>
+                                                <h6>{{ $orden->consumoAgua['total']}} m<sup>3</sup></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -315,7 +315,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-4 m-0 p-0">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['inicial'],2) }} M3
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['inicial'],2) }} m<sup>3</sup>
                                                 </h6>
                                             </div>
                                             <div class="col-2 m-0 p-0">
@@ -323,7 +323,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-4 m-0 p-0">
-                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['final'],2) }} M3
+                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoAgua['final'],2) }} m<sup>3</sup>
                                                 </h6>
                                             </div>
                                         </div>
@@ -336,15 +336,23 @@
                             <div class="col-xl-4 col-md-4">
                                 <div class="card card-social">
                                     <div class="card-header text-center">
-                                        <h5 class="m-0">Electricidad</h5>
+                                        <h5 class="m-0">6. Electricidad</h5>
                                     </div>
                                     <div class="card-block border-bottom">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-auto">
+                                                <h6 class="mb-0">Factor de conversión: </h6>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h6>560</h6>
+                                            </div>
+                                        </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
                                                 <h6 class="mb-0">Consumo en C$</h6>
                                             </div>
                                             <div class="col text-right">
-                                                <h6>{{ $orden->electricidad['totalCordobas'] }} C$</h6>
+                                                <h6> C$ {{ $orden->electricidad['totalCordobas'] }}</h6>
                                             </div>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
@@ -383,15 +391,15 @@
                             <div class="col-xl-4 col-md-4">
                                 <div class="card card-social">
                                     <div class="card-header text-center">
-                                        <h5 class="m-0">Gas Butano</h5>
+                                        <h5 class="m-0">7. Gas Butano</h5>
                                     </div>
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h6 class="mb-0">Consumo en M3</h6>
+                                                <h6 class="mb-0">Consumo en Glns</h6>
                                             </div>
                                             <div class="col text-right">
-                                                <h6>{{ $orden->consumoGas['total']}} M3</h6>
+                                                <h6>{{ $orden->consumoGas['total']}} Glns</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -402,7 +410,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-4 m-0 p-0">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['inicial'],2) }} M3
+                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['inicial'],2) }} Glns
                                                 </h6>
                                             </div>
                                             <div class="col-2 m-0 p-0">
@@ -410,7 +418,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-4 m-0 p-0">
-                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['final'],2) }} M3
+                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['final'],2) }} Glns
                                                 </h6>
                                             </div>
                                         </div>

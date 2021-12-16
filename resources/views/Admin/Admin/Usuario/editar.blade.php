@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="username">Nombre de usuario</label>
-                                                <input type="text" readonly disabled class="form-control" name="username" id="username" value="{{ $user['username']}}">
+                                                <input type="text" class="form-control" name="username" id="username" value="{{ $user['username']}}">
                                                 <small id="usernameHelp" class="form-text text-muted">Escriba un nombre de usuario</small>
                                             </div>
                                             <div class="form-group">
