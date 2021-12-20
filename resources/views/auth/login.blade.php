@@ -39,7 +39,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary shadow-2 mb-4">
-                            {{ __('Siguiente') }}
+                            {{ __('Inicio') }}
                         </button>
                     </form>
                     <p class="mb-2 text-muted"><?php echo "INNOVA INDUSTRIAS S.A. Copyright ".date("Y").""?></p>

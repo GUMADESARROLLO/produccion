@@ -560,10 +560,10 @@
         consumoFinalElec = $('#consumoFinalElec').val();
         consumoInicialAgua = $('#consumoInicialAgua').val();
         consumoFinalAgua = $('#consumoFinalAgua').val();
-        consumoInicialGas = $('#consumoInicialGas').val();
+        consumoInicialGas = 0;
         consumoFinalGas = $('#consumoFinalGas').val();
 
-        if (codigo == '') {
+        if (codigo === '') {
             mensaje("No hay datos que guardar :(", "error")
         } else {
             $.ajax({

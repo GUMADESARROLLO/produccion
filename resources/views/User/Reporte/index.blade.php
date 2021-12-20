@@ -158,7 +158,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="card Monthly-sales mb-0">
                                                             <div class="card-block">
-                                                                <h6 class="mb-4 font-weight-bold">Consumo Agua m3</h6>
+                                                                <h6 class="mb-4 font-weight-bold">Consumo Agua m<sup>3</sup></h6>
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($consumo_agua) )
@@ -200,19 +200,19 @@
                                                     <div class="col-sm-4">
                                                         <div class="card Monthly-sales mb-0">
                                                             <div class="card-block">
-                                                                <h6 class="mb-4 font-weight-bold">Consumo Gas m3</h6>
+                                                                <h6 class="mb-4 font-weight-bold">Consumo Gas Glns</h6>
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($consumo_gas) )
                                                                             <form>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                <!--<div class="form-group row">
+                                                                                    <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial : </label>
                                                                                     <div class="col-sm-7">
                                                                                         <input type="number" class="form-control" id="consumoInicialGas">
                                                                                     </div>
-                                                                                </div>
+                                                                                </div>-->
                                                                                 <div class="form-group row">
-                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Total : </label>
                                                                                     <div class="col-sm-7">
                                                                                         <input type="number" class="form-control" id="consumoFinalGas">
                                                                                     </div>
@@ -220,14 +220,14 @@
                                                                             </form>
                                                                         @else
                                                                             <form>
-                                                                                <div class="form-group row">
+                                                                                <!--<div class="form-group row">
                                                                                     <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
                                                                                     <div class="col-sm-7">
                                                                                         <input type="number" class="form-control" id="consumoInicialGas" value="{{ $consumo_gas->inicial }}">
                                                                                     </div>
-                                                                                </div>
+                                                                                </div>-->
                                                                                 <div class="form-group row">
-                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Total : </label>
                                                                                     <div class="col-sm-7">
                                                                                         <input type="number" value="{{ $consumo_gas->final }}" class="form-control" id="consumoFinalGas">
                                                                                     </div>

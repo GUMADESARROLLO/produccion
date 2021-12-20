@@ -116,7 +116,6 @@
                                                 </div>
                                               </div>
                                             </div>
-
                                             <div class="col-md-3">
                                                 <div class="form-group row">
                                                     <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora de Tetrapack:</label>
@@ -127,22 +126,39 @@
                                             </div>
                                             <div class="col-md-3">
                                             </div>
+                                            <div class="col-md-3">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- [ Header orden produccion ] end -->
-
+                        </div>
+                        <div class="row">
                             <!-- [ Consumo Electricidad ] start -->
                             <div class="col-xl-6 col-md-6">
                                 <div class="card card-social">
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h5 class="mb-0">Electricidad Kwh</h5>
+                                                 <h4 class="mb-0">Consumo Elec. C$</h4>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ number_format($detalle_orden->electricidad_total,2)}}</h3>
+                                                <h4>{{ number_format($detalle_orden->electricidad_total_cord,2)}} C$</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card card-social">
+                                    <div class="card-block border-bottom">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-auto">
+                                                <h4 class="mb-0">Consumo Elec. kw/Hrs</h4>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h4>{{ number_format($detalle_orden->electricidad_total_unid,2)}} kw/Hrs</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -156,16 +172,33 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h5 class="mb-0">Consumo Agua</h5>
+                                                 <h4 class="mb-0">Consumo Agua m<sup>3</sup></h4>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ number_format($detalle_orden->agua_total,2) }}</h3>
+                                                <h4>{{ number_format($detalle_orden->agua_total,2) }} m<sup>3</sup></h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- [ Consumo Agua ] end -->
+
+                            <!-- [ Consumo Gas ] start -->
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card card-social">
+                                    <div class="card-block border-bottom">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-auto">
+                                                <h4 class="mb-0">Consumo Gas Glns</h4>
+                                            </div>
+                                            <div class="col text-right">
+                                                <h4>{{ number_format($detalle_orden->gas_total,2)}} Glns</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ Consumo Gas ] end -->
                         </div>
                          <div class="row">
                             <div class="col-xl-12">
@@ -183,8 +216,8 @@
                                                         <th>Nombre</th>
                                                         <th>Unidad de Medidad</th>
                                                         <th>Cantidad</th>
-                                                        <th>Costo Unitario</th>
-                                                        <th>Subtotal</th>
+                                                        <th>Costo Unitario C$</th>
+                                                        <th>Subtotal C$</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -215,10 +248,10 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h5 class="mb-0">Costo Total</h5>
+                                                 <h5 class="mb-0">Costo Total en C$</h5>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ number_format($detalle_orden->costo_total,2) }}</h3>
+                                                <h3>{{ number_format($detalle_orden->costo_total,2) }} C$</h3>
                                             </div>
                                         </div>
                                     </div>
