@@ -403,26 +403,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-block">
-                                        <div class="row align-items-center justify-content-center card-active">
-                                            <div class="col-2 m-0 p-0">
-                                                <h6 class="text-left m-b-10"><span class="text-muted m-r-5">Inicial:</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-4 m-0 p-0">
-                                                <h6 class="text-right m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['inicial'],2) }} Glns
-                                                </h6>
-                                            </div>
-                                            <div class="col-2 m-0 p-0">
-                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5">Final:</span>
-                                                </h6>
-                                            </div>
-                                            <div class="col-4 m-0 p-0">
-                                                <h6 class="text-right  m-b-10"><span class="text-muted m-r-5"></span>{{ number_format($orden->consumoGas['final'],2) }} Glns
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
