@@ -126,7 +126,8 @@ class usuarioController extends Controller
             'rol_id'   => 'required',
             'password' => 'required|max:255',
             'nombre'   => 'required|max:255',
-            'apellido' => 'required|max:255'
+            'apellido' => 'required|max:255',
+            'username' => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -139,6 +140,7 @@ class usuarioController extends Controller
             ->update([
                 'nombres'               => $request->nombre,
                 'apellidos'             => $request->apellido,
+                'username'             => $request->username,
                 'password'              => Hash::make($request->password)
             ]);
 

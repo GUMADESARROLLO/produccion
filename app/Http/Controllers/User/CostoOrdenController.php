@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Costo;
 use App\Models\CostoOrden;
+use App\Models\DetalleOrden;
 use App\Models\orden_produccion;
 use App\Models\productos;
 use Illuminate\Http\Request;
@@ -50,8 +51,10 @@ class CostoOrdenController extends Controller
 
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
         $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
+        $detalle_orden = DetalleOrden::where('numOrden', $idOP)->get()->first();
+        //dd($detalle_orden);
         //dd($costoOrden);
-        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden']));
+        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden', 'detalle_orden']));
     }
 
     public function nuevoCostoOrden($idOP)
@@ -112,12 +115,16 @@ class CostoOrdenController extends Controller
 
         );
         $validator = Validator::make($request->all(), [
-            'cantidad' => 'required|numeric|digits_between:1,9',
-            'costo_unitario' => 'required|numeric|digits_between:1,9'
+            'cantidad' => 'required|numeric',
+            'costo_unitario' => 'required|numeric'
         ], $messages);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
+
+        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])->where('costo_id', '=', $request['costo_orden'])->first()){
+            return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
+        }else{
 
         costoOrden::where('id', $request->id)
             ->update([
@@ -126,7 +133,7 @@ class CostoOrdenController extends Controller
                 'cantidad' => $request->cantidad,
                 'costo_unitario' => $request->costo_unitario
             ]);
-        return redirect::to('costo-orden/detalle/' . $orden);
+        return redirect::to('costo-orden/detalle/' . $orden);}
     }
 
     public function guardarHrasProd(Request $request)

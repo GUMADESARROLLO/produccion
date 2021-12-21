@@ -51,7 +51,7 @@
                                                     <tr class="text-center">
 
                                                         <th>ID</th>
-                                                        <th>DESCRIPCION</th>
+                                                        <th>DESCRIPCIÓN</th>
                                                         <th>UNIDAD DE MEDIDA</th>
                                                         <th>CANTIDAD</th>
                                                         <th>COSTO UNITARIO</th>
@@ -79,6 +79,24 @@
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th class="text-right" colspan="5">
+                                                        <h5>Costo Total en C$</h5>
+                                                    </th>
+                                                    <th>
+
+                                                            @if(isset($detalle_orden->costo_total))
+                                                            <h5>C$ {{ number_format($detalle_orden->costo_total,2) }}</h5>
+                                                            @else
+                                                            <h5>C$ {{ number_format(0,2) }}</h5>
+                                                            @endif
+
+
+                                                    </th>
+                                                </tr>
+
+                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>
@@ -86,7 +104,6 @@
                             </div>
                             <!-- [ Tabla Categorias ] end -->
                         </div>
-                        <div class="row">
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
                                 <div class="card">
