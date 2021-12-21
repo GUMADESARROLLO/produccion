@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="card-block table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="id_tbl_costo_detalles">
                                                 <thead>
                                                     <tr class="text-center">
 
@@ -85,14 +85,11 @@
                                                         <h5>Costo Total en C$</h5>
                                                     </th>
                                                     <th>
-
-                                                            @if(isset($detalle_orden->costo_total))
-                                                            <h5>C$ {{ number_format($detalle_orden->costo_total,2) }}</h5>
-                                                            @else
-                                                            <h5>C$ {{ number_format(0,2) }}</h5>
-                                                            @endif
-
-
+                                                        @if(isset($detalle_orden))
+                                                        <h5>C$ {{ number_format($detalle_orden,2) }}</h5>
+                                                        @else
+                                                        <h5>C$ {{ number_format(0,2) }}</h5>
+                                                        @endif
                                                     </th>
                                                 </tr>
 
