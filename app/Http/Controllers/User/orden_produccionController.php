@@ -604,7 +604,7 @@ class orden_produccionController extends Controller
                 'inicial' => $inicial,
                 'final' => $final,
                 'totalConsumo' => number_format(($final - $inicial), 2),
-                'totalCordobas' => number_format(($final - $inicial) * 560, 2)
+                'totalCordobas' => number_format(((($final - $inicial) * 560)*0.8), 2)
             );
         } else {
             $data = array(

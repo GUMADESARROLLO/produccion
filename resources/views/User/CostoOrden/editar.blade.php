@@ -66,7 +66,7 @@
                                                             <div class="form-group">
                                                                 <label for="id">Id del Costo de la Orden</label>
                                                                 <input type="text" readonly class="form-control"
-                                                                       name="id" id="id" value="{{ $cor['id'] }}">
+                                                                       name="id" id="id" value="{{ $cor->id }}">
                                                                 <small id="idcostoordenHelp"
                                                                        class="form-text text-muted">Tipo de
                                                                     Costo </small>
@@ -79,7 +79,7 @@
                                                                 <label for="num_Orden"># de la orden</label>
                                                                 <input type="text" readonly class="form-control"
                                                                        name="num_Orden" id="num_Orden"
-                                                                       value="{{ $cor['numOrden'] }}">
+                                                                       value="{{ $cor->numOrden }}">
                                                                 <small id="num_OrdenHelp" class="form-text text-muted">Escriba
                                                                     el # de la orden</small>
                                                             </div>
@@ -88,12 +88,10 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group">
                                                                 <label for="costo_orden">Tipo de costo</label>
+
                                                                 <select class="form-control" name="costo_orden"
                                                                         id="costo_orden">
-                                                                    @foreach($costos as $co)
-                                                                        <option
-                                                                            value="{{ $co['id'] }}">{{ $co['descripcion'] }}</option>
-                                                                    @endforeach
+                                                                    <option value="{{ $cor->costo_id }}">{{ $cor->descripcion }}</option>
                                                                 </select>
                                                                 <small id="costo_ordenHelp"
                                                                        class="form-text text-muted">Escriba
@@ -107,7 +105,7 @@
                                                             <div class="form-group">
                                                                 <label for="cantidad">Cantidad</label>
                                                                 <input type="text" class="form-control" name="cantidad"
-                                                                       id="cantidad" value="{{old('cantidad')}}">
+                                                                       id="cantidad" value="{{$cor->cantidad}}">
                                                                 <small id="cantidadHelp" class="form-text text-muted">Escriba
                                                                     la cantidad</small>
                                                             </div>
@@ -118,7 +116,7 @@
                                                                 <label for="costo_unitario">Costo Unitario</label>
                                                                 <input type="text" class="form-control"
                                                                        name="costo_unitario" id="costo_unitario"
-                                                                       value="{{old('costo_unitario')}}">
+                                                                       value="{{$cor->costo_unitario}}">
                                                                 <small id="costo_unitarioHelp"
                                                                        class="form-text text-muted">Escriba
                                                                     el costo unitario</small>

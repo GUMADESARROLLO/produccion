@@ -72,7 +72,7 @@
                                                         <td class="dt-center">
                                                             <a href="#!" onclick="deleteCostoOrden()" ><i
                                                                     class="feather icon-x-circle text-c-red f-30 m-r-10" ></i></a>
-                                                            <a href="editar/{{ $co->id }}" target="_blank">
+                                                            <a href="editar/{{ $co->id }}" target="_blank" id="btnEditar">
                                                                 <i class="feather icon-edit text-c-blue f-30 m-r-10"></i>
                                                             </a>
                                                         </td>

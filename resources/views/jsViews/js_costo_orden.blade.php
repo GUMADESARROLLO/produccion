@@ -27,6 +27,13 @@
         console.log(URLlast);
     });
 
+    $(document).on('click', '#btnEditar', function () {
+        var numOrden = $("#numOrden").val();
+        const  URLlast = "/produccion/costo-orden/nuevo/" + numOrden;
+        $('#btnNuevoCostoO').attr('href', "/produccion/costo-orden/nuevo/" + numOrden);
+        console.log(URLlast);
+    });
+
 
 
     $(document).on('click', '#btnguardar', function () {
