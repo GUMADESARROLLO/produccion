@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Costo;
 use App\Models\CostoOrden;
 use App\Models\DetalleOrden;
+use App\Models\TipoCambio;
 use App\Models\orden_produccion;
 use App\Models\DetalleCostoSubtotal;
 use App\Models\productos;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -53,9 +55,18 @@ class CostoOrdenController extends Controller
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
         $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         $detalle_orden = DetalleCostoSubtotal::where('numOrden', $idOP)->sum('subtotal');
-        //dd($detalle_orden);
+
+
+        //$TipoCambio = TipoCambio::select('MONTO')->where('FECHA', '=', Carbon::today())->get()->last();
+        //$date = Carbon::today();
+
+        //$TipoCambio = TipoCambio::where('FECHA', '=', Carbon::today())->pluck('MONTO')->first();
+
+        //dd($date,$TipoCambio);
         //dd($costoOrden);
-        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden', 'detalle_orden']));
+        $TipoCambio = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->pluck('tipo_cambio')->first();
+
+        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden', 'detalle_orden', 'TipoCambio' ]));
     }
 
     public function nuevoCostoOrden($idOP)

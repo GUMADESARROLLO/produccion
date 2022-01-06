@@ -296,6 +296,9 @@ class orden_produccionController extends Controller
             return ["error" => $e->getMessage()];
 
         }*/
+        
+        $TipoCambio = DB::connection('sqlsrv')->table('umk.TIPO_CAMBIO_HIST')->select('MONTO')
+                        ->where('FECHA', '=', Carbon::today())->get()->last();
 
         $ordProd = new orden_produccion();
         $ordProd->producto = $request->producto;
@@ -307,6 +310,7 @@ class orden_produccionController extends Controller
         $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
         $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
         $ordProd->estado = 1;
+        $ordProd->tipo_cambio = $TipoCambio->MONTO;
         $ordProd->save();
 
         /*$lastOrden = orden_produccion::latest('idOrden')->first()->numOrden;

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -169,6 +170,12 @@ Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name(
 //Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
 Route::get('/detalleOrdenPDF/{numOrden}','PDFController@detalleOrdenPDF')->name('detalleOrdenPDF/{numOrden}');
 Route::get('/home/detalle/{numOrden}', 'HomeController@detail')->name('/home/detalle/{numOrden}');
+
+
+
+//Tipo de Cambio
+Route::get('costo-orden/detalle/get-Tipo-Cambio/{date}', 'User\TipoCambioController@getTipoCambio')->name('costo-orden/detalle/get-Tipo-Cambio/{date}');
+Route::post('costo-orden/detalle/actualizarTC', 'User\TipoCambioController@actualizarTC')->name('costo-orden/detalle/actualizarTC');
 
 
 Auth::routes();
