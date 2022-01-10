@@ -231,7 +231,7 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card card-event">
                                         <div class="card-header">
-                                            <h5 class="m-0">3. Materia Prima Directa Quimicos</h5>
+                                            <h5 class="m-0">3. Materia Prima Directa - Quimicos</h5>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
@@ -349,20 +349,21 @@
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h6 class="mb-0">Consumo en C$</h6>
+                                                <h6 class="mb-0">Consumo en Kw</h6>
                                             </div>
                                             <div class="col text-right">
-                                                <h6> C$ {{ $orden->electricidad['totalCordobas'] }}</h6>
+                                                <h6>{{ $orden->electricidad['totalConsumo'] }} Kw</h6>
                                             </div>
                                         </div>
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h6 class="mb-0">Consumo en Kw/Hrs</h6>
+                                                <h6 class="mb-0">Consumo Real(80%)</h6>
                                             </div>
                                             <div class="col text-right">
-                                                <h6>{{ $orden->electricidad['totalConsumo'] }} Kw/Hrs</h6>
+                                                <h6> {{ $orden->electricidad['totalCordobas'] }} Kw/Hrs</h6>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="card-block">
                                         <div class="row align-items-center justify-content-center card-active">

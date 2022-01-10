@@ -146,6 +146,7 @@
             </table>
         </div>
     </div>
+   
     <div class="row">
         <div class="col-4">
             <table class="table table-sm " style="margin-top:-3.5rem;">
@@ -168,10 +169,14 @@
                     <th class="text-left cell-color">HORA TERMINACION</th>
                     <td class="text-center">{{ $do->horaFinal }}</td>
                 </tr>
+                <tr>
+                    <th class="text-left cell-color">TASA DE CAMBIO</th>
+                    <td class="text-center">{{ $do->tipo_cambio }}</td>
+                </tr>
             </table>
         </div>
         <div class="col-4">
-            <table class="table table-sm" style="margin-left: 16rem; margin-top:-8.1rem">
+            <table class="table table-sm" style="margin-left: 16rem; margin-top:-9.6rem">
                 <tr>
                     <th class="text-center " style="border-bottom: 2px solid black;" colspan="3">HORAS PRODUCTIVAS</th>
                 </tr>
@@ -197,7 +202,30 @@
                 </tr>
             </table>
         </div>
+    </div>
+     <!-- tabla de los costos totales-->
 
+     <div class="row">
+        <div class="col-4">
+            <table class="table table-sm " style="margin-left: 38.8rem;  margin-top: -5rem;">
+                <tr>
+                    <th class="text-center cell-border cell-color" style="" >MONEDA</th>
+                    <th WIDTH="100px" class="text-center cell-border cell-color">CORDOBAS (C$)</th>
+                    <th WIDTH="100px" class="text-center cell-border cell-color">DOLARES (U$)</th>
+                </tr>
+                <tr>
+                    <th class="text-left cell-color">COSTO UNITARIO (KG)</th>
+                    <td WIDTH="100px" class="text-center">C$ {{ number_format(($do->costo_total/($do->prod_real + $do->merma_total)),2)}}</td>
+                    <td WIDTH="100px" class="text-center">$ {{ number_format((($do->costo_total/($do->prod_real + $do->merma_total))/$do->tipo_cambio),2)}}</td>
+
+                </tr>
+                <tr>
+                    <th class="text-left cell-color">COSTO (TON)</th>
+                    <td class="text-center">C$ {{ number_format((($do->costo_total/($do->prod_real + $do->merma_total))*1000),2)}}</td>
+                    <td class="text-center">$ {{ number_format(((($do->costo_total/($do->prod_real + $do->merma_total))*1000)/$do->tipo_cambio),2)}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">

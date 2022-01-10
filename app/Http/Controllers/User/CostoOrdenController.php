@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Costo;
 use App\Models\CostoOrden;
 use App\Models\DetalleOrden;
+use App\Models\TipoCambio;
 use App\Models\orden_produccion;
 use App\Models\DetalleCostoSubtotal;
 use App\Models\productos;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -53,9 +55,18 @@ class CostoOrdenController extends Controller
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
         $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         $detalle_orden = DetalleCostoSubtotal::where('numOrden', $idOP)->sum('subtotal');
-        //dd($detalle_orden);
+
+
+        //$TipoCambio = TipoCambio::select('MONTO')->where('FECHA', '=', Carbon::today())->get()->last();
+        //$date = Carbon::today();
+
+        //$TipoCambio = TipoCambio::where('FECHA', '=', Carbon::today())->pluck('MONTO')->first();
+
+        //dd($date,$TipoCambio);
         //dd($costoOrden);
-        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden', 'detalle_orden']));
+        $TipoCambio = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->pluck('tipo_cambio')->first();
+
+        return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden', 'detalle_orden', 'TipoCambio' ]));
     }
 
     public function nuevoCostoOrden($idOP)
@@ -83,7 +94,8 @@ class CostoOrdenController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])->where('costo_id', '=', $request['costo_orden'])->first()){
+        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])->where('costo_id', '=', $request['costo_orden'])->first())
+        {
             return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
         }else{
             $costoOrden = new costoOrden();
@@ -101,14 +113,22 @@ class CostoOrdenController extends Controller
 
     public function editarCostoOrden($id)
     {
-        $costoOrden = costoOrden::where('id', $id)->where('estado', 1)->get()->toArray();
-        $ordenes = orden_produccion::where('estado', 1)->orderBy('idOrden', 'asc')->get();
-        $costos = costo::where('estado', 1)->orderBy('id', 'asc')->get();
-        return view('User.CostoOrden.editar', compact(['costoOrden', 'ordenes', 'costos']));
+        //$costoOrden = costoOrden::where('id', $id)->where('estado', 1)->get()->toArray();
+        //$ordenes = orden_produccion::where('estado', 1)->orderBy('idOrden', 'asc')->get();
+        //$costos = costo::where('estado', 1)->orderBy('id', 'asc')->get();
+        $costoOrden= DB::select(('select costo_orden.id, costo_orden.numOrden, costo_orden.costo_id,
+                                    costo.unidad_medida,  costo.descripcion, costo_orden.cantidad,
+                                    costo_orden.costo_unitario
+                                    from costo_orden
+                                    inner join costo on costo_orden.costo_id = costo.id
+                                    where costo_orden.id = :id
+                                    order by costo_id asc'), array('id' => $id));
+        return view('User.CostoOrden.editar', compact(['costoOrden']));
     }
 
     public function actualizarCostoOrden(Request $request)
     {
+        //dd($request);
         $orden = $request['num_Orden'];
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
@@ -122,19 +142,25 @@ class CostoOrdenController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-
-        if (CostoOrden::where('numOrden', '=', $request['num_Orden'])->where('costo_id', '=', $request['costo_orden'])->first()){
-            return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
-        }else{
-
-        costoOrden::where('id', $request->id)
-            ->update([
-                'numOrden' => $request->num_Orden,
-                'costo_id' => $request->costo_orden,
-                'cantidad' => $request->cantidad,
-                'costo_unitario' => $request->costo_unitario
-            ]);
-        return redirect::to('costo-orden/detalle/' . $orden);}
+//        $query = CostoOrden::where('id', $request->id)->where('numOrden', '=', $request->num_Orden)
+//            ->where('costo_id', '=', $request->costo_orden)->get()
+//            ;
+//        //dd($query);
+//        if ($query != null)
+//        {
+//            return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
+//        }
+//        else
+//        {
+            costoOrden::where('id', $request->id)
+                ->update([
+                    'numOrden' => $request->num_Orden,
+                    'costo_id' => $request->costo_orden,
+                    'cantidad' => $request->cantidad,
+                    'costo_unitario' => $request->costo_unitario
+                ]);
+            return redirect::to('costo-orden/detalle/' . $orden);
+        //}
     }
 
     public function guardarHrasProd(Request $request)

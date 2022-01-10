@@ -17,9 +17,9 @@
                                     <h5 class="m-b-10">Resumen de la Orden de Producción</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:">Resumen de Costos</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>-->
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}"><i class="feather icon-home"></i> Inicio</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:">Resumen de la Orden de Produccion</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group row">
-                                                    <label for="merma-yankee-dry" class="col-sm-6 col-form-label">Merma Yankee Dry:</label>
+                                                    <label for="merma-yankee-dry" class="col-sm-6 col-form-label">Merma Yankee Dry(kg):</label>
                                                     <div class="col-sm-6">
                                                         <h6 class="mt-2">{{ number_format($detalle_orden->merma_total,2) }}</h6>
                                                     </div>
@@ -92,7 +92,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group row">
-                                                    <label for="residuos-pulper" class="col-sm-6 col-form-label">Residuos del Pulper:</label>
+                                                    <label for="residuos-pulper" class="col-sm-6 col-form-label">Residuos del Pulper(kg):</label>
                                                     <div class="col-sm-6">
                                                         <h6 class="mt-2">{{ number_format($detalle_orden->residuo_total,2) }}</h6>
                                                     </div>
@@ -110,7 +110,7 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                               <div class="form-group row">
-                                                <label for="produccionNeta" class="col-sm-6 col-form-label">PROD. REAL (unds y kg):</label>
+                                                <label for="produccionNeta" class="col-sm-6 col-form-label">PROD. REAL (kg):</label>
                                                 <div class="col-sm-6">
                                                   <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($detalle_orden->prod_real,2) }}">
                                                 </div>
@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group row">
-                                                    <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora de Tetrapack:</label>
+                                                    <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora de Tetrapack(kg):</label>
                                                     <div class="col-sm-6">
                                                         <h6 class="mt-2">{{ number_format($detalle_orden->lavadora_total,2) }}</h6>
                                                     </div>
@@ -172,7 +172,7 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h4 class="mb-0">Consumo Agua m<sup>3</sup></h4>
+                                                 <h4 class="mb-0">Consumo Agua</h4>
                                             </div>
                                             <div class="col text-right">
                                                 <h4>{{ number_format($detalle_orden->agua_total,2) }} m<sup>3</sup></h4>
@@ -189,7 +189,7 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                <h4 class="mb-0">Consumo Gas Glns</h4>
+                                                <h4 class="mb-0">Consumo Gas</h4>
                                             </div>
                                             <div class="col text-right">
                                                 <h4>{{ number_format($detalle_orden->gas_total,2)}} Glns</h4>
@@ -251,7 +251,7 @@
                                                  <h5 class="mb-0">Costo Total en C$</h5>
                                             </div>
                                             <div class="col text-right">
-                                                <h3>{{ number_format($detalle_orden->costo_total,2) }} C$</h3>
+                                                <h3>C$ {{ number_format($detalle_orden->costo_total,2) }}</h3>
                                             </div>
                                         </div>
                                     </div>
