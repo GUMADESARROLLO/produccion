@@ -38,7 +38,6 @@ class orden_produccionController extends Controller
         $i = 0;
         $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
 
-
         if (count($ord_produccion) > 0)
         {
             foreach ($ord_produccion as $key)
@@ -47,26 +46,27 @@ class orden_produccionController extends Controller
                 $array[$i]['numOrden'] = $key['numOrden'];
                 $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
                 $array[$i]['producto'] = $fibra->nombre;
+
+                /** Produccion Real **/
                 $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
-                if (is_null($detalle_prod_real) || $detalle_prod_real === '' ){
+                if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
                     $array[$i]['prod_real'] = 0;
-                }else{
+                } else {
                     $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
                 }
 
+                /** Merma Total **/
                 $detalle_merma_total = DetalleProduccion::select('merma_total')->where('numOrden', $key['numOrden'])->get()->first();
-                if (is_null($detalle_merma_total) || $detalle_merma_total == ''){
+                if (is_null($detalle_merma_total) || $detalle_merma_total == '') {
                     $array[$i]['merma_total'] = 0;
-                }else{
+                } else {
                     $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
                 }
-                //$array[$i]['prod_total'] = $detalle_prod_real->prod_real + $detalle_merma_total->merma_total;
 
+                $array[$i]['prod_total'] = $detalle_prod_real->prod_real  + $detalle_merma_total->merma_total ;
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
-                $array[$i]['horaInicio'] = date('g:i a', strtotime($key['horaInicio']));
-                //$array[$i]['horaFinal'] = date('g:i a', strtotime($key['horaFinal']));
                 $array[$i]['estado'] = $key['estado'];
                 $i++;
             }
@@ -86,9 +86,6 @@ class orden_produccionController extends Controller
         $usuario = usuario::select('nombres', 'apellidos')->where('id', $ord_produccion->idUsuario)->get()->first();
         $idTetra = fibras::select('idFibra')->where('descripcion', 'like', '%Tetrapack%')->get()->first();
 
-        /*$electricidad = electricidad::where('descripcion','like','%Tetrapack%')->get()->first();
-        $consumo_agua = consumo_agua::where('descripcion','like','%Tetrapack%')->get()->first();*/
-
         $mp_directa = mp_directa::select('mp_directa.*', 'fibras.descripcion', 'maquinas.nombre')
             ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
             ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
@@ -106,10 +103,9 @@ class orden_produccionController extends Controller
             ->where('quimico_maquina.numOrden', $idOP)
             ->get();
 
-        if (count($mp_directa) > 0 && $totalMPTPACK->total != '') {
+        if (count($mp_directa) > 0 && $totalMPTPACK->total != '')
+        {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
-            //$produccionBruta_ = $this->calcularProduccionBruta($idOP);
-            //$produccion_bruta = $produccionBruta_ + $produccionNeta->produccionNeta;
             $mermaYankeeDry = $this->calcularMermaYankeeDry($idOP);
             $residuosPulper = $this->calcularResiduosPulper($idOP);
             $lavadoraTetrapack = $this->calcularLavadoraTetrapack($idOP);
@@ -117,7 +113,9 @@ class orden_produccionController extends Controller
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
-            $produccion_bruta = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
+            $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
+            $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
+            $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
 
             if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
                 $porcentMermaYankeeDry = ($mermaYankeeDry->merma / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma)) * 100;
@@ -141,15 +139,8 @@ class orden_produccionController extends Controller
                 $factorFibral = 0;
             }
 
-
-            /*$porcentMermaYankeeDry = ( $mermaYankeeDry->merma/($produccionNeta->produccionNeta+$mermaYankeeDry->merma) )*100;
-            $porcentResiduosPulper = ($residuosPulper->residuo_pulper / $totalMP->mp_directa) * 100;
-            $porcentLavadoraTetrapack = ($lavadoraTetrapack->lav_tetrapack / $totalMPTPACK->total) * 100;
-            $factorFibral = (($totalMP->mp_directa - $lavadoraTetrapack->lav_tetrapack) / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma));*/
         } else {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
-            //$produccionBruta_ = $this->calcularProduccionBruta($idOP);
-            //$produccion_bruta = $produccionBruta_ + $produccionNeta->produccionNeta;
             $mermaYankeeDry = $this->calcularMermaYankeeDry($idOP);
             $residuosPulper = $this->calcularResiduosPulper($idOP);
             $lavadoraTetrapack = $this->calcularLavadoraTetrapack($idOP);
@@ -157,10 +148,9 @@ class orden_produccionController extends Controller
             $electricidad = $this->calcularElectricidad($idOP);
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
-            $produccion_bruta = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
-
-            //$factor_fibral = $this->calcularFactorFibral($idOP);
-
+            $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
+            $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
+            $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
 
             $porcentMermaYankeeDry = 0;
             $porcentResiduosPulper = 0;
@@ -180,7 +170,9 @@ class orden_produccionController extends Controller
             date('g:i a', strtotime($ord_produccion->horaInicio)),
             date('g:i a', strtotime($ord_produccion->horaFinal)),
             $produccionNeta->produccionNeta,
-            $produccion_bruta,
+            $produccion_total,
+            $estandar_electricidad,
+            $estandar_gas,
             $mermaYankeeDry->merma,
             $residuosPulper->residuo_pulper,
             $lavadoraTetrapack->lav_tetrapack,
@@ -296,9 +288,9 @@ class orden_produccionController extends Controller
             return ["error" => $e->getMessage()];
 
         }*/
-        
+
         $TipoCambio = DB::connection('sqlsrv')->table('umk.TIPO_CAMBIO_HIST')->select('MONTO')
-                        ->where('FECHA', '=', Carbon::today())->get()->last();
+            ->where('FECHA', '=', Carbon::today())->get()->last();
 
         $ordProd = new orden_produccion();
         $ordProd->producto = $request->producto;
@@ -379,7 +371,7 @@ class orden_produccionController extends Controller
 
     public function actualizar(Request $request)
     {
-        if($request->hrsTrabajadas == ''){
+        if ($request->hrsTrabajadas == '') {
             return Redirect::back()->withErrors("Las horas trabajadas no pueden estar vacias")->withInput();
         }
 
@@ -528,7 +520,7 @@ class orden_produccionController extends Controller
         return $data;
     }
 
-    public function calcularProduccionBruta($numOrden)
+    public function calcularProduccionTotal($numOrden)
     {
         $merma = jumboroll::select(DB::raw('( SUM(merma_yankee_dry_1) + SUM(merma_yankee_dry_2) ) AS merma'))
             ->where('jumboroll.numOrden', $numOrden)
@@ -607,15 +599,15 @@ class orden_produccionController extends Controller
             $data = array(
                 'inicial' => $inicial,
                 'final' => $final,
-                'totalConsumo' => number_format(($final - $inicial), 2),
-                'totalCordobas' => number_format(((($final - $inicial) * 560)*0.8), 2)
+                'totalConsumo' => (($final - $inicial)),
+                'totalProcesoH' => (((($final - $inicial) * 560) * 0.8))
             );
         } else {
             $data = array(
                 'inicial' => 0,
                 'final' => 0,
                 'totalConsumo' => number_format(0),
-                'totalCordobas' => number_format(0)
+                'totalProcesoH' => number_format(0)
             );
         }
 
@@ -677,13 +669,13 @@ class orden_produccionController extends Controller
             $data = array(
                 'inicial' => $inicial,
                 'final' => $final,
-                'total' => number_format(($final - $inicial), 2)
+                'total' => (($final - $inicial))
             );
         } else {
             $data = array(
                 'inicial' => 0,
                 'final' => 0,
-                'total' => number_format(0)
+                'total' => 0
             );
         }
 
@@ -830,13 +822,13 @@ class orden_produccionController extends Controller
                         //mp_directa::where('numOrden', $numOrden)->delete();
                         foreach ($array as $dataMP) {
                             $mpE = mp_directa::where([
-                                ['numOrden', '=',  $numOrden],
+                                ['numOrden', '=', $numOrden],
                                 ['id', '=', $dataMP['id']],
                                 ['estado', '=', 1]
                             ])->first();
                             if ($mpE != null) {
                                 mp_directa::where([
-                                    ['numOrden', '=',  $numOrden],
+                                    ['numOrden', '=', $numOrden],
                                     ['id', '=', $dataMP['id']],
                                     ['estado', '=', 1]
                                 ])->update([
@@ -900,13 +892,13 @@ class orden_produccionController extends Controller
                     if (count($array) > 0) {
                         foreach ($array as $dataQM) {
                             $qmE = QuimicoMaquina::where([
-                                ['numOrden', '=',  $numOrden],
+                                ['numOrden', '=', $numOrden],
                                 ['id', '=', $dataQM['id']],
                                 ['estado', '=', 1]
                             ])->first();
                             if ($qmE != null) {
                                 QuimicoMaquina::where([
-                                    ['numOrden', '=',  $numOrden],
+                                    ['numOrden', '=', $numOrden],
                                     ['id', '=', $dataQM['id']],
                                     ['estado', '=', 1]
                                 ])->update([
@@ -919,8 +911,8 @@ class orden_produccionController extends Controller
                                 $qm = new QuimicoMaquina();
                                 $qm->idMaquina = $dataQM['idMaquina'];
                                 $qm->idQuimico = $dataQM['idQuimico'];
-                                $qm->numOrden  =  $dataQM['numOrden'];
-                                $qm->cantidad  =  $dataQM['cantidad'];
+                                $qm->numOrden = $dataQM['numOrden'];
+                                $qm->cantidad = $dataQM['cantidad'];
                                 $qm->estado = 1;
                                 $qm->save();
                             }
@@ -994,7 +986,9 @@ class orden
     public $horaInicio;
     public $horaFinal;
     public $produccionNeta;
-    public $produccionReal;
+    public $produccionTotal;
+    public $estandar_electricidad;
+    public $estandar_gas;
     public $mermaYankeeDry;
     public $residuosPulper;
     public $lavadoraTetrapack;
@@ -1006,7 +1000,7 @@ class orden
     public $consumoGas;
     public $factorFibral;
 
-    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionReal, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral)
+    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal,$estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral)
     {
         $this->idOrden = $idOrden;
         $this->numOrden = $numOrden;
@@ -1018,7 +1012,9 @@ class orden
         $this->horaInicio = $horaInicio;
         $this->horaFinal = $horaFinal;
         $this->produccionNeta = $produccionNeta;
-        $this->produccionReal = $produccionReal;
+        $this->produccionTotal = $produccionTotal;
+        $this->estandar_electricidad = $estandar_electricidad;
+        $this->estandar_gas = $estandar_gas;
         $this->mermaYankeeDry = $mermaYankeeDry;
         $this->residuosPulper = $residuosPulper;
         $this->lavadoraTetrapack = $lavadoraTetrapack;

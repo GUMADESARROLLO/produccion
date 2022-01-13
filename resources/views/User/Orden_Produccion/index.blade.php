@@ -72,7 +72,7 @@
                                                             <h6>{{ number_format($key['prod_real'],2) }}</h6>
                                                         </td>
                                                         <td class="dt-center">
-                                                            <h6>{{ number_format($key['prod_real'] + $key['merma_total'], 2)}}</h6>
+                                                            <h6>{{ number_format($key['prod_total'],2) }}</h6>
                                                         </td>
                                                         <td class="dt-center">
                                                             @if ( $key['estado'] )

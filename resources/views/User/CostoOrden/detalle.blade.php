@@ -46,12 +46,10 @@
                                             <div class="col">
                                                 <h5>Lista de Costos por Orden</h5>
                                             </div>
-                                            <div class="col text-center">
-                                                <p for="" class="text-danger font-weight-bold"  id="txtTasaCambio" >Tasa de cambio: {{ number_format($TipoCambio,4) }}</p>
-                                            </div>
+
                                             <div class="col text-right">
                                                 <a id="btnTipoCambio" class="btn btn-info active " data-dismiss="modal"
-                                                   data-toggle="modal" data-target="#capturacompararModal">Tasa de cambio</a>
+                                                   data-toggle="modal" data-target="#capturacompararModal">T / C : C$ {{ number_format($TipoCambio,4) }} </a>
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +242,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h4 class=" text-center text-danger mb-0" id="tasaCambio"></h4>
+                                <h4 class=" text-center text-danger mb-0" id="tasaCambio">C$ 0.0000</h4>
                                 <div class="form-group">
                                     <label for="fechatc">Fecha</label>
                                         <input type="text" class="input-fecha form-control" name="fechatc" id="fechatc">
@@ -252,7 +250,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button id="btnguardarTC" type="button" class="btn btn-primary">Guardar</button>
+                                <button id="btnguardarTC" type="button" class="btn btn-primary">Aplicar</button>
                             </div>
                         </div>
                     </div>
