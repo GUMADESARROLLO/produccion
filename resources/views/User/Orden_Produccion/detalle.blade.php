@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-    
+
 @endsection
 @section('content')
     <!-- [ Main Content ] start -->
@@ -31,145 +31,85 @@
                     <!-- [ breadcrumb ] start -->
                     <div class="main-body">
                         <div class="page-wrapper">
-                            <div class="row">
-                                <!-- [ Header orden produccion ] start -->
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="card-header d-flex justify-content-center align-items-center">
-                                                <h5>Orden de Produccion N°: {{ $orden->numOrden }}
-                                                    - {{ $orden->producto }}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <label for="fechaInicio">Fecha
-                                                                Inicio:</label>
-                                                        </div>
-
-                                                        <div class="col-sm-6">
-                                                            <input type="text" readonly class="form-control-plaintext" id="fechaInicio" value="{{ $orden->fechaInicio }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="fechaFinal" class="col-sm-6 col-form-label">Fecha
-                                                            Final:</label>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" readonly class="form-control-plaintext" id="fechaFinal" value="{{ $orden->fechaFinal }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="merma-yankee-dry" class="col-sm-6 col-form-label">Merma
-                                                            Yankee Dry (kg):</label>
-                                                        <div class="col-sm-6">
-                                                            <h6 class="mt-2">{{ number_format($orden->mermaYankeeDry,2) }} kg<span class="float-right">{{ $orden->porcentMermaYankeeDry }} %</span>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 ">
-                                                    <div class="form-group row">
-                                                        <label for="" class="col-sm-6 col-form-label">Horas
-                                                            Trabajadas</label>
-                                                        <div class="col-sm-6">
-                                                            <h6 class="mt-2 text-left">{{ $orden->hrsTrabajadas }} hrs</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="produccionNeta" class="col-sm-6 col-form-label">Hora
-                                                            Inicio:</label>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ $orden->horaInicio }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="horaFinal" class="col-sm-6 col-form-label">Hora
-                                                            Final:</label>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" readonly class="form-control-plaintext" id="horaFinal" value="{{ $orden->horaFinal }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="residuos-pulper" class="col-sm-6 col-form-label">Residuos
-                                                            del Pulper (kg):</label>
-                                                        <div class="col-sm-6">
-                                                            <h6 class="mt-2">{{ number_format($orden->residuosPulper,2) }} kg <span class="float-right">{{ $orden->porcentResiduosPulper }} %</span>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="factorFibral" class="col-sm-6 col-form-label">Factor
-                                                            fibral</label>
-                                                        <div class="col-sm-6">
-                                                            <h6 class="mt-2 text-left">{{ $orden->factorFibral }} %</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="produccionNeta" class="col-sm-6 col-form-label">PROD.REAL (kg):</label>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" readonly class="form-control-plaintext"
-                                                            id="produccionNeta" value="{{ number_format($orden->produccionNeta,2) }} kg">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="produccionReal" class="col-sm-6 col-form-label">PROD.TOTAL (kg):</label>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" readonly class="form-control-plaintext"
-                                                            id="produccionReal" value="{{ number_format($orden->produccionTotal,2) }} kg">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group row">
-                                                        <label for="lav-tetrapack" class="col-sm-6 col-form-label">Lavadora
-                                                            de Tetrapack (kg):</label>
-                                                        <div class="col-sm-6">
-                                                            <h6 class="mt-2">{{ number_format($orden->lavadoraTetrapack,2) }} kg <span class="float-right">{{ $orden->porcentLavadoraTetrapack }} %</span>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                    </div>
+                            <section class="m-1">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <!-- [ Header orden produccion ] start -->
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class=" card-titled-flex justify-content-center align-items-center">
+                                                    <h5 class="text-center align-self-center my-2"> N°: {{ $orden->numOrden }}
+                                                        - {{ $orden->producto }}
+                                                    </h5>
+                                                    <h5 class="text-center align-self-center my-2"> {{ $orden->fechaInicio }} - {{ $orden->horaInicio }} -
+                                                        {{ $orden->fechaFinal }} - {{ $orden->horaFinal }}
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <!-- [ Header orden produccion ] end -->
                                     </div>
                                 </div>
-                                <!-- [ Header orden produccion ] end -->
-                            </div>
+                            </section>
 
-                            <section>
+                            <section class="m-1">
+                                <div class="container-fluid">
+                                    <div class="row m-3">
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Merma Yankee Dry (kg)</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ number_format($orden->mermaYankeeDry,2) }} kg</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Merma Yankee Dry (%)</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->porcentMermaYankeeDry }} %</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Residuos del Pulper (kg):</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ number_format($orden->residuosPulper,2) }} kg</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Residuos del Pulper (%):</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->porcentResiduosPulper }} %</p>
+                                        </div>
+                                    </div>
+                                    <div class="row m-3">
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Horas Trabajadas</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->hrsTrabajadas }} hrs</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Factor fibral</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->factorFibral }} %</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">PROD.REAL (kg):</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->produccionNeta,2) }} kg</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">PROD.TOTAL (kg):</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->produccionTotal,2) }} kg</p>
+                                        </div>
+                                    </div>
+                                    <div class="row m-3">
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Lavadora de Tetrapack (kg):</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->lavadoraTetrapack,2) }} kg</p>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <p class="text-muted">Lavadora de Tetrapack (%):</p>
+                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ $orden->porcentLavadoraTetrapack }} %</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="m-1">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <!-- [ Consumo Agua ] start -->
                                         <div class="col-xl-4 col-md-4">
                                             <div class="card card-social">
-                                                <div class="card-header text-center">
+                                                <div class="card-title text-center">
                                                     <h5 class="m-0">5. Agua</h5>
                                                 </div>
                                                 <div class="card-block border-bottom">
@@ -208,7 +148,7 @@
                                         <!-- [ Consumo Gas ] start -->
                                         <div class="col-xl-4 col-md-4">
                                             <div class="card card-social">
-                                                <div class="card-header text-center">
+                                                <div class="card-title text-center">
                                                     <h5 class="m-0">7. Gas Butano</h5>
                                                 </div>
                                                 <div class="card-block border-bottom">
@@ -235,11 +175,11 @@
                                                     <!--<div class="col text-right">
                                                     <h6>{{ number_format($orden->estandar_gas,2) }} Glns/Ton</h6>
                                                 </div>-->
-                                                        @if ($orden->estandar_electricidad > 145)
+                                                        @if ($orden->estandar_gas > 145)
                                                             <div class="col text-right" >
                                                                 <h6 style="color: red"> {{ number_format($orden->estandar_gas,2) }} Glns/Ton</h6>
                                                             </div>
-                                                        @elseif ($orden->estandar_electricidad < 145)
+                                                        @elseif ($orden->estandar_gas < 145)
                                                             <div class="col text-right">
                                                                 <h6 style="color: green"> {{ number_format($orden->estandar_gas,2) }} Glns/Ton</h6>
                                                             </div>
@@ -257,7 +197,7 @@
                                         <!-- [ Consumo Electricidad ] start -->
                                         <div class="col-xl-4 col-md-4">
                                             <div class="card card-social">
-                                                <div class="card-header text-center">
+                                                <div class="card-title text-center">
                                                     <h5 class="m-0">6. Electricidad</h5>
                                                 </div>
                                                 <div class="card-block">
@@ -343,7 +283,7 @@
                                 </div>
                             </section>
 
-                            <section>
+                            <section class="m-1">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <nav class="navbar  navbar-expand-lg  ">
@@ -362,7 +302,6 @@
 
                                             </div>
                                         </nav>
-
                                     </div>
                                 </div>
 
@@ -371,7 +310,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card card-event">
-                                                    <div class="card-header">
+                                                    <div class="card-title">
                                                         <h5 class="m-0">1. Materia Prima Directa (M. P.)</h5>
                                                     </div>
                                                     <div class="card-block table-border-style">
@@ -406,7 +345,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card card-event">
-                                                    <div class="card-header">
+                                                    <div class="card-title">
                                                         <h5 class="m-0">2. Materia Prima Directa</h5>
                                                     </div>
                                                     <div class="card-block table-border-style">
@@ -443,7 +382,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card card-event">
-                                                    <div class="card-header">
+                                                    <div class="card-title">
                                                         <h5 class="m-0">3. Quimicos</h5>
                                                     </div>
                                                     <div class="card-block table-border-style">
@@ -476,7 +415,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card card-event">
-                                                    <div class="card-header">
+                                                    <div class="card-title">
                                                         <h5 class="m-0">4. Costos indirectos de fabricación</h5>
                                                     </div>
                                                     <div class="card-block table-border-style">
