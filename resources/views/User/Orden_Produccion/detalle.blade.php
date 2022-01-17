@@ -52,54 +52,58 @@
                                 </div>
                             </section>
 
+                            <!-- Primer bloque de contenido -->
                             <section class="m-1">
                                 <div class="container-fluid">
-                                    <div class="row m-3">
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Merma Yankee Dry (kg)</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ number_format($orden->mermaYankeeDry,2) }} kg</p>
+                                    <div class="card">
+                                        <div class="row m-3">
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Merma Yankee Dry (kg)</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ number_format($orden->mermaYankeeDry,2) }} kg</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Merma Yankee Dry (%)</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->porcentMermaYankeeDry }} %</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Residuos del Pulper (kg):</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ number_format($orden->residuosPulper,2) }} kg</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Residuos del Pulper (%):</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->porcentResiduosPulper }} %</p>
+                                            </div>
                                         </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Merma Yankee Dry (%)</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->porcentMermaYankeeDry }} %</p>
+                                        <div class="row m-3">
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Horas Trabajadas</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->hrsTrabajadas }} hrs</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Factor fibral</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->factorFibral }} %</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">PROD.REAL (kg):</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->produccionNeta,2) }} kg</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">PROD.TOTAL (kg):</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->produccionTotal,2) }} kg</p>
+                                            </div>
                                         </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Residuos del Pulper (kg):</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ number_format($orden->residuosPulper,2) }} kg</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Residuos del Pulper (%):</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->porcentResiduosPulper }} %</p>
+                                        <div class="row m-3">
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Lavadora de Tetrapack (kg):</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->lavadoraTetrapack,2) }} kg</p>
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <p class="text-muted">Lavadora de Tetrapack (%):</p>
+                                                <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ $orden->porcentLavadoraTetrapack }} %</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row m-3">
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Horas Trabajadas</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->hrsTrabajadas }} hrs</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Factor fibral</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important">{{ $orden->factorFibral }} %</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">PROD.REAL (kg):</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->produccionNeta,2) }} kg</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">PROD.TOTAL (kg):</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->produccionTotal,2) }} kg</p>
-                                        </div>
-                                    </div>
-                                    <div class="row m-3">
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Lavadora de Tetrapack (kg):</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ number_format($orden->lavadoraTetrapack,2) }} kg</p>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <p class="text-muted">Lavadora de Tetrapack (%):</p>
-                                            <p class="font-weight-bolder" style="color: black; font-size: 1.2rem!important"> {{ $orden->porcentLavadoraTetrapack }} %</p>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </section>
 
@@ -286,163 +290,171 @@
                             <section class="m-1">
                                 <div class="container-fluid">
                                     <div class="row">
-                                        <nav class="navbar  navbar-expand-lg  ">
-                                            <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active" id="navFibra" data-toggle="tab"
-                                                   href="#nav-fib" role="tab" aria-controls="nav-bod" aria-selected="true">Fibra</a>
-                                                <a class="nav-item nav-link" id="navMOD" data-toggle="tab" href="#nav-MOD"
-                                                   role="tab" aria-controls="nav-MOD" aria-selected="false">Mano de obra
-                                                    directa</a>
-                                                <a class="nav-item nav-link" id="navQuimico" data-toggle="tab"
-                                                   href="#nav-Quim" role="tab" aria-controls="nav-Quim"
-                                                   aria-selected="false">Quimicos</a>
-                                                <a class="nav-item nav-link" id="navCIF" data-toggle="tab" href="#nav-CIF"
-                                                   role="tab" aria-controls="nav-Cif" aria-selected="false">Costos
-                                                    indirectos de fabricación</a>
+                                        <div class="col-xl-12">
+                                            <ul class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-item nav-link active" id="navFibra" data-toggle="tab"
+                                                       href="#nav-fib" role="tab" aria-controls="nav-bod" aria-selected="true">Fibra</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-item nav-link" id="navMOD" data-toggle="tab" href="#nav-MOD"
+                                                       role="tab" aria-controls="nav-MOD" aria-selected="false">Mano de obra
+                                                        directa</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-item nav-link" id="navQuimico" data-toggle="tab"
+                                                       href="#nav-Quim" role="tab" aria-controls="nav-Quim"
+                                                       aria-selected="false">Quimicos</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-item nav-link" id="navCIF" data-toggle="tab" href="#nav-CIF"
+                                                       role="tab" aria-controls="nav-Cif" aria-selected="false">Costos
+                                                        indirectos de fabricación</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="nav-fib" role="tabpanel" aria-labelledby="navFibra">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card card-event">
+                                                        <div class="card-title">
+                                                            <h5 class="m-0">1. Materia Prima Directa (M. P.)</h5>
+                                                        </div>
+                                                        <div class="card-block table-border-style">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" id="dtBachadasxdias">
+                                                                    <thead>
+                                                                    <tr class="text-center">
+                                                                        <th class="text-center">MAQUINA</th>
+                                                                        <th>DESCRIPCION</th>
+                                                                        <th>CANTIDAD</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    @foreach ($mp_directa as $key => $mp)
+                                                                        <tr class="unread">
+                                                                            <td class="dt-center">{{ $mp->nombre }}</td>
+                                                                            <td class="dt-center">{{ $mp->descripcion }}</td>
+                                                                            <td class="dt-center">{{ number_format($mp->cantidad,2) }}
+                                                                                kg
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </nav>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-MOD" role="tabpanel" aria-labelledby="navMOD">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card card-event">
+                                                        <div class="card-title">
+                                                            <h5 class="m-0">2. Materia Prima Directa</h5>
+                                                        </div>
+                                                        <div class="card-block table-border-style">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" id="dtBachadasxdias">
+                                                                    <thead>
+                                                                    <tr class="text-center">
+                                                                        <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
+                                                                        <th>DIA</th>
+                                                                        <th>NOCHE</th>
+                                                                        <th>TOTAL</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    @foreach ($mo_directa as $key)
+                                                                        <tr class="unread">
+                                                                            <td class="dt-left">{{ $key['actividad'] }}</td>
+                                                                            <td class="dt-center">{{ $key['dia'] }} hrs</td>
+                                                                            <td class="dt-center">{{ $key['noche'] }} hrs</td>
+                                                                            <td class="dt-center">{{ number_format($key['total'],2) }}
+                                                                                hrs
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-Quim" role="tabpanel" aria-labelledby="navQuimico">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card card-event">
+                                                        <div class="card-title">
+                                                            <h5 class="m-0">3. Quimicos</h5>
+                                                        </div>
+                                                        <div class="card-block table-border-style">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" id="dtBachadasxdias">
+                                                                    <thead>
+                                                                    <tr class="text-center">
+                                                                        <th class="text-center">MAQUINA</th>
+                                                                        <th>DESCRIPCION</th>
+                                                                        <th>CANTIDAD</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    @foreach ($quimico_maquina as $key => $qm)
+                                                                        <tr class="unread">
+                                                                            <td class="dt-center">{{ $qm->nombre }}</td>
+                                                                            <td class="dt-center">{{ $qm->descripcion }}</td>
+                                                                            <td class="dt-center">{{ $qm->cantidad }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-CIF" role="tabpanel" aria-labelledby="navCIF">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card card-event">
+                                                        <div class="card-title">
+                                                            <h5 class="m-0">4. Costos indirectos de fabricación</h5>
+                                                        </div>
+                                                        <div class="card-block table-border-style">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" id="dtBachadasxdias">
+                                                                    <thead>
+                                                                    <tr class="text-center">
+                                                                        <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
+                                                                        <th>HORAS</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    @foreach ($mo_directa as $key)
+                                                                        <tr class="unread">
+                                                                            <td class="dt-left">{{ $key['actividad'] }}</td>
+                                                                            <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="nav-fib" role="tabpanel" aria-labelledby="navFibra">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">1. Materia Prima Directa (M. P.)</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-center">MAQUINA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th>CANTIDAD</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($mp_directa as $key => $mp)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-center">{{ $mp->nombre }}</td>
-                                                                        <td class="dt-center">{{ $mp->descripcion }}</td>
-                                                                        <td class="dt-center">{{ number_format($mp->cantidad,2) }}
-                                                                            kg
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-MOD" role="tabpanel" aria-labelledby="navMOD">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">2. Materia Prima Directa</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
-                                                                    <th>DIA</th>
-                                                                    <th>NOCHE</th>
-                                                                    <th>TOTAL</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($mo_directa as $key)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                                        <td class="dt-center">{{ $key['dia'] }} hrs</td>
-                                                                        <td class="dt-center">{{ $key['noche'] }} hrs</td>
-                                                                        <td class="dt-center">{{ number_format($key['total'],2) }}
-                                                                            hrs
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-Quim" role="tabpanel" aria-labelledby="navQuimico">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">3. Quimicos</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-center">MAQUINA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th>CANTIDAD</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($quimico_maquina as $key => $qm)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-center">{{ $qm->nombre }}</td>
-                                                                        <td class="dt-center">{{ $qm->descripcion }}</td>
-                                                                        <td class="dt-center">{{ $qm->cantidad }}</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-CIF" role="tabpanel" aria-labelledby="navCIF">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">4. Costos indirectos de fabricación</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
-                                                                    <th>HORAS</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($mo_directa as $key)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                                        <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </section>
 
                         </div>
