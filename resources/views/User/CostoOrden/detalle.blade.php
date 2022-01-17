@@ -242,7 +242,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h2 class=" text-center text-danger mb-0" id="tasaCambio">C$ 0.0000</h2>
+                                <h4 class=" text-center text-danger mb-0" id="tasaCambio">C$ 0.0000</h4>
                                 <div class="form-group">
                                     <label for="fechatc">Fecha</label>
                                         <input type="text" class="input-fecha form-control" name="fechatc" id="fechatc">
