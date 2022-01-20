@@ -106,7 +106,7 @@
             type: 'post',
             async: true,
             success: function(resultado) {
-                mensaje('Se elimino con exito con exito :)', 'success')
+                mensaje('Se elimino con exito la fila :)', 'success')
             }
         }).done(function(data) {
             dtMPD.row('.selected').remove().draw(false);
@@ -127,7 +127,7 @@
             type: 'post',
             async: true,
             success: function(resultado) {
-                mensaje('Se elimino con exito con exito :)', 'success')
+                mensaje('Se elimino con exito la fila :)', 'success')
             }
         }).done(function(data) {
             dtQM.row('.selected').remove().draw(false);
@@ -230,8 +230,8 @@
     /********** Guardar informacion de fibras ***********/
     $(document).on('click', '#btnGFibras', function(e) {
         e.preventDefault();
-        var codigo = $('#numOrden').val();
-        alert(codigo);
+         var codigo = $('#numOrden').val();
+         alert(codigo);
         var i = 0;
         /********** variables de Fibras ***********/
         //var last_row = dtMPD.row(":last").data();
@@ -443,7 +443,6 @@
 
         } else if (horasT === '') {
             //e.preventDefault();
-
             mensaje("Debe ingresar una horas trabajadas de la orden", "error");
             return false;
         } else if (codigo === '') {
