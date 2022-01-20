@@ -93,6 +93,8 @@ Route::post('guardarqm-directa', 'User\orden_produccionController@guardarQM')->n
 Route::get('data-qm', 'User\orden_produccionController@getDataQuimico')->name('data-qm');
 Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')->name('cargarqm-directa');
 Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->name('eliminar-qm');
+//Add by xochilt
+Route::get('getData/{idOrd}', 'User\orden_produccionController@getData')->name('getData/{idOrd}');
 
 
 //RUTAS CONFIGURACIONES
