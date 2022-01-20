@@ -107,7 +107,7 @@
             type: 'post',
             async: true,
             success: function(resultado) {
-                mensaje('Se elimino con exito con exito :)', 'success')
+                mensaje('Se elimino con exito la fila :)', 'success')
             }
         }).done(function(data) {
         dtMPD.row('.selected').remove().draw( false );
@@ -128,7 +128,7 @@
             type: 'post',
             async: true,
             success: function(resultado) {
-                mensaje('Se elimino con exito con exito :)', 'success')
+                mensaje('Se elimino con exito la fila :)', 'success')
             }
         }).done(function(data) {
             dtQM.row('.selected').remove().draw( false );
@@ -220,7 +220,8 @@
     /********** Guardar informacion de fibras ***********/
     $(document).on('click', '#btnGFibras', function(e) {
         e.preventDefault();
-        codigo = $('#numOrden').val();
+         var codigo = $('#numOrden').val();
+         alert(codigo);
         var i = 0;
         /********** variables de Fibras ***********/
         //var last_row = dtMPD.row(":last").data();
@@ -277,7 +278,7 @@
             }).done(function(data) { location.reload(); });
             //console.log('El arreglo esta vacio :(');
             return mensaje('Los datos en materia prima estan vacios :(', 'error');
-           
+
         }
 
         /********** Ajax de Quimicos ***********/
@@ -422,7 +423,6 @@
 
         } else if (horasT === '') {
             //e.preventDefault();
-            
             mensaje("Debe ingresar una horas trabajadas de la orden", "error");
             return false;
         } else if (codigo === '') {
