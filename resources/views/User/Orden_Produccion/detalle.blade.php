@@ -18,7 +18,7 @@
                         <div class="nk-block-head nk-block-head-sm">
                             <div class="nk-block-between g-3">
                                 <div class="nk-block-head-content">
-                                    <h3 class="nk-block-title page-title">Detalles Orden N°: {{ $orden->numOrden }}</h3>
+                                    <h3 class="nk-block-title page-title">ORDEN NO.{{ $orden->numOrden }}</h3>
                                     <div class="nk-block-des text-soft">
                                         <ul class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
@@ -46,8 +46,8 @@
                                 <div class="card-inner">
                                     <div class="card-title-group align-start mb-3">
                                         <div class="card-title">
-                                            <h6 class="title">Estadisticas Generales</h6>
-                                            <p>Alguna baina  &amp; bien PRO.</p>
+                                            <h6 class="title">Información General de la Orden</h6>
+                                            <p>Se detalla datos relevantes de la orden.</p>
                                         </div>                                
                                     </div>
                                     <br>
@@ -132,7 +132,7 @@
                                         <div class="card-inner ">
                                             <div class="card-title-group align-start mb-0">
                                                 <div class="card-title">
-                                                    <h6 class="subtitle text-base">AGUA</h6>
+                                                    <h6 class="title">AGUA</h6>                                                    
                                                 </div>                                       
                                             </div>
                                             <div class="card-amount">
@@ -165,7 +165,7 @@
                                         <div class="card-inner">
                                             <div class="card-title-group align-start mb-0">
                                                 <div class="card-title">
-                                                <h6 class="subtitle text-base">Gas Butano</h6>
+                                                <h6 class="title">Gas Butano</h6>
                                                 </div>                                       
                                             </div>
                                             <div class="card-amount">
@@ -204,7 +204,7 @@
                                         <div class="card-inner ">
                                             <div class="card-title-group align-start mb-0">
                                                 <div class="card-title">
-                                                    <h6 class="subtitle text-base">Electricidad</h6>
+                                                    <h6 class="title">Electricidad</h6>
                                                 </div>                                       
                                             </div>
                                             <div class="card-amount">
@@ -234,7 +234,9 @@
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                             <div class="card-title-group align-start mb-0">
-                                                <div class="card-title"><h6 class="subtitle text-base">Consumo Electricidad Kw/Ton</h6></div>                                       
+                                                <div class="card-title">
+                                                    <h6 class="title">Consumo Electricidad Kw/Ton</h6>
+                                                </div>                                       
                                             </div>
                                             <div class="card-amount">
                                                 <span class="amount">
@@ -265,181 +267,160 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                </div> 
-            </div>
-
-            
-            <div class="pcoded-content"  >
-                <div class="pcoded-inner-content">
-                    <!-- [ breadcrumb ] start -->
-                    <div class="main-body" >
-                        <div class="page-wrapper">     
-                            
-                            <section class="m-1">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <nav class="navbar  navbar-expand-lg  ">
-                                            <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active" id="navFibra" data-toggle="tab" href="#nav-fib" role="tab" aria-controls="nav-bod" aria-selected="true">Fibra</a>
-                                                <a class="nav-item nav-link" id="navMOD" data-toggle="tab" href="#nav-MOD" role="tab" aria-controls="nav-MOD" aria-selected="false">Mano de obra directa</a>
-                                                <a class="nav-item nav-link" id="navQuimico" data-toggle="tab" href="#nav-Quim" role="tab" aria-controls="nav-Quim" aria-selected="false">Quimicos</a>
-                                                <a class="nav-item nav-link" id="navCIF" data-toggle="tab" href="#nav-CIF" role="tab" aria-controls="nav-Cif" aria-selected="false">Costos indirectos de fabricación</a>
-                                            </div>
-                                        </nav>
-                                    </div>
+                    <div class="card card-bordered card-full">
+                        <div class="card-inner border-bottom">
+                            <div class="card-title-group">
+                                <div class="card-title">
+                                    <h6 class="title">Insumos de la Orden de Producción</h6>
                                 </div>
-
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="nav-fib" role="tabpanel" aria-labelledby="navFibra">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">1. Materia Prima Directa (M. P.)</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-center">MAQUINA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th>CANTIDAD</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($mp_directa as $key => $mp)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-center">{{ $mp->nombre }}</td>
-                                                                        <td class="dt-center">{{ $mp->descripcion }}</td>
-                                                                        <td class="dt-center">{{ number_format($mp->cantidad,2) }}
-                                                                            kg
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-MOD" role="tabpanel" aria-labelledby="navMOD">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">2. Materia Prima Directa</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
-                                                                    <th>DIA</th>
-                                                                    <th>NOCHE</th>
-                                                                    <th>TOTAL</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($mo_directa as $key)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                                        <td class="dt-center">{{ $key['dia'] }} hrs</td>
-                                                                        <td class="dt-center">{{ $key['noche'] }} hrs</td>
-                                                                        <td class="dt-center">{{ number_format($key['total'],2) }}
-                                                                            hrs
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-Quim" role="tabpanel" aria-labelledby="navQuimico">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">3. Quimicos</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-center">MAQUINA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th>CANTIDAD</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($quimico_maquina as $key => $qm)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-center">{{ $qm->nombre }}</td>
-                                                                        <td class="dt-center">{{ $qm->descripcion }}</td>
-                                                                        <td class="dt-center">{{ $qm->cantidad }}</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-CIF" role="tabpanel" aria-labelledby="navCIF">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card card-event">
-                                                    <div class="card-title">
-                                                        <h5 class="m-0">4. Costos indirectos de fabricación</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtBachadasxdias">
-                                                                <thead>
-                                                                <tr class="text-center">
-                                                                    <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
-                                                                    <th>HORAS</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach ($mo_directa as $key)
-                                                                    <tr class="unread">
-                                                                        <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                                        <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="card-tools">
+                                    <ul class="card-tools-nav nav">
+                                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#nav_fibra"><span>Fribra</span></a></li>
+                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_mano_obra"><span>Mano de obra directa</span></a></li>
+                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_quimico"><span>Quimicos</span></a></li>
+                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_costos_indirectos"><span>Costos indirectos de fabricación</span></a></li>
+                                    </ul>
                                 </div>
-                            </section>
-
+                            </div>
                         </div>
-
-                    </div>
-
-                </div>
-
+                        <div class="tab-content mt-0">
+                            <div class="tab-pane active" id="nav_fibra">
+                                <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                        <table class="table table-hover" id="dtBachadasxdias">
+                                                            <thead>
+                                                            <tr class="text-center">
+                                                                <th class="text-center">MAQUINA</th>
+                                                                <th>DESCRIPCION</th>
+                                                                <th>CANTIDAD</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach ($mp_directa as $key => $mp)
+                                                                <tr class="unread">
+                                                                    <td class="dt-center">{{ $mp->nombre }}</td>
+                                                                    <td class="dt-center">{{ $mp->descripcion }}</td>
+                                                                    <td class="dt-center">{{ number_format($mp->cantidad,2) }}
+                                                                        kg
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="nav_mano_obra">
+                                <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">                                
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-mask">
+                                            <div class="simplebar-offset" >
+                                                <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                        <tr class="text-center">
+                                                            <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
+                                                            <th>DIA</th>
+                                                            <th>NOCHE</th>
+                                                            <th>TOTAL</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach ($mo_directa as $key)
+                                                            <tr class="unread">
+                                                                <td class="dt-left">{{ $key['actividad'] }}</td>
+                                                                <td class="dt-center">{{ $key['dia'] }} hrs</td>
+                                                                <td class="dt-center">{{ $key['noche'] }} hrs</td>
+                                                                <td class="dt-center">{{ number_format($key['total'],2) }}
+                                                                    hrs
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="nav_quimico">
+                                <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                        <tr class="text-center">
+                                                            <th class="text-center">MAQUINA</th>
+                                                            <th>DESCRIPCION</th>
+                                                            <th>CANTIDAD</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach ($quimico_maquina as $key => $qm)
+                                                            <tr class="unread">
+                                                                <td class="dt-center">{{ $qm->nombre }}</td>
+                                                                <td class="dt-center">{{ $qm->descripcion }}</td>
+                                                                <td class="dt-center">{{ $qm->cantidad }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="nav_costos_indirectos">
+                                <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">    
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                        <tr class="text-center">
+                                                            <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
+                                                            <th>HORAS</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach ($mo_directa as $key)
+                                                            <tr class="unread">
+                                                                <td class="dt-left">{{ $key['actividad'] }}</td>
+                                                                <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>                 
             </div>
-
         </div>
-
     </div>
     </div>
     <!-- [ Main Content ] end -->
