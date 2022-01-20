@@ -94,7 +94,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="numOrden">Horas Trabajadas</label>
+                                                        <label for="hrsTrabajadas">Horas Trabajadas</label>
                                                         <input type="text" class="form-control" name="hrsTrabajadas" id="hrsTrabajadas" value="{{ old('hrsTrabajadas') }}" onpaste="return false">
                                                         <small id="hrsTrabajadasHelp" class="form-text text-muted">Especifique
                                                             las hras trabajadas</small>
