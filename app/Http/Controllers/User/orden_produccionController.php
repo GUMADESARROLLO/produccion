@@ -63,7 +63,8 @@ class orden_produccionController extends Controller
                     $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
                 }
 
-                $array[$i]['prod_total'] = $detalle_prod_real->prod_real  + $detalle_merma_total->merma_total ;
+
+                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'] ;
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
@@ -149,8 +150,14 @@ class orden_produccionController extends Controller
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
-            $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
-            $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
+
+            if($produccion_total == 0 || $produccion_total == ''){
+                $estandar_electricidad = 0;
+                $estandar_gas = 0;
+            }else {
+                $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
+                $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
+            }
 
             $porcentMermaYankeeDry = 0;
             $porcentResiduosPulper = 0;
@@ -289,9 +296,6 @@ class orden_produccionController extends Controller
 
         }*/
 
-        $TipoCambio = DB::connection('sqlsrv')->table('umk.TIPO_CAMBIO_HIST')->select('MONTO')
-            ->where('FECHA', '=', Carbon::today())->get()->last();
-
         $ordProd = new orden_produccion();
         $ordProd->producto = $request->producto;
         $ordProd->numOrden = $request->numOrden;
@@ -302,30 +306,7 @@ class orden_produccionController extends Controller
         $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
         $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
         $ordProd->estado = 1;
-        $ordProd->tipo_cambio = $TipoCambio->MONTO;
         $ordProd->save();
-
-        /*$lastOrden = orden_produccion::latest('idOrden')->first()->numOrden;
-        foreach ($request-> all() as $req)
-        {
-            mp_directa::create([
-                'idMaquina' => $request['maquina'],
-                'idFibra' => $request['fibras'],
-                'numOrden' => $lastOrden,
-                'cantidad' => $request['cantidad']
-            ]);
-        }
-
-        foreach ($request-> all() as $req)
-        {
-            QuimicoMaquina::create([
-                'idMaquina' => $request['maquinaq'],
-                'idFibra' => $request['quimicos'],
-                'numOrden' => $lastOrden,
-                'cantidad' => $request['cantidadq']
-            ]);
-        }*/
-
 
         //return ["success" => "Data Inserted"];
         //return redirect()->route('orden-produccion');
@@ -798,7 +779,7 @@ class orden_produccionController extends Controller
     public function guardarMP(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayFibra = $request->input('data');
         if ($numOrdenE != null) {
@@ -869,7 +850,7 @@ class orden_produccionController extends Controller
     public function guardarQM(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayQuimico = $request->input('data');
         if ($numOrdenE != null) {
