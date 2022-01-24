@@ -17,7 +17,7 @@
                                     <h5 class="m-b-10">Hoja de Reporte</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/orden-produccion')}}">Ordenes Produccion</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Reporte</a></li>
                                 </ul>

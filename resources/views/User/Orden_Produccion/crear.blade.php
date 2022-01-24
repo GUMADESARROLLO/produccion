@@ -18,9 +18,9 @@
                                     <h5 class="m-b-10">Nueva Orden de Producción</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/orden-produccion')}}">Ordenes
                                             Produccion</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Nueva</a></li>
