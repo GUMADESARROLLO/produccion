@@ -205,7 +205,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-amount">
-                                                <span class="amount"> {{ $orden->electricidad['totalConsumo']}}<span class="currency"> Kw/Hrs
+                                                <span class="amount"> {{ $orden->electricidad['totalConsumo']}}<span class="currency"> Kw
                                                 </span>
                                             </div>
                                             <div class="amount-sm">560 <small>Factor de conversión</small></div>
@@ -214,12 +214,12 @@
                                                     <div class="card-stats-data">
                                                         <div class="title">Inicial</div>
                                                         <div class="amount">
-                                                            {{ number_format($orden->electricidad['inicial'],2) }} Kwh
+                                                            {{ number_format($orden->electricidad['inicial'],2) }} Kw
                                                         </div>
                                                     </div>
                                                     <div class="card-stats-data">
                                                         <div class="title">Final</div>
-                                                        <div class="amount">{{ number_format($orden->electricidad['final'],2) }} Kwh </div>
+                                                        <div class="amount">{{ number_format($orden->electricidad['final'],2) }} Kw </div>
                                                     </div>
                                                 </div>
 
@@ -248,7 +248,7 @@
                                             </div>
                                             <div class="card-stats">
                                                 <div class="card-stats-group g-2">
-                                                    <div class="card-stats-data">
+                                                    <div class="card-stats-data" style="display:none">
                                                         <div class="title">Real (80%) : </div>
                                                         <div class="amount"> {{ $orden->electricidad['totalProcesoH'] }} Kw/Hrs  </div>
                                                     </div>
