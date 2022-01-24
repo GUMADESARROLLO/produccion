@@ -16,11 +16,11 @@
                                 <div class="page-header-title">
                                     <h5 class="m-b-10">Orden de Producción</h5>
                                 </div>
-                                <ul class="breadcrumb">
+                                <!--<ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
                                     <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Orden de Producción</a></li>
-                                </ul>
+                                </ul>-->
                             </div>
                             <div class="col-md-2">
                                 <a href="{{url('orden-produccion/nueva')}}" class="btn btn-primary btn-sm  float-right">Nueva Orden</a>
