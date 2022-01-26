@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models;
 use App\Models\DetalleOrden;
 use App\Models\DetalleCostoSubtotal;
+use App\Models\orden_produccion;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller

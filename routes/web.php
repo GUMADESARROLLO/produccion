@@ -165,6 +165,12 @@ Route::get('dataJROLL/{idTurno}/{codigo}', 'User\reporteController@getDataJumboR
 Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventario')->name('getDtaInventario/{codigo}');
 Route::get('getDataJRDetail/{codigo}', 'User\reporteController@getDataJRDetail')->name('getDataJRDetail/{codigo}');
 Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name('guardar-detailJR');
+Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name('guardar-detailJR');
+
+
+Route::post('guardar-hrasEft', 'User\reporteController@guardarhrasEft')->name('guardar-hrasEft');
+Route::post('eliminar-hras-efectivas', 'User\reporteController@eliminarHrasEft')->name('eliminar-hras-efectivas');
+
 
 
 

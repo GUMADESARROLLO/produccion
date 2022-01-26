@@ -35,26 +35,26 @@
                                     <div class="card-header">
                                         <div class="card-header">
                                             <h5>Orden de Produccion N°: {{ $detalle_orden->numOrden }} </h5>
-                                            <h6>Codigo de Producto:   {{ $detalle_orden->codigo }} -  {{ $detalle_orden->nombre }}</h6>
+                                            <h6>Codigo de Producto: {{ $detalle_orden->codigo }} - {{ $detalle_orden->nombre }}</h6>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-3">
-                                              <div class="form-group row">
-                                                <label for="fechaInicio" class="col-sm-6 col-form-label">Fecha Inicio:</label>
-                                                <div class="col-sm-6">
-                                                  <input type="text" readonly class="form-control-plaintext" id="fechaInicio" value="{{ $detalle_orden->fechaInicio }}">
+                                                <div class="form-group row">
+                                                    <label for="fechaInicio" class="col-sm-6 col-form-label">Fecha Inicio:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" readonly class="form-control-plaintext" id="fechaInicio" value="{{ $detalle_orden->fechaInicio }}">
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                             <div class="col-md-3">
-                                              <div class="form-group row">
-                                                <label for="fechaFinal" class="col-sm-6 col-form-label">Fecha Final:</label>
-                                                <div class="col-sm-6">
-                                                  <input type="text" readonly class="form-control-plaintext" id="fechaFinal" value="{{ $detalle_orden->fechaFinal }}">
+                                                <div class="form-group row">
+                                                    <label for="fechaFinal" class="col-sm-6 col-form-label">Fecha Final:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" readonly class="form-control-plaintext" id="fechaFinal" value="{{ $detalle_orden->fechaFinal }}">
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group row">
@@ -75,20 +75,20 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
-                                              <div class="form-group row">
-                                                <label for="produccionNeta" class="col-sm-6 col-form-label">Hora Inicio:</label>
-                                                <div class="col-sm-6">
-                                                  <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ $detalle_orden->horaInicio }}">
+                                                <div class="form-group row">
+                                                    <label for="produccionNeta" class="col-sm-6 col-form-label">Hora Inicio:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ $detalle_orden->horaInicio }}">
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                             <div class="col-md-3">
-                                              <div class="form-group row">
-                                                <label for="horaFinal" class="col-sm-6 col-form-label">Hora Final:</label>
-                                                <div class="col-sm-6">
-                                                  <input type="text" readonly class="form-control-plaintext" id="horaFinal" value="{{ $detalle_orden->horaFinal }}">
+                                                <div class="form-group row">
+                                                    <label for="horaFinal" class="col-sm-6 col-form-label">Hora Final:</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" readonly class="form-control-plaintext" id="horaFinal" value="{{ $detalle_orden->horaFinal }}">
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group row">
@@ -109,12 +109,12 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
-                                              <div class="form-group row">
-                                                <label for="produccionNeta" class="col-sm-6 col-form-label">PROD. REAL (kg):</label>
-                                                <div class="col-sm-6">
-                                                  <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($detalle_orden->prod_real,2) }}">
+                                                <div class="form-group row">
+                                                    <label for="produccionNeta" class="col-sm-6 col-form-label">PROD. REAL (kg):</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" readonly class="form-control-plaintext" id="produccionNeta" value="{{ number_format($detalle_orden->prod_real,2) }}">
+                                                    </div>
                                                 </div>
-                                              </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group row">
@@ -125,6 +125,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
+                                                <div class="form-group row">
+                                                    <label for="lav-tetrapack" class="col-sm-6 col-form-label">
+                                                        Horas efectivas por contador:</label>
+                                                    <div class="col-sm-6">
+                                                        <h6 class="mt-2">41.83</h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
                                             </div>
@@ -141,7 +148,7 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h4 class="mb-0">Consumo Elec. C$</h4>
+                                                <h4 class="mb-0">Consumo Elec. C$</h4>
                                             </div>
                                             <div class="col text-right">
                                                 <h4>{{ number_format($detalle_orden->electricidad_total_cord,2)}} C$</h4>
@@ -172,7 +179,7 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h4 class="mb-0">Consumo Agua</h4>
+                                                <h4 class="mb-0">Consumo Agua</h4>
                                             </div>
                                             <div class="col text-right">
                                                 <h4>{{ number_format($detalle_orden->agua_total,2) }} m<sup>3</sup></h4>
@@ -200,7 +207,7 @@
                             </div>
                             <!-- [ Consumo Gas ] end -->
                         </div>
-                         <div class="row">
+                        <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -211,7 +218,6 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr class="text-center">
-
                                                         <th>Codigo</th>
                                                         <th>Nombre</th>
                                                         <th>Unidad de Medidad</th>
@@ -238,8 +244,8 @@
                                     </div>
                                 </div>
                             </div>
-                         </div>
-                         <div class="row">
+                        </div>
+                        <div class="row">
                             <div class="col-xl-6 col-md-6">
 
                             </div>
@@ -248,7 +254,7 @@
                                     <div class="card-block border-bottom">
                                         <div class="row align-items-center justify-content-center">
                                             <div class="col-auto">
-                                                 <h5 class="mb-0">Costo Total en C$</h5>
+                                                <h5 class="mb-0">Costo Total en C$</h5>
                                             </div>
                                             <div class="col text-right">
                                                 <h3>C$ {{ number_format($detalle_orden->costo_total,2) }}</h3>
@@ -257,7 +263,7 @@
                                     </div>
                                 </div>
                             </div>
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
