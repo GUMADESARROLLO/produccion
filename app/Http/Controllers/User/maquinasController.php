@@ -6,15 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\maquinas;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
 
-class maquinasController extends Controller {
-    public function __construct() {
+class maquinasController extends Controller
+{
+    protected $maquinas;
+    public function __construct( maquinas $maquinas) {
         $this->middleware('auth');
+        $this->maquinas = $maquinas;
     }
 
     public function index() {
-        $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
+        //$maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
+        $maquinas = $this->maquinas->obtenerMaquinas();
         return view('User.Maquinas.index', compact('maquinas'));
     }
 

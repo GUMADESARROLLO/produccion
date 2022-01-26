@@ -97,9 +97,9 @@
                                                         </th>
                                                         <th>
                                                             @if(isset($detalle_orden))
-                                                            <h5 id="ctCordobas">C$ {{ number_format($detalle_orden,2) }}</h5>
+                                                            <h5 id="ctCordobas">{{ number_format($detalle_orden,2) }}</h5>
                                                             @else
-                                                            <h5 id="ctCordobas">C$ {{ number_format(0,2) }}</h5>
+                                                            <h5 id="ctCordobas">{{ number_format(0,2) }}</h5>
                                                             @endif
                                                         </th>
                                                     </tr>
@@ -242,7 +242,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h4 class=" text-center text-danger mb-0" id="tasaCambio">C$ 0.0000</h4>
+                                <h4 class=" text-center text-danger mb-0" >C$<span aria-hidden="true" id="tasaCambio"> 0.0000 </span></h4>
                                 <div class="form-group">
                                     <label for="fechatc">Fecha</label>
                                         <input type="text" class="input-fecha form-control" name="fechatc" id="fechatc">
