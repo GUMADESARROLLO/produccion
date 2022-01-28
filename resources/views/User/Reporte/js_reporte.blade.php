@@ -14,14 +14,20 @@
             $('.datetimepicker_').datetimepicker({
                 //format: 'LT',
                 format: 'HH:mm',
-                //inline: true,
-               // pickerPosition: "top-left",
-               
+
+                inline: true,
+                // pickerPosition: "top-left",
+
                 sideBySide: true,
                 widgetPositioning: {
                     horizontal: 'left',
                     vertical: 'bottom'
-                }
+                },
+                icons: {
+                    time: "fa fa-clock-o",
+                    up: "fa fa-plus",
+                    down: "fa fa-minus"
+                },
             });
         });
 
@@ -375,10 +381,8 @@
     $('#dtHrasEfectivas tbody').on('click', 'tr', function() {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
-
-
         } else {
-            dtTMuertos.$('tr.selected').removeClass('selected');
+            dthrasEft.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
     });
@@ -946,15 +950,27 @@
         dthrasEft.row.add([
             indicador_4,
             `<input type="text" class="input-fecha-dos form-control" id="fch-hrftv-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" placeholder="Cantidad" id="cantHrasEft-y1-dia-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" placeholder="Cantidad" id="cantHrasEft-y2-dia-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" placeholder="Cantidad" id="cantHrasEft-y1-noc-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" placeholder="Cantidad" id="cantHrasEft-y2-noc-` + indicador_4 + `">`
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-dia-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-dia-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-noc-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-noc-` + indicador_4 + `">`
         ]).draw(false);
 
         $(function() {
             $('.datetimepicker_').datetimepicker({
-                format: 'LT'
+                format: 'HH:mm ',
+                sideBySide: true,
+
+                inline: true,
+                widgetPositioning: {
+                    horizontal: 'left',
+                    vertical: 'bottom'
+                },
+                icons: {
+                    time: "fa fa-clock-o",
+                    up: "fa fa-plus",
+                    down: "fa fa-minus"
+                }
             });
         });
         inicializaControlFecha2();
@@ -1006,7 +1022,7 @@
                     mensaje('Se guardo con exito :)', 'success')
                 }
             }).done(function(data) {
-
+                location.reload();
             });
         }
     });
@@ -1031,4 +1047,9 @@
 
         dthrasEft.row('.selected').remove().draw(false);
     });
+
+    $(document).on('click', 'input.datetimepicker_:text', function() {
+        var tr = $(this).parent().parent().removeClass('selected');
+    });
+
 </script>

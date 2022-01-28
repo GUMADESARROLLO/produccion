@@ -34,6 +34,159 @@
 
                 </div>
 
+                <!-- customizando la vista detalle -->
+                <div class="row g-gs">
+
+                    <div class="col-lg-3">
+                        <div class="row g-gs">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="card card-bordered ">
+                                    <div class="card-inner ">
+                                        <div class="card-title-group align-start mb-0">
+                                            <div class="card-title">
+                                                <h6 class="title">AGUA</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card-amount">
+                                            <span class="amount"> 370.00<span class="currency"> m<sup>3</sup>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="amount-sm">- <small>-</small></div>
+                                        <div class="card-stats">
+                                            <div class="card-stats-group g-2">
+                                                <div class="card-stats-data">
+                                                    <div class="title">Inicial</div>
+                                                    <div class="amount">44,565.00
+                                                        m<sup>3</sup>
+                                                    </div>
+                                                </div>
+                                                <div class="card-stats-data">
+                                                    <div class="title">Final</div>
+                                                    <div class="amount">44,935.00
+                                                        m<sup>3</sup>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row g-gs">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="card card-bordered ">
+                                    <div class="card-inner ">
+                                        <div class="card-title-group align-start mb-0">
+                                            <div class="card-title">
+                                                <h6 class="title">Electricidad</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card-amount">
+                                            <span class="amount"> 13<span class="currency"> Kw/Hrs
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="amount-sm">560 <small>Factor de conversión</small></div>
+                                        <div class="card-stats">
+                                            <div class="card-stats-group g-2">
+                                                <div class="card-stats-data">
+                                                    <div class="title">Inicial</div>
+                                                    <div class="amount">
+                                                        36.00 Kwh
+                                                    </div>
+                                                </div>
+                                                <div class="card-stats-data">
+                                                    <div class="title">Final</div>
+                                                    <div class="amount">49.00 Kwh </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row g-gs">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="card-title-group align-start mb-0">
+                                            <div class="card-title">
+                                                <h6 class="title">Consumo Electricidad Kw/Ton</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card-amount">
+                                            <!--<span class="amount">-->
+                                            <span class="amount" style="color: red">874.80 Kw/Ton</span>
+                                            <div class="amount-sm">- <small>-</small></div>
+                                            <!--</span>-->
+                                        </div>
+                                        <div class="card-stats">
+                                            <div class="card-stats-group g-2">
+                                                <div class="card-stats-data">
+                                                    <div class="title">Real (80%) : </div>
+                                                    <div class="amount"> 5824 Kw/Hrs </div>
+                                                </div>
+                                                <div class="card-stats-data">
+                                                    <div class="title">Standar de Consu.:</div>
+                                                    <div class="amount">740 Kw/Ton</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row g-gs">
+                            <div class="col-md-6 col-lg-12">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="card-title-group align-start mb-0">
+                                            <div class="card-title">
+                                                <h6 class="title">Gas Butano</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card-amount">
+                                            <span class="amount">1000 <span class="currency">Glns</span>
+                                            </span>
+                                            <div class="amount-sm">- <small>-</small></div>
+                                        </div>
+                                        <div class="card-stats">
+                                            <div class="card-stats-group g-2">
+                                                <div class="card-stats-data">
+                                                    <div class="title">Standar Consu.</div>
+                                                    <div class="amount"> 145 Glns/Ton</div>
+                                                </div>
+                                                <div class="card-stats-data">
+                                                    <div class="title">Consu. Real </div>
+                                                    <!--<div class="amount">-->
+                                                    <div class="amount" style="color: red">150.21 Glns/Ton</div>
+                                                    <!--</div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End of customization -->
                 <div class="row g-gs">
                     <div class="col-lg-6">
                         <div class="card card-bordered">
@@ -44,9 +197,9 @@
                                         <p>Se detalla datos relevantes de la orden.</p>
                                     </div>
                                     <div class="card m-0" style="">
-                                        <h4  class="" style="color: #2B9A48"> Tonelada/Dia: {{ $orden->Tonelada_dia }}</h4>
+                                        <h4 class="" style="color: #2B9A48"> Tonelada/Dia: {{ $orden->Tonelada_dia }}</h4>
                                     </div>
-                                </div>
+                                </div>  
                                 <br>
                                 <div class="nk-insight">
                                     <div class="row g-4 align-end">
@@ -123,7 +276,53 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
+                        <div class="card card-bordered" style="min-height:370px">
+                            <div class="card-body">
+                                <div class="card-title mb-4">
+                                    <h5 class="" style="color: rgb(156, 171, 255)">YANKEE DRYER</h5>
+
+                                    <h6 >Horas Efectivas Por Contador</h6>
+                                </div>
+                                <table class="table table-hover" id="dthrasEfectivas">
+                                    <thead style="background-color: #6c7ae0;">
+                                        <tr class="text-center">
+                                            <th class="text-white text-left" width="25%">MAQUINA</th>
+                                            <th class="text-white " width="25%">Día</th>
+                                            <th class="text-white " width="25%">Noche</th>
+                                            <th class="text-white " width="25%">Total/Horas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($yk_hrasEftvs as $hf)
+                                        <tr class="unread">
+                                            <td class="dt-left">{{ $hf['nombre']}} </td>
+                                            <td class="dt-center">{{ $hf['dia']}} hrs</td>
+                                            <td class="dt-center">{{ $hf['noche']}} hrs</td>
+                                            <td class="dt-center">{{ $hf['total']}} hrs</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot class="text-center">
+                                        <tr>
+                                            <th colspan="4">
+                                                <div class="mt-4">
+                                                    <span class="mt-5" style="font-size: 1rem; font-weight: 700;" >Promedio De Horas Trabajadas En Yankee Dryer:
+                                                        <span class="" style="font-size: 1.5rem; font-weight: 700; color: #6c7ae0">
+                                                            {{ $yk_hrasEftvs[0]['totalYk'] }} Hrs
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--<div class="col-lg-3">
                         <div class="row g-gs">
                             <div class="col-md-6 col-lg-12">
                                 <div class="card card-bordered ">
@@ -179,7 +378,7 @@
                                                 <div class="card-stats-data">
                                                     <div class="title">Consu. Real </div>
                                                     <!--<div class="amount">-->
-                                                    @if ($orden->estandar_gas > 145)
+                    <!-- @if ($orden->estandar_gas > 145)
                                                     <div class="amount" style="color: red">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
                                                     @elseif ($orden->estandar_gas < 145) <div class="amount" style="color: green">{{ number_format($orden->estandar_gas,2) }} Glns/Ton
                                                 </div>
@@ -187,285 +386,171 @@
                                                 <div class="amount">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
                                                 @endif
                                                 <!--</div>-->
-                                            </div>
+                    <!--   </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <!-- </div> -->
+
                 </div>
-                <div class="col-lg-3">
-                    <div class="row g-gs">
-                        <div class="col-md-6 col-lg-12">
-                            <div class="card card-bordered ">
-                                <div class="card-inner ">
-                                    <div class="card-title-group align-start mb-0">
-                                        <div class="card-title">
-                                            <h6 class="title">Electricidad</h6>
-                                        </div>
-                                    </div>
-                                    <div class="card-amount">
-                                        <span class="amount"> {{ $orden->electricidad['totalConsumo']}}<span class="currency"> Kw/Hrs
-                                            </span>
-                                    </div>
-                                    <div class="amount-sm">560 <small>Factor de conversión</small></div>
-                                    <div class="card-stats">
-                                        <div class="card-stats-group g-2">
-                                            <div class="card-stats-data">
-                                                <div class="title">Inicial</div>
-                                                <div class="amount">
-                                                    {{ number_format($orden->electricidad['inicial'],2) }} Kwh
+                <div class="card card-bordered card-full">
+                    <div class="card-inner border-bottom">
+                        <div class="card-title-group">
+                            <div class="card-title">
+                                <h6 class="title">Insumos de la Orden de Producción</h6>
+                            </div>
+                            <div class="card-tools">
+                                <ul class="card-tools-nav nav">
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#nav_fibra"><span>Fibras</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_mano_obra"><span>Mano de obra directa</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_quimico"><span>Quimicos</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_costos_indirectos"><span>Costos indirectos de fabricación</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content mt-0">
+                        <div class="tab-pane active" id="nav_fibra">
+                            <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
+                                <div class="simplebar-wrapper" style="margin: 0px;">
+                                    <div class="simplebar-mask">
+                                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
+                                                <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th class="text-center">MAQUINA</th>
+                                                                <th>DESCRIPCION</th>
+                                                                <th>CANTIDAD</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($mp_directa as $key => $mp)
+                                                            <tr class="unread">
+                                                                <td class="dt-center">{{ $mp->nombre }}</td>
+                                                                <td class="dt-center">{{ $mp->descripcion }}</td>
+                                                                <td class="dt-center">{{ number_format($mp->cantidad,2) }}
+                                                                    kg
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
-                                            <div class="card-stats-data">
-                                                <div class="title">Final</div>
-                                                <div class="amount">{{ number_format($orden->electricidad['final'],2) }} Kwh </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-12">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="card-title-group align-start mb-0">
-                                        <div class="card-title">
-                                            <h6 class="title">Consumo Electricidad Kw/Ton</h6>
-                                        </div>
-                                    </div>
-                                    <div class="card-amount">
-                                        <!--<span class="amount">-->
-                                        @if ($orden->estandar_electricidad > 740)
-                                        <span class="amount" style="color: red">{{ number_format($orden->estandar_electricidad,2) }} Kw/Ton</span>
-                                        @elseif ($orden->estandar_electricidad < 740) <span class="amount" style="color: green">{{ number_format($orden->estandar_electricidad,2) }} Kw/Ton</span>
-                                            @else
-                                            {{ number_format($orden->estandar_electricidad,2) }} Kw/Ton
-                                            @endif
-                                            <!--</span>-->
-                                    </div>
-                                    <div class="card-stats">
-                                        <div class="card-stats-group g-2">
-                                            <div class="card-stats-data">
-                                                <div class="title">Real (80%) : </div>
-                                                <div class="amount"> {{ $orden->electricidad['totalProcesoH'] }} Kw/Hrs </div>
-                                            </div>
-                                            <div class="card-stats-data">
-                                                <div class="title">Standar de Consu.:</div>
-                                                <div class="amount">740 Kw/Ton</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card card-bordered card-full">
-                <div class="card-inner border-bottom">
-                    <div class="card-title-group">
-                        <div class="card-title">
-                            <h6 class="title">Insumos de la Orden de Producción</h6>
-                        </div>
-                        <div class="card-tools">
-                            <ul class="card-tools-nav nav">
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#nav_fibra"><span>Fibras</span></a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_mano_obra"><span>Mano de obra directa</span></a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_quimico"><span>Quimicos</span></a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_costos_indirectos"><span>Costos indirectos de fabricación</span></a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nav_hras_efectivas"><span>Horas efectivas por contador</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content mt-0">
-                    <div class="tab-pane active" id="nav_fibra">
-                        <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
-                                            <div class="simplebar-content" style="padding: 0px;">
-                                                <table class="table table-hover" id="dtBachadasxdias">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th class="text-center">MAQUINA</th>
-                                                            <th>DESCRIPCION</th>
-                                                            <th>CANTIDAD</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($mp_directa as $key => $mp)
-                                                        <tr class="unread">
-                                                            <td class="dt-center">{{ $mp->nombre }}</td>
-                                                            <td class="dt-center">{{ $mp->descripcion }}</td>
-                                                            <td class="dt-center">{{ number_format($mp->cantidad,2) }}
-                                                                kg
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                        <div class="tab-pane" id="nav_mano_obra">
+                            <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
+                                <div class="simplebar-wrapper" style="margin: 0px;">
+                                    <div class="simplebar-mask">
+                                        <div class="simplebar-offset">
+                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                                <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
+                                                                <th>DIA</th>
+                                                                <th>NOCHE</th>
+                                                                <th>TOTAL</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($mo_directa as $key)
+                                                            <tr class="unread">
+                                                                <td class="dt-left">{{ $key['actividad'] }}</td>
+                                                                <td class="dt-center">{{ $key['dia'] }} hrs</td>
+                                                                <td class="dt-center">{{ $key['noche'] }} hrs</td>
+                                                                <td class="dt-center">{{ number_format($key['total'],2) }}
+                                                                    hrs
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane" id="nav_mano_obra">
-                        <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset">
-                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
-                                            <div class="simplebar-content" style="padding: 0px;">
-                                                <table class="table table-hover" id="dtBachadasxdias">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
-                                                            <th>DIA</th>
-                                                            <th>NOCHE</th>
-                                                            <th>TOTAL</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($mo_directa as $key)
-                                                        <tr class="unread">
-                                                            <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                            <td class="dt-center">{{ $key['dia'] }} hrs</td>
-                                                            <td class="dt-center">{{ $key['noche'] }} hrs</td>
-                                                            <td class="dt-center">{{ number_format($key['total'],2) }}
-                                                                hrs
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                        <div class="tab-pane" id="nav_quimico">
+                            <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
+                                <div class="simplebar-wrapper" style="margin: 0px;">
+                                    <div class="simplebar-mask">
+                                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                                <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th class="text-center">MAQUINA</th>
+                                                                <th>DESCRIPCION</th>
+                                                                <th>CANTIDAD</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($quimico_maquina as $key => $qm)
+                                                            <tr class="unread">
+                                                                <td class="dt-center">{{ $qm->nombre }}</td>
+                                                                <td class="dt-center">{{ $qm->descripcion }}</td>
+                                                                <td class="dt-center">{{ $qm->cantidad }}</td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane" id="nav_quimico">
-                        <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
-                                            <div class="simplebar-content" style="padding: 0px;">
-                                                <table class="table table-hover" id="dtBachadasxdias">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th class="text-center">MAQUINA</th>
-                                                            <th>DESCRIPCION</th>
-                                                            <th>CANTIDAD</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($quimico_maquina as $key => $qm)
-                                                        <tr class="unread">
-                                                            <td class="dt-center">{{ $qm->nombre }}</td>
-                                                            <td class="dt-center">{{ $qm->descripcion }}</td>
-                                                            <td class="dt-center">{{ $qm->cantidad }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                        <div class="tab-pane" id="nav_costos_indirectos">
+                            <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
+                                <div class="simplebar-wrapper" style="margin: 0px;">
+                                    <div class="simplebar-mask">
+                                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                                <div class="simplebar-content" style="padding: 0px;">
+                                                    <table class="table table-hover" id="dtBachadasxdias">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
+                                                                <th>HORAS</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($mo_directa as $key)
+                                                            <tr class="unread">
+                                                                <td class="dt-left">{{ $key['actividad'] }}</td>
+                                                                <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane" id="nav_costos_indirectos">
-                        <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-                                <div class="simplebar-mask">
-                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
-                                            <div class="simplebar-content" style="padding: 0px;">
-                                                <table class="table table-hover" id="dtBachadasxdias">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th class="text-left">DESCRIPCION DE LA ACTIVIDAD</th>
-                                                            <th>HORAS</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($mo_directa as $key)
-                                                        <tr class="unread">
-                                                            <td class="dt-left">{{ $key['actividad'] }}</td>
-                                                            <td class="dt-center">{{ number_format($key['total'],2) }} hrs</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="nav_hras_efectivas">
-                        <div class="nk-tnx-pro is-scrollable h-425px" data-simplebar="init">
-                            <div class="simplebar-wrapper" style="margin: 0px;">
-
-                                <div class="simplebar-mask">
-                                    <!-- <div class="card-header">
-                                    <h4 class="mt-5">HORAS EFECTIVA POR CONTADOR</h4>
-                                </div> -->
-                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
-                                            <div class="simplebar-content" style="padding: 0px;">
-
-                                                <table class="table table-hover" id="dthrasEfectivas">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th class="text-left" width="25%">MAQUINA</th>
-                                                            <th width="25%">Día</th>
-                                                            <th width="25%">Noche</th>
-                                                            <th width="25%">Total/Horas</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($yk_hrasEftvs as $hf)
-                                                        <tr class="unread">
-                                                            <td class="dt-left">{{ $hf['nombre']}}</td>
-                                                            <td class="dt-center">{{ $hf['dia']}}</td>
-                                                            <td class="dt-center">{{ $hf['noche']}}</td>
-                                                            <td class="dt-center">{{ $hf['total']}}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                    <tfoot class="text-center">
-                                                        <tr>
-                                                            <th colspan="4">
-                                                                <h4 class="mt-5">Promedio De Horas Trabajadas En Yankee Dryer: {{ $yk_hrasEftvs[0]['totalYk'] }}</h4>
-                                                            </th>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 <!-- [ Main Content ] end -->

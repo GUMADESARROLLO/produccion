@@ -129,11 +129,24 @@
                                                     <label for="lav-tetrapack" class="col-sm-6 col-form-label">
                                                         Horas efectivas por contador:</label>
                                                     <div class="col-sm-6">
-                                                        <h6 class="mt-2">41.83</h6>
+                                                        <h6 class="mt-2"> {{ $hras_efectivas[0]['totalYk'] }}</h6>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
+                                                <div class="form-group row">
+                                                    <label for="lav-tetrapack" class="col-sm-6 col-form-label">
+                                                        Tonelada/Dia:</label>
+                                                    <div class="col-sm-6">
+                                                        <h6 class="mt-2">
+                                                            @if($detalle_orden->prod_real>0 && $detalle_orden->hrsTrajadas>0) {{
+                                                            number_format(($detalle_orden->prod_real/ ($detalle_orden->hrsTrajadas/24))/1000,2) }}
+                                                            @else
+                                                                0
+                                                            @endif
+                                                       </h6>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

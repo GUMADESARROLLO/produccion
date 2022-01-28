@@ -91,7 +91,7 @@ class reporteController extends Controller
     public function guardarTiempoPulpeo(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempo_pulpeo::where('numOrden', $numOrden)->delete();
 
@@ -115,7 +115,7 @@ class reporteController extends Controller
     public function guardarTiempoLavado(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempo_lavado::where('numOrden', $numOrden)->delete();
 
@@ -139,7 +139,7 @@ class reporteController extends Controller
     public function guardarTiemposMuertos(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempos_muertos::where('numOrden', $numOrden)->delete();
 
@@ -245,7 +245,7 @@ class reporteController extends Controller
     {
         $id = 0;
         $i = 0;
-        $numOrden = intval($request->input('codigo')); // numero de orden
+        $numOrden = $request->input('codigo'); // numero de orden
 
         $orden = orden_produccion::where([['numOrden', $request->input('codigo')], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         $fechaInicio = date('Y-m-d');
@@ -355,7 +355,7 @@ class reporteController extends Controller
 
     public function guardarDetailJR(Request $request)
     {
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
         $validate = jumboroll::where('numOrden', $numOrden)->get();
 
         if ($request->isMethod('post')) {
@@ -417,8 +417,8 @@ class reporteController extends Controller
                         'y2_dia'        => date('H:i:s',strtotime($key['y2M'])),
                         'y1_noche'      => date('H:i:s',strtotime($key['y1N'])),
                         'y2_noche'      => date('H:i:s', strtotime($key['y2N'])),
-                        'estado'        => 1
-
+                        'estado'        => 1,
+                        'updated_at'     => date('Y-m-d H:i:s')
                     ]);
                 } else {
                     $array[$i]['numOrden']      = $key['orden'];
@@ -428,6 +428,7 @@ class reporteController extends Controller
                     $array[$i]['y1_noche']      = $key['y1N'];
                     $array[$i]['y2_noche']      = $key['y2N'];
                     $array[$i]['estado']        = 1;
+                    $array[$i]['created_at']     = date('Y-m-d H:i:s');
                     $i++;
                 }
                 $response = horas_efectivas::insert($array);
@@ -442,7 +443,8 @@ class reporteController extends Controller
         $id = intval($request->input('id'));
 
         $response = horas_efectivas::where('id', $id)->update([
-            'estado'        => 0
+            'estado'        => 0,
+            'updated_at'     => date('Y-m-d H:i:s')
         ]);
 
         return response()->json($response);

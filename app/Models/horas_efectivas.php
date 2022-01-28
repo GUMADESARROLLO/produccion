@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class horas_efectivas extends Model
 {
     protected $table = "horas_efectivas";
-    protected $fillable = ['numOrden', 'fecha', 'y1_dia','y2_dia', 'y1_noche', 'y2_noche', 'estado' ];
-    public $timestamps = false;
+    protected $fillable = ['numOrden', 'fecha', 'y1_dia','y2_dia', 'y1_noche', 'y2_noche', 'estado', 'created_at','updated_at' ];
+    //public $timestamps = false;
 
 }

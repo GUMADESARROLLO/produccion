@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Models;
 use App\Models\DetalleOrden;
 use App\Models\DetalleCostoSubtotal;
-use App\Models\orden_produccion;
-use Illuminate\Support\Facades\DB;
+use App\Traits\ModelScopes;
 
 class HomeController extends Controller
 {
+    use ModelScopes;
     /**
      * Create a new controller instance.
      *
@@ -30,15 +30,15 @@ class HomeController extends Controller
     {
         $detalle_orden = DetalleOrden::all();
         //dd($detalle_orden);
-        return view('home',compact(['detalle_orden']));
+        return view('home', compact(['detalle_orden']));
     }
 
     public function detail($idOP)
     {
         $detalle_costo_subtotal = DetalleCostoSubtotal::where('numOrden', $idOP)->get();
         $detalle_orden = DetalleOrden::where('numOrden', $idOP)->get()->first();
-
-        //dd($detalle_orden, $detalle_costo_subtotal);
-        return view('homed',compact('detalle_orden','detalle_costo_subtotal'));
+        $hras_efectivas = $this->calcularHrasEftvs($idOP);
+        
+        return view('homed', compact('detalle_orden', 'detalle_costo_subtotal', 'hras_efectivas'));
     }
 }

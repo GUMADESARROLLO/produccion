@@ -56,12 +56,12 @@
                                                 <div class="card card-event" id="card-JRDetail">
                                                     <div class="card-block p-2 ">
                                                         <div class="row align-items-center justify-content-center">
-                                                            <div class="col-6">
-                                                                <h5 class="m-0">Total de jumbo roll</h5>
+                                                            <div class="">
+                                                                <h5 class="m-0"  style="font-size: 1.3em;">Residuos</h5>
                                                             </div>
-                                                            <div class="col-6">
+                                                            <!-- <div class="col-6">
                                                                 <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
-                                                            </div>
+                                                            </div>-->
                                                         </div>
                                                     </div>
                                                     <div class="card-block p-1 table-border-style">
@@ -514,7 +514,15 @@
                             <div class="col-xl-12 col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Jumbo Roll</h5>
+                                        <!-- <h5>Jumbo Roll</h5>-->
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-6">
+                                                <h5 class="m-0">Total de jumbo roll</h5>
+                                            </div>
+                                            <div class="col-6">
+                                                <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         @foreach ($jumboroll as $key => $jr)
@@ -663,15 +671,3 @@
 </div>
 <!-- [ MODAL ] end -->
 @endsection
-
-<thead>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr>
-        <th></th>
-    <tr>
-        <th></th>
