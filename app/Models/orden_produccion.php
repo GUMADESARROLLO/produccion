@@ -23,4 +23,10 @@ class orden_produccion extends Model
         return $this->belongsToMany('fibras', 'mp_directa', 'numOrden', 'idFibra');
     }
 
+    //Una orden tiene muchas requisas
+    public function requisas()
+    {
+        return $this->hasMany('App\Models\Requisa', 'numOrden', 'numOrden');
+    }
+
 }

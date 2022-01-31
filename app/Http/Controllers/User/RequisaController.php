@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\orden_produccion;
+use App\Models\Turno;
 use Illuminate\Http\Request;
 use App\Models\Requisa;
 
@@ -37,8 +39,9 @@ class RequisaController extends Controller
      */
     public function create()
     {
-        //
-        return view('User.Requisas.nuevo');
+        $orden = orden_produccion::all();
+        $turno = Turno::all();
+        return view('User.Requisas.nuevo', compact(['orden', 'turno']));
     }
 
     /**
@@ -50,7 +53,11 @@ class RequisaController extends Controller
     public function store(Request $request)
     {
         //
-        return redirect()->action(RequisaController::class, 'index')
+        //dd($request);
+        $requisa = new Requisa($request->all());
+        //$requisa->estado=1;
+        $requisa->save();
+        return redirect()->action([RequisaController::class, 'index'])
             ->with('message-success', 'Se guardo con exito :)');
     }
 

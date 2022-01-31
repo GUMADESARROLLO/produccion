@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\productos;
-use App\Models\turnos;
+use App\Models\Turno;
 use App\Models\maquinas;
 use App\Models\Admin\Rol;
 use Illuminate\Support\Facades\Validator;

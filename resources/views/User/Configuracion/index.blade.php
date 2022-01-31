@@ -39,7 +39,7 @@
                                         <div class="row align-items-center">
 
                                             <div class="col-sm-2">
-                                            <a href="{{url('/turnos')}}" class="text-dark">
+                                            <a href="{{url('/turno')}}" class="text-dark">
                                                 <i class="far fa-clock text-c-blue f-60"></i>
                                                 <span class="d-block text-uppercase mt-4 text-c-danger">Turnos</span>
                                             </a>

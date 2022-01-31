@@ -80,7 +80,7 @@ INSERT INTO `menu` VALUES (24, 0, 'Configuración', '/configuracion', 3, 'icon-s
 INSERT INTO `menu` VALUES (23, 0, 'Produccion', '/produccion', 2, 'icon-bar-chart-2');
 INSERT INTO `menu` VALUES (14, 24, 'Menu', '/menu', 4, 'icon-menu');
 INSERT INTO `menu` VALUES (15, 0, 'Usuario', '/usuario', 5, 'icon-user');
-INSERT INTO `menu` VALUES (25, 24, 'Turnos', '/turnos', 1, 'icon-clock');
+INSERT INTO `menu` VALUES (25, 24, 'Turnos', '/turno', 1, 'icon-clock');
 INSERT INTO `menu` VALUES (19, 24, 'Rol', '/rol', 2, 'icon-user-check');
 INSERT INTO `menu` VALUES (27, 29, 'Mi Inventario', '/inventario', 1, 'icon-box');
 INSERT INTO `menu` VALUES (26, 23, 'Ordenes', '/orden-produccion', 1, 'icon-box');
@@ -215,7 +215,7 @@ INSERT INTO `rol` VALUES (4, 'usuario general', '2021-05-25 16:36:27', '2021-05-
 INSERT INTO `rol` VALUES (5, 'JEFE DE TURNO', '2021-06-22 16:35:30', '2021-06-22 16:35:30');
 
 -- ----------------------------
--- Table structure for turnos
+-- Table structure for turno
 -- ----------------------------
 DROP TABLE IF EXISTS `turnos`;
 CREATE TABLE `turnos`  (
@@ -229,7 +229,7 @@ CREATE TABLE `turnos`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of turnos
+-- Records of turno
 -- ----------------------------
 INSERT INTO `turnos` VALUES (14, 'Matutino', '06:00:00', '18:00:00', 'Horario Matutino', b'1');
 INSERT INTO `turnos` VALUES (19, 'Nocturno', '18:00:00', '06:00:00', 'Horario Nocturno', b'1');

@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/usuario', 'Admin\usuarioController@index')->name('usuario');
 Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('orden-produccion');
 Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');
-Route::get('/turnos', 'User\configuracionController@turnos')->name('turnos');
+//Route::get('/turno', 'User\configuracionController@turno')->name('turno');
 Route::get('/fibras', 'User\fibrasController@index')->name('fibras');
 Route::get('/fibras/nueva-fibra', 'User\fibrasController@index')->name('fibras/nueva');
 Route::get('/productos', 'User\produccionController@productos')->name('inventario');
@@ -85,14 +85,6 @@ Route::post('guardarqm-directa', 'User\orden_produccionController@guardarQM')->n
 Route::get('data-qm', 'User\orden_produccionController@getDataQuimico')->name('data-qm');
 Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')->name('cargarqm-directa');
 Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->name('eliminar-qm');
-
-
-//RUTAS CONFIGURACIONES
-Route::get('turnos/crear', 'User\configuracionController@crearTurno')->name('turnos/crear');
-Route::post('turnos/guardar', 'User\configuracionController@guardarTurno')->name('turnos/guardar');
-Route::get('turnos/editar/{id}', 'User\configuracionController@editarTurno')->name('turnos/editar/{id}');
-Route::get('turnos/eliminar/{id}', 'User\configuracionController@eliminarTurno')->name('turnos/eliminar/{id}');
-Route::post('turnos/actualizar', 'User\configuracionController@actualizarTurno')->name('turnos/actualizar');
 
 
 //RUTAS MI INVENTARIO
@@ -172,11 +164,23 @@ Route::post('costo-orden/detalle/actualizarTC', 'User\TipoCambioController@actua
 
 
 //Requisas
-/*Route::get('/requisas', 'User\RequisaController@index')->name('requisa');
-Route::get('requisas/nuevo/{numOrden}', 'User\RequisaController@nuevoRequisa')->name('requisa/nuevo/{numOrden}');
-Route::post('requisas/guardar', 'User\RequisaController@guardarRequisa')->name('requisa/guardar');
-Route::get('requisas/detalle/{numOrden}', 'User\RequisaController@detalleRequisa')->name('requisa/detalle/{numOrden}');
-Route::get('requisas/detalle/editar/{id}', 'User\RequisaController@editarRequisa')->name('requisa/detalle/editar/{id}');
-Route::post('requisas/actualizar', 'User\RequisaController@actualizarRequisa')->name('requisa/actualizar');*/
-Route::resource('requisas','User\RequisaController');
+Route::get('/requisas', 'User\RequisaController@index')->name('requisas.index');
+Route::get('/requisas/create', 'User\RequisaController@create')->name('requisa.create');
+Route::post('/requisas', 'User\RequisaController@store')->name('requisas.store');
+Route::get('/requisas/{id}', 'User\RequisaController@show')->name('requisas.show');
+Route::get('/requisas/{id}/edit', 'User\RequisaController@edit')->name('requisas.edit');
+Route::put('/requisas/update', 'User\RequisaController@update')->name('requisas.update');
+//Route::resource('requisas','User\RequisaController');
+
+
+//RUTAS CONFIGURACIONES
+Route::get('/turnos', 'User\TurnoController@index')->name('turnos.index');
+Route::get('/turnos/create', 'User\TurnoController@create')->name('turnos.create');
+Route::post('/turnos', 'User\TurnoController@store')->name('turnos.store');
+Route::get('/turnos/{id}', 'User\TurnoController@show')->name('turnos.show');
+Route::get('/turnos/{id}/edit', 'User\TurnoController@edit')->name('turnos.edit');
+Route::put('/turnos/update', 'User\TurnoController@update')->name('turnos.update');
+//Route::resource('turnos','User\TurnoController');
+
+
 Auth::routes();
