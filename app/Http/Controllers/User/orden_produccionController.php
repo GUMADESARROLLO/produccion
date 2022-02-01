@@ -131,11 +131,10 @@ class orden_produccionController extends Controller
 
             if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
                 $porcentMermaYankeeDry = ($mermaYankeeDry->merma / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma)) * 100;
-                $Tonelada_dia =  number_format(($produccionNeta->produccionNeta/ ($ord_produccion->hrsTrabajadas/24))/1000,2);
-
+                $Tonelada_dia =  number_format(($produccionNeta->produccionNeta / ($ord_produccion->hrsTrabajadas / 24)) / 1000, 2);
             } else {
                 $porcentMermaYankeeDry = 0;
-                $Tonelada_dia=0;
+                $Tonelada_dia = 0;
             }
             if ($lavadoraTetrapack->lav_tetrapack > 0 && $totalMPTPACK->total > 0) {
                 $porcentLavadoraTetrapack = ($lavadoraTetrapack->lav_tetrapack / $totalMPTPACK->total) * 100;
@@ -206,7 +205,7 @@ class orden_produccionController extends Controller
             $Tonelada_dia
         );
 
-        return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina','yk_hrasEftvs']));
+        return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina', 'yk_hrasEftvs']));
     }
 
     public function crear()
@@ -252,6 +251,7 @@ class orden_produccionController extends Controller
     public function guardar(Request $request)
     {
         //dd($request);
+
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
             'unique' => 'Ya existe una orden de trabajo para este turno'
@@ -263,16 +263,16 @@ class orden_produccionController extends Controller
             'fecha01' => 'required|date',
             'fecha02' => 'required|date',
             'hora01' => 'required',
-            'hora02' => 'required',
-            'hrsTrabajadas' => 'required|'
+            'hora02' => 'required'
         ], $messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-        if ($request->hrsTrabajadas < 0) {
+        /*if ($request->hrsTrabajadas < 0) {
+
             return Redirect::back()->withErrors("Las horas trabajados no pueden ser menores a 0")->withInput();
-        }
+        }*/
         if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
             return Redirect::back()->withErrors("La fecha final no puede ser menor a la fecha inicial")->withInput();
         }
@@ -313,7 +313,7 @@ class orden_produccionController extends Controller
         $ordProd->producto = $request->producto;
         $ordProd->numOrden = $request->numOrden;
         $ordProd->idUsuario = $request->jefe;
-        $ordProd->hrsTrabajadas = $request->hrsTrabajadas;
+        $ordProd->hrsTrabajadas = $request->hrsTrabajadas <= 0 || $request->hrsTrabajadas == "" ? 0 : $request->hrsTrabajadas;
         $ordProd->fechaInicio = date("Y-m-d", strtotime($request->fecha01));
         $ordProd->fechaFinal = date("Y-m-d", strtotime($request->fecha02));
         $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
@@ -792,6 +792,12 @@ class orden_produccionController extends Controller
     public function guardarMP(Request $request)
     {
         $i = 0;
+        $countF = 0;
+        //$countMP_E = 0;
+        $arrayF_select = array();
+        $arrayF_select2 = array();
+        $j = 0;
+
         $numOrden = $request->input('codigo');
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayFibra = $request->input('data');
@@ -799,48 +805,70 @@ class orden_produccionController extends Controller
             if ($request->isMethod('post')) {
                 $array = array();
                 if (is_null($arrayFibra)) {
-                    return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
+                    return response()->json(1);
+                    // return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
                 } else {
                     foreach ($request->input('data') as $key) {
-                        if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
-                            $array[$i]['id'] = $key['id'];
-                            $array[$i]['numOrden'] = $key['orden'];
-                            $array[$i]['idMaquina'] = $key['maquina'];
-                            $array[$i]['idFibra'] = $key['fibra'];
-                            $array[$i]['cantidad'] = $key['cantidad'];
-                            $array[$i]['estado'] = 1;
-                            $i++;
+                        array_push($arrayF_select, $key['fibra']);
+                        if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') { 
+                                $array[$i]['id'] = $key['id'];
+                                $array[$i]['numOrden'] = $key['orden'];
+                                $array[$i]['idMaquina'] = $key['maquina'];
+                                $array[$i]['idFibra'] = $key['fibra'];
+                                $array[$i]['cantidad'] = $key['cantidad'];
+                                $array[$i]['estado'] = 1;
+                                $i++;
+                            
                         }
                     }
-                    if (count($array) > 0) {
+                    if (count($array) >= 0) {
                         //mp_directa::where('numOrden', $numOrden)->delete();
-                        foreach ($array as $dataMP) {
-                            $mpE = mp_directa::where([
-                                ['numOrden', '=', $numOrden],
-                                ['id', '=', $dataMP['id']],
-                                ['estado', '=', 1]
-                            ])->first();
-                            if ($mpE != null) {
-                                mp_directa::where([
+                        $arrayF_select2 = array_unique($arrayF_select);
+                        if (count($arrayF_select2) > 0) {
+                            foreach ($arrayF_select2 as $select_) {
+                                //echo "  MO #  " . $select_;
+                                $j++;
+                            }
+                            if (count($arrayF_select2) < count($arrayF_select)) {
+                                //return response()->json("Ha ingresado materias primas repetidas");
+                                return response("Oh no! Ha ingresado materias primas repetidas D:", 400);
+
+                            }/* else if (count($arrayF_select2) === count($arrayF_select)) {
+                                return response()->json("Ha ingresado materias primas diferentes");
+                            }*/
+
+                            //return response()->json(count($arrayF_select2));
+                            //return redirect()->back()->with('message-failed', 'No se guardo con exito :(, existe una materia prima repetida, por favor elija otra');
+                        }
+                            foreach ($array as $dataMP) {
+                                $mpE = mp_directa::where([
                                     ['numOrden', '=', $numOrden],
                                     ['id', '=', $dataMP['id']],
                                     ['estado', '=', 1]
-                                ])->update([
-                                    'idMaquina' => $dataMP['idMaquina'],
-                                    'idFibra' => $dataMP['idFibra'],
-                                    'cantidad' => $dataMP['cantidad'],
-                                    'estado' => 1,
-                                ]);
-                            } else {
-                                $mpd = new mp_directa();
-                                $mpd->idMaquina = $dataMP['idMaquina'];
-                                $mpd->idFibra = $dataMP['idFibra'];
-                                $mpd->numOrden = $dataMP['numOrden'];
-                                $mpd->cantidad = $dataMP['cantidad'];
-                                $mpd->estado = 1;
-                                $mpd->save();
+                                ])->first();
+                                if ($mpE != null) {
+                                    mp_directa::where([
+                                        ['numOrden', '=', $numOrden],
+                                        ['id', '=', $dataMP['id']],
+                                        ['estado', '=', 1]
+                                    ])->update([
+                                        'idMaquina' => $dataMP['idMaquina'],
+                                        'idFibra' => $dataMP['idFibra'],
+                                        'cantidad' => $dataMP['cantidad'],
+                                        'estado' => 1,
+                                    ]);
+                                } else {
+                                    $mpd = new mp_directa();
+                                    $mpd->idMaquina = $dataMP['idMaquina'];
+                                    $mpd->idFibra = $dataMP['idFibra'];
+                                    $mpd->numOrden = $dataMP['numOrden'];
+                                    $mpd->cantidad = $dataMP['cantidad'];
+                                    $mpd->estado = 1;
+                                    $mpd->save();
+                                }
                             }
-                        }
+                            return response("El registro de fibras en la orden ha sido exitoso :)", 200);
+                        
                         /*mp_directa::where('numOrden', $numOrden)
                         ->update([
                             'estado' => 0
@@ -850,7 +878,6 @@ class orden_produccionController extends Controller
                     }
 
                     //return response()->json($response);
-                    return response("El registro de fibras en la orden ha sido exitoso :)", 200);
                 }
             }
             //return response("El registro de fibras en la orden ha sido exitoso :)", 200);
@@ -1036,8 +1063,6 @@ class orden_produccionController extends Controller
 
         //return view('User.Orden_Produccion.crear', compact(['qm_directa_', 'maquinas', 'quimicos']));
     }
-
- 
 }
 
 
@@ -1069,7 +1094,7 @@ class orden
     public $Tonelada_dia;
 
 
-    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal, $estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral,$Tonelada_dia)
+    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal, $estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral, $Tonelada_dia)
     {
         $this->idOrden = $idOrden;
         $this->numOrden = $numOrden;
@@ -1095,6 +1120,5 @@ class orden
         $this->consumoGas = $consumoGas;
         $this->factorFibral = $factorFibral;
         $this->Tonelada_dia = $Tonelada_dia;
-
     }
 }

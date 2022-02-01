@@ -198,6 +198,7 @@
                                     </div>
                                     <div class="card m-0" style="">
                                         <h4 class="" style="color: #2B9A48"> Tonelada/Dia: {{ $orden->Tonelada_dia }}</h4>
+                                            <span class="ml-1" >STANDAR : 10 ton/dia</span>
                                     </div>
                                 </div>  
                                 <br>
