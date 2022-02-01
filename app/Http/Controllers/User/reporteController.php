@@ -19,6 +19,8 @@ use App\Models\inventario_solicitud;
 use App\Models\jumboroll_detalle;
 use App\Models\horas_efectivas;
 use App\Models\Admin\usuario;
+use App\Traits\ModelScopes;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -26,6 +28,8 @@ use Illuminate\Support\Facades\DB;
 
 class reporteController extends Controller
 {
+    use ModelScopes;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -80,11 +84,12 @@ class reporteController extends Controller
         $usuarios   = usuario::usuarioByRole();
 
         $hrasEfectivas = horas_efectivas::where('numOrden', $orden->numOrden)->get();
+        $yk_hrasEftvs = $this->calcularHrasEftvs($numOrden);
 
         return view('User.Reporte.index', compact([
             'orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
             'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT',
-            'consumo_agua', 'consumo_gas', 'electricidad', 'hrasEfectivas'
+            'consumo_agua', 'consumo_gas', 'electricidad', 'hrasEfectivas', 'yk_hrasEftvs'
         ]));
     }
 
@@ -401,6 +406,7 @@ class reporteController extends Controller
         $i = 0;
         $numOrden = $request->input('codigo');
         //$id = intval($request->input('id'));
+
         $response = '';
         if ($request->isMethod('post')) {
             $array = array();

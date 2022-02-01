@@ -57,7 +57,7 @@
                                                     <div class="card-block p-2 ">
                                                         <div class="row align-items-center justify-content-center">
                                                             <div class="">
-                                                                <h5 class="m-0"  style="font-size: 1.3em;">Residuos</h5>
+                                                                <h5 class="m-0" style="font-size: 1.3em;">Residuos</h5>
                                                             </div>
                                                             <!-- <div class="col-6">
                                                                 <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
@@ -502,6 +502,40 @@
                                                     @endif
                                                     @endforeach
                                                 </tbody>
+                                                <tfoot class="text-center">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[0]['dia'] }} Hrs
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[1]['dia'] }} Hrs
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[0]['noche'] }} Hrs
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[1]['noche'] }} Hrs
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                             <button class="btn btn-primary float-right" id="btnHrasEfv">Guardar</button>
                                             <button class="btn btn-danger float-right" id="quitRowdtHrasEfv">Quitar</button>

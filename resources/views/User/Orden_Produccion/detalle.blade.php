@@ -198,9 +198,9 @@
                                     </div>
                                     <div class="card m-0" style="">
                                         <h4 class="" style="color: #2B9A48"> Tonelada/Dia: {{ $orden->Tonelada_dia }}</h4>
-                                            <span class="ml-1" >STANDAR : 10 ton/dia</span>
+                                        <span class="ml-1">STANDAR : 10 ton/dia</span>
                                     </div>
-                                </div>  
+                                </div>
                                 <br>
                                 <div class="nk-insight">
                                     <div class="row g-4 align-end">
@@ -281,20 +281,28 @@
                         <div class="card card-bordered" style="min-height:370px">
                             <div class="card-body">
                                 <div class="card-title mb-4">
-                                    <h5 class="" style="color: rgb(156, 171, 255)">YANKEE DRYER</h5>
+                                    <h5 class="">YANKEE DRYER</h5>
 
-                                    <h6 >Horas Efectivas Por Contador</h6>
+                                    <h6>Horas Efectivas Por Contador</h6>
                                 </div>
                                 <table class="table table-hover" id="dthrasEfectivas">
-                                    <thead style="background-color: #6c7ae0;">
+                                    <thead>
                                         <tr class="text-center">
-                                            <th class="text-white text-left" width="25%">MAQUINA</th>
-                                            <th class="text-white " width="25%">Día</th>
-                                            <th class="text-white " width="25%">Noche</th>
-                                            <th class="text-white " width="25%">Total/Horas</th>
+                                            <th class=" text-left" width="25%">MAQUINA</th>
+                                            <th class=" " width="25%">Día</th>
+                                            <th class=" " width="25%">Noche</th>
+                                            <th class=" " width="25%">Total/Horas</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(is_null($yk_hrasEftvs))
+                                        <tr class="unread">
+                                            <td class="dt-left">   0.00</td>
+                                            <td class="dt-center"> 0.00</td>
+                                            <td class="dt-center"> 0.00</td>
+                                            <td class="dt-center"> 0.00</td>
+                                        </tr>
+                                        @else
                                         @foreach($yk_hrasEftvs as $hf)
                                         <tr class="unread">
                                             <td class="dt-left">{{ $hf['nombre']}} </td>
@@ -303,14 +311,19 @@
                                             <td class="dt-center">{{ $hf['total']}} hrs</td>
                                         </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
                                     <tfoot class="text-center">
                                         <tr>
                                             <th colspan="4">
                                                 <div class="mt-4">
-                                                    <span class="mt-5" style="font-size: 1rem; font-weight: 700;" >Promedio De Horas Trabajadas En Yankee Dryer:
+                                                    <span class="mt-5" style="font-size: 1rem; font-weight: 700;">Promedio De Horas Trabajadas En Yankee Dryer:
                                                         <span class="" style="font-size: 1.5rem; font-weight: 700; color: #6c7ae0">
+                                                        @if($yk_hrasEftvs[0]['totalYk']!=null)
                                                             {{ $yk_hrasEftvs[0]['totalYk'] }} Hrs
+                                                        @else
+                                                        0.00 Hrs
+                                                        @endif
                                                         </span>
                                                     </span>
                                                 </div>
@@ -546,7 +559,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
