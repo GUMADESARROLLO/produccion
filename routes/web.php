@@ -23,18 +23,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/usuario', 'Admin\usuarioController@index')->name('usuario');
 Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('orden-produccion');
 Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');
-Route::get('/turnos', 'User\configuracionController@turnos')->name('turnos');
+//Route::get('/turno', 'User\configuracionController@turno')->name('turno');
 Route::get('/fibras', 'User\fibrasController@index')->name('fibras');
 Route::get('/fibras/nueva-fibra', 'User\fibrasController@index')->name('fibras/nueva');
 Route::get('/productos', 'User\produccionController@productos')->name('inventario');
 Route::get('/maquinas', 'User\maquinasController@index')->name('maquinas');
 Route::get('/maquina/nueva-maquina', 'User\maquinasController@nueva')->name('maquina/nueva');
 Route::get('/reporte', 'User\reporteController@index')->name('maquina/nueva');
-/***** Add by Rodolfo *****/
 Route::get('/costos', 'User\CostoController@index')->name('costos');
 
-
-/******Add by Xochilt */
 
 //QUIMICOS
 Route::get('/quimicos', 'User\QuimicoController@index')->name('quimicos');
@@ -45,7 +42,7 @@ Route::get('/quimico/editar-quimico/{id}', 'User\QuimicoController@editarQuimico
 Route::post('/quimico/actualizar-quimico/', 'User\QuimicoController@actualizarQuimico')->name('quimico/actualizar-quimico');
 Route::get('/quimico/eliminar-quimico/{id}', 'User\QuimicoController@eliminarQuimico')->name('quimico/eliminar-quimico/{id}');
 
-//
+
 //RUTAS USUARIO
 Route::get('user/nuevo', 'Admin\usuarioController@crear')->name('user/nuevo');
 Route::post('usuario/guardar', 'Admin\usuarioController@guardar')->name('usuario/guardar');
@@ -56,11 +53,6 @@ Route::post('usuario/actualizar', 'Admin\usuarioController@actualizarUser')->nam
 Route::get('user/detalle/{id}', 'Admin\usuarioController@detalleUser')->name('user/detalle/{id}');
 Route::get('user/eliminar/{id}', 'Admin\usuarioController@eliminarUser')->name('user/eliminar/{id}');
 Route::get('user/activar/{id}', 'Admin\usuarioController@activarUser')->name('user/activar/{id}');
-
-
-
-
-
 
 
 //RUTAS ROLES
@@ -76,6 +68,7 @@ Route::post('menu/guardar-orden', 'Admin\menu_controller@guardarOrden')->name('g
 Route::get('rol/edit/{id}','Admin\RolController@editar')->name('rol/edit/{id}');
 Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actualizar');
 
+
 //RUTAS PRODUCCION
 Route::get('orden-produccion/nueva', 'User\orden_produccionController@crear')->name('produccion/nueva');
 Route::post('orden-produccion/guardar', 'User\orden_produccionController@guardar')->name('orden-produccion/guardar');
@@ -88,7 +81,6 @@ Route::post('eliminar-mp', 'User\orden_produccionController@eliminarMateriaPrima
 Route::get('orden-produccion/reporte/{id}', 'User\reporteController@reporte')->name('orden-produccion/editar/{id}');
 Route::post('guardar-costos-indirectos-fab', 'User\orden_produccionController@guardarCostosIndirectosFabricacion')->name('guardar-costos-indirectos-fab');
 Route::post('cargarmp-directa', 'User\orden_produccionController@cargarMateriaPrimadirecta')->name('cargarmp-directa');
-//Add by Rodolfo
 Route::post('guardarqm-directa', 'User\orden_produccionController@guardarQM')->name('guardarqm-directa');
 Route::get('data-qm', 'User\orden_produccionController@getDataQuimico')->name('data-qm');
 Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')->name('cargarqm-directa');
@@ -97,21 +89,12 @@ Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->n
 Route::get('getData/{idOrd}', 'User\orden_produccionController@getData')->name('getData/{idOrd}');
 
 
-//RUTAS CONFIGURACIONES
-Route::get('turnos/crear', 'User\configuracionController@crearTurno')->name('turnos/crear');
-Route::post('turnos/guardar', 'User\configuracionController@guardarTurno')->name('turnos/guardar');
-Route::get('turnos/editar/{id}', 'User\configuracionController@editarTurno')->name('turnos/editar/{id}');
-Route::get('turnos/eliminar/{id}', 'User\configuracionController@eliminarTurno')->name('turnos/eliminar/{id}');
-Route::post('turnos/actualizar', 'User\configuracionController@actualizarTurno')->name('turnos/actualizar');
-
 //RUTAS MI INVENTARIO
 Route::get('insumos/nuevo', 'User\inventarioController@nuevo')->name('insumos/nuevo');
 Route::post('insumos/guardar', 'User\inventarioController@guardar')->name('insumos/guardar');
 
+
 //RUTAS FIBRAS
-
-/***Edit by xochilt*/
-
 Route::get('fibras/nueva','User\fibrasController@nuevaFibra')->name('fibras/nueva');
 Route::get('fibras/nueva-fibra', 'User\fibrasController@nuevaFibra')->name('fibras/nueva');
 Route::get('fibras/editar/{id}', 'User\fibrasController@editarFibras')->name('producto/editar/{id}');
@@ -120,11 +103,13 @@ Route::post('fibras/actualizar', 'User\fibrasController@actualizarFibras')->name
 Route::get('fibras/eliminar/{id}', 'User\fibrasController@eliminarFibras')->name('producto/eliminar/{id}');
 Route::get('fibra-data', 'User\fibrasController@getFibras')->name('fibra-data');
 
+
 //RUTAS MAQUINAS
 Route::post('maquina/guardar', 'User\maquinasController@guardar')->name('maquina/guardar');
 Route::get('maquina/editar/{id}', 'User\maquinasController@editar')->name('maquina/editar/{id}');
 Route::post('maquina/actualizar', 'User\maquinasController@actualizar')->name('maquina/actualizar');
 Route::get('maquina/eliminar/{id}', 'User\maquinasController@eliminar')->name('maquina/eliminar/{id}');
+
 
 //RUTAS PRODUCTOS
 Route::get('productos/nuevo', 'User\produccionController@nuevo')->name('productos/nuevo');
@@ -133,11 +118,13 @@ Route::get('producto/editar/{id}', 'User\produccionController@editarProducto')->
 Route::post('producto/actualizar', 'User\produccionController@actualizarProducto')->name('producto/actualizar');
 Route::get('producto/eliminar/{id}', 'User\produccionController@eliminarProducto')->name('producto/eliminar/{id}');
 
+
 //RUTAS CATALOGO DE COSTOS
 Route::get('costos/nuevo', 'User\CostoController@nuevoCosto')->name('costos/nuevo');
 Route::post('costos/guardar', 'User\CostoController@guardarCosto')->name('costos/guardar');
 Route::get('costos/editar/{id}', 'User\CostoController@editarCosto')->name('costos/editar/{id}');
 Route::post('costos/actualizar', 'User\CostoController@actualizarCosto')->name('costos/actualizar');
+
 
 //RUTAS COSTOS POR ORDEN
 Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
@@ -173,17 +160,35 @@ Route::post('eliminar-hras-efectivas', 'User\reporteController@eliminarHrasEft')
 
 
 
-
 //PDF
 //Route::get('/pdf','PDFController@PDF')->name('descargarPDF');
 Route::get('/detalleOrdenPDF/{numOrden}','PDFController@detalleOrdenPDF')->name('detalleOrdenPDF/{numOrden}');
 Route::get('/home/detalle/{numOrden}', 'HomeController@detail')->name('/home/detalle/{numOrden}');
 
 
-
 //Tipo de Cambio
 Route::get('costo-orden/detalle/get-Tipo-Cambio/{date}', 'User\TipoCambioController@getTipoCambio')->name('costo-orden/detalle/get-Tipo-Cambio/{date}');
 Route::post('costo-orden/detalle/actualizarTC', 'User\TipoCambioController@actualizarTC')->name('costo-orden/detalle/actualizarTC');
+
+
+//Requisas
+Route::get('/requisas', 'User\RequisaController@index')->name('requisas.index');
+Route::get('/requisas/create', 'User\RequisaController@create')->name('requisa.create');
+Route::post('/requisas', 'User\RequisaController@store')->name('requisas.store');
+Route::get('/requisas/{id}', 'User\RequisaController@show')->name('requisas.show');
+Route::get('/requisas/{id}/edit', 'User\RequisaController@edit')->name('requisas.edit');
+Route::put('/requisas/update', 'User\RequisaController@update')->name('requisas.update');
+//Route::resource('requisas','User\RequisaController');
+
+
+//RUTAS CONFIGURACIONES
+Route::get('/turnos', 'User\TurnoController@index')->name('turnos.index');
+Route::get('/turnos/create', 'User\TurnoController@create')->name('turnos.create');
+Route::post('/turnos', 'User\TurnoController@store')->name('turnos.store');
+Route::get('/turnos/{id}', 'User\TurnoController@show')->name('turnos.show');
+Route::get('/turnos/{id}/edit', 'User\TurnoController@edit')->name('turnos.edit');
+Route::put('/turnos/update', 'User\TurnoController@update')->name('turnos.update');
+//Route::resource('turnos','User\TurnoController');
 
 
 Auth::routes();

@@ -48,7 +48,7 @@
                                         </div>
                                     @endif
                                     <div class="card-block">
-                                        <form method="post" action="{{url('turnos/guardar')}}">
+                                        <form method="post" action="{{url('turnos')}}">
                                             {{ csrf_field() }}
                                             <div class="form-group">
                                                 <label for="nombre">Nombre del Turno</label>

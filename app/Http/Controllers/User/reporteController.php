@@ -9,7 +9,7 @@ use App\Models\orden_produccion;
 use App\Models\tiempo_pulpeo;
 use App\Models\tiempo_lavado;
 use App\Models\tiempos_muertos;
-use App\Models\turnos;
+use App\Models\Turno;
 use App\Models\productos;
 use App\Models\electricidad;
 use App\Models\consumo_agua;
@@ -45,7 +45,7 @@ class reporteController extends Controller
         $tiempoLavado = tiempo_lavado::where('numOrden', $orden->numOrden)->orderBy('fecha', 'asc')->get();
         $t_muerto = tiempos_muertos::where('numOrden', $orden->numOrden)->orderBy('fecha', 'asc')->get();
         $productos = productos::where('estado', 1)->get();
-        $turnos = turnos::where('estado', 1)->orderBy('horaInicio', 'asc')->get();
+        $turnos = Turno::where('estado', 1)->orderBy('horaInicio', 'asc')->get();
         $pulpeo = tiempo_pulpeo::where('numOrden', $orden->numOrden)->distinct()->get()->first();
         $lavado = tiempo_lavado::where('numOrden', $orden->numOrden)->distinct()->get()->first();
         $consumo_agua = consumo_agua::where('numOrden', $orden->numOrden)->get()->first();
@@ -72,7 +72,7 @@ class reporteController extends Controller
         $tiempoLavado = tiempo_lavado::where('numOrden', $orden->numOrden)->orderBy('fecha', 'asc')->get();
         $t_muerto = tiempos_muertos::where('numOrden', $orden->numOrden)->orderBy('fecha', 'asc')->get();
         $productos = productos::where('estado', 1)->get();
-        $turnos = turnos::where('estado', 1)->orderBy('horaInicio', 'asc')->get();
+        $turnos = Turno::where('estado', 1)->orderBy('horaInicio', 'asc')->get();
         $pulpeo = tiempo_pulpeo::where('numOrden', $orden->numOrden)->distinct()->get()->first();
         $lavado = tiempo_lavado::where('numOrden', $orden->numOrden)->distinct()->get()->first();
         $consumo_agua = consumo_agua::where('numOrden', $orden->numOrden)->get()->first();

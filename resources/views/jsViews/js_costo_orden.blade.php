@@ -84,7 +84,7 @@
             datatype: 'json',
             data: {},
             success: function(data) {
-                $('#tasaCambio').text('C$ ' + data[0]['TipoCambio']);
+                $('#tasaCambio').text(data[0]['TipoCambio']);
             },
             error: function() {
 
