@@ -85,6 +85,8 @@ Route::post('guardarqm-directa', 'User\orden_produccionController@guardarQM')->n
 Route::get('data-qm', 'User\orden_produccionController@getDataQuimico')->name('data-qm');
 Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')->name('cargarqm-directa');
 Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->name('eliminar-qm');
+//Add by xochilt
+Route::get('getData/{idOrd}', 'User\orden_produccionController@getData')->name('getData/{idOrd}');
 
 
 //RUTAS MI INVENTARIO
@@ -150,6 +152,12 @@ Route::get('dataJROLL/{idTurno}/{codigo}', 'User\reporteController@getDataJumboR
 Route::get('getDtaInventario/{codigo}', 'User\reporteController@getDataInventario')->name('getDtaInventario/{codigo}');
 Route::get('getDataJRDetail/{codigo}', 'User\reporteController@getDataJRDetail')->name('getDataJRDetail/{codigo}');
 Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name('guardar-detailJR');
+Route::post('guardar-detailJR', 'User\reporteController@guardarDetailJR')->name('guardar-detailJR');
+
+
+Route::post('guardar-hrasEft', 'User\reporteController@guardarhrasEft')->name('guardar-hrasEft');
+Route::post('eliminar-hras-efectivas', 'User\reporteController@eliminarHrasEft')->name('eliminar-hras-efectivas');
+
 
 
 //PDF
