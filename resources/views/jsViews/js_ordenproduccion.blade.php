@@ -452,7 +452,8 @@
         } else if (horasT === '') {
             mensaje("Debe ingresar una horas trabajadas de la orden", "error");
             return false;
-        }else if (codigo === '') {
+        } 
+        else if (codigo === '') {
             //e.preventDefault();
             mensaje("Debe ingresar un numero de orden", "error");
             return false;
