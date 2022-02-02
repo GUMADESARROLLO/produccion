@@ -23,7 +23,6 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr class="text-center">
-
                                                         <th># Orden</th>
                                                         <th>Nombre</th>
                                                         <th>PROD.REAL KG</th>
@@ -38,7 +37,6 @@
                                                 <tbody>
                                                     @foreach ($detalle_orden as $key => $d)
                                                     <tr class="unread">
-
                                                         <td class="dt-center">{{ $d->numOrden }}</td>
                                                         <td class="dt-center">{{ strtoupper($d->nombre) }}</td>
                                                         <td class="dt-center">{{ number_format($d->prod_real,2 )}}</td>

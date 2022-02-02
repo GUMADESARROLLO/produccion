@@ -17,12 +17,19 @@ use App\Models\jumboroll;
 use App\Models\fibras;
 use App\Models\inventario_solicitud;
 use App\Models\jumboroll_detalle;
+use App\Models\horas_efectivas;
 use App\Models\Admin\usuario;
+use App\Traits\ModelScopes;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+
 
 class reporteController extends Controller
 {
+    use ModelScopes;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -49,8 +56,10 @@ class reporteController extends Controller
 
         $usuarios   = usuario::usuarioByRole();
 
-        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
-            'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'consumo_gas', 'electricidad']));
+        return view('User.Reporte.index', compact([
+            'orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
+            'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'consumo_gas', 'electricidad'
+        ]));
     }
 
     public function reporte($numOrden)
@@ -74,14 +83,20 @@ class reporteController extends Controller
         $jumborollDT = jumboroll::where('numOrden', $orden->numOrden)->get();
         $usuarios   = usuario::usuarioByRole();
 
-        return view('User.Reporte.index', compact(['orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
-            'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT', 'consumo_agua', 'consumo_gas', 'electricidad']));
+        $hrasEfectivas = horas_efectivas::where('numOrden', $orden->numOrden)->get();
+        $yk_hrasEftvs = $this->calcularHrasEftvs($numOrden);
+
+        return view('User.Reporte.index', compact([
+            'orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',
+            'usuarios', 'turnos', 'productos', 'producto', 'jumboroll', 'jumborollDT',
+            'consumo_agua', 'consumo_gas', 'electricidad', 'hrasEfectivas', 'yk_hrasEftvs'
+        ]));
     }
 
     public function guardarTiempoPulpeo(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempo_pulpeo::where('numOrden', $numOrden)->delete();
 
@@ -105,7 +120,7 @@ class reporteController extends Controller
     public function guardarTiempoLavado(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempo_lavado::where('numOrden', $numOrden)->delete();
 
@@ -129,7 +144,7 @@ class reporteController extends Controller
     public function guardarTiemposMuertos(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempos_muertos::where('numOrden', $numOrden)->delete();
 
@@ -235,7 +250,7 @@ class reporteController extends Controller
     {
         $id = 0;
         $i = 0;
-        $numOrden = intval($request->input('codigo')); // numero de orden
+        $numOrden = $request->input('codigo'); // numero de orden
 
         $orden = orden_produccion::where([['numOrden', $request->input('codigo')], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         $fechaInicio = date('Y-m-d');
@@ -345,31 +360,31 @@ class reporteController extends Controller
 
     public function guardarDetailJR(Request $request)
     {
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
         $validate = jumboroll::where('numOrden', $numOrden)->get();
 
-        if($request->isMethod('post')){
+        if ($request->isMethod('post')) {
             $resPulper      = floatval($request->input('resPulper'));
             $lavTetrapack   = floatval($request->input('lavTetrapack'));
             $mermaYDRY1     = floatval($request->input('mermaYDRY1'));
             $mermaYDRY2     = floatval($request->input('mermaYDRY2'));
-            if(count($validate)>0){
+            if (count($validate) > 0) {
                 $response = jumboroll::where('numOrden', $numOrden)
-                ->update([
-                    'residuo_pulper'        => $resPulper,
-                    'lavadora_tetrapack'    => $lavTetrapack,
-                    'merma_yankee_dry_1'    => $mermaYDRY1,
-                    'merma_yankee_dry_2'    => $mermaYDRY2
-                ]);
-            }else{
+                    ->update([
+                        'residuo_pulper'        => $resPulper,
+                        'lavadora_tetrapack'    => $lavTetrapack,
+                        'merma_yankee_dry_1'    => $mermaYDRY1,
+                        'merma_yankee_dry_2'    => $mermaYDRY2
+                    ]);
+            } else {
                 $jumboroll = new jumboroll();
                 $jumboroll->numOrden    = $numOrden;
                 $jumboroll->fechaInicio = date('Y-m-d');
                 $jumboroll->fechaFinal  = date('Y-m-d');
-                $jumboroll->residuo_pulper =        $resPulper   ;
+                $jumboroll->residuo_pulper =        $resPulper;
                 $jumboroll->lavadora_tetrapack =    $lavTetrapack;
-                $jumboroll->merma_yankee_dry_1 =    $mermaYDRY1  ;
-                $jumboroll->merma_yankee_dry_2 =    $mermaYDRY2  ;
+                $jumboroll->merma_yankee_dry_1 =    $mermaYDRY1;
+                $jumboroll->merma_yankee_dry_2 =    $mermaYDRY2;
                 $jumboroll->idTurno     = 0;
                 $jumboroll->idUsuario   = 0;
                 $response = $jumboroll->save();
@@ -386,4 +401,58 @@ class reporteController extends Controller
         return response()->json($data);
     }
 
+    public function guardarhrasEft(Request $request)
+    {
+        $i = 0;
+        $numOrden = $request->input('codigo');
+        //$id = intval($request->input('id'));
+
+        $response = '';
+        if ($request->isMethod('post')) {
+            $array = array();
+            foreach ($request->input('data') as $key) {
+
+                $hras_eftv_exist = horas_efectivas::where([['id', $key['id']], ['numOrden', $numOrden]])->get(); //->toArray();
+               // echo $hras_eftv_exist;
+                if (count($hras_eftv_exist) > 0) {
+
+                    $response = horas_efectivas::where('id', $key['id'])->update([
+                        'numOrden'      => $key['orden'],
+                        'fecha'         => date('Y-m-d', strtotime($key['dia'])),
+                        'y1_dia'        => date('H:i:s', strtotime($key['y1M'])),
+                        'y2_dia'        => date('H:i:s',strtotime($key['y2M'])),
+                        'y1_noche'      => date('H:i:s',strtotime($key['y1N'])),
+                        'y2_noche'      => date('H:i:s', strtotime($key['y2N'])),
+                        'estado'        => 1,
+                        'updated_at'     => date('Y-m-d H:i:s')
+                    ]);
+                } else {
+                    $array[$i]['numOrden']      = $key['orden'];
+                    $array[$i]['fecha']         = date('Y-m-d', strtotime($key['dia']));
+                    $array[$i]['y1_dia']        = $key['y1M'];
+                    $array[$i]['y2_dia']        = $key['y2M'];
+                    $array[$i]['y1_noche']      = $key['y1N'];
+                    $array[$i]['y2_noche']      = $key['y2N'];
+                    $array[$i]['estado']        = 1;
+                    $array[$i]['created_at']     = date('Y-m-d H:i:s');
+                    $i++;
+                }
+                $response = horas_efectivas::insert($array);
+            }
+
+            return response()->json($response);
+        }
+    }
+
+    public function eliminarHrasEft(Request $request)
+    {
+        $id = intval($request->input('id'));
+
+        $response = horas_efectivas::where('id', $id)->update([
+            'estado'        => 0,
+            'updated_at'     => date('Y-m-d H:i:s')
+        ]);
+
+        return response()->json($response);
+    }
 }

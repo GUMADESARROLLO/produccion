@@ -1,13 +1,36 @@
 <script type="text/javascript">
-    var dtBath, dtTetra, dtJRollDtl;
+    var dtBath, dtTetra, dtJRollDtl, dthrasEft;
     var indicador_1 = 0;
     var indicador_2 = 0;
     var indicador_3 = 0;
     var indicador_4 = 0;
+    var indicador_5 = 0;
+
     var base_url = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/';
 
     $(document).ready(function() {
         /********INICIALIZANDO LOS DATATABLES - START ********/
+        $(function() {
+            $('.datetimepicker_').datetimepicker({
+                //format: 'LT',
+                format: 'HH:mm',
+
+                inline: true,
+                // pickerPosition: "top-left",
+
+                sideBySide: true,
+                widgetPositioning: {
+                    horizontal: 'left',
+                    vertical: 'bottom'
+                },
+                icons: {
+                    time: "fa fa-clock-o",
+                    up: "fa fa-plus",
+                    down: "fa fa-minus"
+                },
+            });
+        });
+
         dtBath = $('#dtBachadasxdias').DataTable({
             "destroy": true,
             "ordering": false,
@@ -83,6 +106,22 @@
             "searching": false,
             "language": {
                 "emptyTable": `<p class="text-center">Agrega una fila nueva</p>`
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false
+            }]
+        });
+
+        dthrasEft = $('#dtHrasEfectivas').DataTable({
+            "destroy": true,
+            "ordering": false,
+            "info": false,
+            "bPaginate": false,
+            "bfilter": false,
+            "searching": false,
+            "language": {
+                "emptyTable": `<p class="text-center">Agrega una fecha</p>`
             },
             "columnDefs": [{
                 "targets": [0],
@@ -337,6 +376,17 @@
             $(this).addClass('selected');
         }
     });
+
+
+    $('#dtHrasEfectivas tbody').on('click', 'tr', function() {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            dthrasEft.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+
     /********EVENTO SELECCIONAR ROW DE LOS DATATABLE - END********/
 
     /********EVENTO ELIMINAR ROW DE LOS DATATABLE - START********/
@@ -762,6 +812,7 @@
         });
     });
 
+
     /********INICIANDO GUARDADO DE JUMBO ROLL RP, MY *****/
 
     $(document).on('click', '#btnJRdetail', function() {
@@ -882,4 +933,123 @@
     $("#turno").change(function() {
         addRowsJumboroll();
     })
+
+
+    /*** HORAS EFECTIVAS PORDUCIDAS POR YANKEE */
+
+    //Agregar filas
+    $(document).on('click', '.add-row-dt-hrasEft', function() {
+        var last_row_ = dthrasEft.row(":last").data();
+
+        if (typeof(last_row_) === "undefined") {
+            indicador_4 = 1;
+        } else {
+            indicador_4 = parseInt(last_row_[0]) + 1
+        }
+
+        dthrasEft.row.add([
+            indicador_4,
+            `<input type="text" class="input-fecha-dos form-control" id="fch-hrftv-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-dia-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-dia-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-noc-` + indicador_4 + `">`,
+            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-noc-` + indicador_4 + `">`
+        ]).draw(false);
+
+        $(function() {
+            $('.datetimepicker_').datetimepicker({
+                format: 'HH:mm ',
+                sideBySide: true,
+
+                inline: true,
+                widgetPositioning: {
+                    horizontal: 'left',
+                    vertical: 'bottom'
+                },
+                icons: {
+                    time: "fa fa-clock-o",
+                    up: "fa fa-plus",
+                    down: "fa fa-minus"
+                }
+            });
+        });
+        inicializaControlFecha2();
+    });
+
+    //Guardar hrasEfectivas x yankee
+    $(document).on('click', '#btnHrasEfv', function() {
+        codigo = $('#numOrden').text();
+        var last_row = dthrasEft.row(":last").data();
+        var array = new Array();
+        var i = 0;
+
+        if (typeof(last_row) === "undefined") {
+            mensaje("No hay datos que guardar :(", "error")
+        } else {
+            dthrasEft.rows().eq(0).each(function(index) {
+                var row = dthrasEft.row(index);
+                var data = row.data();
+                console.log(data[0]);
+                var id = data[0];
+                var fecha = $('#fch-hrftv-' + data[0]).val()
+                var y1D = ($('#cantHrasEft-y1-dia-' + data[0]).val() == "") ? 0 : $('#cantHrasEft-y1-dia-' + data[0]).val();
+                var y2D = ($('#cantHrasEft-y2-dia-' + data[0]).val() == "") ? 0 : $('#cantHrasEft-y2-dia-' + data[0]).val();
+                var y1N = ($('#cantHrasEft-y1-noc-' + data[0]).val() == "") ? 0 : $('#cantHrasEft-y1-noc-' + data[0]).val();
+                var y2N = ($('#cantHrasEft-y2-noc-' + data[0]).val() == "") ? 0 : $('#cantHrasEft-y2-noc-' + data[0]).val();
+
+                array[i] = {
+                    id: id,
+                    orden: codigo,
+                    dia: fecha,
+                    y1M: y1D,
+                    y2M: y2D,
+                    y1N: y1N,
+                    y2N: y2N
+                };
+
+                i++;
+            });
+
+            $.ajax({
+                url: base_url + "guardar-hrasEft",
+                data: {
+                    codigo: codigo,
+                    data: array
+                },
+                type: 'post',
+                async: true,
+                success: function(resultado) {
+                    mensaje('Se guardo con exito :)', 'success')
+                }
+            }).done(function(data) {
+                location.reload();
+            });
+        }
+    });
+
+    //Eliminar filas en dtHrasEft
+
+    $(document).on('click', '#quitRowdtHrasEfv', function() {
+        var select_row = dthrasEft.row(".selected").data();
+        indexData = select_row[0];
+        console.log(indexData);
+        $.ajax({
+            url: base_url + "eliminar-hras-efectivas",
+            data: {
+                id: indexData
+            },
+            type: 'post',
+            async: true,
+            success: function(resultado) {
+                mensaje('Se elimino con exito :)', 'success')
+            }
+        })
+
+        dthrasEft.row('.selected').remove().draw(false);
+    });
+
+    $(document).on('click', 'input.datetimepicker_:text', function() {
+        var tr = $(this).parent().parent().removeClass('selected');
+    });
+
 </script>

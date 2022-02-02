@@ -230,7 +230,7 @@
     $(document).on('click', '#btnGFibras', function(e) {
         e.preventDefault();
         var codigo = $('#numOrden').val();
-        
+        //alert(codigo);
         var i = 0;
         /********** variables de Fibras ***********/
         //var last_row = dtMPD.row(":last").data();
@@ -282,17 +282,27 @@
                 async: true,
                 success: function(response) {
                     //console.log('Exito en guardar fibras');
-                    mensaje(response.responseText, 'success');
+                    //alert(response);
+                    if (response == 1) {
+                        mensaje("Ingrese materias primas por favor ", 'error');
+                    } else if (response == 2) {
+                        mensaje("No se guardo con exito :(, ya existe esta materia prima, por favor elija otra ", 'error');
+                    } else if (response == false) {
+                        mensaje(response.responseText, 'error');
+                    } else {
+                        mensaje(response.responseText, 'success');
+                    }
                 },
                 error: function(response) {
                     mensaje(response.responseText, 'error');
                 }
             }).done(function(data) {
-                location.reload();
+                // location.reload();
             });
             //console.log('El arreglo esta vacio :(');
-            return mensaje('Los datos en materia prima estan vacios :(', 'error');
 
+        } else {
+            return mensaje('Los datos en materia prima estan vacios :(', 'error');
         }
 
         /********** Ajax de Quimicos ***********/
@@ -439,11 +449,10 @@
             //e.preventDefault();
             mensaje("Debe ingresar una hora final para la orden", "error");
             return false;
-
         } else if (horasT === '') {
             mensaje("Debe ingresar una horas trabajadas de la orden", "error");
             return false;
-        } else if (codigo === '') {
+        }else if (codigo === '') {
             //e.preventDefault();
             mensaje("Debe ingresar un numero de orden", "error");
             return false;
@@ -469,12 +478,12 @@
                         option1 += `<option value='` + element.idFibra + `'>` + element.nombreFibra + `</option>`
                         option2 += `<option value='` + element.idMaquina + `'>` + element.nombreMaquina + `</option>`
                         dtMPD.row.add([
-                            element.id,`<select disabled class="mb-3 form-control " id="maquinaf-prev-` +  element.id + `">` + option2 + `</select>`,
-                            `<select disabled class="mb-3 form-control" id="fibras-prev-` +  element.id + `">` + option1 + `</select>`,
+                            element.id, `<select disabled class="mb-3 form-control " id="maquinaf-prev-` + element.id + `">` + option2 + `</select>`,
+                            `<select disabled class="mb-3 form-control" id="fibras-prev-` + element.id + `">` + option1 + `</select>`,
                             `<input required="required" class="input-dt" type="text"  placeholder="Cantidad" id="cantidadf-prev-` +
                             element.id + `" onpaste="return false" value="` + element.cantidad + `" >`,
                         ]).draw(false);
-                    } 
+                    }
                     if (element.idQuimico != null) {
                         var option1q = '';
                         var option2q = '';
@@ -482,12 +491,12 @@
                         option2q += `<option value='` + element.idMaquina + `'>` + element.nombreMaquina + `</option>`
                         dtQM.row.add([
                             element.id,
-                            `<select disabled class="mb-3 form-control " id="maquinaq-prev-` +  element.id + `">` + option2q + `</select>`,
-                            `<select disabled class="mb-3 form-control" id="quimicos-prev-` +  element.id + `">` + option1q + `</select>`,
+                            `<select disabled class="mb-3 form-control " id="maquinaq-prev-` + element.id + `">` + option2q + `</select>`,
+                            `<select disabled class="mb-3 form-control" id="quimicos-prev-` + element.id + `">` + option1q + `</select>`,
                             `<input required="required" class="input-dt qm-cant" type="text"  placeholder="Cantidad" id="cantidadq-prev-` +
                             element.id + `" onpaste="return false" value="` + element.cantidad + `" >`,
                         ]).draw(false);
-                    } 
+                    }
                 });
             },
             error: function(data) {
