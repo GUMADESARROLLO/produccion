@@ -46,7 +46,8 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                         <tr class="text-center">
-                                                            <th># Orden</th>
+                                                            <th>#</th>
+                                                            <th>No. Orden</th>
                                                             <th>Codigo</th>
                                                             <th>Turno</th>
                                                             <th>Fecha Creacion</th>
@@ -57,7 +58,9 @@
 
                                                     @foreach ($requisas as $key)
                                                         <tr class="unread">
-
+                                                            <td class="dt-center">
+                                                                <h6>{{ $key['id'] }}</h6>
+                                                            </td>
                                                             <td class="dt-center">
                                                                 <h6>{{ $key['numOrden'] }}</h6>
                                                             </td>
@@ -65,14 +68,14 @@
                                                                 <h6>{{ $key['codigo_req'] }}</h6>
                                                             </td>
                                                             <td class="dt-center">
-                                                                <h6>{{ $key['jefe_turno'] }}</h6>
+                                                                <h6>{{ $key['turno'] }}</h6>
                                                             </td>
                                                             <td class="dt-center">
                                                                 <h6>{{ strtoupper(date('d.m.y g:i a', strtotime($key->created_at)))}}</h6>
                                                             </td>
                                                             <td class="dt-center">
                                                                 <a href="#!" onclick="deleteTurno()"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
-                                                                <a href="turnos/{{ $key['id'] }}/edit"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
+                                                                <a href="requisas/{{ $key['id'] }}/edit"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach

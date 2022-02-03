@@ -1,5 +1,13 @@
 @extends('layouts.main')
 @section('metodosjs')
+    @include('jsViews.js_requisas')
+    <style>
+        a {
+            cursor: pointer;
+            color: rgb(49, 116, 199);
+            text-decoration: none;
+        }
+    </style>
 
 @endsection
 @section('content')
@@ -56,16 +64,13 @@
                                             <form method="post" action="{{url('requisas')}}">
                                                 {{ csrf_field() }}
                                                 <div class="row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4" hidden>
                                                         <div class="form-group">
                                                             <label for="numOrden">Numero de orden</label>
-                                                            <!--<input type="text" class="form-control" name="numOrden"
-                                                                   id="numOrden" value="{{old('numOrden')}}">-->
                                                             <select class="form-control" name="numOrden" id="numOrden">
                                                                 @foreach($orden as $o)
                                                                     <option value="{{$o['numOrden'] }}">{{$o['numOrden']}} </option>
                                                                 @endforeach
-
                                                             </select>
                                                             <small id="numOrdenHelp" class="form-text text-muted">Escriba
                                                                 el # de Orden</small>
@@ -85,9 +90,11 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="jefe_turno">Jefe de Turno</label>
-                                                            <input type="text" class="form-control"
-                                                                   name="jefe_turno" id="jefe_turno"
-                                                                   value="{{old('jefe_turno')}}">
+                                                            <select class="form-control" name="jefe_turno" id="jefe_turno">
+                                                                @foreach($jefe as $j)
+                                                                    <option value="{{$j->id }}">{{$j->nombres}} </option>
+                                                                @endforeach
+                                                            </select>
                                                             <small id="jefe_turnonHelp" class="form-text text-muted">Escriba
                                                                 el jefe de turno</small>
                                                         </div>
@@ -95,13 +102,10 @@
 
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="turno">Turno</label>
-                                                            <!--<input type="text" class="form-control"
-                                                                   name="turno" id="turno"
-                                                                   value="{{old('turno')}}">-->
-                                                            <select class="form-control" name="numOrden" id="numOrden">
+                                                            <label for="id_turno">Turno</label>
+                                                            <select class="form-control" name="id_turno" id="id_turno">
                                                                 @foreach($turno as $t)
-                                                                    <option value="{{$t['id'] }}">{{$t['turno']}} </option>
+                                                                    <option value="{{$t['id'] }}">{{$t['descripcion']}} </option>
                                                                 @endforeach
 
                                                             </select>
@@ -110,25 +114,80 @@
                                                     </div>
 
                                                     <div class="col-md-4">
-                                                        <label for="turno">Tipo</label>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                Default checkbox
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                                                            <label class="form-check-label" for="flexCheckChecked">
-                                                                Checked checkbox
-                                                            </label>
+                                                        <div class="form-group row pr-0">
+                                                            <label for="turno" class="col-sm-4 pr-0">Tipo de requisa: </label>
+                                                            <div class="form-group col-sm-8 border rounded-sm py-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="Fibra" value="1">
+                                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                                        Fibra
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="Quimico" value="2">
+                                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                                        Quimicos
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
-                                                <button type="submit" class="btn btn-primary mt-5">Enviar</button>
+                                                <div class="col-md-4">
+                                                    <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Enviar</button>
+                                                </div>
                                             </form>
+                                            <a href="#" id="test"> CLICK HERE</a>
+                                            <!-- TABLA DE QUIMICOS -->
+                                            <div class="mt-1 d-flex justify-content-center border">
+                                                <div class="card" id="cont_quimico" style="width: 90% !important;">
+                                                    <div id="example_wrapper" class="dataTables_wrapper">
+                                                        <div class="card-title text-center m-0 p-0 mb-2">
+                                                            <span id="title_material" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
+                                                        </div>
+                                                        <div class="input-group mb-2" style="width: 30%" id="cont_search">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="basic-addon1"><i data-feather="search"></i></span>
+                                                            </div>
+                                                            <input type="text" id="InputBuscar" class="form-control" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="card-block table-border-style border">
+                                                            <div class="table-responsive">
+                                                                <div class="table-responsive mt-3 mb-2">
+                                                                    <table class="table  table-lg-responsive table-hover" id="tblQuimicos" style="width: 100% !important;">
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END TABLA -->
+                                            <!-- TABLA DE FIBRAS -->
+                                            <div class="mt-1  d-flex justify-content-center border">
+                                                <div class="card" id="cont_fibra" style="width: 90% !important;">
+                                                    <div id="example_wrapper" class="dataTables_wrapper">
+                                                        <div class="card-title text-center m-0 p-0 mb-2">
+                                                            <span id="title_material_fb" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
+                                                        </div>
+                                                        <div class="input-group mb-2" style="width: 30%" id="cont_search_fib">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="basic-addon1"><i data-feather="search"></i></span>
+                                                            </div>
+                                                            <input type="text" id="InputBuscarFibras" class="form-control" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="card-block table-border-style border">
+                                                            <div class="table-responsive">
+                                                                <div class="table-responsive mt-3 mb-2">
+                                                                    <table class="table table-lg-responsive table-hover" id="tblFibras" style="width: 100% !important;">
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END TABLA -->
                                         </div>
                                     </div>
                                 </div>

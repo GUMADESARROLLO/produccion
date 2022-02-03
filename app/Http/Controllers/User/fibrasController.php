@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\fibras;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
-use DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
-class fibrasController extends Controller {
+class fibrasController extends Controller
+{
     public function __construct()
     {
         $this->middleware('auth');
@@ -55,12 +56,12 @@ class fibrasController extends Controller {
     public function getFibras() {
         $fibras = fibras::where('estado', 1)
                     ->get();
-        
+
         return response()->json($fibras);
     }
 
     public function actualizarFibras(Request $request) {
-        
+
         $messages = array(
             'required' => 'El :attribute es un campo requerido'
         );

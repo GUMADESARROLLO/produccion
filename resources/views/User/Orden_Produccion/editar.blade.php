@@ -41,6 +41,10 @@
                                             <button class="btn btn-danger float-right"
                                                     id="btnactualizar">Actualizar
                                             </button>
+                                            <button class="btn btn-outline-primary btn-sm float-right"
+                                                    ><a href="{{url('requisas/create')}}"
+                                                    class="" id="btnrequisa">Solicitar Requisa</a>
+                                            </button>
                                         </div>
                                         @if (session()->has('message-success'))
                                             <div class="alert alert-success">
@@ -183,181 +187,8 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="row mt-3">
-                                            <!-- [ Tabla Materia Prima Directa ] start -->
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Materia Prima Directa (M.P.)</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table" id="dtMPD" cellspacing="0"
-                                                                   width="100%">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>#</th>
-                                                                    <th>MAQUINA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th class="text-center">CANTIDAD</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @if (count($mp_directa) > 0)
-                                                                    @foreach ($mp_directa as $key => $mp)
-                                                                        @if($mp->estado == 1)
-                                                                        <tr>
-                                                                            <td>{{ $mp->id }}</td>
-                                                                            <td>
-                                                                                <select class="mb-3 form-control"
-                                                                                        id="maquina-{{ $mp->id }}">
-                                                                                    @foreach ($maquinas as $key => $m)
-                                                                                        @if ($m->idMaquina == $mp->idMaquina)
-                                                                                            <option
-                                                                                                value="{{ $m->idMaquina }}"
-                                                                                                selected>
-                                                                                                {{ $m->nombre }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $m->idMaquina }}">
-                                                                                                {{ $m->nombre }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </td>
-                                                                            <td>
-                                                                                <select class="mb-3 form-control"
-                                                                                        id="fibras-{{ $mp->id }}">
-                                                                                    @foreach ($fibras as $key => $f)
-                                                                                        @if ($f->idFibra == $mp->idFibra)
-                                                                                            <option
-                                                                                                value="{{ $f->idFibra }}"
-                                                                                                selected>
-                                                                                                {{ $f->descripcion }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $f->idFibra }}">
-                                                                                                {{ $f->descripcion }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </td>
-                                                                            <td><input class="input-dt"
-                                                                                       id="cantidad-{{ $mp->id }}"
-                                                                                       type="number"
-                                                                                       placeholder="Ingrese la cantidad"
-                                                                                       value="{{ $mp->cantidad }}"></td>
-                                                                        </tr>
-                                                                    @endif
-                                                                    @endforeach
 
-                                                                @endif
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <button class="btn btn-danger float-right"
-                                                                id="quitRowdtMP">Quitar
-                                                        </button>
-                                                        <button
-                                                            class="btn btn-light add-row-dt-mp float-right">Agregar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- [ Tabla Materia Prima Directa ] end -->
-                                        </div>
 
-                                        <div class="row mt-3">
-                                            <!-- [ Tabla Quimicos por Maquina ] start -->
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Quimicos por Maquina</h5>
-                                                    </div>
-                                                    <div class="card-block table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table" id="dtQM" cellspacing="0" width="100%">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>#</th>
-                                                                    <th>MAQUINA</th>
-                                                                    <th>QUIMICO</th>
-                                                                    <th class="text-center">CANTIDAD</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody id="tbody-qm">
-                                                                @if (count($quimico_maquina) > 0)
-                                                                    @foreach ($quimico_maquina as $key => $qm)
-                                                                    @if($qm->estado == 1)
-                                                                        <tr>
-                                                                            <td>{{ $qm->id }}</td>
-                                                                            <td>
-                                                                                <select class="mb-3 form-control"
-                                                                                        id="maquinaq-{{ $qm->id }}">
-                                                                                    @foreach ($maquinas as $key => $m)
-                                                                                        @if ($m->idMaquina == $qm->idMaquina)
-                                                                                            <option
-                                                                                                value="{{ $m->idMaquina }}"
-                                                                                                selected>
-                                                                                                {{ $m->nombre }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $m->idMaquina }}">
-                                                                                                {{ $m->nombre }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </td>
-                                                                            <td>
-                                                                                <select class="mb-3 form-control"
-                                                                                        id="quimicos-{{ $qm->id }}">
-                                                                                    @foreach ($quimicos as $key => $q)
-                                                                                        @if ($q->idQuimico == $qm->idQuimico)
-                                                                                            <option
-                                                                                                value="{{ $q->idQuimico }}"
-                                                                                                selected>
-                                                                                                {{ $q->descripcion }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $q->idQuimico }}">
-                                                                                                {{ $q->descripcion }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </td>
-                                                                            <td><input class="input-dt qm-cant"
-                                                                                       type="text"
-                                                                                       placeholder="Ingrese la cantidad"
-                                                                                       id="cantidadq-{{ $qm->id }}"
-                                                                                       onpaste="return false"
-                                                                                       value="{{ $qm->cantidad }}"></td>
-                                                                        </tr>
-                                                                        @endif
-                                                                    @endforeach
-                                                                @endif
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <button class="btn btn-danger float-right" id="quitRowdtQM">
-                                                            Quitar
-                                                        </button>
-                                                        <button class="btn btn-light add-row-dt-qm float-right"
-                                                                id="btn-agregarQ">
-                                                            Agregar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- [ Tabla Quimicos por Maquina ] end -->
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- [ Tabla Categorias ] end -->
