@@ -41,6 +41,8 @@ Route::post('/quimico/guardar-quimico', 'User\QuimicoController@guardarQuimico')
 Route::get('/quimico/editar-quimico/{id}', 'User\QuimicoController@editarQuimico')->name('quimico/editar-quimico/{$id}');
 Route::post('/quimico/actualizar-quimico/', 'User\QuimicoController@actualizarQuimico')->name('quimico/actualizar-quimico');
 Route::get('/quimico/eliminar-quimico/{id}', 'User\QuimicoController@eliminarQuimico')->name('quimico/eliminar-quimico/{id}');
+Route::get('getQuimicos', 'User\QuimicoController@getQuimicos')->name('getQuimicos');
+
 
 
 //RUTAS USUARIO
@@ -191,6 +193,6 @@ Route::put('/turnos/update', 'User\TurnoController@update')->name('turnos.update
 //Route::resource('turnos','User\TurnoController');
 
 //DETALLE DE REQUISA
-Route::put('guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('guardarDetalleReq');
+Route::post('guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('guardarDetalleReq');
 
 Auth::routes();

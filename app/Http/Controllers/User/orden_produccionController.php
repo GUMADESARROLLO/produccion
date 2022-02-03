@@ -839,7 +839,7 @@ class orden_produccionController extends Controller
 
                             //return response()->json(count($arrayF_select2));
                             //return redirect()->back()->with('message-failed', 'No se guardo con exito :(, existe una materia prima repetida, por favor elija otra');
-                        }
+                        }       
                             foreach ($array as $dataMP) {
                                 $mpE = mp_directa::where([
                                     ['numOrden', '=', $numOrden],
