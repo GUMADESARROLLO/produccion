@@ -7,6 +7,8 @@ use App\Models\orden_produccion;
 use App\Models\Turno;
 use Illuminate\Http\Request;
 use App\Models\Requisa;
+use App\Models\detalle_requisas;
+use Illuminate\Support\Facades\DB;
 
 class RequisaController extends Controller
 {
@@ -113,4 +115,12 @@ class RequisaController extends Controller
     {
         //
     }
+
+    public function guardarDetalleReq(Request $request){
+     
+        $obj = detalle_requisas::guardarDetalleReq($request->input('data'));
+        return response()->json($obj);
+
+    }
+   
 }

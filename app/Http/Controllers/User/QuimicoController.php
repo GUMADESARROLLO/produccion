@@ -97,5 +97,11 @@ class QuimicoController extends Controller
 
         return (response()->json(true));
     }
+    public function getQuimicos() {
+        $fibras = Quimicos::where('estado', 1)
+                    ->get();
+        
+        return response()->json($fibras);
+    }
     //
 }
