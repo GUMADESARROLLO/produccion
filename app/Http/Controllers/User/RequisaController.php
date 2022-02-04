@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-//use App\Models\DetalleRequisa;
+use App\Models\DetalleRequisa;
 use App\Models\orden_produccion;
 use App\Models\Turno;
 use App\Models\usuario_rol;
@@ -12,7 +12,6 @@ use App\Models\Requisa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use App\Models\detalle_requisas;
 
 
 class RequisaController extends Controller
@@ -22,7 +21,7 @@ class RequisaController extends Controller
      */
     protected $requisas;
 
-    public function __construct( Requisa $requisas)
+    public function __construct(Requisa $requisas)
     {
         $this->middleware('auth');
         $this->requisas = $requisas;
@@ -46,7 +45,7 @@ class RequisaController extends Controller
      */
     public function create($idOP)
     {
-        $orden = orden_produccion::where('estado', 1)->where('numOrden',$idOP)->orderBy('idOrden', 'asc')->get();
+        $orden = orden_produccion::where('estado', 1)->where('numOrden', $idOP)->orderBy('idOrden', 'asc')->get();
         //$jefe = usuario_rol::where('estado',1)->where('rol_id',5)->get();
         $jefe = DB::select(('select u.id ,u.nombres, u.apellidos
                                     from users u
@@ -55,7 +54,7 @@ class RequisaController extends Controller
                                     where ur.rol_id = 5
                                     order by u.nombres asc ;'));
         $turno = Turno::all();
-        return view('User.Requisas.nuevo', compact(['orden','jefe', 'turno']));
+        return view('User.Requisas.nuevo', compact(['orden', 'jefe', 'turno']));
     }
 
     /**
@@ -79,8 +78,7 @@ class RequisaController extends Controller
             'id_turno' => 'required'
         ], $messages);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         } else {
             //dd($request);
@@ -90,10 +88,9 @@ class RequisaController extends Controller
             $requisa->jefe_turno = $request->jefe_turno;
             $requisa->turno = $request->id_turno;
             $requisa->tipo = $request->tipo;
-            $requisa->estado=1;
+            $requisa->estado = 1;
             $requisa->save();
-            return redirect()->action([RequisaController::class, 'index'])
-                ->with('message-success', 'Se guardo con exito :)');
+            return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
         }
         return  0;
     }
@@ -108,7 +105,7 @@ class RequisaController extends Controller
     {
         //
         $requisa = $this->requisas->obtenerRequisaPorId($id);
-        return view('User.Requisas.detalle', ['requisa' =>$requisa]);
+        return view('User.Requisas.detalle', ['requisa' => $requisa]);
     }
 
     /**
@@ -127,7 +124,7 @@ class RequisaController extends Controller
                                     where ur.rol_id = 5
                                     order by u.nombres asc ;'));
         $turno = Turno::all();
-        return view('User.Requisas.editar', compact(['requisa','jefe', 'turno']));
+        return view('User.Requisas.editar', compact(['requisa', 'jefe', 'turno']));
     }
 
     /**
@@ -156,11 +153,11 @@ class RequisaController extends Controller
         }
 
         requisa::where('id', $id)
-                    ->update([
-                        'jefe_turno' => $request->jefe_turno,
-                        'turno' => $request->id_turno,
+            ->update([
+                'jefe_turno' => $request->jefe_turno,
+                'turno' => $request->id_turno,
 
-                    ]);
+            ]);
 
         return redirect()->action(RequisaController::class, 'index')
             ->with('message-success', 'Se edito con exito :)');
@@ -177,11 +174,29 @@ class RequisaController extends Controller
         //
     }
 
-    public function guardarDetalleReq(Request $request){
-     
-        $obj = detalle_requisas::guardarDetalleReq($request->input('data'));
+    public function guardarDetalleReq(Request $request)
+    {
+
+        $obj = DetalleRequisa::guardarDetalleReq($request->input('data'));
+        return response()->json($obj);
+    }
+    public function actualizarDetalleReq(Request $request)
+    {
+
+        $obj = DetalleRequisa::actualizarDetalleReq($request->input('data'));
+        return response()->json($obj);
+    }
+    public function getFibreReq($codigo)
+    {
+        $detalle = DetalleRequisa::where('requisa_id', $codigo)->get();
         return response()->json($obj);
 
     }
-   
+
+    public function getQuimicoReq($codigo)
+    {
+        $obj = DetalleRequisa::where('requisa_id', $codigo)->get();
+        return response()->json($obj);
+    }
+
 }

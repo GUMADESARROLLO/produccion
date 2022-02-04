@@ -63,6 +63,9 @@
                                     <div class="card-body">
                                         <form method="post" action="{{url('requisas')}}">
                                             {{ csrf_field() }}
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Guardar</button>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4" hidden>
                                                     <div class="form-group">
@@ -132,9 +135,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Enviar</button>
-                                            </div>
+                                            
                                         </form>
 
                                         <div class="mt-1  d-flex justify-content-end ">

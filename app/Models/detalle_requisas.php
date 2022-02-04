@@ -33,6 +33,4 @@ class detalle_requisas extends Model
             return 'Se ha ingresado correctamente';
         }
     }
-
-    
 }

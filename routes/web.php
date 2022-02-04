@@ -194,5 +194,9 @@ Route::put('/turnos/update', 'User\TurnoController@update')->name('turnos.update
 
 //DETALLE DE REQUISA
 Route::post('/guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('/guardarDetalleReq');
+Route::post('/actualizarDetalleReq', 'User\RequisaController@actualizarDetalleReq')->name('/actualizarDetalleReq');
+Route::get('/getRequisaFibra', 'User\RequisaController@getRequisaFibra')->name('/getRequisaFibra');
+Route::get('/getRequisaQuimico', 'User\RequisaController@getRequisaQuimico')->name('/getRequisaQuimico');
+
 
 Auth::routes();
