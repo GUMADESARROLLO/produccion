@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Quimicos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
-
-
-
+use Illuminate\Support\Facades\Redirect;
 
 class QuimicoController extends Controller
 {

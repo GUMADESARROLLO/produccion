@@ -55,15 +55,6 @@ class CostoOrdenController extends Controller
         $costoOrden = costoOrden::where('numOrden', $idOP)->orderBy('id', 'asc')->get();
         $ordenes = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         $detalle_orden = DetalleCostoSubtotal::where('numOrden', $idOP)->sum('subtotal');
-
-
-        //$TipoCambio = TipoCambio::select('MONTO')->where('FECHA', '=', Carbon::today())->get()->last();
-        //$date = Carbon::today();
-
-        //$TipoCambio = TipoCambio::where('FECHA', '=', Carbon::today())->pluck('MONTO')->first();
-
-        //dd($date,$TipoCambio);
-        //dd($costoOrden);
         $TipoCambio = orden_produccion::where([['numOrden',$idOP], ['estado', 1]])->pluck('tipo_cambio')->first();
 
         return view('User.CostoOrden.detalle', compact(['costoOrdenL', 'ordenes', 'costoOrden', 'detalle_orden', 'TipoCambio' ]));

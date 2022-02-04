@@ -192,7 +192,7 @@
                 console.log(arrayRequisa);
                 if (arrayRequisa.length > 0) {
                     $.ajax({
-                        url: "../guardarDetalleReq",
+                        url: "../../guardarDetalleReq",
                         data: {
                             data: arrayRequisa,
                         },
@@ -239,7 +239,7 @@
 
                 if (arrayRequisa.length > 0) {
                     $.ajax({
-                        url: "../guardarDetalleReq",
+                        url: "../../guardarDetalleReq",
                         data: {
                             data: arrayRequisa,
                         },

@@ -175,7 +175,7 @@ Route::post('costo-orden/detalle/actualizarTC', 'User\TipoCambioController@actua
 
 //Requisas
 Route::get('/requisas', 'User\RequisaController@index')->name('requisas.index');
-Route::get('/requisas/create', 'User\RequisaController@create')->name('requisa.create');
+Route::get('/requisas/create/{numOrden}', 'User\RequisaController@create')->name('requisa.create');
 Route::post('/requisas', 'User\RequisaController@store')->name('requisas.store');
 Route::get('/requisas/{id}', 'User\RequisaController@show')->name('requisas.show');
 Route::get('/requisas/{id}/edit', 'User\RequisaController@edit')->name('requisas.edit');
@@ -193,6 +193,6 @@ Route::put('/turnos/update', 'User\TurnoController@update')->name('turnos.update
 //Route::resource('turnos','User\TurnoController');
 
 //DETALLE DE REQUISA
-Route::post('guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('guardarDetalleReq');
+Route::post('/guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('/guardarDetalleReq');
 
 Auth::routes();
