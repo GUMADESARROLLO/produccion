@@ -34,7 +34,7 @@
             responsive: true,
             // "autoWidth": false,
             "ajax": {
-                "url": "../getQuimicos",
+                "url": "../../getQuimicos",
                 'dataSrc': '',
             },
             "info": false,
@@ -56,9 +56,9 @@
             },
 
             "columns": [{
-                "title": "N°",
-                "data": "idQuimico"
-            },
+                    "title": "N°",
+                    "data": "idQuimico"
+                },
                 {
                     "title": "CODIDO",
                     "data": "codigo"
@@ -99,7 +99,7 @@
 
             // "autoWidth": false,
             "ajax": {
-                "url": "../fibra-data",
+                "url": "../../fibra-data",
                 'dataSrc': '',
             },
             "info": false,
@@ -121,9 +121,9 @@
             },
 
             "columns": [{
-                "title": "N°",
-                "data": "idFibra"
-            },
+                    "title": "N°",
+                    "data": "idFibra"
+                },
                 {
                     "title": "CODIDO",
                     "data": "codigo"
@@ -192,7 +192,7 @@
                 console.log(arrayRequisa);
                 if (arrayRequisa.length > 0) {
                     $.ajax({
-                        url: "../guardarDetalleReq",
+                        url: "../../guardarDetalleReq",
                         data: {
                             data: arrayRequisa,
                         },
@@ -239,7 +239,7 @@
 
                 if (arrayRequisa.length > 0) {
                     $.ajax({
-                        url: "../guardarDetalleReq",
+                        url: "../../guardarDetalleReq",
                         data: {
                             data: arrayRequisa,
                         },
@@ -315,5 +315,8 @@
         } else {
             mensaje("No ha seleccionado el tipo de requisa");
         }
+
+
     });
+</script>
 </script>

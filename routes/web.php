@@ -193,6 +193,6 @@ Route::put('/turnos/update', 'User\TurnoController@update')->name('turnos.update
 //Route::resource('turnos','User\TurnoController');
 
 //DETALLE DE REQUISA
-Route::post('guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('guardarDetalleReq');
+Route::post('/guardarDetalleReq', 'User\RequisaController@guardarDetalleReq')->name('/guardarDetalleReq');
 
 Auth::routes();

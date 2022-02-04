@@ -78,17 +78,14 @@
                                                                 el # de Orden</small>
                                                         </div>
                                                     </div>
-
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <label for="codigo_req" class="col-sm-4 col-form-label">Codigo: </label>
-                                                        <div class="col-sm-7 ">
-                                                            <input type="text" class="form-control" name="codigo_req" id="codigo_req" value="{{old('codigo_req')}}">
-                                                            <small id="codigo_reqHelp" class="form-text text-muted">Escriba
-                                                                el codigo de la nueva requisa</small>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <label for="codigo_req">Codigo</label>
+                                                        <input type="text" class="form-control" name="codigo_req" id="codigo_req" value="{{old('codigo_req')}}">
+                                                        <small id="codigo_reqHelp" class="form-text text-muted">Escriba
+                                                            el codigo de la nueva requisa</small>
                                                     </div>
                                                 </div>
 
@@ -117,6 +114,8 @@
                                                             <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
                                                         </div>
 
+                                                        </select>
+                                                        <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
                                                     </div>
                                                 </div>
 
@@ -137,14 +136,14 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Enviar</button>
-                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Enviar</button>
                                             </div>
                                         </form>
+
                                         <div class="mt-1  d-flex justify-content-end ">
                                             <button class="btn btn-primary" id="btnGuardarDR"> Guardar</button>
                                         </div>
@@ -202,6 +201,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- [ Tabla Categorias ] end -->
                         </div>
                     </div>
                 </div>
