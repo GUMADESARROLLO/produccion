@@ -12,6 +12,8 @@ use App\Models\Requisa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use App\Models\detalle_requisas;
+
 
 class RequisaController extends Controller
 {
@@ -176,14 +178,10 @@ class RequisaController extends Controller
     }
 
     public function guardarDetalleReq(Request $request){
-
-     // $detail_requisa =  new detalle_requisa();
-     // $tipo_requisa = intval($request->input('type'));
-
-        $obj = DetalleRequisa::guardarDetalleReq($request);
+     
+        $obj = detalle_requisas::guardarDetalleReq($request->input('data'));
         return response()->json($obj);
-       /* return response()->json($response);
-        $obj = inventario_model::getCostosArticulos($articulo);*/
-		//return response()->json($obj);
+
     }
+   
 }
