@@ -34,7 +34,7 @@
             responsive: true,
             // "autoWidth": false,
             "ajax": {
-                "url": "../getQuimicos",
+                "url": "../../getQuimicos",
                 'dataSrc': '',
             },
             "info": false,
@@ -99,7 +99,7 @@
 
             // "autoWidth": false,
             "ajax": {
-                "url": "../fibra-data",
+                "url": "../../fibra-data",
                 'dataSrc': '',
             },
             "info": false,

@@ -55,12 +55,34 @@ class RequisaController extends Controller
     public function store(Request $request)
     {
         //
-        //dd($request);
-        $requisa = new Requisa($request->all());
-        //$requisa->estado=1;
-        $requisa->save();
-        return redirect()->action([RequisaController::class, 'index'])
-            ->with('message-success', 'Se guardo con exito :)');
+        $orden = $request['num_Orden'];
+        $messages = array(
+            'required' => ':attribute es un campo requerido',
+            'numeric' => 'El :attribute campo debe ser númerico',
+        );
+        $validator = Validator::make($request->all(), [
+            'numOrden' => 'required',
+            'codigo_req' => 'required',
+            'jefe_turno' => 'required',
+            'id_turno' => 'required'
+        ], $messages);
+
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        } else {
+            //dd($request);
+            $requisa = new Requisa();
+            $requisa->numOrden = $request->numOrden;
+            $requisa->codigo_req = $request->codigo_req;
+            $requisa->jefe_turno = $request->jefe_turno;
+            $requisa->turno = $request->id_turno;
+            $requisa->tipo = $request->tipo;
+            $requisa->estado=1;
+            $requisa->save();
+            return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
+        }
+        return  0;
     }
 
     /**
