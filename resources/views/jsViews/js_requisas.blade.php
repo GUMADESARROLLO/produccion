@@ -34,7 +34,7 @@
             responsive: true,
             // "autoWidth": false,
             "ajax": {
-                "url": "../getQuimicos",
+                "url": "../../getQuimicos",
                 'dataSrc': '',
             },
             "info": false,
@@ -99,7 +99,7 @@
 
             // "autoWidth": false,
             "ajax": {
-                "url": "../fibra-data",
+                "url": "../../fibra-data",
                 'dataSrc': '',
             },
             "info": false,
@@ -192,7 +192,7 @@
                 console.log(arrayRequisa);
                 if (arrayRequisa.length > 0) {
                     $.ajax({
-                        url: "../guardarDetalleReq",
+                        url: "../../guardarDetalleReq",
                         data: {
                             data: arrayRequisa,
                         },
@@ -239,7 +239,7 @@
 
                 if (arrayRequisa.length > 0) {
                     $.ajax({
-                        url: "../guardarDetalleReq",
+                        url: "../../guardarDetalleReq",
                         data: {
                             data: arrayRequisa,
                         },

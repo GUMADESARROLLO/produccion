@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\DetalleRequisa;
+//use App\Models\DetalleRequisa;
 use App\Models\orden_produccion;
 use App\Models\Turno;
 use App\Models\usuario_rol;
