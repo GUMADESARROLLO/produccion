@@ -55,12 +55,13 @@
                                         <div class="card-body">
                                             <form method="post" action="{{url('requisas')}}">
                                                 {{ csrf_field() }}
+                                                @foreach ($requisa as $req)
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="numOrden">Numero de orden</label>
-                                                            <input type="text" class="form-control" name="numOrden"
-                                                                   id="numOrden" value="{{old('numOrden')}}">
+                                                            <input type="text" readonly class="form-control" name="numOrden"
+                                                                   id="numOrden" value="{{ $req->id }}">
                                                             <small id="numOrdenHelp" class="form-text text-muted">Escriba
                                                                 el # de Orden</small>
                                                         </div>
@@ -70,18 +71,21 @@
                                                         <div class="form-group">
                                                             <label for="codigo_req">Codigo</label>
                                                             <input type="text" class="form-control" name="codigo_req"
-                                                                   id="codigo_req" value="{{old('codigo_req')}}">
+                                                                   id="codigo_req" value="{{$req->codigo_req}}">
                                                             <small id="codigo_reqHelp" class="form-text text-muted">Escriba
                                                                 el codigo de la nueva requisa</small>
                                                         </div>
                                                     </div>
+                                                    @endforeach
 
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="jefe_turno">Jefe de Turno</label>
-                                                            <input type="text" class="form-control"
-                                                                   name="jefe_turno" id="jefe_turno"
-                                                                   value="{{old('jefe_turno')}}">
+                                                            <select class="form-control" name="jefe_turno" id="jefe_turno">
+                                                                @foreach($jefe as $j)
+                                                                    <option value="{{$j->id }}">{{$j->nombres}} </option>
+                                                                @endforeach
+                                                            </select>
                                                             <small id="jefe_turnonHelp" class="form-text text-muted">Escriba
                                                                 el jefe de turno</small>
                                                         </div>
@@ -90,22 +94,16 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="turno">Turno</label>
-                                                            <input type="text" class="form-control"
-                                                                   name="turno" id="turno"
-                                                                   value="{{old('turno')}}">
+                                                            <select class="form-control" name="id_turno" id="id_turno">
+                                                                @foreach($turno as $t)
+                                                                    <option value="{{$t['id'] }}">{{$t['descripcion']}} </option>
+                                                                @endforeach
+
+                                                            </select>
                                                             <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label for="turno">Tipo</label>
-                                                            <input type="text" class="form-control"
-                                                                   name="turno" id="turno"
-                                                                   value="{{old('turno')}}">
-                                                            <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary mt-5">Enviar</button>
                                             </form>

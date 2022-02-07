@@ -113,7 +113,7 @@
     });
     
     
-    $(document).on('click','#btnactualizar',function() {
+    /*$(document).on('click','#btnactualizar',function() {
         codigo = $('#numOrden').val();
         var last_row = dtQM.row(":last").data();
         var array = new Array();
@@ -159,7 +159,7 @@
             });
             
         }
-    });
+    });*/
     
     
     </script>

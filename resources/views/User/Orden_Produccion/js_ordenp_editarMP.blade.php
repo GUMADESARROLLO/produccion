@@ -113,7 +113,7 @@ $(document).on('click','.add-row-dt-mp',function() {
 });
 
 
-$(document).on('click','#btnactualizar',function() {
+/*$(document).on('click','#btnactualizar',function() {
     codigo = $('#numOrden').val();
     var last_row = dtMPD.row(":last").data();
     var array = new Array();
@@ -158,7 +158,19 @@ $(document).on('click','#btnactualizar',function() {
         });
 
     }
-});
+});*/
+
+$(document).on('click','#btnactualizar',function(data)
+        {
+            $("#formdataord").submit();
+        });
+
+$(document).on('click', '#btnrequisa', function requi() {
+        var numOrden = $("#numOrden").val();
+        const URLlast = "/produccion/requisas/create/" + numOrden;
+        $('#btnrequisa').attr('href', "/produccion/requisas/create/" + numOrden);
+        console.log(URLlast);
+    });
 
 
 function soloNumeros(caracter, e, numeroVal) {
