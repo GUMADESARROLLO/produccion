@@ -36,6 +36,8 @@ class RequisaController extends Controller
     public function index()
     {
         $requisas = $this->requisas->obtenerRequisas();
+      
+      
         return view('User.Requisas.index', compact('requisas'));
     }
 
@@ -198,7 +200,7 @@ class RequisaController extends Controller
                     $Requisado[$i]['codigo'] =      $f['codigo'];
                     $Requisado[$i]['descripcion'] = $f['descripcion'];
                     $Requisado[$i]['unidad'] = $f['unidad'];
-                    $Requisado[$i]['cantidad'] =    $detalleRequisa['cantidad'];
+                    $Requisado[$i]['cantidad'] =    "<input type='text' class='form-control'  id='cantidad' name='cantidad' value='".$detalleRequisa['cantidad']."'>" ;
                     $i++;
                 }
             }
@@ -217,5 +219,12 @@ class RequisaController extends Controller
         }
         //->where('tipo', $tipo)->get();
         return response()->json($Requisado);
+    }
+
+    public function getRequisas()
+    {
+        $requisas = $this->requisas->obtenerRequisas();
+    
+        return response()->json($requisas);
     }
 }

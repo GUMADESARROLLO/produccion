@@ -159,7 +159,16 @@
     $(document).on('click', '#btnGuardarDR', function() {
         let id_requisa = $('#codigo_req').val();
         let numOrden = $('#numOrden').val();
+      //  console.log($(dtFibras).DataTable().rows( { filter : 'applied'} ).nodes());
 
+        //Recorrer data table
+        dtFibras.rows().eq(0).each(function(index) {
+            var rowf = dtFibras.row(index);
+            var dataf = rowf.data();
+            //var posf = dataf['cantidad'];
+            console.log(dataf);
+           // var idf = posf;
+        });
 
         let arrayRequisa = [];
         let i = 0;
@@ -219,8 +228,10 @@
                     let elemento_id = $(this).closest("tr").find('td:eq(0)').text();
 
                     //let type = 1;
+
+
                     if (cantidad != "undefined" && cantidad != "") {
-                        //  console.log(idFibra);
+                        //  console.log(idFibra);   
                         //  console.log(cantidad);
                         arrayRequisa[i] = {
                             numOrden: numOrden,
@@ -234,6 +245,8 @@
                         mensaje("Por favor Ingrese la cantidad requisada", 'error');
                     }
                 });
+
+
 
                 console.log(arrayRequisa);
 
@@ -262,56 +275,6 @@
 
 
 
-            //  } else if (typeOfReq.val() == 2) {
-            /*$("table tr").each(function() {
-                let cantidad = $(this).closest("tr").find('input[name="cantidad"]').val();
-                let idFibra = $(this).closest("tr").find('td:eq(0)').text();;
-                //let type = 1;
-                if (cantidad != "undefined" && cantidad != "") {
-                    console.log(idFibra);
-                    console.log(cantidad);
-
-                    arrayRequisa[i] = {
-                        requisa_id: id_requisa,
-                        elemento_id: idQuimico,
-                        cantidad: cantidad,
-                        tipo: typeOfReq
-                    };
-                    //console.log(posf);
-                    i++;
-                } else {
-                    mensaje("Por favor Ingrese la cantidad requisada", 'error');
-                }
-            });*/
-
-            // INGRESO DEL DETALLE DE LA REQUISA TIPO QUIMICOS
-            /*if (arrayRequisa.length > 0) {
-                $.ajax({
-                    url: "../guardarDetailRequisa",
-                    data: {
-                        data: arrayf,
-                        type: typeOfReq
-                        //      codigo: codigo
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(response) {
-
-                    },
-                    error: function(response) {
-                        mensaje(response.responseText, 'error');
-                    }
-                }).done(function(data) {
-                    // location.reload();
-                });
-                //console.log('El arreglo esta vacio :(');
-
-            } else {
-                return mensaje('No existen datos en la requisa:(', 'error');
-            }*/
-            //     }
-            //  console.log($('input[name="flexRadioDefault"]').val());
-
         } else {
             mensaje("No ha seleccionado el tipo de requisa");
         }
@@ -326,7 +289,7 @@
     numOrden = $('#numOrden').val();
     tipo_requisa = $('input:radio[name="tipo_requisa"]').val();
     //  console.log(cod_requisa,numOrden,tipo_requisa);
-   // alert(tipo_requisa);
+    // alert(tipo_requisa);
     //CARGAR TABLAS DE LOS DETALLES DE REQUISAS
     dtReqFibras = $("#tblReqFibras").DataTable({
         responsive: true,
@@ -373,7 +336,7 @@
             },
             {
                 "title": "CANTIDAD",
-                "defaultContent": "<input type='text' class='form-control'  id='cantidad' name='cantidad'>"
+                "data": "cantidad"
             },
         ],
         "columnDefs": [{

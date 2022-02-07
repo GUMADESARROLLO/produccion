@@ -199,6 +199,7 @@ Route::get('/getRequisaFibra', 'User\RequisaController@getRequisaFibra')->name('
 Route::get('/getRequisaQuimico', 'User\RequisaController@getRequisaQuimico')->name('/getRequisaQuimico');
 
 Route::get('/getDetalleReq/{codigo}/{tipo}', 'User\RequisaController@getDetalleReq')->name('/getDetalleReq/{codigo}/{tipo}');
+Route::get('/getRequisas', 'User\RequisaController@getRequisas')->name('/getRequisas');
 
 
 
