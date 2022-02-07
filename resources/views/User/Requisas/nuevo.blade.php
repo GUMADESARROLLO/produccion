@@ -67,16 +67,19 @@
                                                 <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Guardar</button>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4" hidden>
-                                                    <div class="form-group">
-                                                        <label for="numOrden">Numero de orden</label>
-                                                        <select class="form-control" name="numOrden" id="numOrden">
-                                                            @foreach($orden as $o)
-                                                            <option value="{{$o['numOrden'] }}">{{$o['numOrden']}} </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <small id="numOrdenHelp" class="form-text text-muted">Escriba
-                                                            el # de Orden</small>
+                                                <div class="col-md-4">
+                                                    <!-- Nuevo estilo -->
+                                                    <div class="form-group row">
+                                                        <label for="numOrden" class="col-sm-5 col-form-label">Numero de orden: </label>
+                                                        <div class="col-sm-7">
+                                                            <select class="form-control" name="numOrden" id="numOrden">
+                                                                @foreach($orden as $o)
+                                                                <option value="{{$o['numOrden'] }}">{{$o['numOrden']}} </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <small id="numOrdenHelp" class="ml-2 form-text text-muted">Escriba
+                                                                el # de Orden</small>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -89,26 +92,30 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="jefe_turno">Jefe de Turno</label>
-                                                        <select class="form-control" name="jefe_turno" id="jefe_turno">
-                                                            @foreach($jefe as $j)
-                                                            <option value="{{$j->id }}">{{$j->nombres}} </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <small id="jefe_turnonHelp" class="form-text text-muted">Escriba
-                                                            el jefe de turno</small>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="jefe_turno">Jefe de Turno</label>
+                                                            <select class="form-control" name="jefe_turno" id="jefe_turno">
+                                                                @foreach($jefe as $j)
+                                                                    <option value="{{$j->id }}">{{$j->nombres}} </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <small id="jefe_turnonHelp" class="form-text text-muted">Escriba
+                                                                el jefe de turno</small>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="id_turno">Turno</label>
-                                                        <select class="form-control" name="id_turno" id="id_turno">
-                                                            @foreach($turno as $t)
-                                                            <option value="{{$t['id'] }}">{{$t['descripcion']}} </option>
-                                                            @endforeach
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="id_turno">Turno</label>
+                                                            <select class="form-control" name="id_turno" id="id_turno">
+                                                                @foreach($turno as $t)
+                                                                    <option value="{{$t['id'] }}">{{$t['descripcion']}} </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
+                                                        </div>
 
                                                         </select>
                                                         <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
@@ -189,6 +196,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- END TABLA -->
                                         </div>
                                         <!-- END TABLA -->
                                     </div>

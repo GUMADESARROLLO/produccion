@@ -336,78 +336,7 @@
                         </div>
                     </div>
 
-                    <!--<div class="col-lg-3">
-                        <div class="row g-gs">
-                            <div class="col-md-6 col-lg-12">
-                                <div class="card card-bordered ">
-                                    <div class="card-inner ">
-                                        <div class="card-title-group align-start mb-0">
-                                            <div class="card-title">
-                                                <h6 class="title">AGUA</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-amount">
-                                            <span class="amount"> {{ $orden->consumoAgua['total']}}<span class="currency"> m<sup>3</sup>
-                                                </span>
-                                        </div>
-                                        <div class="amount-sm">- <small>-</small></div>
-                                        <div class="card-stats">
-                                            <div class="card-stats-group g-2">
-                                                <div class="card-stats-data">
-                                                    <div class="title">Inicial</div>
-                                                    <div class="amount">{{ number_format($orden->consumoAgua['inicial'],2) }}
-                                                        m<sup>3</sup></span>
-                                                    </div>
-                                                </div>
-                                                <div class="card-stats-data">
-                                                    <div class="title">Final</div>
-                                                    <div class="amount">{{ number_format($orden->consumoAgua['final'],2) }}
-                                                        m<sup>3</sup></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-12">
-                                <div class="card card-bordered">
-                                    <div class="card-inner">
-                                        <div class="card-title-group align-start mb-0">
-                                            <div class="card-title">
-                                                <h6 class="title">Gas Butano</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-amount">
-                                            <span class="amount">{{ $orden->consumoGas['total']}} <span class="currency">Glns</span>
-                                            </span>
-                                        </div>
-                                        <div class="card-stats">
-                                            <div class="card-stats-group g-2">
-                                                <div class="card-stats-data">
-                                                    <div class="title">Standar Consu.</div>
-                                                    <div class="amount"> 145 Glns/Ton</div>
-                                                </div>
-                                                <div class="card-stats-data">
-                                                    <div class="title">Consu. Real </div>
-                                                    <!--<div class="amount">-->
-                    <!-- @if ($orden->estandar_gas > 145)
-                                                    <div class="amount" style="color: red">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
-                                                    @elseif ($orden->estandar_gas < 145) <div class="amount" style="color: green">{{ number_format($orden->estandar_gas,2) }} Glns/Ton
-                                                </div>
-                                                @else
-                                                <div class="amount">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
-                                                @endif
-                                                <!--</div>-->
-                    <!--   </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- </div> -->
+                    
 
                 </div>
                 <div class="card card-bordered card-full">

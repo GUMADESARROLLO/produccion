@@ -10,7 +10,6 @@
                 format: 'LT'
             });
         });
-
         /****** Fibras - Agregar filas ******/
         dtMPD = $('#dtMPD').DataTable({
             "destroy": true,
@@ -450,13 +449,10 @@
             //e.preventDefault();
             mensaje("Debe ingresar una hora final para la orden", "error");
             return false;
-
-        }
-        /*else if (horasT === '') {
-                   //e.preventDefault();
-                   mensaje("Debe ingresar una horas trabajadas de la orden", "error");
-                   return false;
-               }*/
+        } else if (horasT === '') {
+            mensaje("Debe ingresar una horas trabajadas de la orden", "error");
+            return false;
+        } 
         else if (codigo === '') {
             //e.preventDefault();
             mensaje("Debe ingresar un numero de orden", "error");
@@ -510,7 +506,6 @@
         });
     });
     /*$(document).on('load', function(e) {
-      
     });*/
     /********** funciones extras para validacion ***********/
 </script>

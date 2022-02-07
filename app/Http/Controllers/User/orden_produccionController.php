@@ -119,8 +119,7 @@ class orden_produccionController extends Controller
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
-            //            $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
-            //            $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
+
             if ($produccion_total == 0 || $produccion_total == '') {
                 $estandar_electricidad = 0;
                 $estandar_gas = 0;
@@ -162,6 +161,7 @@ class orden_produccionController extends Controller
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
+            
             $Tonelada_dia = 0;
 
             if ($produccion_total == 0 || $produccion_total == '') {

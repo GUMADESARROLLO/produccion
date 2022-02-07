@@ -25,7 +25,7 @@ class detalle_requisas extends Model
                 // $dta_Req->created_at = date('Y-m-d H:i:s');
                 $dta_Req->save();
 
-               DB::select('call inn_requisas_update("' . $detail_req['numOrden'] . '", "' . $detail_req['elemento_id'] . '",
+                DB::select('call inn_requisas_update("' . $detail_req['numOrden'] . '", "' . $detail_req['elemento_id'] . '",
                 "' . $detail_req['tipo'] . '","' . $detail_req['cantidad'] . '")');
 
             }
