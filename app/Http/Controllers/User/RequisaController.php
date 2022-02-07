@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetalleRequisa;
+use App\Models\fibras;
 use App\Models\orden_produccion;
+use App\Models\Quimicos;
 use App\Models\Turno;
 use App\Models\usuario_rol;
 use Illuminate\Http\Request;
@@ -75,7 +77,9 @@ class RequisaController extends Controller
             'numOrden' => 'required',
             'codigo_req' => 'required',
             'jefe_turno' => 'required',
-            'id_turno' => 'required'
+            'id_turno' => 'required',
+            'flexRadioDefault' => 'required|in:1,2'
+
         ], $messages);
 
         if ($validator->fails()) {
@@ -87,7 +91,7 @@ class RequisaController extends Controller
             $requisa->codigo_req = $request->codigo_req;
             $requisa->jefe_turno = $request->jefe_turno;
             $requisa->turno = $request->id_turno;
-            $requisa->tipo = $request->tipo;
+            $requisa->tipo = $request->flexRadioDefault;
             $requisa->estado = 1;
             $requisa->save();
             return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
@@ -108,12 +112,6 @@ class RequisaController extends Controller
         return view('User.Requisas.detalle', ['requisa' => $requisa]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $requisa = $this->requisas->obtenerRequisaPorId($id);
@@ -162,7 +160,6 @@ class RequisaController extends Controller
         return redirect()->action(RequisaController::class, 'index')
             ->with('message-success', 'Se edito con exito :)');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -180,23 +177,46 @@ class RequisaController extends Controller
         $obj = DetalleRequisa::guardarDetalleReq($request->input('data'));
         return response()->json($obj);
     }
+
     public function actualizarDetalleReq(Request $request)
     {
 
         $obj = DetalleRequisa::actualizarDetalleReq($request->input('data'));
         return response()->json($obj);
     }
-    public function getFibreReq($codigo)
+
+
+    public function getDetalleReq($cod_requisa, $tipo)
     {
-        $detalle = DetalleRequisa::where('requisa_id', $codigo)->get();
-        return response()->json($obj);
-
+        $Requisado = array();
+        $obj = DetalleRequisa::where('requisa_id', $cod_requisa)->get();
+        $i = 0;
+        if ($tipo == 1) { //Fibra
+            foreach ($obj as $detalleRequisa) {
+                $fibras = fibras::where('idFibra', $detalleRequisa['elemento_id'])->get();
+                foreach ($fibras as $f) {
+                    $Requisado[$i]['id'] =     $f['idFibra'];
+                    $Requisado[$i]['codigo'] =      $f['codigo'];
+                    $Requisado[$i]['descripcion'] = $f['descripcion'];
+                    $Requisado[$i]['unidad'] = $f['unidad'];
+                    $Requisado[$i]['cantidad'] =    $detalleRequisa['cantidad'];
+                    $i++;
+                }
+            }
+        } else {
+            foreach ($obj as $detalleRequisa) {
+                $quimicos = Quimicos::where('idQuimico', $detalleRequisa['elemento_id'])->get();
+                foreach ($quimicos as $q) {
+                    $Requisado[$i]['id'] =          $q['idQuimico'];
+                    $Requisado[$i]['codigo'] =      $q['codigo'];
+                    $Requisado[$i]['descripcion'] = $q['descripcion'];
+                    $Requisado[$i]['unidad'] =      $q['unidad'];
+                    $Requisado[$i]['cantidad'] =    $detalleRequisa['cantidad'];
+                    $i++;
+                }
+            }
+        }
+        //->where('tipo', $tipo)->get();
+        return response()->json($Requisado);
     }
-
-    public function getQuimicoReq($codigo)
-    {
-        $obj = DetalleRequisa::where('requisa_id', $codigo)->get();
-        return response()->json($obj);
-    }
-
 }

@@ -110,6 +110,30 @@
                                                 </div>
 
                                             </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group row pr-0">
+                                                    <label for="turno" class="col-sm-4 pr-0">Tipo de requisa: </label>
+                                                    <div class="form-group col-sm-8 border rounded-sm py-2">
+                                                        @foreach($requisa as $req)
+                                                        @if($req['tipo'] == 1 )
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="tipo_requisa" id="Fibra" value="1" checked>
+                                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                                Fibra
+                                                            </label>
+                                                        </div>
+                                                        @else
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="tipo_requisa" id="Quimico" value="2" checked>
+                                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                                Quimicos
+                                                            </label>
+                                                        </div>
+                                                        @endif
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <button type="submit" class="btn btn-primary mt-5">Enviar</button>
                                         </form>
                                         <div class="mt-1  d-flex justify-content-end ">

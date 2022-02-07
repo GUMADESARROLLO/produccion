@@ -321,9 +321,12 @@
 
     //Actualizar los datos del detalle de las requisas 
 
-    var dtReqQuimicos;
-    var dtReqFibras;
-
+    var dtReqQuimicos, dtReqFibras, cod_requisa, numOrden, tipo_requisa;
+    cod_requisa = $('#codigo_req').val();
+    numOrden = $('#numOrden').val();
+    tipo_requisa = $('input:radio[name="tipo_requisa"]').val();
+    //  console.log(cod_requisa,numOrden,tipo_requisa);
+   // alert(tipo_requisa);
     //CARGAR TABLAS DE LOS DETALLES DE REQUISAS
     dtReqFibras = $("#tblReqFibras").DataTable({
         responsive: true,
@@ -331,7 +334,7 @@
 
         // "autoWidth": false,
         "ajax": {
-            "url": "../../getFibreReq",
+            "url": "../../getDetalleReq/" + cod_requisa + '/' + tipo_requisa,
             'dataSrc': '',
         },
         "info": false,
@@ -354,7 +357,7 @@
 
         "columns": [{
                 "title": "N°",
-                "data": "idFibra"
+                "data": "id"
             },
             {
                 "title": "CODIDO",
@@ -385,6 +388,4 @@
         var table = $('#tblReqFibras').DataTable();
         table.search(this.value).draw();
     });
-
-    
 </script>
