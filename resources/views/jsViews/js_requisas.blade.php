@@ -168,7 +168,7 @@
         if (typeOfReq.is(':checked')) {
             let tipo = $('input:radio[name=flexRadioDefault]:checked').val();
             // if (typeOfReq.val() == 1) {
-                console.log(tipo);
+            console.log(tipo);
             if (tipo == 1) {
                 $("#tblFibras tbody tr").each(function() {
                     let cantidad = $(this).closest("tr").find('input[name="cantidad"]').val();
@@ -318,5 +318,73 @@
 
 
     });
-</script>
+
+    //Actualizar los datos del detalle de las requisas 
+
+    var dtReqQuimicos;
+    var dtReqFibras;
+
+    //CARGAR TABLAS DE LOS DETALLES DE REQUISAS
+    dtReqFibras = $("#tblReqFibras").DataTable({
+        responsive: true,
+        "destroy": true,
+
+        // "autoWidth": false,
+        "ajax": {
+            "url": "../../getFibreReq",
+            'dataSrc': '',
+        },
+        "info": false,
+
+        "pagingType": "full",
+        "language": {
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "zeroRecords": "No hay coincidencias",
+            "loadingRecords": "Cargando datos...",
+            oPaginate: {
+                sNext: '<i class="fas fa-angle-right fa-2x mx-2 text-info"></i>',
+                sPrevious: '<i class="fas fa-angle-left fa-2x mx-2 text-info"></i>',
+                sFirst: '<i class="fas fa-angle-double-left fa-2x mx-2 text-info"></i>',
+                sLast: '<i class="fas fa-angle-double-right fa-2x mx-2 text-info"></i>',
+            },
+            "lengthMenu": "MOSTRAR _MENU_",
+            "emptyTable": "NO HAY DATOS DISPONIBLES",
+            "search": "BUSCAR"
+        },
+
+        "columns": [{
+                "title": "N°",
+                "data": "idFibra"
+            },
+            {
+                "title": "CODIDO",
+                "data": "codigo"
+            },
+            {
+                "title": "DESCRIPCIÓN DEL ARTICULO",
+                "data": "descripcion"
+            },
+            {
+                "title": "UND/MEDIDA",
+                "data": "unidad"
+            },
+            {
+                "title": "CANTIDAD",
+                "defaultContent": "<input type='text' class='form-control'  id='cantidad' name='cantidad'>"
+            },
+        ],
+        "columnDefs": [{
+            "className": "dt-center",
+            "targets": [2, 3]
+        }, ],
+    });
+
+    $("#tblReqFibras_filter").hide();
+    $("#tblReqFibras_length").hide();
+    $('#SearchReqFib').on('keyup', function() {
+        var table = $('#tblReqFibras').DataTable();
+        table.search(this.value).draw();
+    });
+
+    
 </script>
