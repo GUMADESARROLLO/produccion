@@ -882,4 +882,67 @@
     $("#turno").change(function() {
         addRowsJumboroll();
     })
+
+    /********** funciones extras para validacion ***********/
+    function soloNumeros(caracter, e, numeroVal) {
+        var numero = numeroVal;
+        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+            e.preventDefault();
+            mensaje('No puedes iniciar con un punto', 'warning');
+        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+            e.preventDefault();
+            mensaje('No puede haber mas de dos puntos', 'warning');
+        } else {
+            const soloNumeros = new RegExp("^[0-9]+$");
+            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+                e.preventDefault();
+                mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
+            }
+        }
+    }
+
+    $('#rp').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#rp').val());
+    });
+
+    $('#lt').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#lt').val());
+    });
+
+    $('#mr-y1').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#mr-y1').val());
+    });
+
+    $('#mr-y2').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#mr-y2').val());
+    });
+
+    $('#consumoInicialElec').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#consumoInicialElec').val());
+    });
+
+    $('#consumoFinalElec').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#consumoFinalElec').val());
+    });
+
+    $('#consumoInicialAgua').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#consumoInicialAgua').val());
+    });
+
+    $('#consumoFinalAgua').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#consumoFinalAgua').val());
+    });
+
+    $('#consumoFinalGas').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#consumoFinalGas').val());
+    });
+
+    $('#tiempo-pulpeo').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#tiempo-pulpeo').val());
+    });
+
+    $('#tiempo-lavado').on('keypress', function(e) {
+        soloNumeros(e.keyCode, e, $('#tiempo-lavado').val());
+    });
+
 </script>

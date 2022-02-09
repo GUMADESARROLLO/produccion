@@ -81,7 +81,7 @@ class reporteController extends Controller
     public function guardarTiempoPulpeo(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempo_pulpeo::where('numOrden', $numOrden)->delete();
 
@@ -105,7 +105,7 @@ class reporteController extends Controller
     public function guardarTiempoLavado(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempo_lavado::where('numOrden', $numOrden)->delete();
 
@@ -129,7 +129,7 @@ class reporteController extends Controller
     public function guardarTiemposMuertos(Request $request)
     {
         $i = 0;
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         tiempos_muertos::where('numOrden', $numOrden)->delete();
 
@@ -235,7 +235,7 @@ class reporteController extends Controller
     {
         $id = 0;
         $i = 0;
-        $numOrden = intval($request->input('codigo')); // numero de orden
+        $numOrden = $request->input('codigo'); // numero de orden
 
         $orden = orden_produccion::where([['numOrden', $request->input('codigo')], ['estado', 1]])->orderBy('idOrden', 'asc')->get();
         $fechaInicio = date('Y-m-d');
@@ -297,7 +297,7 @@ class reporteController extends Controller
 
     public function eliminarTiempoPulpeo(Request $request)
     {
-        $id = intval($request->input('id'));
+        $id = $request->input('id');
 
         $response = tiempo_pulpeo::where('id', $id)->delete();
 
@@ -306,7 +306,7 @@ class reporteController extends Controller
 
     public function eliminarTiempoLavado(Request $request)
     {
-        $id = intval($request->input('id'));
+        $id = $request->input('id');
 
         $response = tiempo_lavado::where('id', $id)->delete();
 
@@ -315,7 +315,7 @@ class reporteController extends Controller
 
     public function eliminarTiemposMuertos(Request $request)
     {
-        $id = intval($request->input('id'));
+        $id = $request->input('id');
 
         $response = tiempos_muertos::where('id', $id)->delete();
 
@@ -324,7 +324,7 @@ class reporteController extends Controller
 
     public function eliminarVinietaJRoll(Request $request)
     {
-        $id = intval($request->input('id'));
+        $id = $request->input('id');
 
         $response = jumboroll_detalle::where('id', $id)->delete();
 
@@ -345,7 +345,7 @@ class reporteController extends Controller
 
     public function guardarDetailJR(Request $request)
     {
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
         $validate = jumboroll::where('numOrden', $numOrden)->get();
 
         if($request->isMethod('post')){

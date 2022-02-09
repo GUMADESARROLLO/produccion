@@ -720,7 +720,7 @@ class orden_produccionController extends Controller
     public function guardarCostosIndirectosFabricacion(Request $request)
     {
         if ($request->isMethod('post')) {
-            $numOrden = intval($request->input('codigo'));
+            $numOrden = $request->input('codigo');
             $consumoInicialElec = ($request->input('consumoInicialElec') == '') ? 0 : $request->input('consumoInicialElec');
             $consumoFinalElec = ($request->input('consumoFinalElec') == '') ? 0 : $request->input('consumoFinalElec');
             $consumoInicialAgua = ($request->input('consumoInicialAgua') == '') ? 0 : $request->input('consumoInicialAgua');
@@ -987,7 +987,7 @@ class orden_produccionController extends Controller
             if ($key['idMaquina'] !== '' && $key['idFibra'] !== '' && $key['cantidad'] !== '') {
                 $data[$i]['id'] = $key['id'];
                 $data[$i]['idMaquina'] = $key['idMaquina'];
-               
+
                 $maquinas = maquinas::where([['idMaquina',$key['idMaquina']],['estado', 1]])->get(); // obtengo la maquina seleccionada
                 foreach($maquinas as $m){
                     $data[$i]['nombreMaquina'] = $m['nombre'];
@@ -1007,7 +1007,7 @@ class orden_produccionController extends Controller
             if ($key['idMaquina'] !== '' && $key['idQuimico'] !== '' && $key['cantidad'] !== '') {
                 $data[$i]['id'] = $key['id'];
                 $data[$i]['idMaquina'] = $key['idMaquina'];
-                
+
                 $maquinas = maquinas::where([['idMaquina',$key['idMaquina']],['estado', 1]])->get(); // obtengo la maquina seleccionada
                 foreach($maquinas as $m){
                     $data[$i]['nombreMaquina'] = $m['nombre'];
