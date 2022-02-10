@@ -46,4 +46,8 @@ class Requisa extends Model
         return $this->belongsToMany('App\Models\fibras', 'DetalleRequisa', 'elemento_id', 'idFibra');
     }
 
+    public function updateRequisa(){
+        return $this->belongsToMany('App\Models\fibras', 'DetalleRequisa', 'elemento_id', 'idFibra');
+    }
+
 }

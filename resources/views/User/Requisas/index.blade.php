@@ -35,7 +35,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-10">
                                 <div class="page-header-title">
-                                    <h5 class="m-b-10 font-weight-bold">Lista de Requisas</h5>
+                                    <h5 class="m-b-10">REQUISAS</h5>
                                 </div>
                             </div>
                         </div>
@@ -49,6 +49,9 @@
 
                             <div class="col-xl-12">
                                 <div class="card">
+                                    <div class="card-header">
+                                        <h5>LISTA DE REQUISAS</h5>
+                                    </div>
                                     <div class="input-group my-4 ml-2" style="width: 50%;" id="cont_search">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>

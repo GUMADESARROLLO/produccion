@@ -60,45 +60,38 @@
                                     </div>
                                     @endif
                                     <div class="card-body">
-                                        <form method="post" action="{{url('requisas')}}">
-                                            {{ csrf_field() }}
-                                            @foreach ($requisa as $req)
+                                        <form id="frmRequisas">
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <!-- method="post" action="{{url('requisas')}}" -->
+                                                {{ csrf_field() }}
+                                                @foreach ($requisa as $req)
+                                                <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="numOrden">Numero de orden</label>
-                                                        <input type="text" readonly class="form-control" name="numOrden" id="numOrden" value="{{ $req->id }}">
-                                                        <small id="numOrdenHelp" class="form-text text-muted">Escriba
-                                                            el # de Orden</small>
+                                                        <input type="text" readonly class="form-control" name="numOrden" id="numOrden" value="{{ $req->numOrden }}">
+                                                        <small id="numOrdenHelp" class="form-text text-muted">Número de Orden</small>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="codigo_req">Codigo</label>
-                                                        <input type="text" class="form-control" name="codigo_req" id="codigo_req" value="{{$req->codigo_req}}">
-                                                        <small id="codigo_reqHelp" class="form-text text-muted">Escriba
-                                                            el codigo de la nueva requisa</small>
+                                                        <input type="text" class="form-control" name="codigo_req" id="codigo_req" value="{{$req->codigo_req}}" readonly>
+                                                        <small id="codigo_reqHelp" class="form-text text-muted">codigo de la requisa</small>
                                                     </div>
                                                 </div>
                                                 @endforeach
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="jefe_turno">Jefe de Turno</label>
                                                         <select class="form-control" name="jefe_turno" id="jefe_turno">
                                                             @foreach($jefe as $j)
                                                             <option value="{{$j->id }}">{{$j->nombres}} </option>
                                                             @endforeach
                                                         </select>
-                                                        <small id="jefe_turnonHelp" class="form-text text-muted">Escriba
-                                                            el jefe de turno</small>
+                                                        <small id="jefe_turnonHelp" class="form-text text-muted">jefe de turno</small>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="turno">Turno</label>
                                                         <select class="form-control" name="id_turno" id="id_turno">
                                                             @foreach($turno as $t)
                                                             <option value="{{$t['id'] }}">{{$t['descripcion']}} </option>
@@ -108,79 +101,45 @@
                                                         <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group row pr-0">
-                                                    <label for="turno" class="col-sm-4 pr-0">Tipo de requisa: </label>
-                                                    <div class="form-group col-sm-8 border rounded-sm py-2">
-                                                        @foreach($requisa as $req)
-                                                        @if($req['tipo'] == 1 )
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="tipo_requisa" id="Fibra" value="1" checked>
-                                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                                Fibra
-                                                            </label>
-                                                        </div>
-                                                        @else
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="tipo_requisa" id="Quimico" value="2" checked>
-                                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                                Quimicos
-                                                            </label>
-                                                        </div>
-                                                        @endif
-                                                        @endforeach
+                                                <div class="col-md-2">
+                                                    @foreach($requisa as $req)
+                                                    @if($req['tipo'] == 1 )
+                                                    <select class="form-control" name="tipo_requisa" id="tipo_requisa" disabled>
+                                                        <option name="flexRadioDefault" id="Fibra" value="1" selected>Fibra</option>
+                                                    </select>
+                                                    @else
+                                                    <select class="form-control" name="tipo_requisa" id="tipo_requisa" disabled>
+                                                        <option name="flexRadioDefault" id="Quimico" value="2" selected>Quimico</option>
+                                                    </select>
+                                                    @endif
+                                                    @endforeach
+                                                    <small id="tipoRequisa" class="form-text text-muted">Tipo de Requisa</small>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="mt-1  d-flex justify-content-end ">
+                                                        <button class="btn btn-primary" id="btnActualizar"> Actualizar</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary mt-5">Enviar</button>
+                                            <input type="hidden" id="id_req" value="{{$requisa[0]['id']}}">
                                         </form>
-                                        <div class="mt-1  d-flex justify-content-end ">
-                                            <button class="btn btn-primary" id="btnGuardarDR"> Guardar</button>
-                                        </div>
-                                        <!-- TABLA DE QUIMICOS -->
-                                        <div class="mt-1 d-flex justify-content-center ">
-                                            <div class="card border  px-5 py-5" id="cont_quimico" style="width: 100% !important;">
-                                                <div id="example_wrapper" class="dataTables_wrapper">
-                                                    <div class="card-title text-center m-0 p-0 mb-2">
-                                                        <span class="font-weight-bold text-info" id="title_material" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
-                                                    </div>
-                                                    <div class="input-group mb-2" style="width: 30%" id="cont_search">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                                                        </div>
-                                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                                    </div>
-                                                    <div class="card-block table-border-style border">
-                                                        <div class="table-responsive">
-                                                            <div class="table-responsive mt-3 mb-2">
-                                                                <table class="table  table-lg-responsive table-hover" id="tblReqQuimicos" style="width: 100% !important;">
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END TABLA -->
-                                        <!-- TABLA DE FIBRAS -->
+                                        <!-- TABLA DE REQUISAS -->
                                         <div class="mt-1  d-flex justify-content-center ">
-                                            <div class="card border  px-5 py-5 " id="cont_Rfibra" style="width: 100% !important;">
+                                            <div class="card border  px-5 py-5 " id="cont_R" style="width: 100% !important;">
                                                 <div id="example_wrapper" class="dataTables_wrapper">
                                                     <div class="card-title text-center m-0 p-0 mb-2">
-                                                        <span class="font-weight-bold text-info" id="title_material_fb" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
+                                                        <span class="font-weight-bold text-info" id="title_Req" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
                                                     </div>
-                                                    <div class="input-group mb-2" style="width: 30%" id="cont_search_fib">
+                                                    <div class="input-group mb-2" style="width: 30%" id="cont_search_Req">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                                                         </div>
-                                                        <input type="text" id="SearchReqFib" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                                        <input type="text" id="SearchReq" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
                                                     </div>
                                                     <div class="card-block table-border-style border">
                                                         <div class="table-responsive">
                                                             <div class="table-responsive mt-3 mb-2">
-                                                                <table class="table table-lg-responsive table-hover" id="tblReqFibras" style="width: 100% !important;">
+                                                                <table class="table table-lg-responsive table-hover" id="tblDetalleReq" style="width: 100% !important;">
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -194,7 +153,6 @@
                             </div>
                             <!-- [ Tabla Categorias ] end -->
                         </div>
-
 
                     </div>
                 </div>

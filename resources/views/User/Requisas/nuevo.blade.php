@@ -118,7 +118,7 @@
                                                                 <option name="flexRadioDefault" id="Fibra" value="1">Fibra</option>
                                                                 <option name="flexRadioDefault" id="Quimico" value="2">Quimico</option>
                                                             </select>
-                                                            <small id="turnoHelp" class="form-text text-muted">Escriba la opción</small>
+                                                            <small id="turnoHelp" class="form-text text-muted">Seleccione la opción</small>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -11,6 +11,7 @@ use App\Models\Turno;
 use App\Models\usuario_rol;
 use Illuminate\Http\Request;
 use App\Models\Requisa;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -36,8 +37,8 @@ class RequisaController extends Controller
     public function index()
     {
         $requisas = $this->requisas->obtenerRequisas();
-      
-      
+
+
         return view('User.Requisas.index', compact('requisas'));
     }
 
@@ -189,42 +190,53 @@ class RequisaController extends Controller
 
     public function getDetalleReq($cod_requisa, $tipo)
     {
-        $Requisado = array();
-        $obj = DetalleRequisa::where('requisa_id', $cod_requisa)->get();
-        $i = 0;
-        if ($tipo == 1) { //Fibra
-            foreach ($obj as $detalleRequisa) {
-                $fibras = fibras::where('idFibra', $detalleRequisa['elemento_id'])->get();
-                foreach ($fibras as $f) {
-                    $Requisado[$i]['id'] =     $f['idFibra'];
-                    $Requisado[$i]['codigo'] =      $f['codigo'];
-                    $Requisado[$i]['descripcion'] = $f['descripcion'];
-                    $Requisado[$i]['unidad'] = $f['unidad'];
-                    $Requisado[$i]['cantidad'] =    "<input type='text' class='form-control'  id='cantidad' name='cantidad' value='".$detalleRequisa['cantidad']."'>" ;
-                    $i++;
-                }
-            }
-        } else {
-            foreach ($obj as $detalleRequisa) {
-                $quimicos = Quimicos::where('idQuimico', $detalleRequisa['elemento_id'])->get();
-                foreach ($quimicos as $q) {
-                    $Requisado[$i]['id'] =          $q['idQuimico'];
-                    $Requisado[$i]['codigo'] =      $q['codigo'];
-                    $Requisado[$i]['descripcion'] = $q['descripcion'];
-                    $Requisado[$i]['unidad'] =      $q['unidad'];
-                    $Requisado[$i]['cantidad'] =    $detalleRequisa['cantidad'];
-                    $i++;
-                }
-            }
-        }
-        //->where('tipo', $tipo)->get();
-        return response()->json($Requisado);
+        $obj = DetalleRequisa::getDetalleReq($cod_requisa, $tipo);
+        return response()->json($obj);
     }
 
     public function getRequisas()
     {
         $requisas = $this->requisas->obtenerRequisas();
-    
+
         return response()->json($requisas);
+    }
+
+    public function updateRequisa(Request $request)
+    {
+        
+        $numOrden   =   $request->input('numOrden');
+        $codigo_req =   $request->input('codigo_req');
+        $jefe_turno =   $request->input('jefe_turno');
+        $turno      =   $request->input('turno');
+        $id_req     =   $request->input('id_req');
+        $tipo       =   $request->input('tipo');
+
+        try {
+           
+            $requisa_ = requisa::where('id', $id_req)
+                ->update([
+                    'jefe_turno' =>  $jefe_turno,
+                    'turno' => $turno,
+
+                ]);
+
+            $data = $request->input('arrayDR');
+            foreach ($data as $dataDR) {
+                $id_DR = $dataDR["id"];
+                $cantidad =  $dataDR["cantidad"];
+                $codigo_req =  $dataDR["requisa_id"];
+                $elemento_id =  $dataDR["elemento_id"];                //actualizar detalles de la requisa
+                DB::select('call inn_requisas_update("' .   $numOrden . '", "' . $id_DR  . '",
+                "' . $codigo_req . '","' .  $tipo  . '","' .  $elemento_id  . '","' .  $cantidad  . '")');
+            };
+
+            return response()->json($requisa_);
+            
+        } catch (Exception $e) {
+
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
+        //  DB::select('call inn_requisas_update()');
+        // return "llego hasta aqui";
     }
 }
