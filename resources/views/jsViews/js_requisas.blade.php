@@ -368,10 +368,8 @@
 
     $('#btnActualizar').on('click', function(e) {
 
-        // $('#frmRequisas').preventDefault();
         var arrayDRFormat = [];
         var data = tblDetalleReq.$('input').serializeArray();
-        console.log(data);// e.preventDefault();
         let numOrden, cod_req, jefe_turno, turno, cantidad, i = 0,
             row, id, tipo_requisa, tipo, elemento_id, id_req;
 
@@ -384,13 +382,7 @@
         turno = $('#id_turno').val();
         tipo_requisa = $('#tipo_requisa').val();
         id_req = $('#id_req').val();
-
-       
-        if (tipo_requisa == 1) {
-            tipo = 'Fibra';
-        } else {
-            tipo = 'Quimico';
-        }
+        
         console.log(tipo_requisa);
         $.each(data, function(ind, elem) {
             tblDetalleReq.rows().eq(0).each(function(index) {
@@ -400,10 +392,7 @@
                 cantidad = data['cantidad'];
                 elemento_id = data['elemento_id'];
 
-                if (elem.name == id) {
-                    console.log('index:  ' + ind + '  id ' + id + ' == ' + '  id_requisa: ' + elem.name +
-                        ' tipo ' + tipo + ' elemento_id ' + elemento_id + ' cantidad ' + elem.value);
-
+                if (elem.name == id) {                  
                     dataDR[i] = {
                         id: id,
                         requisa_id: cod_req,
@@ -431,7 +420,7 @@
                 arrayDR: dataDR,
             },
             success: function(data) {
-                alert(data);
+                mensaje(data.responseText, 'success');
                 // 
             },
             error: function(data) {
