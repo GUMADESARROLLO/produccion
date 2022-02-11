@@ -91,7 +91,7 @@
                                                         <div class="col-sm-12">
                                                             <select class="form-control" name="jefe_turno" id="jefe_turno">
                                                                 @foreach($jefe as $j)
-                                                                    <option value="{{$j->id }}">{{$j->nombres}} </option>
+                                                                <option value="{{$j->id }}">{{$j->nombres}} </option>
                                                                 @endforeach
                                                             </select>
                                                             <small id="jefe_turnonHelp" class="form-text text-muted">Escriba
@@ -129,68 +129,70 @@
                                             </div>
                                         </form>
 
-                                        <!-- TABLA DE QUIMICOS -->
-                                        <div class="mt-1 d-flex justify-content-center ">
-                                            <div class="card border  px-5 py-5" id="cont_quimico" style="width: 100% !important;">
-                                                <div id="example_wrapper" class="dataTables_wrapper">
-                                                    <div class="card-title text-center m-0 p-0 mb-2">
-                                                        <span class="font-weight-bold text-info" id="title_material" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
-                                                    </div>
-                                                    <div class="input-group mb-2" style="" id="cont_search">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                                                        </div>
-                                                        <input type="text" id="InputBuscar" class="form-control bg-white"
-                                                               placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                                    </div>
-                                                    <div class="card-block table-border-style border">
-                                                        <div class="table-responsive">
-                                                            <div class="table-responsive mt-3 mb-2">
-                                                                <table class="table  table-lg-responsive table-hover" id="tblQuimicos" style="width: 100% !important;">
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END TABLA -->
-                                        <!-- TABLA DE FIBRAS -->
-                                        <div class="mt-1  d-flex justify-content-center ">
-                                            <div class="card border  px-5 py-5 " id="cont_fibra" style="width: 100% !important;">
-                                                <div id="example_wrapper" class="dataTables_wrapper">
-                                                    <div class="card-title text-center m-0 p-0 mb-2">
-                                                        <span class="font-weight-bold text-info" id="title_material_fb" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
-                                                    </div>
-                                                    <div class="input-group mb-2" style="width: 30%" id="cont_search_fib">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                                                        </div>
-                                                        <input type="text" id="InputBuscarFibras" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                                    </div>
-                                                    <div class="card-block table-border-style border">
-                                                        <div class="table-responsive">
-                                                            <div class="table-responsive mt-3 mb-2">
-                                                                <table class="table table-lg-responsive table-hover" id="tblFibras" style="width: 100% !important;">
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- END TABLA -->
-                                        </div>
-                                        <!-- END TABLA -->
                                     </div>
                                 </div>
+
+                                
+                                <!-- TABLA DE QUIMICOS -->
+                                <div class="mt-1 d-flex justify-content-center ">
+                                    <div class="card border  px-5 py-5" id="cont_quimico" style="width: 100% !important;">
+                                        <div id="example_wrapper" class="dataTables_wrapper">
+                                            <div class="card-title text-center m-0 p-0 mb-2">
+                                                <span class="font-weight-bold text-info" id="title_material" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
+                                            </div>
+                                            <div class="input-group mb-2" style="width: 30%" id="cont_search">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                                </div>
+                                                <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="card-block table-border-style border">
+                                                <div class="table-responsive">
+                                                    <div class="table-responsive mt-3 mb-2">
+                                                        <table class="table  table-lg-responsive table-hover" id="tblQuimicos" style="width: 100% !important;">
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END TABLA -->
+                                <!-- TABLA DE FIBRAS -->
+                                <div class="mt-1  d-flex justify-content-center ">
+                                    <div class="card border  px-5 py-5 " id="cont_fibra" style="width: 100% !important;">
+                                        <div id="example_wrapper" class="dataTables_wrapper">
+                                            <div class="card-title text-center m-0 p-0 mb-2">
+                                                <span class="font-weight-bold text-info" id="title_material_fb" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
+                                            </div>
+                                            <div class="input-group mb-2" style="width: 30%" id="cont_search_fib">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                                </div>
+                                                <input type="text" id="InputBuscarFibras" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="card-block table-border-style border">
+                                                <div class="table-responsive">
+                                                    <div class="table-responsive mt-3 mb-2">
+                                                        <table class="table table-lg-responsive table-hover" id="tblFibras" style="width: 100% !important;">
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END TABLA -->
+                                </div>
+                                <!-- END TABLA -->
                             </div>
-                            <!-- [ Tabla Categorias ] end -->
                         </div>
                     </div>
+                    <!-- [ Tabla Categorias ] end -->
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- [ Main Content ] end -->
 @endsection

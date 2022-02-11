@@ -13,8 +13,21 @@ class Requisa extends Model
 
     public function obtenerRequisas()
     {
+        $i = 0;
+        $data = array();
         //return Requisa::all();
-        return Requisa::select(['id', 'numOrden', 'codigo_req', 'turno', 'created_at'])->get();
+        $Requisa = Requisa::select(['id', 'numOrden', 'codigo_req', 'turno', 'created_at'])->get();
+        foreach($Requisa as $rq){
+            $data[$i]['id'] =  $rq['id'];
+            $data[$i]['numOrden'] =  $rq['numOrden'];
+            $data[$i]['codigo_req'] =  $rq['codigo_req'];
+            $data[$i]['turno'] = $rq['turno'] == 1? "Dia" : "Noche";          
+            $data[$i]['created_at'] =  date("Y-m-d H:i:s", strtotime($rq['created_at'])) ;   
+            $data[$i]['acciones'] =  '<a href="requisas/'.$rq['id'].'/edit"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>' .
+                                        '<a href="#!" onclick="deleteTurno()"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>';
+            $i++;
+        }
+        return $data;
     }
 
     public function obtenerRequisaPorId($id)
@@ -44,4 +57,9 @@ class Requisa extends Model
         return $this->belongsToMany('App\Models\Quimico', 'detalle_requisas', 'requisa_id', 'elemento_id')
                     ->withPivot('cantidad', 'estado')->withTimestamps();
     }
+
+    public function updateRequisa(){
+        return $this->belongsToMany('App\Models\fibras', 'DetalleRequisa', 'elemento_id', 'idFibra');
+    }
+
 }

@@ -1,7 +1,7 @@
 <script type="text/javascript">
     /** OCULTAR TABLAS */
-    var dtQuimicos;
-    var dtFibras;
+    let dtQuimicos;
+    let dtFibras;
 
     $('#cont_quimico').hide();
     $('#cont_fibra').hide();
@@ -144,7 +144,7 @@
             "columnDefs": [{
                 "className": "dt-center",
                 "targets": [2, 3]
-            }, ],
+            }],
         });
 
         $("#tblFibras_filter").hide();
@@ -156,148 +156,152 @@
         });
     }
 
-    $(document).on('click', '#btnGuardarDR', function(e) {
-        e.preventDefault();
-        $("#formdatareq").submit();
-
-
-       //let id_requisa = $('#codigo_req').val();
+    $(document).on('click', '#btnGuardarDR', function() {
         let id_requisa = $('#codigo_req').val();
         let numOrden = $('#numOrden').val();
-        let jefe_turno = $('#jefe_turno').val();
-       let id_turno = $('#id_turno').val();
-       let id_tipo = $('#id_tipo').val();
-       let arrayRequisa = [];
-      // let arrayDRequisa = [];
-       arrayRequisa[0]={
-           id_requisa: id_requisa,
-           numOrden: numOrden,
-           jefe_turno: jefe_turno,
-           id_turno: id_turno,
-           id_tipo: id_tipo
-       }
+        //  console.log($(dtFibras).DataTable().rows( { filter : 'applied'} ).nodes());
 
+        //Recorrer data table
+        dtFibras.rows().eq(0).each(function(index) {
+            var rowf = dtFibras.row(index);
+            var dataf = rowf.data();
+            //var posf = dataf['cantidad'];
+            console.log(dataf);
+            // var idf = posf;
+        });
+
+        let arrayRequisa = [];
         let i = 0;
-        //let typeOfReq = $('input:radio[name="flexRadioDefault"]');
-        let arrayDRequisa = [];
-        //let id_tipo = $('#id_tipo').val();
-        console.log(id_tipo);
-        alert(typeof(id_tipo));
+        let typeOfReq = $('input:radio[name="flexRadioDefault"]');
 
-        if (id_tipo == 1)
-        {
-            $("#tblFibras tbody tr").each(function() {
-                let cantidad = $(this).closest("tr").find('input[name="cantidad"]').val();
-                let elemento_id = $(this).closest("tr").find('td:eq(0)').text();
-                console.log('This is the table fibra');
-                console.log(cantidad);
-                e.preventDefault();
-                //let type = 1;
-                if (cantidad !== "undefined" && cantidad !== "")
-                {
-                    arrayDRequisa[i] = {
-                        numOrden: numOrden,
-                        requisa_id: id_requisa,
-                        elemento_id: elemento_id,
-                        cantidad: cantidad,
-                        tipo: id_tipo
-                    };
-                    i++;
-                } else
-                    {
+        if (typeOfReq.is(':checked')) {
+            let tipo = $('input:radio[name=flexRadioDefault]:checked').val();
+            // if (typeOfReq.val() == 1) {
+            console.log(tipo);
+            if (tipo == 1) {
+                $("#tblFibras tbody tr").each(function() {
+                    let cantidad = $(this).closest("tr").find('input[name="cantidad"]').val();
+                    let elemento_id = $(this).closest("tr").find('td:eq(0)').text();
+
+                    console.log('This is the table fibra');
+                    //let type = 1;
+                    if (cantidad != "undefined" && cantidad != "") {
+                        arrayRequisa[i] = {
+                            numOrden: numOrden,
+                            requisa_id: id_requisa,
+                            elemento_id: elemento_id,
+                            cantidad: cantidad,
+                            tipo: tipo
+                        };
+                        i++;
+                    } else {
                         mensaje("Por favor Ingrese la cantidad requisada", 'error');
                     }
-            });
-            //console.log(arrayDRequisa);
-           alert(arrayDRequisa);
-           alert(arrayRequisa);
-
-            if (arrayDRequisa.length > 0)
-            {
-                $.ajax({
-                    url: "../../guardarDetalleReq",
-                    data: {
-                        dataDR: arrayDRequisa,
-                        dataR: arrayRequisa
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(response) {
-                        mensaje(response, 'success')
-                    },
-                    error: function(response) {
-                        mensaje(response, 'error');
-                    }
-                }).done(function(data) {
-                    // location.reload();
                 });
-                //console.log('El arreglo esta vacio :(');
-            } else
-                {
+                console.log(arrayRequisa);
+                if (arrayRequisa.length > 0) {
+                    $.ajax({
+                        url: "../../guardarDetalleReq",
+                        data: {
+                            data: arrayRequisa,
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            mensaje(response, 'success')
+                        },
+                        error: function(response) {
+                            mensaje(response, 'error');
+                        }
+                    }).done(function(data) {
+                        // location.reload();
+                    });
+                    //console.log('El arreglo esta vacio :(');
+                } else {
                     return mensaje('No existen datos en la requisa:(', 'error');
                 }
-        }
-        else {
-            $("#tblQuimicos tbody tr").each(function() {
-                console.log('This is the table Quimico');
-
-                let cantidad = $(this).closest("tr").find('input[name="cantidad"]').val();
-                let elemento_id = $(this).closest("tr").find('td:eq(0)').text();
-                alert(cantidad);
-                //let type = 1;
-                if (cantidad !== "undefined" && cantidad !== "") {
-                    //  console.log(idFibra);
-                    //  console.log(cantidad);
-                    arrayDRequisa[i] = {
-                        requisa_id: id_requisa,
-                        elemento_id: elemento_id,
-                        cantidad: cantidad,
-                    };
-                    i++;
-                } else {
-                    mensaje("Por favor Ingrese la cantidad requisada", 'error');
-                }
-            });
-
-            //console.log(arrayDRequisa);
-
-            if (arrayDRequisa.length > 0) {
-                $.ajax({
-                    url: "../../guardarDetalleReq",
-                    data: {
-                        dataDR: arrayDRequisa,
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(response) {
-                        mensaje('Los datos han sido ingresados correctamente', 'success');
-                    },
-                    error: function(response) {
-                        mensaje('Ha ocurrido un error intentelo nuevamente', 'error');
-                    }
-                }).done(function(data) {
-
-                });
-                //console.log('El arreglo esta vacio :(');
             } else {
-                return mensaje('No existen datos en la requisa:(', 'error');
+                $("#tblQuimicos tbody tr").each(function() {
+                    console.log('This is the table Quimico');
+
+                    let cantidad = $(this).closest("tr").find('input[name="cantidad"]').val();
+                    let elemento_id = $(this).closest("tr").find('td:eq(0)').text();
+
+                    //let type = 1;
+
+
+                    if (cantidad != "undefined" && cantidad != "") {
+                        //  console.log(idFibra);   
+                        //  console.log(cantidad);
+                        arrayRequisa[i] = {
+                            numOrden: numOrden,
+                            requisa_id: id_requisa,
+                            elemento_id: elemento_id,
+                            cantidad: cantidad,
+                            tipo: tipo
+                        };
+                        i++;
+                    } else {
+                        mensaje("Por favor Ingrese la cantidad requisada", 'error');
+                    }
+                });
+
+
+
+                console.log(arrayRequisa);
+
+                if (arrayRequisa.length > 0) {
+                    $.ajax({
+                        url: "../../guardarDetalleReq",
+                        data: {
+                            data: arrayRequisa,
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            mensaje('Los datos han sido ingresados correctamente', 'success');
+                        },
+                        error: function(response) {
+                            mensaje('Ha ocurrido un error intentelo nuevamente', 'error');
+                        }
+                    }).done(function(data) {
+                        // location.reload();
+                    });
+                    //console.log('El arreglo esta vacio :(');
+                } else {
+                    return mensaje('No existen datos en la requisa:(', 'error');
+                }
             }
+
+
+
+        } else {
+            mensaje("No ha seleccionado el tipo de requisa");
         }
+
+
     });
 
-    //Actualizar los datos del detalle de las requisas
+    //Actualizar los datos del detalle de las requisas 
 
-    var dtReqQuimicos;
-    var dtReqFibras;
+    let tblDetalleReq, cod_requisa, numOrden, tipo_requisa;
 
-    //CARGAR TABLAS DE LOS DETALLES DE REQUISAS
-    dtReqFibras = $("#tblReqFibras").DataTable({
+    cod_requisa = $('#codigo_req').val();
+    numOrden = $('#numOrden').val();
+    tipo_requisa = $('select[name="tipo_requisa"]').val();
+    if (tipo_requisa == 1) {
+        $('#title_Req').text("Lista de fibras");
+    } else {
+        $('#title_Req').text("Lista de Quimicos");
+    }
+    //CARGAR DETALLE DE LAS REQUISAS
+    tblDetalleReq = $("#tblDetalleReq").DataTable({
         responsive: true,
         "destroy": true,
 
         // "autoWidth": false,
         "ajax": {
-            "url": "../../getFibreReq",
+            "url": "../../getDetalleReq/" + cod_requisa + '/' + tipo_requisa,
             'dataSrc': '',
         },
         "info": false,
@@ -319,8 +323,12 @@
         },
 
         "columns": [{
+                "title": "id",
+                "data": "id"
+            },
+            {
                 "title": "N°",
-                "data": "idFibra"
+                "data": "numero"
             },
             {
                 "title": "CODIDO",
@@ -336,20 +344,91 @@
             },
             {
                 "title": "CANTIDAD",
-                "defaultContent": "<input type='text' class='form-control'  id='cantidad' name='cantidad'>"
+                "data": "cantidad"
             },
         ],
         "columnDefs": [{
             "className": "dt-center",
             "targets": [2, 3]
-        }, ],
+        }, {
+            "targets": [0],
+            "visible": false,
+            "searchable": true
+        }],
     });
 
-    $("#tblReqFibras_filter").hide();
-    $("#tblReqFibras_length").hide();
-    $('#SearchReqFib').on('keyup', function() {
-        var table = $('#tblReqFibras').DataTable();
+    $("#tblDetalleReq_filter").hide();
+    $("#tblDetalleReq_length").hide();
+    $('#SearchReq').on('keyup', function() {
+        var table = $('#tblDetalleReq').DataTable();
         table.search(this.value).draw();
     });
 
+    //ACTUALIZAR DETALLES DE LAS REQUISAS
+
+    $('#btnActualizar').on('click', function(e) {
+
+        var arrayDRFormat = [];
+        var data = tblDetalleReq.$('input').serializeArray();
+        let numOrden, cod_req, jefe_turno, turno, cantidad, i = 0,
+            row, id, tipo_requisa, tipo, elemento_id, id_req;
+
+        let dataDR = [],
+        dataR = [];
+
+        numOrden = $('#numOrden').val();
+        cod_req = $('#codigo_req').val();
+        jefe_turno = $('#jefe_turno').val();
+        turno = $('#id_turno').val();
+        tipo_requisa = $('#tipo_requisa').val();
+        id_req = $('#id_req').val();
+        
+        console.log(tipo_requisa);
+        $.each(data, function(ind, elem) {
+            tblDetalleReq.rows().eq(0).each(function(index) {
+                row = tblDetalleReq.row(index);
+                data = row.data();
+                id = data['id'];
+                cantidad = data['cantidad'];
+                elemento_id = data['elemento_id'];
+
+                if (elem.name == id) {                  
+                    dataDR[i] = {
+                        id: id,
+                        requisa_id: cod_req,
+                        elemento_id: elemento_id,
+                        cantidad: elem.value
+                    }
+                    i++;
+                }
+
+            });
+        });
+        //alert(tipo);
+        //     alert(dataDR[0]['id']);
+        $.ajax({
+            url: "../../updateRequisas",
+            type: 'post',
+            dataType: "json",
+            data: {
+                numOrden: numOrden,
+                codigo_req: cod_req,
+                jefe_turno: jefe_turno,
+                turno: turno,
+                tipo: tipo_requisa,
+                id_req: id_req,
+                arrayDR: dataDR,
+            },
+            success: function(data) {
+                mensaje(data.responseText, 'success');
+                // 
+            },
+            error: function(data) {
+                //console.log('Fuck no funciono');
+            }
+        });
+      
+        e.preventDefault();
+
+    });
 </script>

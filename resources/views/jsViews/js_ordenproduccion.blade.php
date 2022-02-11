@@ -501,7 +501,7 @@
                 });
             },
             error: function(data) {
-                console.log('Fuck no funciono');
+
             }
         });
     });

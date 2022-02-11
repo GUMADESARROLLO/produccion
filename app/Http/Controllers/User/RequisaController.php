@@ -4,11 +4,14 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetalleRequisa;
+use App\Models\fibras;
 use App\Models\orden_produccion;
+use App\Models\Quimicos;
 use App\Models\Turno;
 use App\Models\usuario_rol;
 use Illuminate\Http\Request;
 use App\Models\Requisa;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +33,8 @@ class RequisaController extends Controller
     public function index()
     {
         $requisas = $this->requisas->obtenerRequisas();
+
+
         return view('User.Requisas.index', compact('requisas'));
     }
 
@@ -62,7 +67,9 @@ class RequisaController extends Controller
             'numOrden' => 'required',
             'codigo_req' => 'required',
             'jefe_turno' => 'required',
-            'id_turno' => 'required'
+            'id_turno' => 'required',
+            'flexRadioDefault' => 'required|in:1,2'
+
         ], $messages);
 
         $requisa_repetida = Requisa::where('numOrden', '=', $request['num_Orden'])->where('codigo_req', '=', $request['codigo_req'])->first();
@@ -97,7 +104,6 @@ class RequisaController extends Controller
         $requisa = $this->requisas->obtenerRequisaPorId($id);
         return view('User.Requisas.detalle', ['requisa' => $requisa]);
     }
-
 
     public function edit($id)
     {
@@ -141,6 +147,12 @@ class RequisaController extends Controller
             ->with('message-success', 'Se edito con exito :)');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
     public function destroy($id)
     {
@@ -157,21 +169,63 @@ class RequisaController extends Controller
         $obj = DetalleRequisa::guardarDetalleReq($request->input('dataDR'));
         return response()->json($obj);
     }
+
     public function actualizarDetalleReq(Request $request)
     {
         $obj = DetalleRequisa::actualizarDetalleReq($request->input('data'));
         return response()->json($obj);
     }
-    public function getFibreReq($codigo)
+
+
+    public function getDetalleReq($cod_requisa, $tipo)
     {
-        $obj = DetalleRequisa::where('requisa_id', $codigo)->get();
+        $obj = DetalleRequisa::getDetalleReq($cod_requisa, $tipo);
         return response()->json($obj);
     }
 
-    public function getQuimicoReq($codigo)
+    public function getRequisas()
     {
-        $obj = DetalleRequisa::where('requisa_id', $codigo)->get();
-        return response()->json($obj);
+        $requisas = $this->requisas->obtenerRequisas();
+
+        return response()->json($requisas);
     }
 
+    public function updateRequisa(Request $request)
+    {
+        
+        $numOrden   =   $request->input('numOrden');
+        $codigo_req =   $request->input('codigo_req');
+        $jefe_turno =   $request->input('jefe_turno');
+        $turno      =   $request->input('turno');
+        $id_req     =   $request->input('id_req');
+        $tipo       =   $request->input('tipo');
+
+        try {
+            
+            $requisa_ = requisa::where('id', $id_req)
+                ->update([
+                    'jefe_turno' =>  $jefe_turno,
+                    'turno' => $turno,
+
+                ]);
+
+            $data = $request->input('arrayDR');
+            foreach ($data as $dataDR) {
+                $id_DR = $dataDR["id"];
+                $cantidad =  $dataDR["cantidad"];
+                $codigo_req =  $dataDR["requisa_id"];
+                $elemento_id =  $dataDR["elemento_id"];                //actualizar detalles de la requisa
+                DB::select('call inn_requisas_update("' .   $numOrden . '", "' . $id_DR  . '",
+                "' . $codigo_req . '","' .  $tipo  . '","' .  $elemento_id  . '","' .  $cantidad  . '")');
+            };
+
+            return response()->json($requisa_);
+            
+        } catch (Exception $e) {
+
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
+        //  DB::select('call inn_requisas_update()');
+        // return "llego hasta aqui";
+    }
 }

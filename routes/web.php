@@ -198,5 +198,12 @@ Route::post('/actualizarDetalleReq', 'User\RequisaController@actualizarDetalleRe
 Route::get('/getRequisaFibra', 'User\RequisaController@getRequisaFibra')->name('/getRequisaFibra');
 Route::get('/getRequisaQuimico', 'User\RequisaController@getRequisaQuimico')->name('/getRequisaQuimico');
 
+Route::get('/getDetalleReq/{codigo}/{tipo}', 'User\RequisaController@getDetalleReq')->name('/getDetalleReq/{codigo}/{tipo}');
+Route::get('/getRequisas', 'User\RequisaController@getRequisas')->name('/getRequisas');
+Route::post('/updateRequisas', 'User\RequisaController@updateRequisa')->name('/updateRequisas');
+
+
+
+
 
 Auth::routes();
