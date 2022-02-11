@@ -57,7 +57,7 @@ class DetalleRequisa extends Model
                     $Requisado[$i]['codigo'] =      $f['codigo'];
                     $Requisado[$i]['descripcion'] = $f['descripcion'];
                     $Requisado[$i]['unidad'] = $f['unidad'];
-                    $Requisado[$i]['cantidad'] =    "<input type='text' class='form-control'  id='cantidad-". $detalleRequisa['id'] ."' name='". $detalleRequisa['id'] ."' value='".$detalleRequisa['cantidad']."'>" ;
+                    $Requisado[$i]['cantidad'] =    "<input type='text' class='form-control' onkeypress='validarNum(event, this, true)' id='cantidad-". $detalleRequisa['id'] ."' name='". $detalleRequisa['id'] ."' value='".$detalleRequisa['cantidad']."'>" ;
                     $i++;
                 }
             }
@@ -71,7 +71,7 @@ class DetalleRequisa extends Model
                     $Requisado[$i]['codigo'] =      $q['codigo'];
                     $Requisado[$i]['descripcion'] = $q['descripcion'];
                     $Requisado[$i]['unidad'] =      $q['unidad'];
-                    $Requisado[$i]['cantidad'] =    "<input type='text' class='form-control'  id='cantidad-". $detalleRequisa['id'] ."' name='". $detalleRequisa['id'] ."' value='".$detalleRequisa['cantidad']."'>" ;
+                    $Requisado[$i]['cantidad'] =    "<input type='text' class='form-control' onkeypress='validarNum(event, this, true)'  id='cantidad-". $detalleRequisa['id'] ."' name='". $detalleRequisa['id'] ."' value='".$detalleRequisa['cantidad']."'>" ;
                     $i++;
                 }
             }

@@ -374,7 +374,7 @@
             row, id, tipo_requisa, tipo, elemento_id, id_req;
 
         let dataDR = [],
-        dataR = [];
+            dataR = [];
 
         numOrden = $('#numOrden').val();
         cod_req = $('#codigo_req').val();
@@ -382,7 +382,7 @@
         turno = $('#id_turno').val();
         tipo_requisa = $('#tipo_requisa').val();
         id_req = $('#id_req').val();
-        
+
         console.log(tipo_requisa);
         $.each(data, function(ind, elem) {
             tblDetalleReq.rows().eq(0).each(function(index) {
@@ -392,7 +392,7 @@
                 cantidad = data['cantidad'];
                 elemento_id = data['elemento_id'];
 
-                if (elem.name == id) {                  
+                if (elem.name == id) {
                     dataDR[i] = {
                         id: id,
                         requisa_id: cod_req,
@@ -427,8 +427,19 @@
                 //console.log('Fuck no funciono');
             }
         });
-      
+
         e.preventDefault();
 
     });
+    /********** funciones extras para validacion ***********/
+    function validarNum(event, element, _float) {
+        event = event || window.event;
+        var charCode = event.which || event.keyCode;
+        if (charCode == 8 || charCode == 13 || (_float ? (element.value.indexOf('.') == -1 ? charCode == 46 : false) : even.preventDefault()))
+            return true;
+        else if ((charCode < 48) || (charCode > 57))
+            return  event.preventDefault();
+        return true;
+    }
+
 </script>
