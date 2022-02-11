@@ -26,22 +26,14 @@ class RequisaController extends Controller
         $this->requisas = $requisas;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $requisas = $this->requisas->obtenerRequisas();
         return view('User.Requisas.index', compact('requisas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create($idOP)
     {
         $orden = orden_produccion::where('estado', 1)->where('numOrden', $idOP)->orderBy('idOrden', 'asc')->get();
@@ -56,20 +48,16 @@ class RequisaController extends Controller
         return view('User.Requisas.nuevo', compact(['orden', 'jefe', 'turno']));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+
         $orden = $request['num_Orden'];
         $messages = array(
             'required' => ':attribute es un campo requerido',
             'numeric' => 'El :attribute campo debe ser númerico',
         );
+
         $validator = Validator::make($request->all(), [
             'numOrden' => 'required',
             'codigo_req' => 'required',
@@ -77,29 +65,32 @@ class RequisaController extends Controller
             'id_turno' => 'required'
         ], $messages);
 
-        if ($validator->fails()) {
+        $requisa_repetida = Requisa::where('numOrden', '=', $request['num_Orden'])->where('codigo_req', '=', $request['codigo_req'])->first();
+
+        if ($validator->fails())
+        {
             return Redirect::back()->withErrors($validator)->withInput();
-        } else {
-            //dd($request);
-            $requisa = new Requisa();
-            $requisa->numOrden = $request->numOrden;
-            $requisa->codigo_req = $request->codigo_req;
-            $requisa->jefe_turno = $request->jefe_turno;
-            $requisa->turno = $request->id_turno;
-            $requisa->tipo = $request->tipo;
-            $requisa->estado = 1;
-            $requisa->save();
-            return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
         }
-        return  0;
+        if ($requisa_repetida)
+        {
+            return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es una requisa duplicada, por favor elija otra');
+        } else
+                {
+                    //dd($request);
+                    $requisa = new Requisa();
+                    $requisa->numOrden = $request->numOrden;
+                    $requisa->codigo_req = $request->codigo_req;
+                    $requisa->jefe_turno = $request->jefe_turno;
+                    $requisa->turno = $request->id_turno;
+                    $requisa->tipo = $request->tipo;
+                    $requisa->estado = 1;
+                    $requisa->save();
+                    //return redirect()->back()->with('message-success', 'Se creo la Requisa con exito :)');
+                    $data = Requisa::latest('id');
+                }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
@@ -107,12 +98,7 @@ class RequisaController extends Controller
         return view('User.Requisas.detalle', ['requisa' => $requisa]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $requisa = $this->requisas->obtenerRequisaPorId($id);
@@ -126,13 +112,7 @@ class RequisaController extends Controller
         return view('User.Requisas.editar', compact(['requisa', 'jefe', 'turno']));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
@@ -155,19 +135,13 @@ class RequisaController extends Controller
             ->update([
                 'jefe_turno' => $request->jefe_turno,
                 'turno' => $request->id_turno,
-
             ]);
 
         return redirect()->action(RequisaController::class, 'index')
             ->with('message-success', 'Se edito con exito :)');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //
@@ -175,21 +149,23 @@ class RequisaController extends Controller
 
     public function guardarDetalleReq(Request $request)
     {
+        //$requisa = $request->input('dataR');
+        //$requisa = $this->store($request->input('dataDR'));
+        //return response()->json($requisa);
+        // Guardar Requisa
 
-        $obj = DetalleRequisa::guardarDetalleReq($request->input('data'));
+        $obj = DetalleRequisa::guardarDetalleReq($request->input('dataDR'));
         return response()->json($obj);
     }
     public function actualizarDetalleReq(Request $request)
     {
-
         $obj = DetalleRequisa::actualizarDetalleReq($request->input('data'));
         return response()->json($obj);
     }
     public function getFibreReq($codigo)
     {
-        $detalle = DetalleRequisa::where('requisa_id', $codigo)->get();
+        $obj = DetalleRequisa::where('requisa_id', $codigo)->get();
         return response()->json($obj);
-
     }
 
     public function getQuimicoReq($codigo)

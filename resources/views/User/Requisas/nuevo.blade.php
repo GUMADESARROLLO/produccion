@@ -61,20 +61,15 @@
                                     </div>
                                     @endif
                                     <div class="card-body">
-                                        <form method="post" action="{{url('requisas')}}">
+                                        <form method="post" >
                                             {{ csrf_field() }}
-                                            <div class="d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-primary ml-5" id="btnGuardar_requisas">Guardar</button>
-                                            </div>
                                             <div class="row">
-                                                <div class="col-md-4">
-                                                    <!-- Nuevo estilo -->
+                                                <div class="col-xl-2" hidden>
                                                     <div class="form-group row">
-                                                        <label for="numOrden" class="col-sm-5 col-form-label">Numero de orden: </label>
                                                         <div class="col-sm-7">
                                                             <select class="form-control" name="numOrden" id="numOrden">
                                                                 @foreach($orden as $o)
-                                                                <option value="{{$o['numOrden'] }}">{{$o['numOrden']}} </option>
+                                                                    <option value="{{$o['numOrden'] }}">{{$o['numOrden']}} </option>
                                                                 @endforeach
                                                             </select>
                                                             <small id="numOrdenHelp" class="ml-2 form-text text-muted">Escriba
@@ -82,19 +77,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="codigo_req">Codigo</label>
-                                                        <input type="text" class="form-control" name="codigo_req" id="codigo_req" value="{{old('codigo_req')}}">
-                                                        <small id="codigo_reqHelp" class="form-text text-muted">Escriba
-                                                            el codigo de la nueva requisa</small>
+                                                <div class="col-xl-2">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" name="codigo_req" id="codigo_req" value="{{old('codigo_req')}}">
+                                                            <small id="codigo_reqHelp" class="form-text text-muted">Escriba
+                                                                el codigo de la nueva requisa</small>
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="jefe_turno">Jefe de Turno</label>
+                                                <div class="col-xl-3">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
                                                             <select class="form-control" name="jefe_turno" id="jefe_turno">
                                                                 @foreach($jefe as $j)
                                                                     <option value="{{$j->id }}">{{$j->nombres}} </option>
@@ -105,49 +99,36 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="id_turno">Turno</label>
+                                                <div class="col-xl-3">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
                                                             <select class="form-control" name="id_turno" id="id_turno">
                                                                 @foreach($turno as $t)
-                                                                    <option value="{{$t['id'] }}">{{$t['descripcion']}} </option>
+                                                                    <option value="{{$t['id'] }}">{{$t['turno']}} </option>
                                                                 @endforeach
                                                             </select>
                                                             <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
                                                         </div>
-
-                                                        </select>
-                                                        <small id="turnoHelp" class="form-text text-muted">Escriba el turno</small>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-4">
+                                                <div class="col-xl-2">
                                                     <div class="form-group row pr-0">
-                                                        <label for="turno" class="col-sm-4 pr-0">Tipo de requisa: </label>
-                                                        <div class="form-group col-sm-8 border rounded-sm py-2">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Fibra" value="1">
-                                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                                    Fibra
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Quimico" value="2">
-                                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                                    Quimicos
-                                                                </label>
-                                                            </div>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control" name="id_tipo" id="id_tipo">
+                                                                <option name="flexRadioDefault" id="Fibra" value="1">Fibra</option>
+                                                                <option name="flexRadioDefault" id="Quimico" value="2">Quimico</option>
+                                                            </select>
+                                                            <small id="turnoHelp" class="form-text text-muted">Escriba la opción</small>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-xl-2">
+                                                    <button class="btn btn-primary" id="btnGuardarDR"> Guardar</button>
+                                                </div>
                                             </div>
-                                            
                                         </form>
 
-                                        <div class="mt-1  d-flex justify-content-end ">
-                                            <button class="btn btn-primary" id="btnGuardarDR"> Guardar</button>
-                                        </div>
                                         <!-- TABLA DE QUIMICOS -->
                                         <div class="mt-1 d-flex justify-content-center ">
                                             <div class="card border  px-5 py-5" id="cont_quimico" style="width: 100% !important;">
@@ -155,11 +136,12 @@
                                                     <div class="card-title text-center m-0 p-0 mb-2">
                                                         <span class="font-weight-bold text-info" id="title_material" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
                                                     </div>
-                                                    <div class="input-group mb-2" style="width: 30%" id="cont_search">
+                                                    <div class="input-group mb-2" style="" id="cont_search">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                                                         </div>
-                                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                                        <input type="text" id="InputBuscar" class="form-control bg-white"
+                                                               placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
                                                     </div>
                                                     <div class="card-block table-border-style border">
                                                         <div class="table-responsive">

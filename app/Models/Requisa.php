@@ -24,13 +24,24 @@ class Requisa extends Model
         return $requisa;
     }
 
+    #Relaciones
+    //Una requisa pertenece a una orden de produccion
     public function orden()
     {
         return $this->belongsTo('App\Models\orden_produccion', 'numOrden', 'numOrden');
     }
 
-    public function requisasFibras(){
-        return $this->belongsToMany('App\Models\fibras', 'DetalleRequisa', 'elemento_id', 'idFibra');
+    // 1-Modelo a Relacionar, 2-Tabla Puente, 3-fk del modelo definido , 4-fk del modelo a relacionar
+
+    //Una requisa tiene muchas fibras, $data = Requisa::with('requisaF')->get();
+    public function requisaF(){
+        return $this->belongsToMany('App\Models\fibras', 'detalle_requisas', 'requisa_id', 'elemento_id')
+                    ->withPivot('cantidad', 'estado')->withTimestamps();
     }
 
+    //Una requisa tiene muchos quimicos
+    public function requisaQ(){
+        return $this->belongsToMany('App\Models\Quimico', 'detalle_requisas', 'requisa_id', 'elemento_id')
+                    ->withPivot('cantidad', 'estado')->withTimestamps();
+    }
 }
