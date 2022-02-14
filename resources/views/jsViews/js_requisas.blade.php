@@ -16,7 +16,7 @@
             $('#cont_fibra').hide();
             getFibra();
             $('#tblFibras > thead').addClass('bg-info text-white');
-        } else {
+        } else if (tipo_ == 2) {
             $('#title_material').text('LISTA DE QUIMICOS');
             $('#tblQuimicos').empty();
             $('#tblFibras').empty();
@@ -24,6 +24,9 @@
             $('#cont_fibra').hide();
             getQuimicos();
             $('#tblQuimicos > thead').addClass('bg-info text-white');
+        } else {
+            $('#cont_quimico').hide();
+            $('#cont_fibra').hide();
         }
     });
 
@@ -172,7 +175,7 @@
         if (id_tipo == 1) { //FIBRA
             data = dtFibras.$('input').serializeArray();
             $.each(data, function(ind, elem) {
-                dtFibras.rows().eq(0).each(function(index) {    
+                dtFibras.rows().eq(0).each(function(index) {
                     row = dtFibras.row(index);
                     dataf = row.data();
                     id = dataf['idFibra'];
@@ -220,7 +223,7 @@
             }
             e.preventDefault();
 
-        } else if(id_tipo == 2){ //TIPO 2 : QUIMICOS
+        } else if (id_tipo == 2) { //TIPO 2 : QUIMICOS
             data = dtQuimicos.$('input').serializeArray();
             $.each(data, function(ind, elem) {
                 dtQuimicos.rows().eq(0).each(function(index) {
@@ -269,8 +272,8 @@
                 mensaje('No existen datos en la requisa:(', 'error');
                 e.preventDefault();
             }
-        }else{
-            mensaje('Seleccione un tipo de Requisa','error');
+        } else {
+            mensaje('Seleccione un tipo de Requisa', 'error');
             return false;
         }
 
