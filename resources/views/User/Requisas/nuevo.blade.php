@@ -61,7 +61,7 @@
                                     </div>
                                     @endif
                                     <div class="card-body">
-                                        <form method="post" >
+                                        <form>
                                             {{ csrf_field() }}
                                             <div class="row">
                                                 <div class="col-xl-2" hidden>
@@ -115,6 +115,7 @@
                                                     <div class="form-group row pr-0">
                                                         <div class="col-sm-12">
                                                             <select class="form-control" name="id_tipo" id="id_tipo">
+                                                                <option name="flexRadioDefault">Seleccione un tipo</option>
                                                                 <option name="flexRadioDefault" id="Fibra" value="1">Fibra</option>
                                                                 <option name="flexRadioDefault" id="Quimico" value="2">Quimico</option>
                                                             </select>
