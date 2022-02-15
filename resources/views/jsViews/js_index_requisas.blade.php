@@ -10,7 +10,7 @@
             'dataSrc': '',
         },
         "info": false,
-
+        "order": [[ 0, "desc" ]],
         "pagingType": "full",
         "language": {
             "infoFiltered": "(Filtrado de _MAX_ total entradas)",

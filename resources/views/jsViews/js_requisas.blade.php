@@ -76,7 +76,7 @@
                     "title": "CANTIDAD",
                     "data": "idQuimico",
                     "render": function(data, type, row) {
-                        return '<input type="text" class="form-control"  name="' + data + '" id="cantidad">';
+                        return '<input type="text" class="form-control" onkeypress="validarNum(event, this, true)"  name="' + data + '" id="cantidad">';
                     }
                 },
             ],
@@ -145,7 +145,7 @@
                     "title": "CANTIDAD",
                     "data": "idFibra",
                     "render": function(data, type, row) {
-                        return '<input type="text" class="form-control"  name="' + data + '" id="cantidad">';
+                        return '<input type="text" class="form-control" onkeypress="validarNum(event, this, true)" name="' + data + '" id="cantidad">';
                     }
                 },
             ],
@@ -172,6 +172,11 @@
             id_turno = $('#id_turno').val(),
             id_tipo = $('#id_tipo').val();
         let dataDR = [];
+
+        if (id_requisa == '') {
+            mensaje('Por favor ingrese el codigo de la requisa', 'error');
+            return false;
+        };
         if (id_tipo == 1) { //FIBRA
             data = dtFibras.$('input').serializeArray();
             $.each(data, function(ind, elem) {
@@ -181,16 +186,21 @@
                     id = dataf['idFibra'];
                     nombre = dataf['descripcion'];
                     if (elem.name == id) {
-                        console.log('tipo:  ' + id_tipo + '  id:' + id + '  nombre ' + nombre + '  cantidad: ' + elem.value);
-                        if (elem.value > 0 || elem.value != '') {
-                            dataDR[i] = {
-                                numOrden: numOrden,
-                                requisa_id: id_requisa,
-                                elemento_id: id,
-                                cantidad: elem.value,
-                                tipo: id_tipo
+                        if (elem.value != '') {
+                            if (elem.value <= 0) {
+                                alert('La cantidad no puede ser 0');
+                                return false;
                             }
-                            i++;
+                            if (elem.value > 0) {
+                                dataDR[i] = {
+                                    numOrden: numOrden,
+                                    requisa_id: id_requisa,
+                                    elemento_id: id,
+                                    cantidad: elem.value,
+                                    tipo: id_tipo
+                                }
+                                i++;
+                            }
                         }
                     }
                 });
@@ -209,17 +219,18 @@
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        mensaje(response, 'success');
-                        e.preventDefault();
+                        if (response == 0) {
+                            mensaje('No se guardo con exito :(, es una requisa duplicada, por favor elija otra', 'warning');
+                        } else {
+                            mensaje(response, 'success');
+                        }
                     },
                     error: function(response) {
                         mensaje(response, 'error');
-                        e.preventDefault();
                     }
                 }).done(function(data) {});
             } else {
                 mensaje('No existen datos en la requisa:(', 'error');
-                e.preventDefault();
             }
             e.preventDefault();
 
@@ -232,8 +243,11 @@
                     id = dataf['idQuimico'];
                     nombre = dataf['descripcion'];
                     if (elem.name == id) {
-                        console.log('tipo:  ' + id_tipo + '  id:' + id + '  nombre ' + nombre + '  cantidad: ' + elem.value);
-                        if (elem.value > 0 || elem.value != '') {
+                        if (elem.value != '') {
+                            if (elem.value <= 0) {
+                                alert('La cantidad no puede ser 0');
+                                return false;
+                            }
                             dataDR[i] = {
                                 numOrden: numOrden,
                                 requisa_id: id_requisa,
@@ -260,18 +274,20 @@
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        mensaje(response, 'success');
-                        e.preventDefault();
+                        if (response == 0) {
+                            mensaje('No se guardo :(, es una requisa duplicada, por favor elija otra', 'warning');
+                        } else {
+                            mensaje(response, 'success');
+                        }
                     },
                     error: function(response) {
                         mensaje(response, 'error');
-                        e.preventDefault();
                     }
                 }).done(function(data) {});
             } else {
                 mensaje('No existen datos en la requisa:(', 'error');
-                e.preventDefault();
             }
+            e.preventDefault();
         } else {
             mensaje('Seleccione un tipo de Requisa', 'error');
             return false;
@@ -286,11 +302,8 @@
     cod_requisa = $('#codigo_req').val();
     numOrden = $('#numOrden').val();
     tipo_requisa = $('select[name="tipo_requisa"]').val();
-    if (tipo_requisa == 1) {
-        $('#title_Req').text("Lista de fibras");
-    } else {
-        $('#title_Req').text("Lista de Quimicos");
-    }
+    tipo_requisa == 1 ? $('#title_Req').text("Lista de fibras") : $('#title_Req').text("Lista de Quimicos");
+
     //CARGAR DETALLE DE LAS REQUISAS
     tblDetalleReq = $("#tblDetalleReq").DataTable({
         responsive: true,
