@@ -59,6 +59,7 @@
             dtQM.row('.selected').remove().draw(false);
         });
     });
+
     /****** Fibras - Añadir o remover filas ******/
     $('#dtMPD tbody').on('click', 'tr', function(e) {
         e.preventDefault();
@@ -304,8 +305,7 @@
         } else {
             return mensaje('Los datos en materia prima estan vacios :(', 'error');
         }
-
-        /********** Ajax de Quimicos ***********/
+        /********** Ajax de Fibras ***********/
     });
     /********** Guardar informacion de fibras ***********/
 
@@ -374,7 +374,7 @@
                     mensaje(response.responseText, 'error');
                 }
             }).done(function(data) {
-                location.reload();
+                //location.reload();
             });
         } else {
             //console.log('El arreglo esta vacio :(');
@@ -409,57 +409,46 @@
 
     function validarForm(e) {
         e.preventDefault();
-        var codigo = $('#numOrden').val();
-        var fecha1 = $("#fecha01").val();
-        var fecha2 = $("#fecha02").val();
-        var horaInicio = $("#hora01").val();
-        var horaFin = $("#hora02").val();
-        var horasT = $("#hrsTrabajadas").val();
-        var last_row = dtMPD.row(":last").data();
-        var last_rowq = dtQM.row(":last").data();
-
-        /*if (typeof (last_row) === "undefined") {
-            //e.preventDefault();
-            mensaje("Ingrese al menos un registro en la tabla de Materia Prima Directa", "error");
-            return false;
-
-        } else if (typeof (last_rowq) === "undefined") {
-            //e.preventDefault();
-            mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error");
-            return false;
-
-        } else */
+        let codigo = $('#numOrden').val();
+        let fecha1 = $("#fecha01").val();
+        let fecha2 = $("#fecha02").val();
+        let horaInicio = $("#hora01").val();
+        let horaFin = $("#hora02").val();
+        let horasT = $("#hrsTrabajadas").val();
 
         if (fecha1 === '') {
-            //e.preventDefault();
             mensaje("Debe ingresar una fecha inicial para la orden", "error");
             return false;
+        }
 
-        } else if (fecha2 === '') {
-            //e.preventDefault();
+        if (fecha2 === '') {
             mensaje("Debe ingresar una fecha final para la orden", "error");
             return false;
+        }
 
-        } else if (horaInicio === '') {
-            //e.preventDefault();
+        if (horaInicio === '') {
             mensaje("Debe ingresar una hora inicial para la orden", "error");
             return false;
+        }
 
-        } else if (horaFin === '') {
-            //e.preventDefault();
+        if (horaFin === '') {
             mensaje("Debe ingresar una hora final para la orden", "error");
             return false;
-        } else if (horasT === '') {
-            mensaje("Debe ingresar una horas trabajadas de la orden", "error");
+        }
+
+        if (horasT === '') {
+            mensaje("Debe ingresar las horas trabajadas de la orden", "error");
             return false;
-        } 
-        else if (codigo === '') {
-            //e.preventDefault();
+        }
+
+        if (codigo === '') {
             mensaje("Debe ingresar un numero de orden", "error");
             return false;
         }
+
         return true;
     }
+
     /*********** Cargar registros en datatable**************/
     $(window).on("load", function() {
         var numOrden = $('#numOrden').val();

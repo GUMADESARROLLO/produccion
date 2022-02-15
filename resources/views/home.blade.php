@@ -43,8 +43,14 @@
                                                         <td class="dt-center">{{ number_format(($d->prod_real/1000),2)}}</td>
                                                         <td class="dt-center">C$ {{ number_format($d->costo_total,2)}}</td>
                                                         <td class="dt-center">C$ {{ number_format($d->tipo_cambio,4)}}</td>
-                                                        <td class="dt-center">$ {{ number_format(($d->costo_total/$d->tipo_cambio),4)}}</td>
-                                                        <td class="dt-center">$ {{ number_format((($d->costo_total/$d->tipo_cambio)/($d->prod_real/1000)),4) }}</td>
+                                                        @if ($d->tipo_cambio == 0)
+                                                            <td class="dt-center">$ {{ number_format(0,4)}}</td>
+                                                            <td class="dt-center">$ {{ number_format(0,4)}}</td>
+                                                        @else
+                                                            <td class="dt-center">$ {{ number_format(($d->costo_total/$d->tipo_cambio),4)}}</td>
+                                                            <td class="dt-center">$ {{ number_format((($d->costo_total/$d->tipo_cambio)/($d->prod_real/1000)),4) }}</td>
+                                                        @endif
+
                                                         <td class="dt-center">
                                                             <a href="home/detalle/{{ $d->numOrden }}" target="_blank"><i class="feather icon-eye text-c  f-30 m-r-10"></i></a>
                                                             <a href="detalleOrdenPDF/{{$d->numOrden}}" target="_blank"><i class="far fa-file-pdf text-c-red f-30 m-r-10"></i></a>

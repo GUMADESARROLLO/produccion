@@ -161,7 +161,7 @@ class orden_produccionController extends Controller
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
-            
+
             $Tonelada_dia = 0;
 
             if ($produccion_total == 0 || $produccion_total == '') {
@@ -810,7 +810,7 @@ class orden_produccionController extends Controller
                 } else {
                     foreach ($request->input('data') as $key) {
                         array_push($arrayF_select, $key['fibra']);
-                        if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') { 
+                        if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
                                 $array[$i]['id'] = $key['id'];
                                 $array[$i]['numOrden'] = $key['orden'];
                                 $array[$i]['idMaquina'] = $key['maquina'];
@@ -818,7 +818,7 @@ class orden_produccionController extends Controller
                                 $array[$i]['cantidad'] = $key['cantidad'];
                                 $array[$i]['estado'] = 1;
                                 $i++;
-                            
+
                         }
                     }
                     if (count($array) >= 0) {
@@ -839,7 +839,7 @@ class orden_produccionController extends Controller
 
                             //return response()->json(count($arrayF_select2));
                             //return redirect()->back()->with('message-failed', 'No se guardo con exito :(, existe una materia prima repetida, por favor elija otra');
-                        }       
+                        }
                             foreach ($array as $dataMP) {
                                 $mpE = mp_directa::where([
                                     ['numOrden', '=', $numOrden],
@@ -868,7 +868,7 @@ class orden_produccionController extends Controller
                                 }
                             }
                             return response("El registro de fibras en la orden ha sido exitoso :)", 200);
-                        
+
                         /*mp_directa::where('numOrden', $numOrden)
                         ->update([
                             'estado' => 0
