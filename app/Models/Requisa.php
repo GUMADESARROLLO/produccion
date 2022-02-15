@@ -18,7 +18,7 @@ class Requisa extends Model
         //return Requisa::all();
         $Requisa = Requisa::select(['id', 'numOrden', 'codigo_req', 'turno', 'created_at'])->get();
         foreach($Requisa as $rq){
-            $data[$i]['id'] =  $rq['id'];
+            $data[$i]['id'] =  $i + 1;
             $data[$i]['numOrden'] =  $rq['numOrden'];
             $data[$i]['codigo_req'] =  $rq['codigo_req'];
             $data[$i]['turno'] = $rq['turno'] == 1? "Dia" : "Noche";          

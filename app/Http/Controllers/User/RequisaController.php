@@ -74,27 +74,24 @@ class RequisaController extends Controller
 
         $requisa_repetida = Requisa::where('numOrden', '=', $request['num_Orden'])->where('codigo_req', '=', $request['codigo_req'])->first();
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-        if ($requisa_repetida)
-        {
+        if ($requisa_repetida) {
             return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es una requisa duplicada, por favor elija otra');
-        } else
-                {
-                    //dd($request);
-                    $requisa = new Requisa();
-                    $requisa->numOrden = $request->numOrden;
-                    $requisa->codigo_req = $request->codigo_req;
-                    $requisa->jefe_turno = $request->jefe_turno;
-                    $requisa->turno = $request->id_turno;
-                    $requisa->tipo = $request->tipo;
-                    $requisa->estado = 1;
-                    $requisa->save();
-                    //return redirect()->back()->with('message-success', 'Se creo la Requisa con exito :)');
-                    $data = Requisa::latest('id');
-                }
+        } else {
+            //dd($request);
+            $requisa = new Requisa();
+            $requisa->numOrden = $request->numOrden;
+            $requisa->codigo_req = $request->codigo_req;
+            $requisa->jefe_turno = $request->jefe_turno;
+            $requisa->turno = $request->id_turno;
+            $requisa->tipo = $request->tipo;
+            $requisa->estado = 1;
+            $requisa->save();
+            //return redirect()->back()->with('message-success', 'Se creo la Requisa con exito :)');
+            $data = Requisa::latest('id');
+        }
     }
 
 
@@ -161,13 +158,38 @@ class RequisaController extends Controller
 
     public function guardarDetalleReq(Request $request)
     {
-        //$requisa = $request->input('dataR');
-        //$requisa = $this->store($request->input('dataDR'));
-        //return response()->json($requisa);
-        // Guardar Requisa
+        try {
+            DB::transaction(function () use ($request) {
+                $numOrden   =   $request->input('numOrden');
+                $codigo_req =   $request->input('codigo_req');
+                $jefe_turno =   $request->input('jefe_turno');
+                $id_turno      =   $request->input('id_turno');
+                $tipo       =   $request->input('tipo');
 
-        $obj = DetalleRequisa::guardarDetalleReq($request->input('dataDR'));
-        return response()->json($obj);
+                $requisa_repetida = Requisa::where('codigo_req', '=', $codigo_req)->first();
+                if ($requisa_repetida) {
+                    return response()->json(0); 
+                } else {
+                    //dd($request);
+                    $requisa = new Requisa();
+                    $requisa->numOrden =  $numOrden;
+                    $requisa->codigo_req = $codigo_req;
+                    $requisa->jefe_turno = $jefe_turno;
+                    $requisa->turno = $id_turno;
+                    $requisa->tipo = $tipo;
+                    $requisa->estado = 1;
+                    $requisa->save();
+                    //return redirect()->back()->with('message-success', 'Se creo la Requisa con exito :)');
+                    $obj = DetalleRequisa::guardarDetalleReq($request->input('dataDR'));
+
+                    return response()->json($obj);
+                }
+            });
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return response()->json($mensaje);
+        }
     }
 
     public function actualizarDetalleReq(Request $request)
@@ -192,40 +214,36 @@ class RequisaController extends Controller
 
     public function updateRequisa(Request $request)
     {
-        
-        $numOrden   =   $request->input('numOrden');
-        $codigo_req =   $request->input('codigo_req');
-        $jefe_turno =   $request->input('jefe_turno');
-        $turno      =   $request->input('turno');
-        $id_req     =   $request->input('id_req');
-        $tipo       =   $request->input('tipo');
-
         try {
-            
-            $requisa_ = requisa::where('id', $id_req)
-                ->update([
-                    'jefe_turno' =>  $jefe_turno,
-                    'turno' => $turno,
+            DB::transaction(function () use ($request) {
+                $numOrden   =   $request->input('numOrden');
+                $codigo_req =   $request->input('codigo_req');
+                $jefe_turno =   $request->input('jefe_turno');
+                $turno      =   $request->input('turno');
+                $id_req     =   $request->input('id_req');
+                $tipo       =   $request->input('tipo');
+                $data       =   $request->input('arrayDR');
 
-                ]);
+                $requisa_ = requisa::where('id', $id_req)
+                    ->update([
+                        'jefe_turno' =>  $jefe_turno,
+                        'turno' => $turno,
 
-            $data = $request->input('arrayDR');
-            foreach ($data as $dataDR) {
-                $id_DR = $dataDR["id"];
-                $cantidad =  $dataDR["cantidad"];
-                $codigo_req =  $dataDR["requisa_id"];
-                $elemento_id =  $dataDR["elemento_id"];                //actualizar detalles de la requisa
-                DB::select('call inn_requisas_update("' .   $numOrden . '", "' . $id_DR  . '",
-                "' . $codigo_req . '","' .  $tipo  . '","' .  $elemento_id  . '","' .  $cantidad  . '")');
-            };
+                    ]);
+                foreach ($data as $dataDR) {
+                    $id_DR = $dataDR["id"];
+                    $cantidad =  $dataDR["cantidad"];
+                    $codigo_req =  $dataDR["requisa_id"];
+                    $elemento_id =  $dataDR["elemento_id"];                //actualizar detalles de la requisa
+                    DB::select('call inn_requisas_update("' .   $numOrden . '", "' . $id_DR  . '",
+                    "' . $codigo_req . '","' .  $tipo  . '","' .  $elemento_id  . '","' .  $cantidad  . '")');
+                };
 
-            return response()->json($requisa_);
-            
+                return response()->json($requisa_);
+            });
         } catch (Exception $e) {
 
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
-        //  DB::select('call inn_requisas_update()');
-        // return "llego hasta aqui";
     }
 }
