@@ -28,8 +28,8 @@
                                     <h5 class="m-b-10">Fibras</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="javascript:">Fibras</a></li>
                                 </ul>
                             </div>
@@ -48,15 +48,16 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>Lista de Fibras</h5>
-                                    </div>  
+                                    </div>
                                     <div class="card-block table-border-style">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="dtFibras">
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th>ID</th>
+                                                        <th>#</th>
+                                                        <th>CODIGO</th>
                                                         <th>DESCRIPCIÓN</th>
-                                                        <th>ESTADO</th>
+                                                        <th>UNIDAD DE MEDIDA</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -64,14 +65,10 @@
                                                     @foreach ($fibras as $key => $f)
                                                     <tr class="unread">
                                                         <td class="dt-center">{{$f->idFibra}}</td>
-                                                        <td class="dt-left">{{ strtoupper($f->descripcion) }}</td>
-                                                        <td class="dt-center">
-                                                            @if ( $f->estado )
-                                                            <span class="badge badge-success">Activo</span>
-                                                            @else
-                                                            <span class="badge badge-danger">Inactivo</span>
-                                                            @endif
-                                                        </td>                                                        
+                                                        <td class="dt-center">{{ $f->codigo }}</td>
+                                                        <td class="dt-center">{{ strtoupper($f->descripcion) }}</td>
+                                                        <td class="dt-center">{{ strtoupper($f->unidad) }}</td>
+
                                                         <td class="dt-center">
                                                             <a href="#!" onclick="deleteFibra({{$f['idFibra']}})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
                                                             <a href="fibras/editar/{{ $f['idFibra'] }}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>

@@ -21,7 +21,7 @@
                 sPrevious: ' Anterior ',
                 sFirst: ' Primero ',
                 sLast: ' Ultimo ',
-            }, 
+            },
             "lengthMenu": "MOSTRAR _MENU_",
             "emptyTable": "NO HAY DATOS DISPONIBLES",
             "search": "BUSCAR"

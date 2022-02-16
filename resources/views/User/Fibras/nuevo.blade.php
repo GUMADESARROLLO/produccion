@@ -17,8 +17,8 @@
                                     <h5 class="m-b-10">Nueva Fibra</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/fibras')}}">Fibras</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Nueva</a></li>
                                 </ul>
@@ -55,18 +55,25 @@
                                         <form method="post" action="{{url('fibras/guardar')}}">
                                             {{ csrf_field() }}
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="codigo">Código de la Fibra</label>
                                                         <input type="text" class="form-control" name="codigo" id="codigo" value="{{old('codigo')}}">
                                                         <small id="descripcionHelp" class="form-text text-muted">Escriba el código de la nueva Fibra</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="descripcion">Nombre Fibra</label>
                                                         <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{old('descripcion')}}">
                                                         <small id="descripcionHelp" class="form-text text-muted">Escriba el nombre de la nueva Fibra</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="undmedida">Unidad de Medida</label>
+                                                        <input type="text" class="form-control" name="unidad" id="unidad" value="{{old('unidad')}}">
+                                                        <small id="undmedidaHelp" class="form-text text-muted">Escriba el nombre de la unidad de medida</small>
                                                     </div>
                                                 </div>
                                             </div>

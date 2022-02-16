@@ -110,10 +110,10 @@
                 "zeroRecords": "No hay coincidencias",
                 "loadingRecords": "Cargando datos...",
                 oPaginate: {
-                    sNext: '<i class="fas fa-angle-right fa-2x mx-2 text-info"></i>',
-                    sPrevious: '<i class="fas fa-angle-left fa-2x mx-2 text-info"></i>',
-                    sFirst: '<i class="fas fa-angle-double-left fa-2x mx-2 text-info"></i>',
-                    sLast: '<i class="fas fa-angle-double-right fa-2x mx-2 text-info"></i>',
+                    sNext: '   Siguiente    ',
+                    sPrevious: '   Anterior ',
+                    sFirst: '   Primero   ',
+                    sLast: '   Ultimo   ',
                 },
                 "lengthMenu": "MOSTRAR _MENU_",
                 "emptyTable": "NO HAY DATOS DISPONIBLES",
@@ -231,7 +231,7 @@
 
 
                     if (cantidad != "undefined" && cantidad != "") {
-                        //  console.log(idFibra);   
+                        //  console.log(idFibra);
                         //  console.log(cantidad);
                         arrayRequisa[i] = {
                             numOrden: numOrden,
@@ -282,7 +282,7 @@
 
     });
 
-    //Actualizar los datos del detalle de las requisas 
+    //Actualizar los datos del detalle de las requisas
 
     let tblDetalleReq, cod_requisa, numOrden, tipo_requisa;
 
@@ -421,7 +421,7 @@
             },
             success: function(data) {
                 mensaje(data.responseText, 'success');
-                // 
+                //
             },
             error: function(data) {
                 //console.log('Fuck no funciono');

@@ -9,7 +9,7 @@ use App\Models\Turno;
 use App\Models\maquinas;
 use App\Models\Admin\Rol;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
 
 class produccionController extends Controller {
 
@@ -39,6 +39,7 @@ class produccionController extends Controller {
         $productos = new productos();
         $productos->codigo  = $request->codigo;
         $productos->nombre  = $request->nombre;
+        $productos->descripcion  = $request->descripcion;
         $productos->estado  = 1;
         $productos->save();
 
@@ -57,6 +58,7 @@ class produccionController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'idProducto' => 'required',
+            'codigo' => 'required',
             'nombre' => 'required'
         ], $messages);
 
@@ -67,7 +69,8 @@ class produccionController extends Controller {
         productos::where('idProducto', $request->idProducto)
         ->update([
             'codigo'          => $request->codigo,
-            'nombre'          => $request->nombre
+            'nombre'          => $request->nombre,
+            'descripcion'          => $request->descripcion
         ]);
 
         return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
