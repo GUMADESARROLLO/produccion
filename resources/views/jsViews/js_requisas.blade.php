@@ -56,10 +56,7 @@
                 "search": "BUSCAR"
             },
 
-            "columns": [{
-                    "title": "N°",
-                    "data": "idQuimico"
-                },
+            "columns": [
                 {
                     "title": "CODIDO",
                     "data": "codigo"
@@ -124,10 +121,7 @@
                 "search": "BUSCAR"
             },
 
-            "columns": [{
-                    "title": "N°",
-                    "data": "idFibra"
-                },
+            "columns": [
                 {
                     "title": "CODIDO",
                     "data": "codigo"
@@ -172,7 +166,8 @@
             id_turno = $('#id_turno').val(),
             id_tipo = $('#id_tipo').val();
         let dataDR = [];
-
+        var base_url = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/';
+        var url_ = base_url + 'requisas';
         if (id_requisa == '') {
             mensaje('Por favor ingrese el codigo de la requisa', 'error');
             return false;
@@ -219,10 +214,13 @@
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        if (response == 0) {
+                        if(response){
                             mensaje('No se guardo con exito :(, es una requisa duplicada, por favor elija otra', 'warning');
-                        } else {
-                            mensaje(response, 'success');
+                        } else{
+                            mensaje('Datos guardados', 'success');
+                            setTimeout(function() {
+                                location.href = url_;
+                            }, 3000);
                         }
                     },
                     error: function(response) {
@@ -274,10 +272,13 @@
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        if (response == 0) {
-                            mensaje('No se guardo :(, es una requisa duplicada, por favor elija otra', 'warning');
-                        } else {
-                            mensaje(response, 'success');
+                        if(response){
+                            mensaje('No se guardo con exito :(, es una requisa duplicada, por favor elija otra', 'warning');
+                        } else{
+                            mensaje('Datos guardados', 'success');
+                            setTimeout(function() {
+                                location.href = url_;
+                            }, 3000);
                         }
                     },
                     error: function(response) {
@@ -332,14 +333,7 @@
             "search": "BUSCAR"
         },
 
-        "columns": [{
-                "title": "id",
-                "data": "id"
-            },
-            {
-                "title": "N°",
-                "data": "numero"
-            },
+        "columns": [
             {
                 "title": "CODIDO",
                 "data": "codigo"
@@ -403,6 +397,10 @@
                 elemento_id = data['elemento_id'];
 
                 if (elem.name == id) {
+                    if (elem.value <= 0) {
+                        alert('La cantidad no puede ser 0');
+                        return false;
+                    }
                     dataDR[i] = {
                         id: id,
                         requisa_id: cod_req,

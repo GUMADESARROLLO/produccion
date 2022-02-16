@@ -411,11 +411,8 @@ class reporteController extends Controller
         if ($request->isMethod('post')) {
             $array = array();
             foreach ($request->input('data') as $key) {
-
                 $hras_eftv_exist = horas_efectivas::where([['id', $key['id']], ['numOrden', $numOrden]])->get(); //->toArray();
-               // echo $hras_eftv_exist;
-                if (count($hras_eftv_exist) > 0) {
-
+                   if (count($hras_eftv_exist) > 0) {
                     $response = horas_efectivas::where('id', $key['id'])->update([
                         'numOrden'      => $key['orden'],
                         'fecha'         => date('Y-m-d', strtotime($key['dia'])),
@@ -427,6 +424,7 @@ class reporteController extends Controller
                         'updated_at'     => date('Y-m-d H:i:s')
                     ]);
                 } else {
+
                     $array[$i]['numOrden']      = $key['orden'];
                     $array[$i]['fecha']         = date('Y-m-d', strtotime($key['dia']));
                     $array[$i]['y1_dia']        = $key['y1M'];
@@ -437,10 +435,11 @@ class reporteController extends Controller
                     $array[$i]['created_at']     = date('Y-m-d H:i:s');
                     $i++;
                 }
-                $response = horas_efectivas::insert($array);
             }
-
-            return response()->json($response);
+            if(count($array)>0){
+                $response = horas_efectivas::insert($array);
+                return response()->json($response);
+            }
         }
     }
 

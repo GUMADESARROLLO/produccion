@@ -42,7 +42,7 @@
                                                     id="btnactualizar">Actualizar
                                             </button>
                                             <button class="btn btn-outline-primary btn-sm float-right"
-                                                    ><a href="{{url('requisas/create')}}"
+                                                    ><a href="{{Request::root(('requisas/create'))}}"
                                                     class="" id="btnrequisa">Solicitar Requisa</a>
                                             </button>
                                         </div>
