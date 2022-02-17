@@ -3,32 +3,37 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\productos;
-use App\Models\Turno;
-use App\Models\maquinas;
-use App\Models\Admin\Rol;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 
-class produccionController extends Controller {
+class produccionController extends Controller
+{
 
-    public function productos() {
-        $productos   = productos::where('estado', 1)->orderBy('idProducto', 'asc')->get();
+    public function productos()
+    {
+        $productos = productos::where('estado', 1)->orderBy('idProducto', 'asc')->get();
         return view('User.Productos.index', compact('productos'));
     }
 
-    public function nuevo() {
+    public function nuevo()
+    {
         return view('User.Productos.nuevo');
     }
 
-    public function guardarProducto(Request $request) {
+    public function guardarProducto(Request $request)
+    {
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => 'El :attribute es un campo requerido',
+            'unique' => 'El :attribute es un campo unico'
         );
 
         $validator = Validator::make($request->all(), [
-            'codigo' => 'required',
+            'codigo' => 'required|unique:productos',
             'nombre' => 'required',
         ], $messages);
 
@@ -37,29 +42,32 @@ class produccionController extends Controller {
         }
 
         $productos = new productos();
-        $productos->codigo  = $request->codigo;
-        $productos->nombre  = $request->nombre;
-        $productos->descripcion  = $request->descripcion;
-        $productos->estado  = 1;
+        $productos->codigo = $request->codigo;
+        $productos->nombre = $request->nombre;
+        $productos->descripcion = $request->descripcion;
+        $productos->unidad = $request->unidad;
+        $productos->estado = 1;
         $productos->save();
 
         return redirect()->back()->with('message-success', 'Se guardo con exito :)');
     }
 
-    public function editarProducto($idProducto) {
-        $producto  = productos::where('idProducto', $idProducto)->where('estado', 1)->get()->toArray();
+    public function editarProducto($idProducto)
+    {
+        $producto = productos::where('idProducto', $idProducto)->where('estado', 1)->get()->toArray();
         return view('User.Productos.editar', compact(['producto']));
     }
 
-    public function actualizarProducto(Request $request) {
+    public function actualizarProducto(Request $request)
+    {
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => ':attribute es un campo requerido'
         );
 
         $validator = Validator::make($request->all(), [
             'idProducto' => 'required',
             'codigo' => 'required',
-            'nombre' => 'required'
+            'nombre' => 'required',
         ], $messages);
 
         if ($validator->fails()) {
@@ -67,20 +75,22 @@ class produccionController extends Controller {
         }
 
         productos::where('idProducto', $request->idProducto)
-        ->update([
-            'codigo'          => $request->codigo,
-            'nombre'          => $request->nombre,
-            'descripcion'          => $request->descripcion
-        ]);
+            ->update([
+                'codigo' => $request->codigo,
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'unidad' => $request->unidad
+            ]);
 
         return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
     }
 
-    public function eliminarProducto($idProducto) {
+    public function eliminarProducto($idProducto)
+    {
         productos::where('idProducto', $idProducto)
-        ->update([
-            'estado' => 0
-        ]);
+            ->update([
+                'estado' => 0
+            ]);
 
         return (response()->json(true));
     }

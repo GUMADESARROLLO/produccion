@@ -67,7 +67,7 @@
                                                                     del Turno</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="codigo">Codigo del Producto</label>
                                                                 <input type="text" class="form-control text-uppercase"
@@ -77,7 +77,7 @@
                                                                     el nuevo codigo del producto</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="nombre">Nombre del Producto</label>
                                                                 <input type="text" class="form-control text-uppercase"
@@ -87,7 +87,7 @@
                                                                     el nuevo nombre del producto</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="descripcion">Descripcion del Producto</label>
                                                                 <input type="text" class="form-control text-uppercase"
@@ -95,6 +95,16 @@
                                                                        value="{{ $p['descripcion'] }}">
                                                                 <small id="descripcionHelp" class="form-text text-muted">Escriba
                                                                     la nueva descripcion del producto</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="unidad">Unidad de Medida del Producto</label>
+                                                                <input type="text" class="form-control text-uppercase"
+                                                                       name="unidad" id="unidad"
+                                                                       value="{{ $p['unidad'] }}">
+                                                                <small id="unidadHelp" class="form-text text-muted">Escriba
+                                                                    la nueva unidad del producto</small>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-  
+
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -17,8 +17,8 @@
                                     <h5 class="m-b-10">Editar Maquina</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/maquinas')}}">Maquinas</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Editar Maquina</a></li>
                                 </ul>
@@ -50,7 +50,7 @@
                                                 @endforeach
                                             </ul>
                                         </div>
-                                    @endif                                    
+                                    @endif
                                     <div class="card-block">
                                         <form method="post" action="{{url('maquina/actualizar')}}">
                                             {{ csrf_field() }}
@@ -58,7 +58,7 @@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="idMaquina">Id de la Maquina</label>
+                                                        <label for="idMaquina"># de Maquina</label>
                                                         <input type="text" readonly class="form-control" name="idMaquina" id="idMaquina" value="{{ $m['idMaquina'] }}">
                                                         <small id="idMaquinaHelp" class="form-text text-muted" >Id de la Maquina</small>
                                                     </div>

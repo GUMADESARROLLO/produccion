@@ -49,6 +49,7 @@
                                                         <th>CODIGO</th>
                                                         <th>NOMBRE</th>
                                                         <th>ESTADO</th>
+                                                        <th>U/M</th>
                                                         <th></th>
                                                     </tr>
                                                     </thead>
@@ -58,6 +59,7 @@
                                                             <td class="dt-center">{{ $key+1 }}</td>
                                                             <td class="dt-center">{{ $p->codigo }}</td>
                                                             <td class="dt-center">{{ strtoupper($p->nombre) }}</td>
+                                                            <td class="dt-center">{{ strtoupper($p->unidad) }}</td>
                                                             <td class="dt-center">
                                                                 @if ( $p->estado )
                                                                     <span class="badge badge-success">Activo</span>
