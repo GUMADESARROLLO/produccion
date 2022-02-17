@@ -207,25 +207,7 @@
         })
     });
 
-    /********** Guardar datos de orden de produccion ***********/
-    $(document).on('click', '#btnguardar', function(e) {
-        /*var table_qm = $('#dtQM').DataTable();
-        var form_data_qm  = table_qm.rows().data().toArray();
-        $.each( form_data_qm, function( key, item ) {
-            var id_txt = $(item[3]).attr('id')
-            var xd = $("#" + id_txt).val();
 
-            console.log(xd);
-        });*/
-        e.preventDefault();
-        //codigo = $('#numOrden').val();
-        if (validarForm(e) !== true) {
-            return false
-        } else {
-            $("#formdataord").submit();
-        }
-    });
-    /********** Guardar datos de orden de produccion ***********/
 
     /********** Guardar informacion de fibras ***********/
     $(document).on('click', '#btnGFibras', function(e) {
@@ -385,69 +367,11 @@
 
     /********** Guardar informacion de quimicos ***********/
 
-    /********** funciones extras para validacion ***********/
-    function soloNumeros(caracter, e, numeroVal) {
-        var numero = numeroVal;
-        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
-            e.preventDefault();
-            mensaje('No puedes iniciar con un punto', 'warning');
-        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
-            e.preventDefault();
-            mensaje('No puede haber mas de dos puntos', 'warning');
-        } else {
-            const soloNumeros = new RegExp("^[0-9]+$");
-            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
-                e.preventDefault();
-                mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
-            }
-        }
-    }
 
-    $('#hrsTrabajadas').on('keypress', function(e) {
-        soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
-    });
 
-    function validarForm(e) {
-        e.preventDefault();
-        let codigo = $('#numOrden').val();
-        let fecha1 = $("#fecha01").val();
-        let fecha2 = $("#fecha02").val();
-        let horaInicio = $("#hora01").val();
-        let horaFin = $("#hora02").val();
-        let horasT = $("#hrsTrabajadas").val();
 
-        if (fecha1 === '') {
-            mensaje("Debe ingresar una fecha inicial para la orden", "error");
-            return false;
-        }
 
-        if (fecha2 === '') {
-            mensaje("Debe ingresar una fecha final para la orden", "error");
-            return false;
-        }
 
-        if (horaInicio === '') {
-            mensaje("Debe ingresar una hora inicial para la orden", "error");
-            return false;
-        }
-
-        if (horaFin === '') {
-            mensaje("Debe ingresar una hora final para la orden", "error");
-            return false;
-        }
-
-        if (horasT === '') {
-            mensaje("Debe ingresar las horas trabajadas de la orden", "error");
-            return false;
-        }
-
-        if (codigo === '') {
-            mensaje("Debe ingresar un numero de orden", "error");
-            return false;
-        }
-
-        return true;
-    }
 
     /*********** Cargar registros en datatable**************/
     $(window).on("load", function() {

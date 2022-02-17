@@ -4,11 +4,24 @@
 <style>
     a {
         cursor: pointer;
-        color: rgb(49, 116, 199);
+        color: #5E5E5E;
         text-decoration: none;
     }
-</style>
 
+    .dataTables_paginate {
+        display: flex;
+        align-items: center;
+        padding-top: 20px;
+
+    }
+
+    .dataTables_paginate a {
+        padding: 0 10px;
+        /*border:1px solid #979797;*/
+        /* background: linear-gradient(to bottom, white 0%, #0F85FC 100%);*/
+        margin-inline: 5px;
+    }
+</style>
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -133,7 +146,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <!-- TABLA DE QUIMICOS -->
                                 <div class="mt-1 d-flex justify-content-center ">
                                     <div class="card border  px-5 py-5" id="cont_quimico" style="width: 100% !important;">
@@ -141,7 +154,7 @@
                                             <div class="card-title text-center m-0 p-0 mb-2">
                                                 <span class="font-weight-bold text-info" id="title_material" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
                                             </div>
-                                            <div class="input-group mb-2" style="width: 30%" id="cont_search">
+                                            <div class="input-group mb-2" style="width: 50%" id="cont_search">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                                                 </div>
@@ -166,7 +179,7 @@
                                             <div class="card-title text-center m-0 p-0 mb-2">
                                                 <span class="font-weight-bold text-info" id="title_material_fb" style="font-size: 1.5rem !important;font-weight: 1.5rem !important;"></span>
                                             </div>
-                                            <div class="input-group mb-2" style="width: 30%" id="cont_search_fib">
+                                            <div class="input-group mb-2" style="width: 50%" id="cont_search_fib">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                                                 </div>

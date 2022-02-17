@@ -32,7 +32,8 @@ class fibrasController extends Controller
 
         $validator = Validator::make($request->all(), [
             'descripcion' => 'required|max:100',
-            'codigo'        => 'required|max:20'
+            'codigo'        => 'required|max:20',
+            'unidad'        => 'required|max:20'
         ], $messages);
 
         if ($validator->fails()) {
@@ -42,22 +43,16 @@ class fibrasController extends Controller
         $fibras = new fibras();
         $fibras->descripcion = $request->descripcion;
         $fibras->codigo = $request->codigo;
-        $fibras->estado      = 1;
+        $fibras->unidad = $request->unidad;
+        $fibras->estado = 1;
         $fibras->save();
 
-        return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+        return redirect()->back()->with('message-success', 'Se guardo la fibra con exito :)');
     }
 
     public function editarFibras($idFibra) {
         $fibra  = fibras::where('idFibra', $idFibra)->where('estado', 1)->get()->toArray();
         return view('User.Fibras.editar', compact(['fibra']));
-    }
-
-    public function getFibras() {
-        $fibras = fibras::where('estado', 1)
-                    ->get();
-
-        return response()->json($fibras);
     }
 
     public function actualizarFibras(Request $request) {
@@ -69,7 +64,8 @@ class fibrasController extends Controller
         $validator = Validator::make($request->all(), [
             'idFibra' => 'required',
             'codigo' => 'required|max:20',
-            'nombre' => 'required|max:100'
+            'nombre' => 'required|max:100',
+            'unidad' => 'required|max:100'
         ], $messages);
 
         if ($validator->fails()) {
@@ -79,10 +75,11 @@ class fibrasController extends Controller
         fibras::where('idFibra', $request->idFibra)
         ->update([
             'codigo'               => $request->codigo,
-            'descripcion'          => $request->nombre
+            'descripcion'          => $request->nombre,
+            'unidad'               => $request->unidad
         ]);
 
-        return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
+        return redirect()->back()->with('message-success', 'Se actualizo la fibra con exito :)');
     }
 
     public function eliminarFibras($idFibra) {
@@ -92,5 +89,11 @@ class fibrasController extends Controller
         ]);
 
         return (response()->json(true));
+    }
+
+    public function getFibras() {
+        $fibras = fibras::where('estado', 1)->get();
+
+        return response()->json($fibras);
     }
 }

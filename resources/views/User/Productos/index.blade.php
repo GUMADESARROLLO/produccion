@@ -17,9 +17,9 @@
                                         <h5 class="m-b-10">Productos</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                         <li class="breadcrumb-item"><a href="javascript:">Productos</a></li>
                                     </ul>
                                 </div>
@@ -45,10 +45,9 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr class="text-center">
-                                                        <th>ID</th>
+                                                        <th>#</th>
                                                         <th>CODIGO</th>
                                                         <th>NOMBRE</th>
-                                                        <th>BODEGA</th>
                                                         <th>ESTADO</th>
                                                         <th></th>
                                                     </tr>

@@ -35,7 +35,8 @@ class QuimicoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'descripcion' => 'required|max:100',
-            'codigo'        => 'required|max:20'
+            'codigo'        => 'required|max:20',
+            'unidad'        => 'required|max:20'
         ], $messages);
 
         if ($validator->fails()) {
@@ -46,10 +47,11 @@ class QuimicoController extends Controller
         $quimico = new Quimicos();
         $quimico->codigo  = $request->codigo;
         $quimico->descripcion  = $request->descripcion;
+        $quimico->unidad  = $request->unidad;
         $quimico->estado  = 1;
         $quimico->save();
 
-        return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+        return redirect()->back()->with('message-success', 'Se guardo el quimico con exito :)');
     }
 
     public function editarQuimico($quimico)
@@ -70,7 +72,8 @@ class QuimicoController extends Controller
         $validator = Validator::make($request->all(), [
             'idQuimico' =>'required',
             'codigo' =>'required|max:20',
-            'descripcion' => 'required|max:100'
+            'descripcion' => 'required|max:100',
+            'unidad' => 'required|max:100'
         ], $messages);
 
         if ($validator->fails()) {
@@ -80,10 +83,11 @@ class QuimicoController extends Controller
         Quimicos::where('idQuimico', $request->idQuimico)
             ->update([
                 'codigo'               => $request->codigo,
-                'descripcion'          => $request->descripcion
+                'descripcion'          => $request->descripcion,
+                'unidad'               => $request->unidad
             ]);
 
-        return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
+        return redirect()->back()->with('message-success', 'Se actualizo el quimico con exito :)');
     }
 
     public function eliminarQuimico($idQuimico) {
@@ -96,10 +100,8 @@ class QuimicoController extends Controller
     }
 
     public function getQuimicos() {
-        $fibras = Quimicos::where('estado', 1)
-            ->get();
+        $fibras = Quimicos::where('estado', 1)->get();
 
         return response()->json($fibras);
     }
-    //
 }

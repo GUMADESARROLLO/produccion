@@ -26,7 +26,7 @@ Route::get('/configuracion', 'User\configuracionController@index')->name('config
 //Route::get('/turno', 'User\configuracionController@turno')->name('turno');
 Route::get('/fibras', 'User\fibrasController@index')->name('fibras');
 Route::get('/fibras/nueva-fibra', 'User\fibrasController@index')->name('fibras/nueva');
-Route::get('/productos', 'User\produccionController@productos')->name('inventario');
+Route::get('/productos', 'User\produccionController@productos')->name('productos');
 Route::get('/maquinas', 'User\maquinasController@index')->name('maquinas');
 Route::get('/maquina/nueva-maquina', 'User\maquinasController@nueva')->name('maquina/nueva');
 Route::get('/reporte', 'User\reporteController@index')->name('maquina/nueva');

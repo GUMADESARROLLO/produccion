@@ -17,8 +17,8 @@
                                     <h5 class="m-b-10">Editar Fibra</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/quimicos')}}">Quimicos</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Editar Quimico</a></li>
                                 </ul>
@@ -56,25 +56,32 @@
                                             {{ csrf_field() }}
                                             @foreach ($quimico ?? '' as $q)
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-3" hidden>
                                                     <div class="form-group">
                                                         <label for="idQuimico">ID del Químico</label>
                                                         <input type="text" readonly class="form-control" name="idQuimico" id="idQuimico" value="{{ $q['idQuimico']}}">
                                                         <small id="idFibraHelp" class="form-text text-muted">ID del quimico</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="codigo">Código del Químico</label>
                                                         <input type="text"  class="form-control" name="codigo" id="codigo" value="{{ $q['codigo']}}">
-                                                        <small id="idFibraHelp" class="form-text text-muted">Codigo del quimico</small>
+                                                        <small id="codigoHelp" class="form-text text-muted">Codigo del quimico</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="descripcion">Nombre del Químico</label>
                                                         <input type="text" class="form-control text-uppercase" name="descripcion" id="descripcion" value="{{$q['descripcion']}}">
                                                         <small id="nombreHelp" class="form-text text-muted">Escriba el nuevo nombre del químico</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="unidad">Unidad del Químico</label>
+                                                        <input type="text" class="form-control text-uppercase" name="unidad" id="unidad" value="{{$q['unidad']}}">
+                                                        <small id="unidadHelp" class="form-text text-muted">Escriba el nuevo nombre del químico</small>
                                                     </div>
                                                 </div>
                                             </div>

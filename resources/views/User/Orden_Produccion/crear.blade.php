@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('metodosjs')
 @include('jsViews.js_ordenproduccion')
+@include('jsViews.js_ordenProduccionC')
 
 @endsection
 @section('content')
@@ -38,10 +39,10 @@
                                     <div class="card-header">
                                         <h5>Nueva Orden</h5>
                                         <button class="btn btn-primary float-right" id="btnguardar">Guardar</button>
-                                        <!--<button class="btn btn-outline-primary btn-sm float-right"
+                                        <button class="btn btn-outline-primary btn-sm float-right"
                                                     id="btnrequisa"><a href="{{url('requisas/create')}}"
                                                     class="">Solicitar Requisa</a>
-                                            </button>-->
+                                            </button>
                                     </div>
                                     @if(session()->has('message-success'))
                                     <div class="alert alert-success">
@@ -67,7 +68,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="numOrden">Orden de Producción No.</label>
-                                                        <input type="text" class="form-control" name="numOrden" id="numOrden" value="{{ $idOrd['numOrden']}}">
+                                                        <input type="text" class="form-control" name="numOrden" id="numOrden" value="{{ old('numOrden')}}">
                                                         <small id="numordenHelp" class="form-text text-muted">Escriba
                                                             el No. de Orden de Producción</small>
                                                     </div>
@@ -146,8 +147,8 @@
                                     </div>
                                 </div>
 
-                                <div class="row mt-3">
-                                    <!-- [ Tabla De Fibras ] start -->
+                                <!--<div class="row mt-3">
+
                                     <div class="col-xl-12">
                                         <div class="card">
                                             <div class="card-header">
@@ -184,11 +185,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- [ Tabla De Fibras ] end -->
+
                                 </div>
 
                                 <div class="row mt-3">
-                                    <!-- [ Tabla Quimicos por Maquina ] start -->
+
                                     <div class="col-xl-12">
                                         <div class="card">
                                             <div class="card-header">
@@ -225,8 +226,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- [ Tabla Quimicos por Maquina ] end -->
-                                </div>
+
+                                </div>-->
                             </div>
                         </div>
                     </div>

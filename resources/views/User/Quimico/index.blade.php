@@ -19,11 +19,11 @@
                         <div class="row align-items-center">
                             <div class="col-md-10">
                                 <div class="page-header-title">
-                                    <h5 class="m-b-10">Costos</h5>
+                                    <h5 class="m-b-10">Quimicos</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="javascript:">Quimico</a></li>
                                 </ul>
                             </div>
@@ -48,10 +48,10 @@
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th>ID</th>
+                                                        <th>#</th>
                                                         <th>CÓDIGO</th>
                                                         <th>DESCRIPCIÓN</th>
-                                                        <th>ESTADO</th>
+                                                        <th>UNIDAD</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -61,13 +61,7 @@
                                                         <td class="dt-center">{{ $q->idQuimico}}</td>
                                                         <td class="dt-center">{{ $q->codigo }}</td>
                                                         <td class="dt-center">{{ $q->descripcion }}</td>
-                                                        <td class="dt-center">
-                                                            @if ( $q->estado )
-                                                            <span class="badge badge-success">Activo</span>
-                                                            @else
-                                                            <span class="badge badge-danger">Inactivo</span>
-                                                            @endif
-                                                        </td>
+                                                        <td class="dt-center">{{ $q->unidad }}</td>
                                                         <td class="dt-center">
                                                             <a href="#!" onclick="deleteQuimico({{$q['idQuimico']}})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
                                                             <a href="quimico/editar-quimico/{{$q['idQuimico']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>

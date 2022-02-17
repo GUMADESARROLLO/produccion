@@ -210,42 +210,10 @@ class orden_produccionController extends Controller
 
     public function crear()
     {
-        $idOrd = orden_produccion::latest('numOrden')->first();
-        $fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
-        $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
-        //$mp_directa = mp_directa::where('numOrden', intval($idOrd->numOrden + 1))->get();
         $productos = productos::where('estado', 1)->get()->toArray();
         $usuarios = usuario::usuarioByRole();
 
-        $mp_directa = mp_directa::select(
-            'mp_directa.*',
-            'fibras.descripcion',
-            'maquinas.nombre',
-            'fibras.idFibra',
-            'maquinas.idMaquina'
-        )
-            ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
-            ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
-            ->where('mp_directa.numOrden', intval($idOrd->numOrden))
-            ->get();
-
-        $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
-        $quimico_maquina = QuimicoMaquina::select(
-            'quimico_maquina.*',
-            'quimicos.descripcion',
-            'maquinas.nombre',
-            'quimicos.idQuimico',
-            'maquinas.idMaquina'
-        )
-            ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
-            ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
-            ->where('quimico_maquina.numOrden', intval($idOrd->numOrden))
-            ->get();
-
-        return view('User.Orden_Produccion.crear', compact([
-            'productos', 'usuarios',
-            'idOrd', 'fibras', 'maquinas', 'mp_directa', 'quimicos', 'quimico_maquina'
-        ]));
+        return view('User.Orden_Produccion.crear', compact([ 'productos', 'usuarios']));
     }
 
     public function guardar(Request $request)
@@ -254,7 +222,7 @@ class orden_produccionController extends Controller
 
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
-            'unique' => 'Ya existe una orden de trabajo para este turno'
+            'unique' => 'Ya existe una orden de trabajo con este codigo'
         );
 
         $validator = Validator::make($request->all(), [
@@ -324,17 +292,22 @@ class orden_produccionController extends Controller
         //return ["success" => "Data Inserted"];
         //return redirect()->route('orden-produccion');
         return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
+        //return response()->json($ordProd);
     }
 
     public function editar($idOP)
     {
-        $fibras = array();
+        /*$fibras = array();
         $quimicos = array();
-        $i = 0;
+        $i = 0;*/
+
         $usuarios = usuario::usuarioByRole();
         $orden = orden_produccion::where('numOrden', $idOP)->where('estado', 1)->get();
         $productos = productos::where('estado', 1)->get();
-        $fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
+
+        return view('User.Orden_Produccion.editar', compact(['orden','usuarios','productos']));
+
+        /*$fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
         $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
         $mp_directa = mp_directa::where('numOrden', $idOP)->get();
@@ -349,9 +322,9 @@ class orden_produccionController extends Controller
             ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
             ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
             ->where('quimico_maquina.numOrden', $idOP)
-            ->get();
+            ->get();*/
 
-        return view('User.Orden_Produccion.editar', compact(
+        /*return view('User.Orden_Produccion.editar', compact(
             'orden',
             'mp_directa',
             'usuarios',
@@ -360,7 +333,7 @@ class orden_produccionController extends Controller
             'maquinas',
             'quimicos',
             'quimico_maquina'
-        ));
+        ));*/
     }
 
     public function actualizar(Request $request)
