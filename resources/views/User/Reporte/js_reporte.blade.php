@@ -9,16 +9,17 @@
     var base_url = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/';
 
     $(document).ready(function() {
+        
         /********INICIALIZANDO LOS DATATABLES - START ********/
         $(function() {
             $('.datetimepicker_').datetimepicker({
                 //format: 'LT',
+                //autoClose:'true',
+                
                 format: 'HH:mm',
-
                 inline: true,
                 // pickerPosition: "top-left",
-
-                sideBySide: true,
+                //sideBySide: true,
                 widgetPositioning: {
                     horizontal: 'left',
                     vertical: 'bottom'
@@ -989,6 +990,7 @@
             dthrasEft.rows().eq(0).each(function(index) {
                 var row = dthrasEft.row(index);
                 var data = row.data();
+                console.log(data);
                 console.log(data[0]);
                 var id = data[0];
                 var fecha = $('#fch-hrftv-' + data[0]).val()
@@ -1009,7 +1011,7 @@
 
                 i++;
             });
-
+            alert(array);
             $.ajax({
                 url: base_url + "guardar-hrasEft",
                 data: {
@@ -1018,7 +1020,7 @@
                 },
                 type: 'post',
                 async: true,
-                success: function(resultado) {
+                success: function(response) {
                     mensaje('Se guardo con exito :)', 'success')
                 }
             }).done(function(data) {
@@ -1051,5 +1053,4 @@
     $(document).on('click', 'input.datetimepicker_:text', function() {
         var tr = $(this).parent().parent().removeClass('selected');
     });
-
 </script>

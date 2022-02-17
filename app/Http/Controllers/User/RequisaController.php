@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\PseudoTypes\False_;
 
 class RequisaController extends Controller
 {
@@ -54,7 +55,7 @@ class RequisaController extends Controller
     }
 
 
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
 
         $orden = $request['num_Orden'];
@@ -92,7 +93,7 @@ class RequisaController extends Controller
             //return redirect()->back()->with('message-success', 'Se creo la Requisa con exito :)');
             $data = Requisa::latest('id');
         }
-    }
+    }*/
 
 
     public function show($id)
@@ -158,18 +159,18 @@ class RequisaController extends Controller
 
     public function guardarDetalleReq(Request $request)
     {
-        try {
-            DB::transaction(function () use ($request) {
-                $numOrden   =   $request->input('numOrden');
-                $codigo_req =   $request->input('codigo_req');
-                $jefe_turno =   $request->input('jefe_turno');
-                $id_turno      =   $request->input('id_turno');
-                $tipo       =   $request->input('tipo');
 
-                $requisa_repetida = Requisa::where('codigo_req', '=', $codigo_req)->first();
-                if ($requisa_repetida) {
-                    return response()->json(0); 
-                } else {
+        try {
+            $requisa_repetida = Requisa::where('codigo_req', '=', $request->input('codigo_req'))->first();
+            if (!is_null($requisa_repetida)) {
+                return response()->json(true);
+            } else {
+                DB::transaction(function () use ($request) {
+                    $numOrden   =   $request->input('numOrden');
+                    $codigo_req =   $request->input('codigo_req');
+                    $jefe_turno =   $request->input('jefe_turno');
+                    $id_turno      =   $request->input('id_turno');
+                    $tipo       =   $request->input('tipo');    
                     //dd($request);
                     $requisa = new Requisa();
                     $requisa->numOrden =  $numOrden;
@@ -183,8 +184,8 @@ class RequisaController extends Controller
                     $obj = DetalleRequisa::guardarDetalleReq($request->input('dataDR'));
 
                     return response()->json($obj);
-                }
-            });
+                });
+            }
         } catch (Exception $e) {
             $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
 

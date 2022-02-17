@@ -32,20 +32,23 @@
                     <!-- [ breadcrumb ] start -->
                     <div class="main-body">
                         <div class="page-wrapper">
-                            <div class="container">
-                                <div class="row">
-                                    <!-- [ Tabla Categorias ] start -->
-                                    <div class="col-xl-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5>Editar Orden</h5>
-                                                <button class="btn btn-danger float-right" id="btnactualizar">
-                                                    Actualizar
-                                                </button>
-                                                <button class="btn btn-outline-primary btn-sm float-right">
-                                                    <a href="{{url('requisas/create')}}" class="" id="btnrequisa">Solicitar
-                                                        Requisa</a>
-                                                </button>
+                            <div class="row">
+                                <!-- [ Tabla Categorias ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Editar Orden</h5>
+                                            <button class="btn btn-danger float-right"
+                                                    id="btnactualizar">Actualizar
+                                            </button>
+                                            <button class="btn btn-outline-primary btn-sm float-right"
+                                                    ><a href="{{Request::root(('requisas/create'))}}"
+                                                    class="" id="btnrequisa">Solicitar Requisa</a>
+                                            </button>
+                                        </div>
+                                        @if (session()->has('message-success'))
+                                            <div class="alert alert-success">
+                                                {{ session()->get('message-success') }}
                                             </div>
                                             @if (session()->has('message-success'))
                                                 <div class="alert alert-success">
