@@ -39,10 +39,10 @@
                                     <div class="card-header">
                                         <h5>Nueva Orden</h5>
                                         <button class="btn btn-primary float-right" id="btnguardar">Guardar</button>
-                                        <button class="btn btn-outline-primary btn-sm float-right"
+                                        <!-- <button class="btn btn-outline-primary btn-sm float-right"
                                                     id="btnrequisa"><a href="{{url('requisas/create')}}"
                                                     class="">Solicitar Requisa</a>
-                                            </button>
+                                            </button>-->
                                     </div>
                                     @if(session()->has('message-success'))
                                     <div class="alert alert-success">
