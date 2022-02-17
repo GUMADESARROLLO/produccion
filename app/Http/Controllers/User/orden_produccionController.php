@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use \Carbon\Carbon;
 use App\Traits\ModelScopes;
+use Exception;
 
 class orden_produccionController extends Controller
 {
@@ -213,13 +214,13 @@ class orden_produccionController extends Controller
         $productos = productos::where('estado', 1)->get()->toArray();
         $usuarios = usuario::usuarioByRole();
 
-        return view('User.Orden_Produccion.crear', compact([ 'productos', 'usuarios']));
+        return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios']));
     }
 
     public function guardar(Request $request)
     {
         //dd($request);
-
+        $response = '';
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
             'unique' => 'Ya existe una orden de trabajo con este codigo'
@@ -276,22 +277,33 @@ class orden_produccionController extends Controller
             return ["error" => $e->getMessage()];
 
         }*/
+        try {
+            DB::transaction(function () use ($request) {
 
-        $ordProd = new orden_produccion();
-        $ordProd->producto = $request->producto;
-        $ordProd->numOrden = $request->numOrden;
-        $ordProd->idUsuario = $request->jefe;
-        $ordProd->hrsTrabajadas = $request->hrsTrabajadas <= 0 || $request->hrsTrabajadas == "" ? 0 : $request->hrsTrabajadas;
-        $ordProd->fechaInicio = date("Y-m-d", strtotime($request->fecha01));
-        $ordProd->fechaFinal = date("Y-m-d", strtotime($request->fecha02));
-        $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
-        $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
-        $ordProd->estado = 1;
-        $ordProd->save();
+                $ordProd = new orden_produccion();
+                $ordProd->producto = $request->producto;
+                $ordProd->numOrden = $request->numOrden;
+                $ordProd->idUsuario = $request->jefe;
+                $ordProd->hrsTrabajadas = $request->hrsTrabajadas <= 0 || $request->hrsTrabajadas == "" ? 0 : $request->hrsTrabajadas;
+                $ordProd->fechaInicio = date("Y-m-d", strtotime($request->fecha01));
+                $ordProd->fechaFinal = date("Y-m-d", strtotime($request->fecha02));
+                $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
+                $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
+                $ordProd->estado = 1;
+                $response = $ordProd->save();
+
+                //return $ordProd;
+                //return redirect()->route('orden-produccion/editar/{id}', [$request->numOrden])->with('message-success', 'Se creo la Orden de Produccion con exito :)');
+            });
+        } catch (Exception $e) {
+            //  $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return ["error" => $e->getMessage()];
+        }
+        return redirect()->route('orden-produccion/editar/{id}', [$request->numOrden])->with('message-success', 'Se creo la Orden de Produccion con exito :)');
 
         //return ["success" => "Data Inserted"];
         //return redirect()->route('orden-produccion');
-        return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
         //return response()->json($ordProd);
     }
 
@@ -305,7 +317,7 @@ class orden_produccionController extends Controller
         $orden = orden_produccion::where('numOrden', $idOP)->where('estado', 1)->get();
         $productos = productos::where('estado', 1)->get();
 
-        return view('User.Orden_Produccion.editar', compact(['orden','usuarios','productos']));
+        return view('User.Orden_Produccion.editar', compact(['orden', 'usuarios', 'productos']));
 
         /*$fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
@@ -784,14 +796,13 @@ class orden_produccionController extends Controller
                     foreach ($request->input('data') as $key) {
                         array_push($arrayF_select, $key['fibra']);
                         if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
-                                $array[$i]['id'] = $key['id'];
-                                $array[$i]['numOrden'] = $key['orden'];
-                                $array[$i]['idMaquina'] = $key['maquina'];
-                                $array[$i]['idFibra'] = $key['fibra'];
-                                $array[$i]['cantidad'] = $key['cantidad'];
-                                $array[$i]['estado'] = 1;
-                                $i++;
-
+                            $array[$i]['id'] = $key['id'];
+                            $array[$i]['numOrden'] = $key['orden'];
+                            $array[$i]['idMaquina'] = $key['maquina'];
+                            $array[$i]['idFibra'] = $key['fibra'];
+                            $array[$i]['cantidad'] = $key['cantidad'];
+                            $array[$i]['estado'] = 1;
+                            $i++;
                         }
                     }
                     if (count($array) >= 0) {
@@ -805,7 +816,6 @@ class orden_produccionController extends Controller
                             if (count($arrayF_select2) < count($arrayF_select)) {
                                 //return response()->json("Ha ingresado materias primas repetidas");
                                 return response("Oh no! Ha ingresado materias primas repetidas D:", 400);
-
                             }/* else if (count($arrayF_select2) === count($arrayF_select)) {
                                 return response()->json("Ha ingresado materias primas diferentes");
                             }*/
@@ -813,34 +823,34 @@ class orden_produccionController extends Controller
                             //return response()->json(count($arrayF_select2));
                             //return redirect()->back()->with('message-failed', 'No se guardo con exito :(, existe una materia prima repetida, por favor elija otra');
                         }
-                            foreach ($array as $dataMP) {
-                                $mpE = mp_directa::where([
+                        foreach ($array as $dataMP) {
+                            $mpE = mp_directa::where([
+                                ['numOrden', '=', $numOrden],
+                                ['id', '=', $dataMP['id']],
+                                ['estado', '=', 1]
+                            ])->first();
+                            if ($mpE != null) {
+                                mp_directa::where([
                                     ['numOrden', '=', $numOrden],
                                     ['id', '=', $dataMP['id']],
                                     ['estado', '=', 1]
-                                ])->first();
-                                if ($mpE != null) {
-                                    mp_directa::where([
-                                        ['numOrden', '=', $numOrden],
-                                        ['id', '=', $dataMP['id']],
-                                        ['estado', '=', 1]
-                                    ])->update([
-                                        'idMaquina' => $dataMP['idMaquina'],
-                                        'idFibra' => $dataMP['idFibra'],
-                                        'cantidad' => $dataMP['cantidad'],
-                                        'estado' => 1,
-                                    ]);
-                                } else {
-                                    $mpd = new mp_directa();
-                                    $mpd->idMaquina = $dataMP['idMaquina'];
-                                    $mpd->idFibra = $dataMP['idFibra'];
-                                    $mpd->numOrden = $dataMP['numOrden'];
-                                    $mpd->cantidad = $dataMP['cantidad'];
-                                    $mpd->estado = 1;
-                                    $mpd->save();
-                                }
+                                ])->update([
+                                    'idMaquina' => $dataMP['idMaquina'],
+                                    'idFibra' => $dataMP['idFibra'],
+                                    'cantidad' => $dataMP['cantidad'],
+                                    'estado' => 1,
+                                ]);
+                            } else {
+                                $mpd = new mp_directa();
+                                $mpd->idMaquina = $dataMP['idMaquina'];
+                                $mpd->idFibra = $dataMP['idFibra'];
+                                $mpd->numOrden = $dataMP['numOrden'];
+                                $mpd->cantidad = $dataMP['cantidad'];
+                                $mpd->estado = 1;
+                                $mpd->save();
                             }
-                            return response("El registro de fibras en la orden ha sido exitoso :)", 200);
+                        }
+                        return response("El registro de fibras en la orden ha sido exitoso :)", 200);
 
                         /*mp_directa::where('numOrden', $numOrden)
                         ->update([

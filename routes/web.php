@@ -80,7 +80,7 @@ Route::get('orden-produccion/editar/{id}', 'User\orden_produccionController@edit
 Route::get('orden-produccion/detalle/{id}', 'User\orden_produccionController@detalle')->name('orden-produccion/detalle/{id}');
 Route::get('data-mp', 'User\orden_produccionController@getDataMateriaPrima')->name('data-mp');
 Route::post('eliminar-mp', 'User\orden_produccionController@eliminarMateriaPrima')->name('eliminar-mp');
-Route::get('orden-produccion/reporte/{id}', 'User\reporteController@reporte')->name('orden-produccion/editar/{id}');
+Route::get('orden-produccion/reporte/{id}', 'User\reporteController@reporte')->name('orden-produccion/reporte/{id}');
 Route::post('guardar-costos-indirectos-fab', 'User\orden_produccionController@guardarCostosIndirectosFabricacion')->name('guardar-costos-indirectos-fab');
 Route::post('cargarmp-directa', 'User\orden_produccionController@cargarMateriaPrimadirecta')->name('cargarmp-directa');
 Route::post('guardarqm-directa', 'User\orden_produccionController@guardarQM')->name('guardarqm-directa');

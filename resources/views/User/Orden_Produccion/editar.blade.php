@@ -46,10 +46,7 @@
                                                     class="" id="btnrequisa">Solicitar Requisa</a>
                                             </button>
                                         </div>
-                                        @if (session()->has('message-success'))
-                                            <div class="alert alert-success">
-                                                {{ session()->get('message-success') }}
-                                            </div>
+                                       
                                             @if (session()->has('message-success'))
                                                 <div class="alert alert-success">
                                                     {{ session()->get('message-success') }}
