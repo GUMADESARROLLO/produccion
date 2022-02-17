@@ -46,97 +46,18 @@
                                                 class="" id="btnrequisa">Solicitar Requisa</a>
                                             </button>
                                         </div>
-                                       
-                                            @if (session()->has('message-success'))
-                                                <div class="alert alert-success">
-                                                    {{ session()->get('message-success') }}
-                                                </div>
-                                            @endif
-                                            @if (count($errors) > 0)
-                                                <div class="alert alert-danger">
-                                                    <p>Corrige los siguientes errores:</p>
-                                                    <ul>
-                                                        @foreach ($errors->all() as $message)
-                                                            <li>{{ $message }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            <div class="card-body">
-                                                <h5>Generales</h5>
-                                                <hr>
-                                                <form method="post" action="{{ url('orden-produccion/actualizar') }}"
-                                                      id="formdataord">
-                                                    {{ csrf_field() }}
-                                                    @foreach ($orden as $key => $ord)
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="numOrden">Orden de Producción
-                                                                        No.</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="numOrden"
-                                                                           id="numOrden" value="{{ $ord->numOrden }}">
-                                                                    <small id="numordenHelp"
-                                                                           class="form-text text-muted">Escriba
-                                                                        el No. de Orden de Producción</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="producto">Producto</label>
-                                                                    <select class="form-control" name="producto"
-                                                                            id="producto">
-                                                                        @foreach ($productos as $key => $prod)
-                                                                            @if ($prod->idProducto == $ord->producto)
-                                                                                <option value="{{ $prod->idProducto }}"
-                                                                                        selected>{{ $prod->nombre }}</option>
-                                                                            @else
-                                                                                <option value="{{ $prod->idProducto }}">
-                                                                                    {{ $prod->nombre }}</option>option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <small id="productoHelp"
-                                                                           class="form-text text-muted">Seleccione
-                                                                        un Producto</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="jefe">Jefe de Turno</label>
-                                                                    <select class="form-control" name="jefe" id="jefe">
-                                                                        @foreach ($usuarios as $key)
-                                                                            @if ($key['id'] == $ord->idUsuario)
-                                                                                <option value="{{ $key['id'] }}"
-                                                                                        selected>
-                                                                                    {{ $key['nombres'] }}
-                                                                                    {{ $key['apellidos'] }}</option>
-                                                                            @else
-                                                                                <option value="{{ $key['id'] }}">
-                                                                                    {{ $key['nombres'] }}
-                                                                                    {{ $key['apellidos'] }}</option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <small id="grupoHelp" class="form-text text-muted">Seleccione
-                                                                        un Grupo</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="numOrden">Horas Trabajadas</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="hrsTrabajadas"
-                                                                           id="hrsTrabajadas"
-                                                                           value="{{ $ord->hrsTrabajadas }}">
-                                                                    <small id="hrsTrabajadasHelp"
-                                                                           class="form-text text-muted">Especifique las
-                                                                        hras
-                                                                        trabajadas</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
+                                        @if (session()->has('message-success'))
+                                            <div class="alert alert-success">
+                                                {{ session()->get('message-success') }}
+                                            </div>
+                                        @endif
+                                        @if (count($errors) > 0)
+                                            <div class="alert alert-danger">
+                                                <p>Corrige los siguientes errores:</p>
+                                                <ul>
+                                                    @foreach ($errors->all() as $message)
+                                                        <li>{{ $message }}</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
