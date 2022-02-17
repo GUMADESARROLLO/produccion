@@ -271,12 +271,11 @@
                                 <!-- [ Tabla Categorias ] end -->
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
     <!-- [ Main Content ] end -->
 @endsection

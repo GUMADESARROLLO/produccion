@@ -48,8 +48,8 @@
                                                         <th>#</th>
                                                         <th>CODIGO</th>
                                                         <th>NOMBRE</th>
-                                                        <th>ESTADO</th>
                                                         <th>U/M</th>
+                                                        <th>ESTADO</th>
                                                         <th></th>
                                                     </tr>
                                                     </thead>
