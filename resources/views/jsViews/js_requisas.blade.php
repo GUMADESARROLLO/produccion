@@ -427,9 +427,10 @@
                 id_req: id_req,
                 arrayDR: dataDR,
             },
-            success: function(data) {
-                mensaje(data.responseText, 'success');
-                //
+            success: function(response) {
+                if(response){
+                    mensaje('Actualizado Correctamente' + response, 'success');
+                }
             },
             error: function(data) {
                 //console.log('Fuck no funciono');
