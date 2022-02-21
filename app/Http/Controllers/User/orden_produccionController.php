@@ -1052,6 +1052,46 @@ class orden_produccionController extends Controller
 
         //return view('User.Orden_Produccion.crear', compact(['qm_directa_', 'maquinas', 'quimicos']));
     }
+
+    public function getOrdersProductions(){
+        $array = array();
+        $i = 0;
+        $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
+
+        if (count($ord_produccion) > 0) {
+            foreach ($ord_produccion as $key) {
+                $array[$i]['idOrden'] = $key['idOrden'];
+                $array[$i]['numOrden'] = $key['numOrden'];
+                $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
+                $array[$i]['producto'] = $fibra->nombre;
+
+                /** Produccion Real **/
+                $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
+                    $array[$i]['prod_real'] = 0;
+                } else {
+                    $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
+                }
+
+                /** Merma Total **/
+                $detalle_merma_total = DetalleProduccion::select('merma_total')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_merma_total) || $detalle_merma_total == '') {
+                    $array[$i]['merma_total'] = 0;
+                } else {
+                    $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
+                }
+
+
+                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+
+                $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
+                $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
+                $array[$i]['estado'] = $key['estado'];
+                $i++;
+            }
+        }
+        return response()->json($array);
+    }
 }
 
 

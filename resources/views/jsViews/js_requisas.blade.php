@@ -38,11 +38,12 @@
                 "url": "../../getQuimicos",
                 'dataSrc': '',
             },
-            "info": false,
             "destroy": true,
             "pagingType": "full",
+            "info": false,
             "language": {
                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
                 "zeroRecords": "No hay coincidencias",
                 "loadingRecords": "Cargando datos...",
                 oPaginate: {
@@ -56,8 +57,7 @@
                 "search": "BUSCAR"
             },
 
-            "columns": [
-                {
+            "columns": [{
                     "title": "CODIDO",
                     "data": "codigo"
                 },
@@ -80,7 +80,7 @@
             "columnDefs": [{
                 "className": "dt-center",
                 "targets": [2, 3]
-            }, ],
+            }],
         });
 
         $("#tblQuimicos_filter").hide();
@@ -108,6 +108,7 @@
             "pagingType": "full",
             "language": {
                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
                 "zeroRecords": "No hay coincidencias",
                 "loadingRecords": "Cargando datos...",
                 oPaginate: {
@@ -121,8 +122,7 @@
                 "search": "BUSCAR"
             },
 
-            "columns": [
-                {
+            "columns": [{
                     "title": "CODIDO",
                     "data": "codigo"
                 },
@@ -214,9 +214,9 @@
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        if(response){
+                        if (response) {
                             mensaje('No se guardo con exito :(, es una requisa duplicada, por favor elija otra', 'warning');
-                        } else{
+                        } else {
                             mensaje('Datos guardados', 'success');
                             setTimeout(function() {
                                 location.href = url_;
@@ -272,9 +272,9 @@
                     type: 'post',
                     async: true,
                     success: function(response) {
-                        if(response){
+                        if (response) {
                             mensaje('No se guardo con exito :(, es una requisa duplicada, por favor elija otra', 'warning');
-                        } else{
+                        } else {
                             mensaje('Datos guardados', 'success');
                             setTimeout(function() {
                                 location.href = url_;
@@ -316,10 +316,10 @@
             'dataSrc': '',
         },
         "info": false,
-
         "pagingType": "full",
         "language": {
             "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
             "zeroRecords": "No hay coincidencias",
             "loadingRecords": "Cargando datos...",
             oPaginate: {
@@ -333,8 +333,7 @@
             "search": "BUSCAR"
         },
 
-        "columns": [
-            {
+        "columns": [{
                 "title": "CODIDO",
                 "data": "codigo"
             },

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-
+@include('jsViews.js_ordenproduccion')
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -38,57 +38,16 @@
                                     <div class="card-header">
                                         <h5>Orden de Produccion</h5>
                                     </div>
-                                    <div class="card-block px-0 py-3">
+                                    <div class="input-group mt-4 ml-2" style="width: 98%;" id="cont_search">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                        </div>
+                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="card-block px-0 py-3 ml-4">
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>NO. ORDEN</th>
-                                                        <th>PRODUCTO</th>
-                                                        <th>FECHA INICIO</th>
-                                                        <th>FECHA FINAL</th>
-                                                        <th>PROD.REAL(kg)</th>
-                                                        <th>PROD.TOTAL(kg)</th>
-                                                        <th>ESTADO</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($array as $key)
-                                                    <tr class="unread">
-                                                        <td class="dt-center">
-                                                            <h6>{{ $key['numOrden'] }}</h6>
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <h6>{{ $key['producto'] }}</h6>
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <h6>{{ $key['fechaInicio'] }}</h6>
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <h6>{{ $key['fechaFinal'] }}</h6>
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <h6>{{ number_format($key['prod_real'],2) }}</h6>
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <h6>{{ number_format($key['prod_total'],2) }}</h6>
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            @if ( $key['estado'] )
-                                                            <span class="badge badge-success">Activo</span>
-                                                            @else
-                                                            <span class="badge badge-danger">Inactivo</span>
-                                                            @endif
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <a href="orden-produccion/reporte/{{ $key['numOrden'] }}" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>
-                                                            <a href="orden-produccion/editar/{{ $key['numOrden'] }}" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>
-                                                            <a href="orden-produccion/detalle/{{ $key['numOrden'] }}" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
+                                            <table class="table table-hover" id="tblOrder_produccion">
+                                                
                                             </table>
                                         </div>
                                     </div>

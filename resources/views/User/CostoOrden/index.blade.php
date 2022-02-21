@@ -1,149 +1,49 @@
 @extends('layouts.main')
 @section('metodosjs')
+@include('jsViews.js_costo_orden')
 
 @endsection
 @section('content')
-    <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
-                                <!-- [ Tiempo de Pulpeo ] start -->
-                                <!-- <div class="col-xl-6 col-md-6">
-                                    <div class="card card-event">
-                                        <div class="card-block border-bottom">
-                                            <div class="row align-items-center justify-content-center">
-                                                <div class="col">
-                                                    <h5 class="m-0">Tiempo de Pulpeo</h5>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <label class="label theme-bg2 text-white f-14 f-w-400 float-right">45</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block table-border-style">
-                                            <h6 class="text-uppercase text-center">No. de Bachadas en el pulper</h6>
-                                            <div class="table-responsive">
-                                                <table class="table table-hover" id="dtFibras">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th>FECHA</th>
-                                                            <th>DIA</th>
-                                                            <th>NOCHE</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="unread">
-                                                            <td class="dt-center"></td>
-                                                            <td class="dt-left"></td>
-                                                            <td class="dt-center"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+
+                        <!-- [ Main Content ] end -->
+
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>LISTA DE ORDENES</h5>
                                     </div>
-                                </div> -->
-                                <!-- [ Tiempo de Pulpeo ] end -->
-
-                                <!-- [ Tiempo de Lavado ] start -->
-                                <!-- <div class="col-xl-6 col-md-6">
-                                    <div class="card card-event">
-                                        <div class="card-block border-bottom">
-                                            <div class="row align-items-center justify-content-center">
-                                                <div class="col">
-                                                    <h5 class="m-0">Tiempo de Lavado</h5>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <label class="label theme-bg2 text-white f-14 f-w-400 float-right">45</label>
-                                                </div>
-                                            </div>
+                                    <div class="input-group my-4 ml-2" style="width: 98%;" id="cont_search">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                                         </div>
-                                        <div class="card-block table-border-style">
-                                            <h6 class="text-uppercase text-center">No. de Batch en el lavadora Tetrapack</h6>
-                                            <div class="table-responsive">
-                                                <table class="table table-hover" id="dtFibras">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th>FECHA</th>
-                                                            <th>DIA</th>
-                                                            <th>NOCHE</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="unread">
-                                                            <td class="dt-center"></td>
-                                                            <td class="dt-left"></td>
-                                                            <td class="dt-center"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
-                                </div>-->
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>LISTA DE ORDENES</h5>
-                                        </div>
-                                        <div class="card-block table-border-style">
-                                            <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr class="text-center">
-                                                        <th># Orden</th>
-                                                        <th>Producto</th>
-                                                        <th>Fecha Inicio</th>
-                                                        <!--<th>Total Producido</th>-->
-                                                        <th>Fecha Final</th>
-                                                        <th>Detalle</th>
-
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    @foreach ($array as $key)
-                                                        <tr class="unread">
-
-                                                            <td class="dt-center">
-                                                                <h6>{{ $key['numOrden'] }}</h6>
-                                                            </td>
-                                                            <td class="dt-center">
-                                                                <h6>{{ $key['producto'] }}</h6>
-                                                            </td>
-                                                            <td class="dt-center">
-                                                                <h6>{{ $key['fechaInicio'] }}</h6>
-                                                            </td>
-                                                            <td class="dt-center">
-                                                                <h6>{{ $key['fechaFinal'] }}</h6>
-                                                            </td>
-
-                                                            <td class="dt-center">
-                                                                <a href="costo-orden/detalle/{{ $key['numOrden'] }}" target="_blank">
-                                                                    <i class="feather icon-eye text-c-black f-30 m-r-10"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                    <div class="card-block table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="dtCostoOrden">
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- [ Tabla Categorias ] end -->
                             </div>
-                            <!-- [ Main Content ] end -->
+                            <!-- [ Tabla Categorias ] end -->
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
+</div>
+<!-- [ Main Content ] end -->
 @endsection

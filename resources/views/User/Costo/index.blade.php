@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-
+@include('jsViews.js_costo_orden')
 @endsection
 @section('content')
     <!-- [ Main Content ] start -->
@@ -42,37 +42,8 @@
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr class="text-center">
-                                                        <th>ID</th>
-                                                        <th>CODIGO</th>
-                                                        <th>DESCRIPCION</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach ($costo as $key => $c)
-                                                        <tr class="unread">
-                                                            <td class="dt-center">{{ $key+1 }}</td>
-                                                            <td class="dt-center">{{ $c->codigo }}</td>
-                                                            <td class="dt-center">{{ strtoupper($c->descripcion) }}</td>
-                                                            <td class="dt-center">
-                                                                @if ( $c->estado )
-                                                                    <span class="badge badge-success">Activo</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Inactivo</span>
-                                                                @endif
-                                                            </td>
-                                                            <td class="dt-center">
-                                                                <a href="#!" onclick="deleteCosto({{$c->id}})"><i
-                                                                        class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
-                                                                <a href="costos/editar/{{ $c->id }}"><i
-                                                                        class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
+                                                <table class="table table-hover" id="dtOrder">
+                                                  
                                                 </table>
                                             </div>
                                         </div>
