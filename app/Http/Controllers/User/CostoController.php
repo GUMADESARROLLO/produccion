@@ -85,6 +85,11 @@ class CostoController extends Controller
 
         return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
     }
+    public function getCostos()
+    {
+        $costo = costo::where('estado', 1)->orderBy('id', 'asc')->get();
+        return response()->json($costo);
+    }
 
 }
 

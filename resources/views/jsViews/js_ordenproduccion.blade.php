@@ -1,6 +1,5 @@
 <script type="text/javascript">
-    var dtMPD;
-    var dtQM;
+    var dtMPD, dtQM, dtProduccion;
     var indicador_1 = 0;
 
     /******** Cargar funcion al inicio del DOM ************/
@@ -10,6 +9,89 @@
                 format: 'LT'
             });
         });
+
+        dtProduccion = $('#tblOrder_produccion').DataTable({ // Costos por ORDEN
+            "ajax": {
+                "url": "getOrder_produccion",
+                'dataSrc': '',
+            },
+            "order": [
+                [0, "desc"]
+            ],
+            "destroy": true,
+            "bPaginate": true,
+            "pagingType": "full",
+            "language": {
+                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "search": "BUSCAR",
+                "oPaginate": {
+                    sNext: " Siguiente ",
+                    sPrevious: " Anterior ",
+                    sFirst: "Primero ",
+                    sLast: " Ultimo",
+                },
+            },
+            "columns": [{
+                    "title": "NO. ORDEN",
+                    "data": "numOrden"
+                },
+                {
+                    "title": "PRODUCTO",
+                    "data": "producto"
+                },
+                {
+                    "title": "FECHA INICIO",
+                    "data": "fechaInicio",
+                },
+                {
+                    "title": "FECHA FINAL",
+                    "data": "fechaFinal"
+                },
+                {
+                    "title": "PROD.REAL(kg)",
+                    "data": "prod_real"
+                },
+                {
+                    "title": "PROD.TOTAL(kg)",
+                    "data": "prod_total"
+                },
+                {
+                    "title": "ESTADO",
+                    "data": "estado",
+                    "render": function(data, type, row) {
+                        if (data) {
+                            return '<span class = "badge badge-success"> Activo </span>'
+                        } else {
+                            return '<span class = "badge badge-danger" > Inactivo </span>'
+                        }
+                    }
+                },
+                {
+                    "title": "OPCIONES",
+                    "data": "numOrden",
+                    "render": function(data, type, row) {
+                        return  '<a href="orden-produccion/reporte/' + data + '" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>' +
+                                '<a href="orden-produccion/editar/' + data + '" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>' +
+                                '<a href="orden-produccion/detalle/' + data + '" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
+                    }
+                },
+            ],
+            "columnDefs": [{
+                    "targets": [0],
+                    "className": "dt-center",
+                }
+            ]
+        });
+
+        $("#tblOrder_produccion_filter").hide();
+        $("#tblOrder_produccion_length").hide();
+        $('#cont_search').show();
+        $('#InputBuscar').on('keyup', function() {
+            var table = $('#tblOrder_produccion').DataTable();
+            table.search(this.value).draw();
+        });
+
         /****** Fibras - Agregar filas ******/
         dtMPD = $('#dtMPD').DataTable({
             "destroy": true,

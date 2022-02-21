@@ -89,6 +89,7 @@ Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')
 Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->name('eliminar-qm');
 //Add by xochilt
 Route::get('getData/{idOrd}', 'User\orden_produccionController@getData')->name('getData/{idOrd}');
+Route::get('getOrder_produccion', 'User\orden_produccionController@getOrdersProductions')->name('getOrder_produccion');
 
 
 //RUTAS MI INVENTARIO
@@ -119,14 +120,14 @@ Route::post('producto/guardar', 'User\produccionController@guardarProducto')->na
 Route::get('producto/editar/{id}', 'User\produccionController@editarProducto')->name('producto/editar/{id}');
 Route::post('producto/actualizar', 'User\produccionController@actualizarProducto')->name('producto/actualizar');
 Route::get('producto/eliminar/{id}', 'User\produccionController@eliminarProducto')->name('producto/eliminar/{id}');
-
+Route::get('getProductos', 'User\produccionController@getProductos')->name('getProductos');
 
 //RUTAS CATALOGO DE COSTOS
 Route::get('costos/nuevo', 'User\CostoController@nuevoCosto')->name('costos/nuevo');
 Route::post('costos/guardar', 'User\CostoController@guardarCosto')->name('costos/guardar');
 Route::get('costos/editar/{id}', 'User\CostoController@editarCosto')->name('costos/editar/{id}');
 Route::post('costos/actualizar', 'User\CostoController@actualizarCosto')->name('costos/actualizar');
-
+Route::get('/getCostos', 'User\CostoController@getCostos')->name('/getCostos');
 
 //RUTAS COSTOS POR ORDEN
 Route::get('/costo-orden', 'User\CostoOrdenController@index')->name('costo-orden');
@@ -137,6 +138,8 @@ Route::get('costo-orden/detalle/editar/{id}', 'User\CostoOrdenController@editarC
 Route::post('costo-orden/actualizar', 'User\CostoOrdenController@actualizarCostoOrden')->name('costo-orden/actualizar');
 Route::post('costo-orden/guardarhrs-producidas', 'User\CostoOrdenController@guardarHrasProd')->name('costo-orden/guardarhrs-producidas');
 Route::post('costo-orden/add-comment', 'User\CostoOrdenController@guardarComment')->name('costo-orden/add-comment');
+Route::get('/getCostoOrden', 'User\CostoOrdenController@getCostoOrden')->name('/getCostoOrden');
+
 
 
 //RUTAS REPORTES
@@ -202,7 +205,7 @@ Route::get('/getDetalleReq/{codigo}/{tipo}', 'User\RequisaController@getDetalleR
 Route::get('/getRequisas', 'User\RequisaController@getRequisas')->name('/getRequisas');
 Route::post('/updateRequisas', 'User\RequisaController@updateRequisa')->name('/updateRequisas');
 
-
+Route::get('detalleHome', 'HomeController@getDetalleHome')->name('detalleHome');
 
 
 

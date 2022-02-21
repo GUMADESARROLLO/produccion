@@ -48,34 +48,17 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>Lista de Fibras</h5>
+                                    </div>  
+                                    <div class="input-group mt-4 ml-2" style="width: 98%;" id="cont_search">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                        </div>
+                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                     <div class="card-block table-border-style">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="dtFibras">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>#</th>
-                                                        <th>CODIGO</th>
-                                                        <th>DESCRIPCIÓN</th>
-                                                        <th>UNIDAD DE MEDIDA</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($fibras as $key => $f)
-                                                    <tr class="unread">
-                                                        <td class="dt-center">{{$f->idFibra}}</td>
-                                                        <td class="dt-center">{{ $f->codigo }}</td>
-                                                        <td class="dt-center">{{ strtoupper($f->descripcion) }}</td>
-                                                        <td class="dt-center">{{ strtoupper($f->unidad) }}</td>
-
-                                                        <td class="dt-center">
-                                                            <a href="#!" onclick="deleteFibra({{$f['idFibra']}})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
-                                                            <a href="fibras/editar/{{ $f['idFibra'] }}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
+                                                
                                             </table>
                                         </div>
                                     </div>
