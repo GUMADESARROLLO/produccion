@@ -46,13 +46,12 @@
                     <div class="page-wrapper">
                         <!-- [ Main Content ] start -->
                         <div class="row">
-
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>LISTA DE REQUISAS</h5>
                                     </div>
-                                    <div class="input-group my-4 ml-2" style="width: 50%;" id="cont_search">
+                                    <div class="input-group mt-4 ml-2" style="width: 98%;" id="cont_search">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                                         </div>
@@ -66,6 +65,7 @@
                                                         <th>#</th>
                                                         <th>No. Orden</th>
                                                         <th>Codigo</th>
+                                                        <th>Tipo</th>
                                                         <th>Turno</th>
                                                         <th>Fecha Creacion</th>
                                                         <th>Acciones</th>

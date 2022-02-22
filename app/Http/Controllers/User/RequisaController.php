@@ -215,7 +215,10 @@ class RequisaController extends Controller
 
     public function updateRequisa(Request $request)
     {
+        $response = '';
+
         try {
+
             DB::transaction(function () use ($request) {
                 $numOrden   =   $request->input('numOrden');
                 $codigo_req =   $request->input('codigo_req');
@@ -231,6 +234,8 @@ class RequisaController extends Controller
                         'turno' => $turno,
 
                     ]);
+                
+                
                 foreach ($data as $dataDR) {
                     $id_DR = $dataDR["id"];
                     $cantidad =  $dataDR["cantidad"];
@@ -240,11 +245,15 @@ class RequisaController extends Controller
                     "' . $codigo_req . '","' .  $tipo  . '","' .  $elemento_id  . '","' .  $cantidad  . '")');
                 };
 
-                return response()->json($requisa_);
-            });
-        } catch (Exception $e) {
 
+            });
+            $response = true;
+
+        } catch (Exception $e) {
+            $response = false;
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
+        return response()->json($response);
+
     }
 }

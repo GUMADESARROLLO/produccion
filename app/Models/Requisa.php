@@ -16,11 +16,12 @@ class Requisa extends Model
         $i = 0;
         $data = array();
         //return Requisa::all();
-        $Requisa = Requisa::select(['id', 'numOrden', 'codigo_req', 'turno', 'created_at'])->get();
+        $Requisa = Requisa::select(['id', 'numOrden', 'codigo_req','tipo', 'turno', 'created_at'])->get();
         foreach($Requisa as $rq){
             $data[$i]['id'] =  $i + 1;
             $data[$i]['numOrden'] =  $rq['numOrden'];
             $data[$i]['codigo_req'] =  $rq['codigo_req'];
+            $data[$i]['tipo'] =  $rq['tipo']  == 1? "Fibra" : "Quimico";
             $data[$i]['turno'] = $rq['turno'] == 1? "Dia" : "Noche";          
             $data[$i]['created_at'] =  date("Y-m-d H:i:s", strtotime($rq['created_at'])) ;   
             $data[$i]['acciones'] =  '<a href="requisas/'.$rq['id'].'/edit"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>' .

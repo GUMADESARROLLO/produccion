@@ -128,13 +128,14 @@ class orden_produccionController extends Controller
                 $estandar_electricidad = ($electricidad['totalProcesoH'] / $produccion_total) * 1000;
                 $estandar_gas = ($consumo_gas['total'] / $produccion_total) * 1000;
             }
+            $Tonelada_dia = (($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0 && $ord_produccion->hrsTrabajadas>0)? 
+                            number_format(($produccionNeta->produccionNeta / ($ord_produccion->hrsTrabajadas / 24)) / 1000, 2): 0);
 
             if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
                 $porcentMermaYankeeDry = ($mermaYankeeDry->merma / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma)) * 100;
-                $Tonelada_dia =  number_format(($produccionNeta->produccionNeta / ($ord_produccion->hrsTrabajadas / 24)) / 1000, 2);
+                
             } else {
                 $porcentMermaYankeeDry = 0;
-                $Tonelada_dia = 0;
             }
             if ($lavadoraTetrapack->lav_tetrapack > 0 && $totalMPTPACK->total > 0) {
                 $porcentLavadoraTetrapack = ($lavadoraTetrapack->lav_tetrapack / $totalMPTPACK->total) * 100;
@@ -422,8 +423,13 @@ class orden_produccionController extends Controller
             $t_pulpeo_noche = 0;
         }
         if ($t_lavado) {
-            $t_lavado_dia = ($t_lavado->cantDia * $t_pulpeo->tiempoPulpeo) / 60;
-            $t_lavado_noche = ($t_lavado->cantNoche * $t_pulpeo->tiempoPulpeo) / 60;
+            if($t_pulpeo){
+                $t_lavado_dia = ($t_lavado->cantDia * $t_pulpeo->tiempoPulpeo) / 60;
+                $t_lavado_noche = ($t_lavado->cantNoche * $t_pulpeo->tiempoPulpeo) / 60;
+            } else {
+                $t_lavado_dia = 0;
+                $t_lavado_noche = 0;
+            }
         } else {
             $t_lavado_dia = 0;
             $t_lavado_noche = 0;
@@ -714,7 +720,7 @@ class orden_produccionController extends Controller
     public function guardarCostosIndirectosFabricacion(Request $request)
     {
         if ($request->isMethod('post')) {
-            $numOrden = intval($request->input('codigo'));
+            $numOrden = $request->input('codigo');
             $consumoInicialElec = ($request->input('consumoInicialElec') == '') ? 0 : $request->input('consumoInicialElec');
             $consumoFinalElec = ($request->input('consumoFinalElec') == '') ? 0 : $request->input('consumoFinalElec');
             $consumoInicialAgua = ($request->input('consumoInicialAgua') == '') ? 0 : $request->input('consumoInicialAgua');
@@ -1046,6 +1052,46 @@ class orden_produccionController extends Controller
 
         //return view('User.Orden_Produccion.crear', compact(['qm_directa_', 'maquinas', 'quimicos']));
     }
+
+    public function getOrdersProductions(){
+        $array = array();
+        $i = 0;
+        $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
+
+        if (count($ord_produccion) > 0) {
+            foreach ($ord_produccion as $key) {
+                $array[$i]['idOrden'] = $key['idOrden'];
+                $array[$i]['numOrden'] = $key['numOrden'];
+                $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
+                $array[$i]['producto'] = $fibra->nombre;
+
+                /** Produccion Real **/
+                $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
+                    $array[$i]['prod_real'] = 0;
+                } else {
+                    $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
+                }
+
+                /** Merma Total **/
+                $detalle_merma_total = DetalleProduccion::select('merma_total')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_merma_total) || $detalle_merma_total == '') {
+                    $array[$i]['merma_total'] = 0;
+                } else {
+                    $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
+                }
+
+
+                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+
+                $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
+                $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
+                $array[$i]['estado'] = $key['estado'];
+                $i++;
+            }
+        }
+        return response()->json($array);
+    }
 }
 
 
@@ -1071,13 +1117,13 @@ class orden
     public $porcentResiduosPulper;
     public $porcentLavadoraTetrapack;
     public $electricidad;
-    public $consumoAgua;
+    public $consumo_agua;
     public $consumoGas;
     public $factorFibral;
     public $Tonelada_dia;
 
 
-    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal, $estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral, $Tonelada_dia)
+    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal, $estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumo_agua, $consumoGas, $factorFibral, $Tonelada_dia)
     {
         $this->idOrden = $idOrden;
         $this->numOrden = $numOrden;
@@ -1099,7 +1145,7 @@ class orden
         $this->porcentResiduosPulper = $porcentResiduosPulper;
         $this->porcentLavadoraTetrapack = $porcentLavadoraTetrapack;
         $this->electricidad = $electricidad;
-        $this->consumoAgua = $consumoAgua;
+        $this->consumo_agua = $consumo_agua;
         $this->consumoGas = $consumoGas;
         $this->factorFibral = $factorFibral;
         $this->Tonelada_dia = $Tonelada_dia;

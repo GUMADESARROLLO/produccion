@@ -94,4 +94,10 @@ class produccionController extends Controller
 
         return (response()->json(true));
     }
+
+    public function getProductos() {
+        $productos   = productos::where('estado', 1)->orderBy('idProducto', 'asc')->get();
+        
+        return response()->json($productos);
+    }
 }
