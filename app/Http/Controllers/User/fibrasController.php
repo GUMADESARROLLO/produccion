@@ -27,12 +27,13 @@ class fibrasController extends Controller
 
     public function guardarFibra(Request $request) {
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => 'El :attribute es un campo requerido',
+            'unique' => 'El :attribute es un dato unico'
         );
 
         $validator = Validator::make($request->all(), [
             'descripcion' => 'required|max:100',
-            'codigo'        => 'required|max:20',
+            'codigo'        => 'required|max:20|unique:fibras',
             'unidad'        => 'required|max:20'
         ], $messages);
 

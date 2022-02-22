@@ -51,60 +51,7 @@
                             <div class="col-xl-12 col-md-6">
                                 <div class="card card-event">
                                     <div class="card-block">
-                                        <div class="row ">
-                                            <div class="col-12 border-right">
-                                                <div class="card card-event" id="card-JRDetail">
-                                                    <div class="card-block p-2 ">
-                                                        <div class="row align-items-center justify-content-center">
-                                                            <div class="">
-                                                                <h5 class="m-0" style="font-size: 1.3em;">Residuos</h5>
-                                                            </div>
-                                                            <!-- <div class="col-6">
-                                                                <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
-                                                            </div>-->
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-block p-1 table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtJumboRollDetail" style="padding: 0 !important; margin: 0 !important;">
-                                                                <thead class="">
-                                                                    <tr class="text-center">
-                                                                        <th rowspan="2" class="text-center p-1"></th>
-                                                                        <th rowspan="2" class="text-center p-1">
-                                                                            <p> Residuos del pulper </p>
-                                                                        </th>
-                                                                        <th rowspan="2" class="text-center p-1">
-                                                                            <p> Lavadora tetrapack</p>
-                                                                        </th>
-                                                                        <th colspan="2" rowspan="1" class="p-0">
-                                                                            <p>Merma yankee Dry</p>
-                                                                        </th>
-                                                                    <tr class="text-center">
-                                                                        <th class="p-0">Y1</th>
-                                                                        <th class="p-0">Y2</th>
-                                                                    </tr>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody class="text-center">
-                                                                    @foreach ($jumborollDT as $key => $jr)
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->residuo_pulper }}" placeholder="Cantidad" id="rp"> </td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->lavadora_tetrapack }}" placeholder="Cantidad" id="lt"> </td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_1 }}" placeholder="Cantidad" id="mr-y1"></td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_2 }}" placeholder="Cantidad" id="mr-y2"></td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                            <button class="mt-5 btn btn-success float-right" id="btnJRdetail">Guardar</button>
-                                                            <!-- <button class="btn btn-danger float-right" id="quitRowdtBATH">Quitar</button>  -->
-                                                            <!-- <button class="btn btn-light add-row-dt-bach float-right">Agregar</button> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="row ">
                                             <div class="col-12">
                                                 <div class="row align-items-center justify-content-center">
@@ -663,6 +610,63 @@
                                     </div>
                                 </div>
                                 <!-- [ JUMBO ROLL ] end -->
+                            </div>
+
+
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-12 border-right">
+                                <div class="card card-event" id="card-JRDetail">
+                                    <div class="card-block p-2 ">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="">
+                                                <h5 class="m-0" style="font-size: 1.3em;">Residuos</h5>
+                                            </div>
+                                            <!-- <div class="col-6">
+                                                <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="card-block p-1 table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="dtJumboRollDetail" style="padding: 0 !important; margin: 0 !important;">
+                                                <thead class="">
+                                                <tr class="text-center">
+                                                    <th rowspan="2" class="text-center p-1"></th>
+                                                    <th rowspan="2" class="text-center p-1">
+                                                        <p> Residuos del pulper </p>
+                                                    </th>
+                                                    <th rowspan="2" class="text-center p-1">
+                                                        <p> Lavadora tetrapack</p>
+                                                    </th>
+                                                    <th colspan="2" rowspan="1" class="p-0">
+                                                        <p>Merma yankee Dry</p>
+                                                    </th>
+                                                <tr class="text-center">
+                                                    <th class="p-0">Y1</th>
+                                                    <th class="p-0">Y2</th>
+                                                </tr>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="text-center">
+                                                @foreach ($jumborollDT as $key => $jr)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->residuo_pulper }}" placeholder="Cantidad" id="rp"> </td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->lavadora_tetrapack }}" placeholder="Cantidad" id="lt"> </td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_1 }}" placeholder="Cantidad" id="mr-y1"></td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_2 }}" placeholder="Cantidad" id="mr-y2"></td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                            <button class="mt-5 btn btn-success float-right" id="btnJRdetail">Guardar</button>
+                                            <!-- <button class="btn btn-danger float-right" id="quitRowdtBATH">Quitar</button>  -->
+                                            <!-- <button class="btn btn-light add-row-dt-bach float-right">Agregar</button> -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- [ Main Content ] end -->

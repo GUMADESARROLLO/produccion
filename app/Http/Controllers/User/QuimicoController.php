@@ -30,12 +30,13 @@ class QuimicoController extends Controller
     {
 
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => 'El :attribute es un campo requerido',
+            'unique' => 'El :attribute es un dato unico'
         );
 
         $validator = Validator::make($request->all(), [
             'descripcion' => 'required|max:100',
-            'codigo'        => 'required|max:20',
+            'codigo'        => 'required|max:20|unique:Quimicos',
             'unidad'        => 'required|max:20'
         ], $messages);
 
@@ -71,7 +72,7 @@ class QuimicoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'idQuimico' =>'required',
-            'codigo' =>'required|max:20',
+            'codigo' =>'required|max:20|unique:Quimicos',
             'descripcion' => 'required|max:100',
             'unidad' => 'required|max:100'
         ], $messages);
