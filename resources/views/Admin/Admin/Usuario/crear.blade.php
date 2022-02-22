@@ -41,36 +41,49 @@
                                     <div class="card-block">
                                         <form method="post" action="{{url('usuario/guardar')}}">
                                             {{ csrf_field() }}
-                                            <div class="form-group">
-                                                <label for="nombre">Nombres</label>
-                                                <input type="text" class="form-control" name="nombre" id="nombre">
-                                                <small id="nombreHelp" class="form-text text-muted">Escriba su unico nombre o sus dos nombres</small>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="nombre">Nombres</label>
+                                                        <input type="text" class="form-control" name="nombre" id="nombre">
+                                                        <small id="nombreHelp" class="form-text text-muted">Escriba su unico nombre o sus dos nombres</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="apellido">Apellidos</label>
+                                                        <input type="text" class="form-control" name="apellido" id="apellido">
+                                                        <small id="apellidoHelp" class="form-text text-muted">Escriba su apellido o sus dos apellidos</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="username">Usuario</label>
+                                                        <input type="text" class="form-control" name="username" id="username">
+                                                        <small id="usernameHelp" class="form-text text-muted">Escriba un nombre de usuario</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="password">Contraseña</label>
+                                                        <input type="text" class="form-control" name="password" id="password">
+                                                        <small id="passwordHelp" class="form-text text-muted">Escriba su contraseña</small>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="apellido">Apellidos</label>
-                                                <input type="text" class="form-control" name="apellido" id="apellido">
-                                                <small id="apellidoHelp" class="form-text text-muted">Escriba su apellido o sus dos apellidos</small>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="rol">Seleccione un rol</label>
+                                                        <select class="form-control" id="rol_id" name="rol_id">
+                                                            <option>Seleccione un rol</option>
+                                                            @foreach ($rol as $rol)
+                                                                <option value="{{ $rol['id'] }}">{{ $rol['descripcion'] }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="username">Usuario</label>
-                                                <input type="text" class="form-control" name="username" id="username">
-                                                <small id="usernameHelp" class="form-text text-muted">Escriba un nombre de usuario</small>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password">Contraseña</label>
-                                                <input type="text" class="form-control" name="password" id="password">
-                                                <small id="passwordHelp" class="form-text text-muted">Escriba su contraseña</small>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rol">Seleccione un rol</label>
-                                                <select class="form-control" id="rol_id" name="rol_id">
-                                                    <option>Seleccione un rol</option>
-                                                    @foreach ($rol as $rol)
-                                                    <option value="{{ $rol['id'] }}">{{ $rol['descripcion'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
                                             <button type="submit" class="btn btn-primary">Enviar</button>
                                         </form>
                                     </div>

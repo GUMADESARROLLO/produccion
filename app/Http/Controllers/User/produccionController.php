@@ -29,7 +29,7 @@ class produccionController extends Controller
     {
         $messages = array(
             'required' => 'El :attribute es un campo requerido',
-            'unique' => 'El :attribute es un campo unico'
+            'unique' => 'El :attribute es un dato unico'
         );
 
         $validator = Validator::make($request->all(), [
@@ -41,14 +41,33 @@ class produccionController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        $productos = new productos();
-        $productos->codigo = $request->codigo;
-        $productos->nombre = $request->nombre;
-        $productos->descripcion = $request->descripcion;
-        $productos->unidad = $request->unidad;
-        $productos->estado = 1;
-        $productos->save();
+        $success = false;
+        try {
+            DB::beginTransaction();
+            $productos = new productos();
+            $productos->codigo = $request->codigo;
+            $productos->nombre = $request->nombre;
+            $productos->descripcion = $request->descripcion;
+            $productos->unidad = $request->unidad;
+            $productos->estado = 1;
+            $productos->save();
 
+            $success = true;
+            if ($success) {
+                DB::commit();
+            }
+            //DB::commit();
+            //return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+        } catch (Exception $e) {
+            DB::rollback();
+            $success = false;
+            //return ["error" => $e->getMessage()];
+            return redirect()->back()->with('message-error', 'Ocurrio un error');
+            //$mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            //return response()->json($mensaje);
+        }
+        //return ["success" => "Data Inserted"];
         return redirect()->back()->with('message-success', 'Se guardo con exito :)');
     }
 

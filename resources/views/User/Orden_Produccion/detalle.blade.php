@@ -336,7 +336,7 @@
                         </div>
                     </div>
 
-                    
+
 
                 </div>
                 <div class="card card-bordered card-full">
@@ -361,7 +361,7 @@
                                 <div class="simplebar-wrapper" style="margin: 0px;">
                                     <div class="simplebar-mask">
                                         <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
+                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%;">
                                                 <div class="simplebar-content" style="padding: 0px;">
                                                     <table class="table table-hover" id="dtBachadasxdias">
                                                         <thead>
@@ -431,7 +431,7 @@
                                 <div class="simplebar-wrapper" style="margin: 0px;">
                                     <div class="simplebar-mask">
                                         <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto;">
                                                 <div class="simplebar-content" style="padding: 0px;">
                                                     <table class="table table-hover" id="dtBachadasxdias">
                                                         <thead>
