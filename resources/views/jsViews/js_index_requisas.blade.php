@@ -7,7 +7,7 @@
             "url": "getRequisas",
             'dataSrc': '',
         },
-        "info": false,
+        "info": true,
         "order": [[ 0, "desc" ]],
         "pagingType": "full",
         "info": false,
