@@ -15,8 +15,8 @@
                                     <h3 class="nk-block-title page-title">ORDEN NO.{{ $orden->numOrden }}</h3>
                                     <div class="nk-block-des text-soft">
                                         <ul class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                            <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                            <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                            <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                             <li class="breadcrumb-item"><a href="{{url('/orden-produccion')}}">Ordenes Produccion</a></li>
                                             <li class="breadcrumb-item"><a href="javascript:">Detalle</a></li>
                                         </ul>
@@ -120,15 +120,18 @@
                                                     <h6 class="title">Consumo Electricidad Kw/Ton</h6>
                                                 </div>
                                             </div>
+
                                             <div class="card-amount">
                                                 <!--<span class="amount">-->
-                                                @if($orden->estandar_electricidad > 560)
-                                                    <span class="amount" style="color: red">{{ number_format($orden->estandar_electricidad,2) }} </span>
+                                                @if ($orden->estandar_electricidad > 740)
+                                                    <span class="amount" style="color: red">{{ number_format($orden->estandar_electricidad,2) }} Kw/Ton</span>
+                                                @elseif ($orden->estandar_electricidad> 0 && $orden->estandar_electricidad < 740)
+                                                    <span class="amount" style="color: green">{{ number_format($orden->estandar_electricidad,2) }} Kw/Ton</span>
                                                 @else
-                                                    <span class="amount">{{ number_format($orden->estandar_electricidad,2) }} </span>
+                                                    <span class="amount" style="color: black">{{ number_format($orden->estandar_electricidad,2) }} </span>
                                                 @endif
                                                 <div class="amount-sm">- <small>-</small></div>
-                                                <!--</span>-->
+                                            <!--</span>-->
                                             </div>
                                             <div class="card-stats">
                                                 <div class="card-stats-group g-2">
@@ -160,7 +163,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-amount">
-                                                <span class="amount"> <span class="currency">{{ number_format($orden->consumoGas['total'],2) }}</ Glns</span>
+                                                <span class="amount"> <span class="currency">{{ number_format($orden->consumoGas['total'],2) }} Glns</span>
                                                 </span>
                                                 <div class="amount-sm">- <small>-</small></div>
                                             </div>
@@ -173,15 +176,15 @@
                                                     <div class="card-stats-data">
                                                         <div class="title">Consu. Real </div>
                                                         <!--<div class="amount">-->
-                                                        @if((($orden->consumoGas['total']/$orden->produccionTotal) * 1000)>145)
-                                                            <div class="amount" style="color: red">
-                                                                {{number_format((($orden->consumoGas['total']/$orden->produccionTotal) * 1000),2)}}
-                                                            </div>
+                                                        @if ($orden->estandar_gas > 145)
+                                                            <div class="amount" style="color: red">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
+                                                        @elseif ($orden->estandar_gas > 0 && $orden->estandar_gas < 145)
+                                                            <div class="amount" style="color: green">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
                                                         @else
-                                                            <div class="amount">
-                                                                {{number_format((($orden->consumoGas['total']/$orden->produccionTotal) * 1000),2)}}
-                                                            </div>
+                                                            <div class="amount" style="color: black">{{ number_format($orden->estandar_gas,2) }} Glns/Ton</div>
                                                         @endif
+                                                    <!--</div>-->
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
