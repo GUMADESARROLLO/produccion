@@ -41,10 +41,11 @@
                                             <button class="btn btn-danger float-right"
                                                     id="btnactualizar">Actualizar
                                             </button>
-                                            <button class="btn btn-outline-primary btn-sm float-right"
-                                            ><a href="{{Request::root(('requisas/create'))}}"
-                                                class="" id="btnrequisa">Solicitar Requisa</a>
-                                            </button>
+
+                                            <a href="{{Request::root(('requisas/create'))}}"
+                                               class="btn btn-primary btn-sm float-right" id="btnrequisa">Solicitar
+                                                Requisa</a>
+
                                         </div>
 
                                         @if (session()->has('message-success'))

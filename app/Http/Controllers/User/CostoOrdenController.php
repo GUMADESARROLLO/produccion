@@ -9,8 +9,6 @@ use App\Models\DetalleOrden;
 use App\Models\TipoCambio;
 use App\Models\orden_produccion;
 use App\Models\DetalleCostoSubtotal;
-use App\Models\productos;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -137,7 +135,7 @@ class CostoOrdenController extends Controller
     public function guardarHrasProd(Request $request)
     {
 
-        $numOrden = intval($request->input('codigo'));
+        $numOrden = $request->input('codigo');
 
         orden_produccion::where('numOrden', $numOrden)
             ->update([

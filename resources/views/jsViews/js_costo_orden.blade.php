@@ -198,13 +198,13 @@
                 type: 'post',
                 async: true,
                 success: function(resultado) {
-                    alert("Las horas han sido agregadas correctamente");
+                    mensaje("Las horas han sido agregadas correctamente", "success");
                 }
             }).done(function(data) {
                 $("#formdataord").submit();
             });
         } else {
-            alert('Digite los horas trabajadas para cada yankee')
+            mensaje('Digite las horas trabajadas para cada yankee', 'info')
         }
     });
 
@@ -252,8 +252,9 @@
                 tasaCambio: tasaCambio,
             },
             success: function(response) {
-                mensaje(response.responseText, 'success');
+                //mensaje(response.responseText, 'success');
                 $('#txtTasaCambio').text(tasaCambio);
+                mensaje("El tipo de cambio ha sido agregado correctamente", "success");
             },
             error: function() {}
         })

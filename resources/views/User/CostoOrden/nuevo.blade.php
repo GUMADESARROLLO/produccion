@@ -17,9 +17,9 @@
                                         <h5 class="m-b-10">Nuevo Costo por Orden</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
 
                                         <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de ordenes</a>
                                         </li>
@@ -63,7 +63,7 @@
                                             <form method="post" action="{{url('costo-orden/guardar')}}">
                                                 {{ csrf_field() }}
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="num_Orden"># de la orden</label>
                                                             <select class="form-control" name="num_Orden" id="num_Orden">
@@ -76,9 +76,7 @@
                                                                 el # de la orden</small>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="costo_orden">Tipo de costo</label>
                                                             <select class="form-control" name="costo_orden" id="costo_orden">
@@ -91,10 +89,7 @@
                                                                 la descripcion del costo</small>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="cantidad">Cantidad</label>
                                                             <input type="text" class="form-control" name="cantidad"
@@ -103,9 +98,7 @@
                                                                 la cantidad</small>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="costo_unitario">Costo Unitario</label>
                                                             <input type="text" class="form-control"

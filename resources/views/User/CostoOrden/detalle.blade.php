@@ -17,9 +17,9 @@
                                     <h5 class="m-b-10">Lista Costos por Orden</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                     </li>
-                                    <!--<li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de
                                             ordenes</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:"> Lista de Costos por Orden</a>
@@ -59,7 +59,7 @@
                                                 <thead>
                                                     <tr class="text-center">
 
-                                                        <th>ID</th>
+                                                        <th>#</th>
                                                         <th>DESCRIPCIÓN</th>
                                                         <th>UNIDAD DE MEDIDA</th>
                                                         <th>CANTIDAD</th>
@@ -79,8 +79,8 @@
 
 
                                                         <td class="dt-center">
-                                                            <a href="#!" onclick="deleteCostoOrden()"><i
-                                                                    class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
+                                                            <!--<a href="#!" onclick="deleteCostoOrden()"><i
+                                                                    class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>-->
                                                             <a href="editar/{{ $co->id }}" target="_blank"
                                                                 id="btnEditar">
                                                                 <i

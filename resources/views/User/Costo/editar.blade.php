@@ -17,9 +17,9 @@
                                         <h5 class="m-b-10">Editar Costo</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                         <li class="breadcrumb-item"><a href="{{url('/costos')}}">Costos</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Editar Costo</a></li>
                                     </ul>
@@ -57,7 +57,7 @@
                                                 {{ csrf_field() }}
                                                 @foreach ($costo as $c)
                                                     <div class="row">
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-4" hidden>
                                                             <div class="form-group">
                                                                 <label for="id">Id del Costo</label>
                                                                 <input type="text" readonly class="form-control"
@@ -66,7 +66,7 @@
                                                                     del Costo</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label for="codigo">Codigo del Costo</label>
                                                                 <input type="text" class="form-control text-uppercase"
@@ -76,9 +76,7 @@
                                                                     el nuevo codigo del costo</small>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label for="descripcion">Descripcion del costo</label>
                                                                 <input type="text" class="form-control"
@@ -89,7 +87,7 @@
                                                                     del Costo</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label for="unidad_medida">Unidad de medida del
                                                                     Costo</label>
