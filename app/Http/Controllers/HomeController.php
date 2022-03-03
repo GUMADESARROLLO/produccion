@@ -53,7 +53,7 @@ class HomeController extends Controller
             $detail[$i]['prod_real'] = number_format($d['prod_real'],2);
             $detail[$i]['prod_real_ton'] = number_format(($d['prod_real']/1000),2);
             $detail[$i]['costo_total'] = number_format($d['costo_total'],2);
-            $detail[$i]['tipo_cambio'] = number_format($d['tipo_cambio'],2);
+            $detail[$i]['tipo_cambio'] = number_format($d['tipo_cambio'],4);
 
             if ($d['tipo_cambio'] == 0) {
                 $detail[$i]['CTotal_dollar'] =  number_format(0, 4);
@@ -62,6 +62,7 @@ class HomeController extends Controller
                 $detail[$i]['CTotal_dollar'] = number_format(($d['costo_total'] / $d['tipo_cambio']), 4);
                 $detail[$i]['CTon_dollar'] =    number_format((($d['costo_total']/$d['tipo_cambio'])/($d['prod_real']/1000)),4);
             }
+            $i++;
         }
         return response()->json($detail);
     }

@@ -71,7 +71,7 @@
                                                 <tbody>
                                                     @foreach ($costoOrdenL as $key => $co)
                                                     <tr class="unread">
-                                                        <td class="dt-center">{{ $co->costo_id }}</td>
+                                                        <td class="dt-center">{{ $key+1 }}</td>
                                                         <td class="dt-center">{{ $co->descripcion }}</td>
                                                         <td class="dt-center">{{ $co->unidad_medida }}</td>
                                                         <td class="dt-center">{{ $co->cantidad }}</td>

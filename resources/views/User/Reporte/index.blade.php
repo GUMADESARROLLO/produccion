@@ -211,7 +211,7 @@
                                                 @if( is_null($pulpeo) )
                                                 <input value="" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @else
-                                                <input value="{{ $pulpeo->tiempoPulpeo }} min" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
+                                                <input value="{{ $pulpeo->tiempoPulpeo }}" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @endif
                                             </div>
                                         </div>
@@ -266,7 +266,7 @@
                                                 @if( is_null($lavado) )
                                                 <input value="" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @else
-                                                <input value="{{ $lavado->tiempoLavado }} min" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
+                                                <input value="{{ $lavado->tiempoLavado }}" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @endif
                                             </div>
                                         </div>
@@ -350,16 +350,16 @@
                                                             <input type="text" class="input-fecha-dos form-control" id="fch-tm-{{ $tm->id }}" value="{{ $tm->fecha }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-dia-{{ $tm->id }}" value="{{ $tm->y1_dia }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-dia-{{ $tm->id }}" value="{{ $tm->y1_dia }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-dia-{{ $tm->id }}" value="{{ $tm->y2_dia }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-dia-{{ $tm->id }}" value="{{ $tm->y2_dia }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-noc-{{ $tm->id }}" value="{{ $tm->y1_noche }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-noc-{{ $tm->id }}" value="{{ $tm->y1_noche }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-noc-{{ $tm->id }}" value="{{ $tm->y2_noche }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-noc-{{ $tm->id }}" value="{{ $tm->y2_noche }}">
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -456,28 +456,28 @@
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[0]['dia'] }} Hrs
+                                                                        {{ $yk_hrasEftvs[0]['dia'] }} 
                                                                     </span>
                                                             </div>
                                                         </th>
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[1]['dia'] }} Hrs
+                                                                        {{ $yk_hrasEftvs[1]['dia'] }} 
                                                                     </span>
                                                             </div>
                                                         </th>
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[0]['noche'] }} Hrs
+                                                                        {{ $yk_hrasEftvs[0]['noche'] }} 
                                                                     </span>
                                                             </div>
                                                         </th>
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[1]['noche'] }} Hrs
+                                                                        {{ $yk_hrasEftvs[1]['noche'] }} 
                                                                     </span>
                                                             </div>
                                                         </th>
