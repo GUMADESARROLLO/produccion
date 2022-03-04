@@ -14,7 +14,10 @@ class TipoCambioController extends Controller
 
     public function getTipoCambio($date){
         $json = array();
+
+
         $date_tc = date('Y-m-d H:i:s'.'.000', strtotime($date));
+        
         $TipoCambio = TipoCambio::where('FECHA', '=', $date_tc)->pluck('MONTO')->first();
         $json[0]['TipoCambio'] = number_format($TipoCambio,4);
 
