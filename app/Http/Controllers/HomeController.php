@@ -61,7 +61,7 @@ class HomeController extends Controller
             } else {
                 $detail[$i]['CTotal_dollar'] = number_format(($d['costo_total'] / $d['tipo_cambio']), 4);
                 $detail[$i]['CTon_dollar'] =    number_format((($d['costo_total']/$d['tipo_cambio'])/($d['prod_real']/1000)),4);
-                $i++;
+                //$i++;
             }
             $i++;
         }
