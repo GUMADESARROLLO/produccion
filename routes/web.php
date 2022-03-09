@@ -207,6 +207,12 @@ Route::post('/updateRequisas', 'User\RequisaController@updateRequisa')->name('/u
 
 Route::get('detalleHome', 'HomeController@getDetalleHome')->name('detalleHome');
 
+//PROCESO DE CONVERSIÓN
+Route::get('/conversion', 'User\ProcesoConversionController@index')->name('conversion');
+Route::get('/getOrdenes', 'User\ProcesoConversionController@getOrdenes')->name('/getOrdenes');
+Route::post('/guardar', 'User\ProcesoConversionController@guardar')->name('/guardar');
+Route::get('/editar', 'User\ProcesoConversionController@editar')->name('/editar');
+
 
 
 Auth::routes();
