@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-@include('jsViews.js_ordenproduccion')
+@include('jsViews.js_ordenproduccionindex')
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
@@ -47,7 +47,7 @@
                                     <div class="card-block px-0 py-3 ml-4">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="tblOrder_produccion">
-                                                
+
                                             </table>
                                         </div>
                                     </div>

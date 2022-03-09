@@ -9,13 +9,13 @@
     var base_url = window.location.origin + '/' + window.location.pathname.split('/')[1] + '/';
 
     $(document).ready(function() {
-        
+
         /********INICIALIZANDO LOS DATATABLES - START ********/
         $(function() {
             $('.datetimepicker_').datetimepicker({
                 //format: 'LT',
                 //autoClose:'true',
-                
+
                 format: 'HH:mm',
                 inline: true,
                 // pickerPosition: "top-left",
@@ -304,12 +304,13 @@
             gsm___ = parseInt($('#cant-gsm-' + last_row_[0]).val())
             yank = ($('#yankee-' + last_row_[0]).val() == 1) ? 2 : 1;
         }
+        console.log(num_vinieta);
 
         dtJRoll.row.add([
             indicador_4,
-            `<input class="input-dt" type="text" value="` + num_vinieta + `" placeholder="Cantidad" id="vineta-` + indicador_4 + `">`,
+            `<input class="input-dt" type="text" value="` + 0 + `" placeholder="Codigo" id="vineta-` + indicador_4 + `">`,
             `<input class="input-dt" type="text" placeholder="Cantidad" id="cant-kg-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" value="` + gsm___ + `" placeholder="Cantidad" id="cant-gsm-` + indicador_4 + `">`,
+            `<input class="input-dt" type="text" value="` + 0 + `" placeholder="Cantidad" id="cant-gsm-` + indicador_4 + `">`,
             `<input class="input-dt" type="text" value="` + yank + `" placeholder="Cantidad" id="yankee-` + indicador_4 + `">`,
         ]).draw(false);
     });
@@ -1011,7 +1012,7 @@
 
                 i++;
             });
-            alert(array);
+            //alert(array);
             $.ajax({
                 url: base_url + "guardar-hrasEft",
                 data: {

@@ -34,9 +34,9 @@
                 },
             },
             "columns": [{
-                    "title": "NO. ORDEN",
-                    "data": "numOrden"
-                },
+                "title": "NO. ORDEN",
+                "data": "numOrden"
+            },
                 {
                     "title": "PRODUCTO",
                     "data": "producto"
@@ -73,15 +73,15 @@
                     "data": "numOrden",
                     "render": function(data, type, row) {
                         return  '<a href="orden-produccion/reporte/' + data + '" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>' +
-                                '<a href="orden-produccion/editar/' + data + '" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>' +
-                                '<a href="orden-produccion/detalle/' + data + '" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
+                            '<a href="orden-produccion/editar/' + data + '" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>' +
+                            '<a href="orden-produccion/detalle/' + data + '" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
                     }
                 },
             ],
             "columnDefs": [{
-                    "targets": [0],
-                    "className": "dt-center",
-                }
+                "targets": [0],
+                "className": "dt-center",
+            }
             ]
         });
 
@@ -299,7 +299,7 @@
         //alert(codigo);
         var i = 0;
         /********** variables de Fibras ***********/
-        //var last_row = dtMPD.row(":last").data();
+            //var last_row = dtMPD.row(":last").data();
         var arrayf = [];
         var array2f = [];
         var array3f = [];
@@ -381,7 +381,7 @@
         var codigo = $('#numOrden').val();
         var i = 0;
         /********** variables de Quimicos ***********/
-        //var last_rowq = dtQM.row(":last").data();
+            //var last_rowq = dtQM.row(":last").data();
         var arrayq = [];
         var array2q = [];
         var array3q = [];
