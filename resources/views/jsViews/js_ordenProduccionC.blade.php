@@ -1,20 +1,48 @@
 <script type="text/javascript">
     /********** Guardar datos de orden de produccion ***********/
-    $(document).on('click', '#btnguardar', function(e) {
-    e.preventDefault();
-    /*let codigo = $('#numOrden').val();
-    console.log(codigo);
-    let fecha1 = $("#fecha01").val();
-    let fecha2 = $("#fecha02").val();
-    let horaInicio = $("#hora01").val();
-    let horaFin = $("#hora02").val();
-    let horasT = $("#hrsTrabajadas").val();
-    let data = [];*/
-    if (validarForm(e) !== true) {
-        return false
-    } else {
-        $("#formdataord").submit();
-    }
+    /*$(document).on('click', '#btnguardar', function(e) {
+        e.preventDefault();
+        let codigo = $('#numOrden').val();
+        console.log(codigo);
+        let fecha1 = $("#fecha01").val();
+        let fecha2 = $("#fecha02").val();
+        let horaInicio = $("#hora01").val();
+        let horaFin = $("#hora02").val();
+        let horasT = $("#hrsTrabajadas").val();
+        let data = [];
+        if (validarForm(e) !== true) {
+            return false
+        } else {
+            $("#formdataord").submit();
+        }
+    });*/
+    // boton de registrar
+    $('#btnguardar').click(function(e) {
+
+        if (validarForm(e) !== true) {
+            return false
+        }
+        var dataString = $('#formdataord').serialize(); // carga todos los campos para enviarlos
+        // AJAX
+        $.ajax({
+            type: "POST",
+            url: "{{url('orden-produccion/guardar') }}",
+            data: dataString,
+            success: function(response) {
+                 if (response==true) {
+                     mensaje('No se guardo con exito :(, es una orden duplicada, por favor escriba otra', 'warning');
+                 }else{
+                     mensaje('Datos guardados', 'success');
+                }
+            },
+            error: function(response) {
+                mensaje('Algo salio mal :(' + response, 'error');
+            }
+        });
+            e.preventDefault();
+
+
+
     });
     /********** Guardar datos de orden de produccion ***********/
 
@@ -48,7 +76,7 @@
     });
 
     function validarForm(e) {
-        e.preventDefault();
+
         let codigo = $('#numOrden').val();
         let fecha1 = $("#fecha01").val();
         let fecha2 = $("#fecha02").val();
@@ -57,31 +85,37 @@
         let horasT = $("#hrsTrabajadas").val();
 
         if (fecha1 === '') {
+            e.preventDefault();
             mensaje("Debe ingresar una fecha inicial para la orden", "error");
             return false;
         }
 
         if (fecha2 === '') {
+            e.preventDefault();
             mensaje("Debe ingresar una fecha final para la orden", "error");
             return false;
         }
 
         if (horaInicio === '') {
+            e.preventDefault();
             mensaje("Debe ingresar una hora inicial para la orden", "error");
             return false;
         }
 
         if (horaFin === '') {
+            e.preventDefault();
             mensaje("Debe ingresar una hora final para la orden", "error");
             return false;
         }
 
         if (horasT === '') {
+            e.preventDefault();
             mensaje("Debe ingresar las horas trabajadas de la orden", "error");
             return false;
         }
 
         if (codigo === '') {
+            e.preventDefault();
             mensaje("Debe ingresar un numero de orden", "error");
             return false;
         }

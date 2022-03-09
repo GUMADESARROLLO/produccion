@@ -434,16 +434,16 @@
                                                             <input type="text" class="input-fecha-dos form-control" id="fch-hrftv-{{ $hf->id }}" value="{{ $hf->fecha }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-dia-{{ $hf->id }}" value="{{ $hf->y1_dia }}">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y1-dia-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y1_dia ))}}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-dia-{{ $hf->id }}" value="{{ $hf->y2_dia }}">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y2-dia-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y2_dia ))}}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-noc-{{ $hf->id }}" value="{{ $hf->y1_noche }}">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y1-noc-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y1_noche)) }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-noc-{{ $hf->id }}" value="{{ $hf->y2_noche }}">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y2-noc-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y2_noche ))}}">
                                                         </td>
                                                     </tr>
                                                     @endif
@@ -456,28 +456,28 @@
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[0]['dia'] }} 
+                                                                        {{ $yk_hrasEftvs[0]['dia'] }}
                                                                     </span>
                                                             </div>
                                                         </th>
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[1]['dia'] }} 
+                                                                        {{ $yk_hrasEftvs[1]['dia'] }}
                                                                     </span>
                                                             </div>
                                                         </th>
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[0]['noche'] }} 
+                                                                        {{ $yk_hrasEftvs[0]['noche'] }}
                                                                     </span>
                                                             </div>
                                                         </th>
                                                         <th>
                                                             <div class="mt-2">
                                                                     <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
-                                                                        {{ $yk_hrasEftvs[1]['noche'] }} 
+                                                                        {{ $yk_hrasEftvs[1]['noche'] }}
                                                                     </span>
                                                             </div>
                                                         </th>

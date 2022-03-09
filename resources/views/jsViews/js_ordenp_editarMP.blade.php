@@ -16,7 +16,7 @@
             "bfilter": false,
             "searching": false,
             "language": {
-                "emptyTable": `<p class="text-center">Agrega una fecha</p>`
+                "emptyTable": `<p class="text-center">Agrega una fibra</p>`
             },
             "columnDefs": [
                 {
@@ -32,7 +32,7 @@
 
     $(document).on('click', '#quitRowdtMP', function () {
         var select_row = dtMPD.row(".selected").data();
-        indexData = select_row[0];
+        var indexData = select_row[0];
 
         $.ajax({
             url: "../../eliminar-mp",
@@ -112,7 +112,7 @@
     });
 
 
-    /*$(document).on('click','#btnactualizar',function() {
+    $(document).on('click','#btnactualizar',function() {
         codigo = $('#numOrden').val();
         var last_row = dtMPD.row(":last").data();
         var array = new Array();
@@ -157,11 +157,11 @@
             });
 
         }
-    });*/
-
-    $(document).on('click', '#btnactualizar', function (data) {
-        $("#formdataord").submit();
     });
+
+    /*$(document).on('click', '#btnactualizar', function (data) {
+        $("#formdataord").submit();
+    });*/
 
     $(document).on('click', '#btnrequisa', function requi() {
         var numOrden = $("#numOrden").val();

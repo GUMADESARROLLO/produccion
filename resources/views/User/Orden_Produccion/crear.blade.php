@@ -147,7 +147,7 @@
                                     </div>
                                 </div>
 
-                                <!--<div class="row mt-3">
+                                <div class="row mt-3">
 
                                     <div class="col-xl-12">
                                         <div class="card">
@@ -185,7 +185,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="row mt-3">
@@ -226,8 +225,8 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>-->
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
