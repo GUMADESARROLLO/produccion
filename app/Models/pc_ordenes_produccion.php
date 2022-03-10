@@ -16,12 +16,11 @@ class pc_ordenes_produccion extends Model
 
     public static function guardar($data, $orden)
     {
-        $ordenExist = pc_ordenes_produccion::where('num_orden', $orden)->where('estado','A')->first();
+        $ordenExist = pc_ordenes_produccion::where('num_orden', $orden)->first();
 
         if ($ordenExist) {
             return 1;
         }
-
         try {
             DB::transaction(function () use ($data, $orden) {
 
@@ -35,7 +34,7 @@ class pc_ordenes_produccion extends Model
                     $orden->id_jr              =   $dataO['id_jr'];
                     $orden->fecha_hora_inicio  =   $dataO['fecha_hora_inicio'];
                     $orden->fecha_hora_final   =   $dataO['fecha_hora_final'];
-                    $orden->estado             =   'A';
+                    $orden->estado             =   'S';
                     $orden->save();
                 };
                 return response()->json($orden);
@@ -53,7 +52,7 @@ class pc_ordenes_produccion extends Model
             DB::transaction(function () use ($request) {
                 $id = $request->input('id');
                 $ordenes =   pc_ordenes_produccion::where('id',  $id )->update([
-                    'estado' => 'I',
+                    'estado' => 'N',
                 ]);
                 return response()->json($ordenes);
             });
@@ -62,5 +61,9 @@ class pc_ordenes_produccion extends Model
 
             return response()->json($mensaje);
         }
+    }
+
+    public static function cambiar_estado(){
+
     }
 }
