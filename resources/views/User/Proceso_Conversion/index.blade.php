@@ -17,8 +17,6 @@
 
     .dataTables_paginate a {
         padding: 0 10px;
-        /*border:1px solid #979797;*/
-        /* background: linear-gradient(to bottom, white 0%, #0F85FC 100%);*/
         margin-inline: 5px;
     }
 </style>
@@ -72,8 +70,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- [ modal proceso conversión] end -->
 
                                 <div class="modal fade modal-fullscreen" id="mdlAddOrden" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
