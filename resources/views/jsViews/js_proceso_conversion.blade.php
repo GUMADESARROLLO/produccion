@@ -50,7 +50,7 @@
                 },
                 {
                     "title": "HORAS TRABAJADAS",
-                    "data": "Hrs_trabjadas",
+                    "data": "Hrs_trabajadas",
                     "render": $.fn.dataTable.render.number(',', '.', 2)
                 },
                 {
@@ -122,7 +122,17 @@
         inicializaControlFecha();
         // $('#tblConversion > thead').addClass('bg-primary text-white');
     });
+    function Mostrar(gPosition) {
+        var table = $('#tblConversion').DataTable();
+        var row = table.rows().data();
 
+        const ArrayRows = Object.values(row);
+        var index = ArrayRows.findIndex(s => s.id == gPosition)
+        row = row[index]
+
+
+        window.location = "doc/" + row.num_orden;
+    }
     $('#btnAdd').on('click', function() {
         clearFields();
         $('#mdlAddOrden').modal('show');
@@ -188,7 +198,9 @@
             error: function(response) {
                 mensaje(response.responseText, 'error');
             }
-        })
+        }).done(function(data) {
+            location.reload();
+        });
     });
 
     function clearFields() {

@@ -1,14 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
 use App\Http\Controllers\Controller;
 use App\Models\detalle_pc_ordenes;
 use App\Models\pc_ordenes_produccion;
-use Illuminate\Support\Facades\DB;
-use Exception;
-
-
+use App\Models\ProcesoConversion;
 use Illuminate\Http\Request;
 
 
@@ -24,8 +20,12 @@ class ProcesoConversionController extends Controller
         return view('User.Proceso_Conversion.index');
     }
 
-    public function getOrdenes()
-    {
+    public function doc($Orden)
+    {        
+        return view('User.Proceso_Conversion.detalle',compact('Orden'));
+    }
+
+    public function getOrdenes(){
         $ordenes = detalle_pc_ordenes::getOrdenes();
         return response()->json($ordenes);
     }
@@ -44,4 +44,11 @@ class ProcesoConversionController extends Controller
         $response = pc_ordenes_produccion::eliminar($request);
         return response()->json($response);
     }
+
+    public function jsonInfoOrder($Orden){        
+        $obj = ProcesoConversion::getJson($Orden);
+        return response()->json($obj);
+    }
+    
+    
 }

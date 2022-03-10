@@ -22,8 +22,8 @@ class pc_ordenes_produccion extends Model
             return 1;
         }
         try {
-            DB::transaction(function () use ($data, $orden) {
-
+            DB::transaction(function () use ($data) {
+                
                 $array = array();
                 $i = 0;
                 $orden = new pc_ordenes_produccion();

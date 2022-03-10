@@ -2,12 +2,13 @@
 SELECT
 	T0.id,	
 	T0.num_orden,
+	T0.id_productor,
 	T1.nombre,
 	T0.fecha_hora_inicio,
 	T0.fecha_hora_final,
-	( UNIX_TIMESTAMP(T0.fecha_hora_final) - UNIX_TIMESTAMP(T0.fecha_hora_inicio) ) / 3600 AS Hrs_trabjadas,
-	(SELECT T2.PESO_PORCENT FROM view_proceso_seco_estadisticas T2 WHERE T2.num_orden = T0.num_orden AND T2.ID_ARTICULO =T0.id_jr) PESO_PORCENT,
-	(SELECT SUM(T1.PRODUCTO) FROM view_agrupado_detalle_requisas T1 WHERE T1.num_orden = T0.num_orden) TOTAL_BULTOS_UNDS
+	( UNIX_TIMESTAMP(T0.fecha_hora_final) - UNIX_TIMESTAMP(T0.fecha_hora_inicio) ) / 3600 AS Hrs_trabajadas,
+	IFNULL((SELECT T2.PESO_PORCENT FROM view_proceso_seco_estadisticas T2 WHERE T2.num_orden = T0.num_orden AND T2.ID_ARTICULO =T0.id_jr),0) PESO_PORCENT,
+	IFNULL((SELECT SUM(T1.PRODUCTO) FROM view_agrupado_detalle_requisas T1 WHERE T1.num_orden = T0.num_orden) ,0) TOTAL_BULTOS_UNDS
 FROM
 	pc_ordenes_produccion T0
 	INNER JOIN productos T1 ON T1.idProducto = T0.id_productor
@@ -35,7 +36,7 @@ FROM
 //VIEW_AGRUPADO_DETALLE_REQUISAS
 	SELECT	 
 		T0.num_orden,
-		T0.ID_ARTICULO,
+		T0.ARTICULO,
 		T0.DESCRIPCION_CORTA,
 		sum( if(  T0.ID_TIPO_REQUISA = '1', T0.CANTIDAD , 0 ) ) AS LP_INICIAL,		 
 		sum( if(  T0.ID_TIPO_REQUISA = '2', T0.CANTIDAD , 0 ) ) AS REQUISADO,		 
@@ -51,11 +52,11 @@ FROM
 
 
 
+
 //view_proceso_seco_estadisticas
-	SELECT
+SELECT
 		T0.num_orden,
 		T0.ID_ARTICULO,
-		T0.DESCRIPCION_CORTA,	
 		T0.DESCRIPCION_CORTA,( T0.LP_INICIAL + T0.REQUISADO ) REQUISA,
 		T0.LP_FINAL AS PISO,
 		(T0.MERMA / (( T0.LP_INICIAL + ( T0.REQUISADO ) - T0.LP_FINAL - T0.MERMA ) + T0.MERMA) *100) AS MERMA_PORCENT,
@@ -63,4 +64,4 @@ FROM
 		( T0.LP_INICIAL + ( T0.REQUISADO ) - T0.LP_FINAL - T0.MERMA )  / (SELECT SUM(T1.PRODUCTO) FROM view_agrupado_detalle_requisas T1 WHERE T1.num_orden = T0.num_orden) PESO_PORCENT,	
 		T0.MERMA
 	FROM
-		VIEW_AGRUPADO_DETALLE_REQUISAS T0 
+		VIEW_AGRUPADO_DETALLE_REQUISAS T0 WHERE ( T0.LP_INICIAL + T0.REQUISADO ) > 0

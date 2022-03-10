@@ -84,7 +84,7 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <p class="text-muted m-2">Orden de Producción No. </p>
-                                                        <input type="text" class="form-control" id="num_orden">
+                                                        <input type="text" class="form-control" id="num_orden" placeholder="C-0000-00">
                                                         <small class="">Digite el número de orden</small>
                                                     </div>
                                                     <div class="form-group col-md-6">
