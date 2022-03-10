@@ -44,7 +44,6 @@ class ProcesoConversionController extends Controller
         $response = pc_ordenes_produccion::eliminar($request);
         return response()->json($response);
     }
-
     public function jsonInfoOrder($Orden){        
         $obj = ProcesoConversion::getJson($Orden);
         return response()->json($obj);

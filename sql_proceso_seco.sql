@@ -12,6 +12,7 @@ SELECT
 FROM
 	pc_ordenes_produccion T0
 	INNER JOIN productos T1 ON T1.idProducto = T0.id_productor
+	WHERE T0.estado='S'
 
 
 // view_proceso_seco_data_meteria_prima

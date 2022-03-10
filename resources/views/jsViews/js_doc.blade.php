@@ -4,9 +4,7 @@
     $(document).ready(function() {
 
         id_orden = $("#id_num_orden").text()
-        console.log(id_orden)
-        
-
+      
         $('#tbl_search_producto').on('keyup', function() {
             var table = $('#tblProductos').DataTable();
             table.search(this.value).draw();
@@ -39,7 +37,7 @@
                         
                     break;
                     case 'dtaMateria':
-                        $('#tblMateriaPrima').DataTable({
+                        let table_materia =    $('#tblMateriaPrima').DataTable({
                             "data" : item['data'],
                             "destroy": true,
                             "info": false,
@@ -76,6 +74,17 @@
 
                     $("#tblMateriaPrima_length").hide();
                     $("#tblMateriaPrima_filter").hide();
+
+                    $('#tblMateriaPrima tbody').on('click', "tr", function() {
+                        
+
+                        var data = table_materia.row( this ).data();
+
+                        clearFields();
+                        $('#mdlAddOrden').modal('show');
+
+        
+                    });
                     break;
                     case 'dtaProducto':
                     let table_producto =   $('#tblProductos').DataTable({
@@ -133,8 +142,6 @@
 
                         var data = table_producto.row( this ).data();
 
-                        console.log(data)
-
                         Swal.fire({
                             title: data.DESCRIPCION_CORTA,
                             text: "Ingrese la cantidad de Bultos",
@@ -186,8 +193,7 @@
     });
 
     $('#btnAdd').on('click', function() {
-        clearFields();
-        $('#mdlAddOrden').modal('show');
+      
     });
 
     $('#btnSave').on('click', function() {

@@ -223,11 +223,7 @@
                                                 <i class="material-icons text-black ml-1">search</i>
                                             </span>
                                             <input type="text" id="tbl_search_materia_prima" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                            <div class="input-group-prepend" id="btnAdd">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <i class="material-icons icon-blue ml-1">add</i>
-                                                </span>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">

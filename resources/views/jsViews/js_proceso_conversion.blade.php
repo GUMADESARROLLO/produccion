@@ -122,7 +122,7 @@
         inicializaControlFecha();
         // $('#tblConversion > thead').addClass('bg-primary text-white');
     });
-    function Mostrar(gPosition) {
+    function Editar(gPosition) {
         var table = $('#tblConversion').DataTable();
         var row = table.rows().data();
 
