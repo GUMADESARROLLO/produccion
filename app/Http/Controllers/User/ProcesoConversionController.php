@@ -30,7 +30,9 @@ class ProcesoConversionController extends Controller
     public function guardar(Request $request){
         
         $data = $request->input('data');
-        $orden = pc_ordenes_produccion::guardar($data);
+        $numOrden = $request->input('num_orden');
+
+        $orden = pc_ordenes_produccion::guardar($data,$numOrden);
         return response()->json($orden);
     }
     
