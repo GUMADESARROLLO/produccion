@@ -11,7 +11,7 @@ class pc_ordenes_produccion extends Model
 {
 
     protected $table = "pc_ordenes_produccion";
-    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final'];
+    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final','estado'];
     public    $timestamps = false;
 
     public static function guardar($data, $orden)
@@ -21,7 +21,7 @@ class pc_ordenes_produccion extends Model
         if ($ordenExist) {
             return 1;
         }
-        
+
         try {
             DB::transaction(function () use ($data, $orden) {
 
@@ -35,9 +35,27 @@ class pc_ordenes_produccion extends Model
                     $orden->id_jr              =   $dataO['id_jr'];
                     $orden->fecha_hora_inicio  =   $dataO['fecha_hora_inicio'];
                     $orden->fecha_hora_final   =   $dataO['fecha_hora_final'];
+                    $orden->estado             =   'A';
                     $orden->save();
                 };
                 return response()->json($orden);
+            });
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return response()->json($mensaje);
+        }
+    }
+
+    public static function eliminar(Request $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $id = $request->input('id');
+                $ordenes =   pc_ordenes_produccion::where('id',  $id )->update([
+                    'estado' => 'I',
+                ]);
+                return response()->json($ordenes);
             });
         } catch (Exception $e) {
             $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";

@@ -13,6 +13,9 @@
             },
             "destroy": true,
             "info": false,
+            "order": [
+                [1, "desc"]
+            ],
             "language": {
                 "zeroRecords": "NO HAY COINCIDENCIAS",
                 "paginate": {
@@ -49,7 +52,6 @@
                     "title": "HORAS TRABAJADAS",
                     "data": "Hrs_trabjadas",
                     "render": $.fn.dataTable.render.number(',', '.', 2)
-
                 },
                 {
                     "title": "PESO %",
@@ -57,7 +59,7 @@
                     "render": function(data, type, row) {
                         if (data == null) {
                             return $.fn.dataTable.render.number(',', '.', 2).display(0);
-                        }else{
+                        } else {
                             return $.fn.dataTable.render.number(',', '.', 2).display(data);
 
                         }
@@ -70,19 +72,17 @@
                     "render": function(data, type, row) {
                         if (data == null) {
                             return $.fn.dataTable.render.number(',', '.', 2).display(0);
-                        }else{
+                        } else {
                             return $.fn.dataTable.render.number(',', '.', 2).display(data);
                         }
                     }
-
                 },
                 {
                     "title": "ACCIONES",
                     "data": "id",
                     "render": function(data, type, row, meta) {
                         return '<div class="row justify-content-center">' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-eye text-c-blue f-30 m-r-10" onclick="Mostrar(' + row.id + ')"></i></div>' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-edit-2 text-c-purple f-30 m-r-10" onclick="Editar(' + row.id + ')"></i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-edit-2 text-c-blue f-30 m-r-10" onclick="Editar(' + row.id + ')"></i></div>' +
                             '<div class="col-3 d-flex justify-content-center"><i class="feather icon-trash-2 text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
                             '</div>'
                     }
@@ -176,17 +176,19 @@
             success: function(response) {
                 if (response == 1) {
                     mensaje('Orden duplicada, por favor verifique el N°. Orden', 'warning');
+                   
                 } else {
                     mensaje(response.responseText, 'success');
                     $('#mdlAddOrden').modal('hide');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 }
             },
             error: function(response) {
                 mensaje(response.responseText, 'error');
             }
-        }).done(function(data) {
-
-        });
+        })
     });
 
     function clearFields() {
@@ -196,5 +198,24 @@
         $('#hora_inicial').val('');
         $('#id_select_producto').val('');
 
+    }
+
+    function Eliminar(id) {
+        $.ajax({
+            url: 'eliminar',
+            data: {
+                id: id
+            },
+            type: 'post',
+            async: true,
+            success: function(response) {
+                mensaje(response.responseText, 'success');
+            },
+            error: function(response) {
+                mensaje(response.responseText, 'error');
+            }
+        }).done(function(data) {
+            location.reload();
+        });
     }
 </script>
