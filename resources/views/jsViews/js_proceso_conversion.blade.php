@@ -13,6 +13,9 @@
             },
             "destroy": true,
             "info": false,
+            "order": [
+                [1, "desc"]
+            ],
             "language": {
                 "zeroRecords": "NO HAY COINCIDENCIAS",
                 "paginate": {
@@ -47,26 +50,39 @@
                 },
                 {
                     "title": "HORAS TRABAJADAS",
-                    "data": "Hrs_trabjadas"
+                    "data": "Hrs_trabajadas",
+                    "render": $.fn.dataTable.render.number(',', '.', 2)
                 },
                 {
                     "title": "PESO %",
                     "data": "PESO_PORCENT",
-                    "render": $.fn.dataTable.render.number(',', '.', 2)
+                    "render": function(data, type, row) {
+                        if (data == null) {
+                            return $.fn.dataTable.render.number(',', '.', 2).display(0);
+                        } else {
+                            return $.fn.dataTable.render.number(',', '.', 2).display(data);
+
+                        }
+                    }
 
                 },
                 {
                     "title": "TOTAL DE BULTOS (UNDS)",
                     "data": "TOTAL_BULTOS_UNDS",
-                    "render": $.fn.dataTable.render.number(',', '.', 2, )
+                    "render": function(data, type, row) {
+                        if (data == null) {
+                            return $.fn.dataTable.render.number(',', '.', 2).display(0);
+                        } else {
+                            return $.fn.dataTable.render.number(',', '.', 2).display(data);
+                        }
+                    }
                 },
                 {
                     "title": "ACCIONES",
                     "data": "id",
                     "render": function(data, type, row, meta) {
                         return '<div class="row justify-content-center">' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-eye text-c-blue f-30 m-r-10" onclick="Mostrar(' + row.id + ')"></i></div>' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-edit-2 text-c-purple f-30 m-r-10" onclick="Editar(' + row.id + ')"></i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-edit-2 text-c-blue f-30 m-r-10" onclick="Editar(' + row.id + ')"></i></div>' +
                             '<div class="col-3 d-flex justify-content-center"><i class="feather icon-trash-2 text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
                             '</div>'
                     }
@@ -106,49 +122,112 @@
         inicializaControlFecha();
         // $('#tblConversion > thead').addClass('bg-primary text-white');
     });
+    function Editar(gPosition) {
+        var table = $('#tblConversion').DataTable();
+        var row = table.rows().data();
 
+        const ArrayRows = Object.values(row);
+        var index = ArrayRows.findIndex(s => s.id == gPosition)
+        row = row[index]
+
+
+        window.location = "doc/" + row.num_orden;
+    }
     $('#btnAdd').on('click', function() {
-        //clearFields();
-        $('#mdlResumen').modal('show');
-        //$("#id_add").show();
-
-        //$("#id_row").text("New")
-        //LoadSelect();
-
+        clearFields();
+        $('#mdlAddOrden').modal('show');
     });
 
     $('#btnSave').on('click', function() {
         let fechaInicial = $('#fecha_inicial').val(),
             numOrden = $('#num_orden').val(),
             hora = $('#hora_inicial').val(),
-            producto = $('#id_select_producto').val(),
+            jumborroll = $('#id_select_producto').val(),
+            producto,
             fecha_hora_inicio;
         let array = [];
+        if (jumborroll == 0) {
+            return mensaje('Por favor seleccione el producto', 'error');
+        }
+        if (jumborroll == '' || jumborroll == null) {
+            return mensaje('Por favor seleccione el producto', 'error');
+        }
+        if (numOrden == '') {
+            return mensaje('Por favor digite el numero de orden', 'error');
+        }
+        if (hora == '') {
+            return mensaje('Por favor indique la hora inical', 'error');
+        }
+        if (fechaInicial == '') {
+            return mensaje('Por favor seleccione la fecha inicial', 'error');
+        }
+        if (jumborroll == 35) {
+            producto = 2;
+        } else if (jumborroll == 13) {
+            producto = 1;
+        }
 
         fecha_hora_inicio = fechaInicial + ' ' + hora + ':00';
         array[0] = {
             num_orden: numOrden,
             id_productor: producto,
+            id_jr: jumborroll,
             fecha_hora_inicio: fecha_hora_inicio,
             fecha_hora_final: fecha_hora_inicio
         };
-
         $.ajax({
             url: "guardar",
             data: {
                 data: array,
+                num_orden: numOrden
             },
             type: 'post',
             async: true,
             success: function(response) {
-                mensaje(response.responseText, 'success');
-
+                if (response == 1) {
+                    mensaje('Orden duplicada, por favor verifique el N°. Orden', 'warning');
+                   
+                } else {
+                    mensaje(response.responseText, 'success');
+                    $('#mdlAddOrden').modal('hide');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }
             },
             error: function(response) {
                 mensaje(response.responseText, 'error');
             }
         }).done(function(data) {
-
+            location.reload();
         });
     });
+
+    function clearFields() {
+
+        $('#fecha_inicial').val('');
+        $('#num_orden').val('');
+        $('#hora_inicial').val('');
+        $('#id_select_producto').val('');
+
+    }
+
+    function Eliminar(id) {
+        $.ajax({
+            url: 'eliminar',
+            data: {
+                id: id
+            },
+            type: 'post',
+            async: true,
+            success: function(response) {
+                mensaje(response.responseText, 'success');
+            },
+            error: function(response) {
+                mensaje(response.responseText, 'error');
+            }
+        }).done(function(data) {
+            location.reload();
+        });
+    }
 </script>

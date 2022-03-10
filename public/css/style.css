@@ -10629,3 +10629,26 @@ table.dataTable.no-footer {
 table.dataTable tbody tr.selected {
     background-color: #b0bed9;
 }
+
+/*
+Full screen Modal 
+*/
+.modal.modal-fullscreen .modal-dialog {
+  width: 50%;
+  height: 90%!important;
+  max-width: none; 
+  top: 5px!important;
+  left: 10px!important;
+  right: 10px!important;
+  bottom: 10px!important;
+}
+
+.modal.modal-fullscreen .modal-content {
+  height: auto;
+  height: 50%!important;
+  border-radius: 0;
+  border: none; }
+
+.modal.modal-fullscreen .modal-body {
+  overflow-y: auto; 
+}

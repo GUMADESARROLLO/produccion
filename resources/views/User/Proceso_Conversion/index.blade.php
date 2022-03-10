@@ -17,8 +17,6 @@
 
     .dataTables_paginate a {
         padding: 0 10px;
-        /*border:1px solid #979797;*/
-        /* background: linear-gradient(to bottom, white 0%, #0F85FC 100%);*/
         margin-inline: 5px;
     }
 </style>
@@ -73,9 +71,7 @@
                                     </div>
                                 </div>
 
-                                <!-- [ modal proceso conversión] end -->
-
-                                <div class="modal fade modal-fullscreen" id="mdlResumen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade modal-fullscreen" id="mdlAddOrden" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -88,7 +84,7 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <p class="text-muted m-2">Orden de Producción No. </p>
-                                                        <input type="text" class="form-control" id="num_orden">
+                                                        <input type="text" class="form-control" id="num_orden" placeholder="C-0000-00">
                                                         <small class="">Digite el número de orden</small>
                                                     </div>
                                                     <div class="form-group col-md-6">
