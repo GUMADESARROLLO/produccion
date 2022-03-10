@@ -16,7 +16,7 @@ class pc_ordenes_produccion extends Model
 
     public static function guardar($data, $orden)
     {
-        $ordenExist = pc_ordenes_produccion::where('num_orden', $orden)->first();
+        $ordenExist = pc_ordenes_produccion::where('num_orden', $orden)->where('estado', 'S')->first();
 
         if ($ordenExist) {
             return 1;
