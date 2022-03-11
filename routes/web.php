@@ -213,9 +213,12 @@ Route::get('/getOrdenes', 'User\ProcesoConversionController@getOrdenes')->name('
 Route::post('/guardar', 'User\ProcesoConversionController@guardar')->name('/guardar');
 Route::post('/eliminar', 'User\ProcesoConversionController@eliminar')->name('/eliminar');
 Route::get('/editar', 'User\ProcesoConversionController@editar')->name('/editar');
+Route::post('/actualizarCantidad', 'User\ProcesoConversionController@actualizarCantidad')->name('/actualizarCantidad');
+
 
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');
+
 
 
 

@@ -1,10 +1,10 @@
 <script type="text/javascript">
     var dtConversion;
-    
+
     $(document).ready(function() {
 
         id_orden = $("#id_num_orden").text()
-      
+
         $('#tbl_search_producto').on('keyup', function() {
             var table = $('#tblProductos').DataTable();
             table.search(this.value).draw();
@@ -14,14 +14,14 @@
             var table = $('#tblMateriaPrima').DataTable();
             table.search(this.value).draw();
         });
-        
-        $.getJSON("../jsonInfoOrder/"+id_orden, function(json) {
-            $.each(json, function (i, item) {
+
+        $.getJSON("../jsonInfoOrder/" + id_orden, function(json) {
+            $.each(json, function(i, item) {
 
                 switch (item['tipo']) {
                     case 'dtaOrden':
-                        
-                        
+
+
 
                         $("#id_peso_porcent").text(item['data'].peso_procent)
 
@@ -34,158 +34,258 @@
                         $("#id_hrs_trabajadas").text(item['data'].hrs_trabajadas);
 
                         $("#id_total_bultos_und").text(item['data'].total_bultos_und);
-                        
-                    break;
+
+                        break;
                     case 'dtaMateria':
-                        let table_materia =    $('#tblMateriaPrima').DataTable({
-                            "data" : item['data'],
+                        let table_materia = $('#tblMateriaPrima').DataTable({
+                            "data": item['data'],
                             "destroy": true,
                             "info": false,
-                            "lengthMenu": [[100,-1], [100,"Todo"]],
+                            "lengthMenu": [
+                                [100, -1],
+                                [100, "Todo"]
+                            ],
                             "language": {
-                            "zeroRecords": "NO HAY COINCIDENCIAS",
-                            "paginate": {
-                                "first": "Primera",
-                                "last": "Última ",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
+                                "zeroRecords": "NO HAY COINCIDENCIAS",
+                                "paginate": {
+                                    "first": "Primera",
+                                    "last": "Última ",
+                                    "next": "Siguiente",
+                                    "previous": "Anterior"
+                                },
+                                "lengthMenu": "MOSTRAR _MENU_",
+                                "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                                "search": "BUSCAR"
                             },
-                            "lengthMenu": "MOSTRAR _MENU_",
-                            "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                            "search": "BUSCAR"
-                        },
-                        'columns': [
-                            {"title": "ARTICULO",               "data": "ARTICULO"},
-                            {"title": "DESCRIPCION",            "data": "DESCRIPCION_CORTA"},
-                            {"title": "REQUISA",                "data": "REQUISA"},
-                            {"title": "PISO",                   "data": "PISO"},
-                            {"title": "PESO %",                 "data": "PERSO_PORCENT"},
-                            {"title": "MERMA",                  "data": "MERMA"},
-                            {"title": "MERMA %",                "data": "MERMA_PORCENT"},                            
-                        ],
-                        "columnDefs": [
-                            {"className": "dt-center","targets": []},
-                            {"className": "dt-right","targets": [2,3,4,5,6]},
-                            {"visible": false,"searchable": false,"targets": []},
-                            {"width": "10%","targets": [2,3,4,5,6]},
-                            {"width": "15%","targets": [2]},
-                        ],
-                    });
+                            'columns': [{
+                                    "title": "ARTICULO",
+                                    "data": "ARTICULO"
+                                },
+                                {
+                                    "title": "DESCRIPCION",
+                                    "data": "DESCRIPCION_CORTA"
+                                },
+                                {
+                                    "title": "REQUISA",
+                                    "data": "REQUISA"
+                                },
+                                {
+                                    "title": "PISO",
+                                    "data": "PISO"
+                                },
+                                {
+                                    "title": "PESO %",
+                                    "data": "PERSO_PORCENT"
+                                },
+                                {
+                                    "title": "MERMA",
+                                    "data": "MERMA"
+                                },
+                                {
+                                    "title": "MERMA %",
+                                    "data": "MERMA_PORCENT"
+                                },
+                            ],
+                            "columnDefs": [{
+                                    "className": "dt-center",
+                                    "targets": []
+                                },
+                                {
+                                    "className": "dt-right",
+                                    "targets": [2, 3, 4, 5, 6]
+                                },
+                                {
+                                    "visible": false,
+                                    "searchable": false,
+                                    "targets": []
+                                },
+                                {
+                                    "width": "10%",
+                                    "targets": [2, 3, 4, 5, 6]
+                                },
+                                {
+                                    "width": "15%",
+                                    "targets": [2]
+                                },
+                            ],
+                        });
 
-                    $("#tblMateriaPrima_length").hide();
-                    $("#tblMateriaPrima_filter").hide();
+                        $("#tblMateriaPrima_length").hide();
+                        $("#tblMateriaPrima_filter").hide();
 
-                    $('#tblMateriaPrima tbody').on('click', "tr", function() {
-                        
+                        $('#tblMateriaPrima tbody').on('click', "tr", function() {
 
-                        var data = table_materia.row( this ).data();
 
-                        clearFields();
-                        $('#mdlAddOrden').modal('show');
+                            var data = table_materia.row(this).data();
 
-        
-                    });
-                    break;
+                            clearFields();
+                            $('#mdlAddOrden').modal('show');
+
+
+                        });
+                        break;
                     case 'dtaProducto':
-                    let table_producto =   $('#tblProductos').DataTable({
-                            "data" : item['data'],
+                        let table_producto = $('#tblProductos').DataTable({
+                            "data": item['data'],
                             "destroy": true,
                             "info": false,
-                            "lengthMenu": [[100,-1], [100,"Todo"]],
+                            "lengthMenu": [
+                                [100, -1],
+                                [100, "Todo"]
+                            ],
                             "language": {
-                            "zeroRecords": "NO HAY COINCIDENCIAS",
-                            "paginate": {
-                                "first": "Primera",
-                                "last": "Última ",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
+                                "zeroRecords": "NO HAY COINCIDENCIAS",
+                                "paginate": {
+                                    "first": "Primera",
+                                    "last": "Última ",
+                                    "next": "Siguiente",
+                                    "previous": "Anterior"
+                                },
+                                "lengthMenu": "MOSTRAR _MENU_",
+                                "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                                "search": "BUSCAR"
                             },
-                            "lengthMenu": "MOSTRAR _MENU_",
-                            "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                            "search": "BUSCAR"
-                        },
-                        'columns': [
-                            {"title": "ARTICULO",       "data": "ARTICULO"},
-                            {"title": "DESCRIPCION",    "data": "DESCRIPCION_CORTA"},
-                            {"title": "BULTO",          "data": "BULTO"},
-                            {"title": "PESO %",         "data": "PERSO_PORCENT"},
-                            {"title": "KG",             "data": "KG"},
-                            
-                        ],
-                        "columnDefs": [
-                            {"className": "dt-center","targets": []},
-                            {"className": "dt-right","targets": [2,3,4]},
-                            {"visible": false,"searchable": false,"targets": []},
-                            {"width": "10%","targets": []},
-                            {"width": "15%","targets": []},
-                        ],
-                        "footerCallback": function ( row, data, start, end, display ) {
-                            var api = this.api();
-                            var intVal = function ( i ) {
-                                return typeof i === 'string' ?
-                                i.replace(/[^0-9.]/g, '')*1 :
-                                typeof i === 'number' ?
-                                i : 0;
-                            };
-                            Total = api.column( 4 ).data().reduce( function (a, b){
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-                            $('#id_jr_total').text( numeral(Total).format('0,0.00'));
-                        }
-                    });
+                            'columns': [{
+                                    "title": "ARTICULO",
+                                    "data": "ARTICULO"
+                                },
+                                {
+                                    "title": "DESCRIPCION",
+                                    "data": "DESCRIPCION_CORTA"
+                                },
+                                {
+                                    "title": "BULTO",
+                                    "data": "BULTO"
+                                },
+                                {
+                                    "title": "PESO %",
+                                    "data": "PERSO_PORCENT"
+                                },
+                                {
+                                    "title": "KG",
+                                    "data": "KG"
+                                },
 
-                    $("#tblProductos_length").hide();
-                    $("#tblProductos_filter").hide();
-
-                    $('#tblProductos tbody').on('click', "tr", function() {
-                        
-
-                        var data = table_producto.row( this ).data();
-
-                        Swal.fire({
-                            title: data.DESCRIPCION_CORTA,
-                            text: "Ingrese la cantidad de Bultos",
-                            input: 'text',
-                            inputAttributes: {
-                                autocapitalize: 'off'
-                            },
-                            showCancelButton: true,
-                            confirmButtonText: 'Guardar',
-                            showLoaderOnConfirm: true,
-                            preConfirm: (login) => {
-                                return fetch(`//api.github.com/users/${login}`)
-                                .then(response => {
-                                    if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                    }
-                                    return response.json()
-                                })
-                                .catch(error => {
-                                    Swal.showValidationMessage(
-                                    `Request failed: ${error}`
-                                    )
-                                })
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                Swal.fire({
-                                title: `${result.value.login}'s avatar`,
-                                imageUrl: result.value.avatar_url
-                                })
+                            ],
+                            "columnDefs": [{
+                                    "className": "dt-center",
+                                    "targets": []
+                                },
+                                {
+                                    "className": "dt-right",
+                                    "targets": [2, 3, 4]
+                                },
+                                {
+                                    "visible": false,
+                                    "searchable": false,
+                                    "targets": []
+                                },
+                                {
+                                    "width": "10%",
+                                    "targets": []
+                                },
+                                {
+                                    "width": "15%",
+                                    "targets": []
+                                },
+                            ],
+                            "footerCallback": function(row, data, start, end, display) {
+                                var api = this.api();
+                                var intVal = function(i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[^0-9.]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                        i : 0;
+                                };
+                                Total = api.column(4).data().reduce(function(a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+                                $('#id_jr_total').text(numeral(Total).format('0,0.00'));
                             }
+                        });
+
+                        $("#tblProductos_length").hide();
+                        $("#tblProductos_filter").hide();
+
+                        $('#tblProductos tbody').on('click', "tr", function() {
+
+                            var row = table_producto.row(this).data();
+
+                            const ArrayRows = Object.values(row);
+                            var index = ArrayRows.findIndex(s => s.id == 1)
+                            row = row[index];
+
+
+                            var data = table_producto.row(this).data();
+                            let cantidad = data['BULTO'];
+                            let id_articulo = data['ID_ARTICULO'];
+
+                            // let id = data['BULTO'];
+                            let num_orden = $('#id_num_orden').text();
+
+                            console.log(data);
+                            console.log(id_articulo);
+                            console.log(cantidad.replace(/[',]+/g, ''));
+
+                            Swal.fire({
+                                title: data.DESCRIPCION_CORTA,
+                                text: "Ingrese la cantidad de Bultos",
+                                input: 'text',
+                                inputAttributes: {
+                                    autocapitalize: 'off'
+                                },
+                                showCancelButton: true,
+                                confirmButtonText: 'Guardar',
+                                showLoaderOnConfirm: true,
+                                inputValue: cantidad,
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Digita la cantidad por favor';
+                                    }
+                                    /*if (!Number.isInteger(value)) {
+                                        return 'formato incorrecto';
+                                    }*/  
+                                    value = value.replace(/[',]+/g, '');
+                                    if (isNaN(value)) {
+                                        return 'Formato incorrecto';
+                                    }  else {
+                                        $.ajax({
+                                            url: "../actualizarCantidad",
+                                            data: {
+                                                cantidad: value,
+                                                num_orden: num_orden,
+                                                id_articulo: id_articulo
+                                            },
+                                            type: 'post',
+                                            async: true,
+                                            success: function(response) {
+                                                console.log(response);
+                                                swal("Saved!", "Guardado exitosamente", "success");
+                                            },
+                                            error: function(response) {
+                                                swal("Oops", "No se ha podido guardar!", "error");
+                                                //     mensaje(response.responseText, 'error');
+                                            }
+                                        }).done(function(data) {
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 2000);
+                                        });
+                                    }
+                                }
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {}
                             })
-                        
-        
-                    });
-                    break;
-                    
+                        });
+                        break;
+
                     default:
                         console.log('Lo lamentamos, por el momento no disponemos de ');
                 }
             });
         });
-        
+
 
 
         inicializaControlFecha();
@@ -193,7 +293,7 @@
     });
 
     $('#btnAdd').on('click', function() {
-      
+
     });
 
     $('#btnSave').on('click', function() {
