@@ -25,8 +25,12 @@ class ProcesoConversion extends Model {
             'tipo' => 'dtaMateria',
             'data' => ProcesoConversion::get_materia_prima($data_orden['peso_procent'],$data_orden['id_productor'],$data_orden['num_orden'])
         );
+        $Array_Tiempos_Paros[] = array(
+            'tipo' => 'dtaTiemposParos',
+            'data' => ProcesoConversion::get_info_producto($data_orden['peso_procent'],$data_orden['id_productor'],$data_orden['num_orden'])
+        );
 
-        $array_merge = array_merge($Array_Info,$Array_Producto,$Array_Materia);
+        $array_merge = array_merge($Array_Info,$Array_Producto,$Array_Materia,$Array_Tiempos_Paros);
         return $array_merge;
 
     }

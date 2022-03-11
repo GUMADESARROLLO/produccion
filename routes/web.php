@@ -216,6 +216,7 @@ Route::get('/editar', 'User\ProcesoConversionController@editar')->name('/editar'
 
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');
+Route::get('/doc_printer/{codigo}', 'User\ProcesoConversionController@doc_printer')->name('doc_printer/{codigo}');
 
 
 

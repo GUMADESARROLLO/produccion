@@ -20,10 +20,10 @@
 
                 switch (item['tipo']) {
                     case 'dtaOrden':
-                        
-                        
 
                         $("#id_peso_porcent").text(item['data'].peso_procent)
+
+                        $("#id_nombre_articulos").text(item['data'].nombre)
 
                         $("#id_fecha_inicial").text(item['data'].fecha_inicio)
                         $("#id_hora_inicial").text(item['data'].hora_inicio)
@@ -56,12 +56,19 @@
                         },
                         'columns': [
                             {"title": "ARTICULO",               "data": "ARTICULO"},
-                            {"title": "DESCRIPCION",            "data": "DESCRIPCION_CORTA"},
+                            {
+                                "title": "DESCRIPCION_CORTA",
+                                "data": "DESCRIPCION_CORTA",
+                                "render": function(data, type, row, meta) {
+                                    return '<span class="text-success"><sup>+</sup></span>' + data 
+                                        
+                                }
+                            },  
                             {"title": "REQUISA",                "data": "REQUISA"},
                             {"title": "PISO",                   "data": "PISO"},
                             {"title": "PESO %",                 "data": "PERSO_PORCENT"},
                             {"title": "MERMA",                  "data": "MERMA"},
-                            {"title": "MERMA %",                "data": "MERMA_PORCENT"},                            
+                            {"title": "MERMA %",                "data": "MERMA_PORCENT"}, 
                         ],
                         "columnDefs": [
                             {"className": "dt-center","targets": []},
@@ -82,6 +89,11 @@
 
                         clearFields();
                         $('#mdlAddOrden').modal('show');
+
+                        
+                        $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
+                        $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);
+
 
         
                     });
@@ -106,7 +118,14 @@
                         },
                         'columns': [
                             {"title": "ARTICULO",       "data": "ARTICULO"},
-                            {"title": "DESCRIPCION",    "data": "DESCRIPCION_CORTA"},
+                            {
+                                "title": "DESCRIPCION_CORTA",
+                                "data": "DESCRIPCION_CORTA",
+                                "render": function(data, type, row, meta) {
+                                    return '<span class="text-success"><sup>+</sup></span>' + data 
+                                        
+                                }
+                            },  
                             {"title": "BULTO",          "data": "BULTO"},
                             {"title": "PESO %",         "data": "PERSO_PORCENT"},
                             {"title": "KG",             "data": "KG"},
@@ -179,6 +198,56 @@
         
                     });
                     break;
+
+                    case 'dtaTiemposParos':
+                    $('#tblTiemposParos').DataTable({
+                            "data" : item['data'],
+                            "destroy": true,
+                            "info": false,
+                            "lengthMenu": [[100,-1], [100,"Todo"]],
+                            "language": {
+                            "zeroRecords": "NO HAY COINCIDENCIAS",
+                            "paginate": {
+                                "first": "Primera",
+                                "last": "Última ",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                            "lengthMenu": "MOSTRAR _MENU_",
+                            "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                            "search": "BUSCAR"
+                        },
+                        'columns': [
+                            {
+                                "title": "DESCRIPCION DE LA ACTIVIDAD",
+                                "data": "DESCRIPCION_CORTA",
+                                "render": function(data, type, row, meta) {
+                                    return '<span class="text-success"><sup>+</sup></span>' + data 
+                                        
+                                }
+                            },  
+                            {"title": "DIA",          "data": "BULTO"},
+                            {"title": "NOCHE",          "data": "BULTO"},
+                            {"title": "TOTAL HRS",             "data": "KG"},
+                            {"title": "No. Personas",             "data": "KG"},
+                            
+                        ],
+                        "columnDefs": [
+                            {"className": "dt-center","targets": []},
+                            {"className": "dt-right","targets": []},
+                            {"visible": false,"searchable": false,"targets": []},
+                            {"width": "10%","targets": []},
+                            {"width": "15%","targets": []},
+                        ],
+                        "footerCallback": function ( row, data, start, end, display ) {
+                           
+                        }
+                    });
+
+                    $("#tblTiemposParos_length").hide();
+                    $("#tblTiemposParos_filter").hide();
+
+                    break;
                     
                     default:
                         console.log('Lo lamentamos, por el momento no disponemos de ');
@@ -189,11 +258,6 @@
 
 
         inicializaControlFecha();
-        // $('#tblConversion > thead').addClass('bg-primary text-white');
-    });
-
-    $('#btnAdd').on('click', function() {
-      
     });
 
     $('#btnSave').on('click', function() {

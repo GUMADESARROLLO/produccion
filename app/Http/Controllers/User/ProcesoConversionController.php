@@ -48,6 +48,28 @@ class ProcesoConversionController extends Controller
         $obj = ProcesoConversion::getJson($Orden);
         return response()->json($obj);
     }
+
+    public function doc_printer($Orden){        
+        
+        $data_orden = ProcesoConversion::getJson($Orden);
+
+        //$data_orden[0]['data']['jr_total_kg'] = array_sum(array_column($data_orden[1]['data'], 'KG'));  
+
+        $data_orden[0]['data']['jr_total_kg'] = number_format(array_sum( str_replace(['', ',', '.'], ['', '', '.'],array_column($data_orden[1]['data'], 'KG')) ),2, '.', ',');
+        
+        $data = [
+            'Informacion_Orden' =>  $data_orden[0]['data'],
+            'Producto'          =>  $data_orden[1]['data'],
+            'Materia_prima'     =>  $data_orden[2]['data'],
+        ];
+        
+        //dd($data_orden[1]['data']);
+        //return view('User.Proceso_Conversion.print', compact('data'));
+        $pdf = \PDF::loadView('User.Proceso_Conversion.print', compact('data'));
+        return $pdf->download('Orden.pdf');
+        //return response()->json($obj);
+    }
+    
     
     
 }
