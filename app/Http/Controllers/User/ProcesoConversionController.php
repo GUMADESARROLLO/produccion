@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\detalle_pc_ordenes;
 use App\Models\pc_ordenes_produccion;
 use App\Models\ProcesoConversion;
+use App\Models\pc_requisado_detalles;
+
 use Illuminate\Http\Request;
 
 
@@ -70,6 +72,12 @@ class ProcesoConversionController extends Controller
         //return response()->json($obj);
     }
     
+
+    public function actualizarCantidad(Request $request)
+    {
+        $response = pc_requisado_detalles::actualizarCantidad($request);
+        return response()->json($response);
+    }
     
     
 }

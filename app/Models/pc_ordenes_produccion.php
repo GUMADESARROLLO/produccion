@@ -63,7 +63,5 @@ class pc_ordenes_produccion extends Model
         }
     }
 
-    public static function cambiar_estado(){
-
-    }
+    
 }

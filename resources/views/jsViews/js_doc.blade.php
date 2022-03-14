@@ -159,7 +159,23 @@
                     $('#tblProductos tbody').on('click', "tr", function() {
                         
 
-                        var data = table_producto.row( this ).data();
+                        var row = table_producto.row(this).data();
+
+                        const ArrayRows = Object.values(row);
+                        var index = ArrayRows.findIndex(s => s.id == 1)
+                        row = row[index];
+
+
+                        var data = table_producto.row(this).data();
+                        let cantidad = data['BULTO'];
+                        let id_articulo = data['ID_ARTICULO'];
+
+                        // let id = data['BULTO'];
+                        let num_orden = $('#id_num_orden').text();
+
+                        console.log(data);
+                        console.log(id_articulo);
+                        console.log(cantidad.replace(/[',]+/g, ''));
 
                         Swal.fire({
                             title: data.DESCRIPCION_CORTA,
@@ -171,29 +187,46 @@
                             showCancelButton: true,
                             confirmButtonText: 'Guardar',
                             showLoaderOnConfirm: true,
-                            preConfirm: (login) => {
-                                return fetch(`//api.github.com/users/${login}`)
-                                .then(response => {
-                                    if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                    }
-                                    return response.json()
-                                })
-                                .catch(error => {
-                                    Swal.showValidationMessage(
-                                    `Request failed: ${error}`
-                                    )
-                                })
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                Swal.fire({
-                                title: `${result.value.login}'s avatar`,
-                                imageUrl: result.value.avatar_url
-                                })
+                            inputValue: cantidad,
+                            inputValidator: (value) => {
+                                if (!value) {
+                                    return 'Digita la cantidad por favor';
+                                }
+                                /*if (!Number.isInteger(value)) {
+                                    return 'formato incorrecto';
+                                }*/  
+                                value = value.replace(/[',]+/g, '');
+                                if (isNaN(value)) {
+                                    return 'Formato incorrecto';
+                                }  else {
+                                    $.ajax({
+                                        url: "../actualizarCantidad",
+                                        data: {
+                                            cantidad: value,
+                                            num_orden: num_orden,
+                                            id_articulo: id_articulo
+                                        },
+                                        type: 'post',
+                                        async: true,
+                                        success: function(response) {
+                                            console.log(response);
+                                            swal("Saved!", "Guardado exitosamente", "success");
+                                        },
+                                        error: function(response) {
+                                            swal("Oops", "No se ha podido guardar!", "error");
+                                            //     mensaje(response.responseText, 'error');
+                                        }
+                                    }).done(function(data) {
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 2000);
+                                    });
+                                }
                             }
-                            })
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {}
+                        })
                         
         
                     });
