@@ -26,7 +26,7 @@
                                 <div class="nk-block-head-content">
                                     <h3 class="nk-block-title page-title text-right">{{ $orden->producto }}</h3>
                                     <div class="nk-block-des text-right text-soft ">
-                                        {{ $orden->fechaInicio }} - {{ $orden->horaInicio }} -{{ $orden->fechaFinal }} - {{ $orden->horaFinal }}
+                                    {{ $orden->fechaInicio }} - {{ $orden->horaInicio }} -{{ $orden->fechaFinal }} - {{ $orden->horaFinal }}
                                     </div>
                                 </div>
                             </div>

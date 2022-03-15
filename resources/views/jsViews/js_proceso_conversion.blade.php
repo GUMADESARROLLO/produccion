@@ -84,6 +84,7 @@
                         return '<div class="row justify-content-center">' +
                             '<div class="col-3 d-flex justify-content-center"><i class="feather icon-edit-2 text-c-blue f-30 m-r-10" onclick="Editar(' + row.id + ')"></i></div>' +
                             '<div class="col-3 d-flex justify-content-center"><i class="feather icon-trash-2 text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="far fa-file-pdf text-c-red f-30 m-r-10" onclick="Printer(' + row.id + ')"></i></div>' +
                             '</div>'
                     }
                 },
@@ -122,6 +123,17 @@
         inicializaControlFecha();
         // $('#tblConversion > thead').addClass('bg-primary text-white');
     });
+    function Printer(gPosition){
+        var table = $('#tblConversion').DataTable();
+        var row = table.rows().data();
+
+        const ArrayRows = Object.values(row);
+        var index = ArrayRows.findIndex(s => s.id == gPosition)
+        row = row[index]
+
+
+        location.href = "doc_printer/" + row.num_orden;
+    }
     function Editar(gPosition) {
         var table = $('#tblConversion').DataTable();
         var row = table.rows().data();
