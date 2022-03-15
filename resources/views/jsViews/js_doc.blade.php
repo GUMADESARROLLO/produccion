@@ -156,33 +156,23 @@
                     $("#tblProductos_length").hide();
                     $("#tblProductos_filter").hide();
 
-                    $('#tblProductos tbody').on('click', "tr", function() {
-                        
-
-                        var row = table_producto.row(this).data();
-
-                        const ArrayRows = Object.values(row);
-                        var index = ArrayRows.findIndex(s => s.id == 1)
-                        row = row[index];
-
+                    $('#tblProductos tbody').on('click', "tr", function(event) {
 
                         var data = table_producto.row(this).data();
                         let cantidad = data['BULTO'];
                         let id_articulo = data['ID_ARTICULO'];
-
-                        // let id = data['BULTO'];
                         let num_orden = $('#id_num_orden').text();
-
-                        console.log(data);
-                        console.log(id_articulo);
-                        console.log(cantidad.replace(/[',]+/g, ''));
+                        cantidad = cantidad.replace(/[',]+/g, '');
 
                         Swal.fire({
                             title: data.DESCRIPCION_CORTA,
                             text: "Ingrese la cantidad de Bultos",
                             input: 'text',
+                            inputPlaceholder: 'Digite la cantidad',
                             inputAttributes: {
-                                autocapitalize: 'off'
+                                id: 'cantidad',
+                                required: 'true',
+                                onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
                             },
                             showCancelButton: true,
                             confirmButtonText: 'Guardar',
@@ -192,13 +182,10 @@
                                 if (!value) {
                                     return 'Digita la cantidad por favor';
                                 }
-                                /*if (!Number.isInteger(value)) {
-                                    return 'formato incorrecto';
-                                }*/  
                                 value = value.replace(/[',]+/g, '');
                                 if (isNaN(value)) {
                                     return 'Formato incorrecto';
-                                }  else {
+                                } else {
                                     $.ajax({
                                         url: "../actualizarCantidad",
                                         data: {
@@ -214,7 +201,6 @@
                                         },
                                         error: function(response) {
                                             swal("Oops", "No se ha podido guardar!", "error");
-                                            //     mensaje(response.responseText, 'error');
                                         }
                                     }).done(function(data) {
                                         setTimeout(function() {
@@ -223,7 +209,6 @@
                                     });
                                 }
                             }
-
                         }).then((result) => {
                             if (result.isConfirmed) {}
                         })
@@ -361,5 +346,23 @@
         $('#hora_inicial').val('');
         $('#id_select_producto').val('');
 
+    }
+    function soloNumeros(caracter, e, numeroVal) {
+        var numero = numeroVal;
+        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+            e.preventDefault();
+            swal.showValidationError('No se puede iniciar con un punto');
+        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+            e.preventDefault();
+            swal.showValidationError('No puede haber mas de dos puntos');
+        } else {
+            const soloNumeros = new RegExp("^[0-9]+$");
+            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+                e.preventDefault();
+                swal.showValidationError(
+                    'No se pueden escribir letras, solo se permiten datos númericos'
+                );
+            }
+        }
     }
 </script>
