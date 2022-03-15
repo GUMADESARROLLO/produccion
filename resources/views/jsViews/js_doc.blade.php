@@ -1,56 +1,45 @@
 <script type="text/javascript">
     var dtConversion;
-
-    $(document).ready(function () {
-
-        let id_orden = $("#id_num_orden").text()
-
-        $('#tbl_search_producto').on('keyup', function () {
+    
+    $(document).ready(function() {
+        id_orden = $("#id_num_orden").text()
+      
+        $('#tbl_search_producto').on('keyup', function() {
             var table = $('#tblProductos').DataTable();
             table.search(this.value).draw();
         });
-
-        $('#tbl_search_materia_prima').on('keyup', function () {
+        $('#tbl_search_materia_prima').on('keyup', function() {
             var table = $('#tblMateriaPrima').DataTable();
             table.search(this.value).draw();
         });
-
-        $.getJSON("../jsonInfoOrder/" + id_orden, function (json) {
+        
+        $.getJSON("../jsonInfoOrder/"+id_orden, function(json) {
             $.each(json, function (i, item) {
-
                 switch (item['tipo']) {
                     case 'dtaOrden':
-
-                    case 'dtaOrden':
                         $("#id_peso_porcent").text(item['data'].peso_procent)
-
                         $("#id_nombre_articulos").text(item['data'].nombre)
-
                         $("#id_fecha_inicial").text(item['data'].fecha_inicio)
                         $("#id_hora_inicial").text(item['data'].hora_inicio)
                         $("#id_fecha_final").text(item['data'].fecha_final)
                         $("#id_hora_final").text(item['data'].hora_final);
                         $("#id_hrs_trabajadas").text(item['data'].hrs_trabajadas);
                         $("#id_total_bultos_und").text(item['data'].total_bultos_und);
-                        break;
-
+                        
+                    break;
                     case 'dtaMateria':
-                        var table_materia = $('#tblMateriaPrima').DataTable({
-                            "data": item['data'],
+                        let table_materia =    $('#tblMateriaPrima').DataTable({
+                            "data" : item['data'],
                             "destroy": true,
                             "info": false,
-                            "lengthMenu": [[100, -1], [100, "Todo"]],
+                            "lengthMenu": [[100,-1], [100,"Todo"]],
                             "language": {
-                                "zeroRecords": "NO HAY COINCIDENCIAS",
-                                "paginate": {
-                                    "first": "Primera",
-                                    "last": "Última ",
-                                    "next": "Siguiente",
-                                    "previous": "Anterior"
-                                },
-                                "lengthMenu": "MOSTRAR _MENU_",
-                                "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                                "search": "BUSCAR"
+                            "zeroRecords": "NO HAY COINCIDENCIAS",
+                            "paginate": {
+                                "first": "Primera",
+                                "last": "Última ",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
                             },
                             "lengthMenu": "MOSTRAR _MENU_",
                             "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
@@ -80,52 +69,52 @@
                             {"width": "15%","targets": [2]},
                         ],
                     });
+                    $("#tblMateriaPrima_length").hide();
+                    $("#tblMateriaPrima_filter").hide();
+                    $('#tblMateriaPrima tbody').on('click', "tr", function() {
+                        
+                        /*var data = table_materia.row( this ).data();
+                        clearFields();
+                        
+                        
+                        $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
+                        $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);*/
 
-                        $("#tblMateriaPrima_length").hide();
-                        $("#tblMateriaPrima_filter").hide();
-                        $('#tblMateriaPrima tbody').on('click', "tr", function () {
-                            mostrarReq();
+                        mostrarReq();
                             //var data = table_materia.row(this).data();
                             /*var row = table_materia.row(this).data();
                             var listaD = Object.values(row);
                             var index = listaD.findIndex(mp => mp.id ==1)
                             row =row[index];*/
                             var data = table_materia.row(this).data();
+
+                            $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
+                            $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);
+
+
                             var id_articulo = data['ID_ARTICULO'];
                             var num_orden = $('#id_num_orden').text();
                             var elemento = document.getElementById("id_elemento").value = id_articulo;
+                            
 
-                            console.log(data);
-                            console.log(num_orden);
-                            console.log(id_articulo);
-                            if (id_articulo == 13){
-                                $('#mdlMatPrima').modal('show');
-                                $('#cantidad').val('');
-                                //clearFields();
-                            }
-
-                        });
-                        $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
-                        $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);
-                        break;
-
+                            $('#mdlMatPrima').modal('show');
+                            $('#cantidad').val('');
+        
+                    });
+                    break;
                     case 'dtaProducto':
-                        let table_producto = $('#tblProductos').DataTable({
-                            "data": item['data'],
+                    let table_producto =   $('#tblProductos').DataTable({
+                            "data" : item['data'],
                             "destroy": true,
                             "info": false,
-                            "lengthMenu": [[100, -1], [100, "Todo"]],
+                            "lengthMenu": [[100,-1], [100,"Todo"]],
                             "language": {
-                                "zeroRecords": "NO HAY COINCIDENCIAS",
-                                "paginate": {
-                                    "first": "Primera",
-                                    "last": "Última ",
-                                    "next": "Siguiente",
-                                    "previous": "Anterior"
-                                },
-                                "lengthMenu": "MOSTRAR _MENU_",
-                                "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                                "search": "BUSCAR"
+                            "zeroRecords": "NO HAY COINCIDENCIAS",
+                            "paginate": {
+                                "first": "Primera",
+                                "last": "Última ",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
                             },
                             "lengthMenu": "MOSTRAR _MENU_",
                             "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
@@ -167,18 +156,15 @@
                             $('#id_jr_total').text( numeral(Total).format('0,0.00'));
                         }
                     });
-
                     $("#tblProductos_length").hide();
                     $("#tblProductos_filter").hide();
 
                     $('#tblProductos tbody').on('click', "tr", function(event) {
-
                         var data = table_producto.row(this).data();
                         let cantidad = data['BULTO'];
                         let id_articulo = data['ID_ARTICULO'];
                         let num_orden = $('#id_num_orden').text();
                         cantidad = cantidad.replace(/[',]+/g, '');
-
                         Swal.fire({
                             title: data.DESCRIPCION_CORTA,
                             text: "Ingrese la cantidad de Bultos",
@@ -211,7 +197,6 @@
                                         type: 'post',
                                         async: true,
                                         success: function(response) {
-                                            console.log(response);
                                             swal("Saved!", "Guardado exitosamente", "success");
                                         },
                                         error: function(response) {
@@ -231,7 +216,6 @@
         
                     });
                     break;
-
                     case 'dtaTiemposParos':
                     $('#tblTiemposParos').DataTable({
                             "data" : item['data'],
@@ -276,10 +260,8 @@
                            
                         }
                     });
-
                     $("#tblTiemposParos_length").hide();
                     $("#tblTiemposParos_filter").hide();
-
                     break;
                     
                     default:
@@ -287,53 +269,73 @@
                 }
             });
         });
-
-        inicializaControlFecha();
         
-
-    $('#btnSave').on('click', function () {
-        let numOrden = $('#num_orden').val(),
-            tipo = $('#requisadoE').val(),
-            cantidad = $('#cantidad').val(),
-            id_elemento = $('#id_elemento').val();
-
-        console.log(numOrden);
-        console.log(tipo);
-        console.log(cantidad);
-        console.log(id_elemento);
+        inicializaControlFecha();
+    });
+    $('#btnSave').on('click', function() {
+        let fechaInicial = $('#fecha_inicial').val(),
+            numOrden = $('#num_orden').val(),
+            hora = $('#hora_inicial').val(),
+            jumborroll = $('#id_select_producto').val(),
+            producto,
+            fecha_hora_inicio;
+        let array = [];
+        if (jumborroll == 0) {
+            return mensaje('Por favor seleccione el producto', 'error');
+        }
+        if (jumborroll == '' || jumborroll == null) {
+            return mensaje('Por favor seleccione el producto', 'error');
+        }
+        if (numOrden == '') {
+            return mensaje('Por favor digite el numero de orden', 'error');
+        }
+        if (hora == '') {
+            return mensaje('Por favor indique la hora inical', 'error');
+        }
+        if (fechaInicial == '') {
+            return mensaje('Por favor seleccione la fecha inicial', 'error');
+        }
+        if (jumborroll == 35) {
+            producto = 2;
+        } else if (jumborroll == 13) {
+            producto = 1;
+        }
+        fecha_hora_inicio = fechaInicial + ' ' + hora + ':00';
+        array[0] = {
+            num_orden: numOrden,
+            id_productor: producto,
+            id_jr: jumborroll,
+            fecha_hora_inicio: fecha_hora_inicio,
+            fecha_hora_final: fecha_hora_inicio
+        };
         $.ajax({
-            url: "../guardarMatP",
+            url: "guardar",
             data: {
-                num_orden: numOrden,
-                tipo : tipo,
-                cantidad: cantidad,
-                id_elemento: id_elemento
+                data: array,
+                num_orden: numOrden
             },
             type: 'post',
             async: true,
-            success: function (response) {
+            success: function(response) {
                 if (response == 1) {
                     mensaje('Orden duplicada, por favor verifique el N°. Orden', 'warning');
                 } else {
                     mensaje(response.responseText, 'success');
-                    $('#mdlMatPrima').modal('hide');
+                    $('#mdlAddOrden').modal('hide');
                 }
             },
-            error: function (response) {
+            error: function(response) {
                 mensaje(response.responseText, 'error');
             }
-        }).done(function (data) {
-            //location.reload();
+        }).done(function(data) {
+            location.reload();
         });
-
     });
-
     function clearFields() {
         $('#fecha_inicial').val('');
         $('#num_orden').val('');
         $('#hora_inicial').val('');
         $('#id_select_producto').val('');
-
     }
     function soloNumeros(caracter, e, numeroVal) {
         var numero = numeroVal;
@@ -353,6 +355,38 @@
             }
         }
     }
+    $('#btnSave').on('click', function () {
+            let numOrden = $('#num_orden').val(),
+            tipo = $('#requisadoE').val(),
+            cantidad = $('#cantidad').val(),
+            id_elemento = $('#id_elemento').val();
+
+            $.ajax({
+                url: "../guardarMatP",
+                data: {
+                    num_orden: numOrden,
+                    tipo : tipo,
+                    cantidad: cantidad,
+                    id_elemento: id_elemento
+                },
+                type: 'post',
+                async: true,
+                success: function (response) {
+                    /*if (response == 1) {
+                        mensaje('Orden duplicada, por favor verifique el N°. Orden', 'warning');
+                    } else {
+                        mensaje(response.responseText, 'success');
+                        $('#mdlMatPrima').modal('hide');
+                    }*/
+                },
+                error: function (response) {
+                    mensaje(response.responseText, 'error');
+                }
+            }).done(function (data) {
+                //location.reload();
+            });
+
+    });
     function mostrarReq(){
         var Articulos = '';
         $.ajax({
@@ -360,7 +394,6 @@
             type: 'get',
             dataType: 'json',
             success: function(response){
-                console.log(response);
                 $.each(response, function (index, value) {
                     // APPEND OR INSERT DATA TO SELECT ELEMENT.
                     Articulos += '<option  value="' + value.ID + '">' + value.NOMBRE + '</option>'

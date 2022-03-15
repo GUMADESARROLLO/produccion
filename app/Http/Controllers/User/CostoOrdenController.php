@@ -111,16 +111,7 @@ class CostoOrdenController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-        //        $query = CostoOrden::where('id', $request->id)->where('numOrden', '=', $request->num_Orden)
-        //            ->where('costo_id', '=', $request->costo_orden)->get()
-        //            ;
-        //        //dd($query);
-        //        if ($query != null)
-        //        {
-        //            return redirect()->back()->with('message-failed', 'No se guardo con exito :(, es un costo duplicado, por favor elija otro costo');
-        //        }
-        //        else
-        //        {
+
         costoOrden::where('id', $request->id)
             ->update([
                 'numOrden' => $request->num_Orden,
@@ -129,7 +120,7 @@ class CostoOrdenController extends Controller
                 'costo_unitario' => $request->costo_unitario
             ]);
         return redirect::to('costo-orden/detalle/' . $orden);
-        //}
+        
     }
 
     public function guardarHrasProd(Request $request)
