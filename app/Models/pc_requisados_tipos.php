@@ -9,7 +9,12 @@ use Exception;
 
 class pc_requisados_tipos extends Model{
 
-    protected $table = "pc_tiempos_tipos";
+    protected $table = "pc_requisados_tipos";
     public    $timestamps = false;
+
+    public static function getRequisados()
+    {
+        return pc_requisados_tipos::all();
+    }
 
 }
