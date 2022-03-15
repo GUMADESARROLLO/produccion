@@ -214,8 +214,12 @@ Route::post('/guardar', 'User\ProcesoConversionController@guardar')->name('/guar
 Route::post('/eliminar', 'User\ProcesoConversionController@eliminar')->name('/eliminar');
 Route::get('/editar', 'User\ProcesoConversionController@editar')->name('/editar');
 
+Route::post('/guardarMatP', 'User\PcRequisadoDetalleController@guardarMatP')->name('guardarMatP');
+Route::get('/getRequisados', 'User\PcRequisadoTipoController@getRequisados')->name('getRequisados');
+
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');
+
 
 
 

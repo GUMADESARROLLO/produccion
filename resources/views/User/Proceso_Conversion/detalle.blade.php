@@ -2,6 +2,7 @@
 @section('metodosjs')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/detailStyle.css') }}">
 @include('jsViews.js_doc')
+@include('jsViews.js_doc_mp')
 <style>
     a {
         cursor: pointer;
@@ -193,7 +194,7 @@
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        
+
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
@@ -201,7 +202,7 @@
                                                 <i class="material-icons text-black ml-1">search</i>
                                             </span>
                                             <input type="text" id="tbl_search_producto" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                            
+
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
@@ -223,7 +224,7 @@
                                                 <i class="material-icons text-black ml-1">search</i>
                                             </span>
                                             <input type="text" id="tbl_search_materia_prima" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                            
+
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
@@ -237,23 +238,25 @@
 
                                 <!-- [ modal proceso conversión] end -->
 
-                                <div class="modal fade modal-fullscreen" id="mdlAddOrden" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade modal-fullscreen" id="mdlMatPrima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Nueva orden de produccion</h5> <span id="id_row"></span>
+                                                <h5 class="modal-title" id="nombreP" >Nueva orden de produccion</h5> <span id="id_row"></span>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-row">
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-6" hidden>
                                                         <p class="text-muted m-2">Orden de Producción No. </p>
-                                                        <input type="text" class="form-control" id="num_orden" placeholder="C-0000-00">
+                                                        <input type="text" class="form-control" id="num_orden" value="{{$Orden}}">
                                                         <small class="">Digite el número de orden</small>
                                                     </div>
-                                                    <div class="form-group col-md-6">
+                                                    <input class="form-control" type="hidden" id="id_elemento">
+
+                                                    <div class="form-group col-md-6" hidden>
                                                         <p class="text-muted">Producto</p>
                                                         <select class="form-control" id="id_select_producto">
                                                             <option value="0">...</option>
@@ -263,17 +266,30 @@
                                                         <small class="">Seleccione el tipo de producto</small>
                                                     </div>
                                                 </div>
+                                                <!--<div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <p class="text-muted m-2">Cantidad</p>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <p class="text-muted m-2">Tipo</p>
+                                                    </div>
+                                                </div>-->
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <p class="text-muted m-2">Fecha Inicial</p>
-                                                        <input type="text" class="input-fecha form-control" id="fecha_inicial">
-                                                        <small class="">Indique la fecha en que inicia</small>
+                                                        <label for="producto">Tipo</label>
+                                                        <select id="requisadoE" class="form-control">
+                                                            <option id="" value="">-- Select --</option>
+                                                        </select>
+                                                        <small id="productoHelp" class="form-text text-muted">Seleccione
+                                                            un Tipo de entrada</small>
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <p class="text-muted m-2">Hora Inicial</p>
-                                                        <input type="time" class="form-control" id="hora_inicial">
-                                                        <small class="">Indique la hora en que inicia</small>
+                                                        <label for="cantidad">Cantidad</label>
+                                                        <input type="text" class="form-control" id="cantidad">
+                                                        <small class="form-text text-muted">Indique la cantidad</small>
                                                     </div>
+                                                    <p id="msg"></p>
+
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
