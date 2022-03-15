@@ -216,8 +216,12 @@ Route::get('/editar', 'User\ProcesoConversionController@editar')->name('/editar'
 Route::post('/actualizarCantidad', 'User\ProcesoConversionController@actualizarCantidad')->name('/actualizarCantidad');
 
 
-Route::post('/guardarMatP', 'User\PcRequisadoDetalleController@guardarMatP')->name('guardarMatP');
-Route::get('/getRequisados', 'User\PcRequisadoTipoController@getRequisados')->name('getRequisados');
+Route::post('/guardarMatP', 'User\ProcesoConversionController@guardarMatP')->name('guardarMatP');
+Route::get('/getRequisados', 'User\ProcesoConversionController@getRequisados')->name('getRequisados');
+Route::post('/actualizarMP', 'User\ProcesoConversionController@actualizarMP')->name('actualizarMP');
+Route::get('/getRequisadosMP/{numOrden}/{id_articulo}', 'User\ProcesoConversionController@getRequisadosMP')->name('getRequisadosMP/{numOrden}/{id_articulo}');
+
+
 
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');

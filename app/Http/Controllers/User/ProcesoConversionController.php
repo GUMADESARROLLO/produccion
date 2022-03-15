@@ -78,6 +78,29 @@ class ProcesoConversionController extends Controller
         $response = pc_requisado_detalles::actualizarCantidad($request);
         return response()->json($response);
     }
+
+    public function guardarMatP(Request $request)
+    {
+        $response = pc_requisado_detalles::guardarRequisado($request);
+        return response()->json($response);
+    }
+
+    public function getRequisados(){
+        $requisados = pc_requisados_tipos::getRequisados();
+        return response()->json($requisados);
+    }
+
+    public function actualizarRequisado(){
+        $requisados = pc_requisados_tipos::actualizarRequisado();
+        return response()->json($requisados);
+    }
+
+    public function getRequisadosMP($numOrden,$articulo){
+        $requisados = pc_requisado_detalles::getRequisadosMP($numOrden,$articulo);
+        return response()->json($requisados);
+    }
+
+
     
     
 }
