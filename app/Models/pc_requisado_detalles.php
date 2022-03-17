@@ -56,34 +56,69 @@ class pc_requisado_detalles extends Model
             return response()->json($mensaje);
         }
     }
-    public static function guardarRequisado(Request $request)
+    public static function guardarMatP(Request $request) //guarda lp y merma
     {
+
         if ($request->ajax()) {
             try {
-                //dd($request);
-                $requisado = new pc_requisado_detalles();
-                $requisado->num_orden = $request->input('num_orden');
-                $requisado->id_articulos = $request->input('id_elemento');
-                $requisado->cantidad = $request->input('cantidad');
-                $requisado->tipo = $request->input('tipo');
-                $requisado->save();
+                $data = $request->input('data');
+                $response = '';
+                foreach ($data as $requisado) {
+                    if ($requisado['cantidad'] != '') {
+                        $id_exist = DB::table('pc_requisado_detalles') //Confirmar si existe 
+                            ->select('id')
+                            ->where('num_orden', $requisado['num_orden'])
+                            ->where('id_articulos', $requisado['id_articulo'])
+                            ->where('tipo', $requisado['tipo'])->get()->first();
+
+                        if (!is_null($id_exist)) {
+                            $id = $id_exist->id;
+                            $requisa =   pc_requisado_detalles::where('id',  $id_exist->id)->update([
+                                'cantidad' => $requisado['cantidad'],
+                            ]);
+                        } else {
+                            $requisa = new pc_requisado_detalles();
+                            $requisa->num_orden          =   $requisado['num_orden'];
+                            $requisa->id_articulos       =   $requisado['id_articulo'];
+                            $requisa->cantidad           =   $requisado['cantidad'];
+                            $requisa->tipo               =   $requisado['tipo'];
+                            $requisa->save();
+                        }
+                    }
+                }
+                return $requisa;
             } catch (Exception $e) {
                 $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
                 return response()->json($mensaje);
             }
         }
     }
-    public static function actualizarRequisado(Request $request)
+    public static function actualizarMP(Request $request)
     {
         if ($request->ajax()) {
             try {
-                //dd($request);
+
                 $requisado = new pc_requisado_detalles();
-                $requisado->num_orden = $request->input('num_orden');
-                $requisado->id_articulos = $request->input('id_elemento');
-                $requisado->cantidad = $request->input('cantidad');
-                $requisado->tipo = $request->input('tipo');
-                $requisado->save();
+                $num_orden = $request->input('num_orden');
+                $id_articulo = $request->input('id_articulo');
+                $id = $request->input('id_requisa');
+                $cantidad = $request->input('cantidad');
+                $tipo = $request->input('tipo');
+
+                if (!empty($id)) {
+                    $response =   pc_requisado_detalles::where('id',  $id)->update([
+                        'cantidad' => $cantidad,
+                    ]);
+                    return response()->json($response);
+                } else {
+                    $requisado = new pc_requisado_detalles();
+                    $requisado->num_orden = $num_orden;
+                    $requisado->id_articulos = $id_articulo;
+                    $requisado->cantidad = $cantidad;
+                    $requisado->tipo = $tipo;
+                    $requisado->save();
+                    return response()->json($requisado);
+                }
             } catch (Exception $e) {
                 $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
                 return response()->json($mensaje);
@@ -91,30 +126,62 @@ class pc_requisado_detalles extends Model
         }
     }
 
-    public static function getRequisadosMP($num_orden,  $id_articulo)
+    public static function getRequisadosMP($num_orden, $id_articulo, $tipo)
     {
-        $data = array();
         $i = 0;
         $data = array();
-        $requisadoMP = DB::table('pc_requisado_detalles')
+
+        $requisadoMP = DB::table('view_articulos_detalles')
             ->where('num_orden',  $num_orden)
-            ->where('id_articulos',  $id_articulo)
+            ->where('ID_ARTICULO',  $id_articulo)
+            ->where('ID_TIPO_REQUISA',  $tipo)
             ->get();
 
         if (!is_null($requisadoMP)) {
-            foreach ($requisadoMP as $MP  => $value) {
-                $data[$i]['id']             =  $value->id;
-                $data[$i]['num_orden']      =  $value->num_orden;
-                $data[$i]['id_articulos']   =  $value->id_articulos;
-                $data[$i]['cantidad']       =  $value->cantidad;
-                $data[$i]['tipo']           =  $value->tipo;
+            foreach ($requisadoMP as $MP  => $value) { // lp_inicial
+                $data[$i]['id']                 =  $value->id;
+                $data[$i]['num_orden']          =  $value->num_orden;
+                $data[$i]['id_articulos']       =  $value->ID_ARTICULO;
+                $data[$i]['articulo']           =  $value->ARTICULO;
+                $data[$i]['cantidad']           =  number_format($value->CANTIDAD,2);
+                $data[$i]['id_tipo_requisa']    =  $value->ID_TIPO_REQUISA;
+                $data[$i]['tipo_requisa']       =  $value->TIPO_REQUISA;
+                $data[$i]['fecha_creacion']     = date("Y-m-d", strtotime($value->fecha_creacion));
+
                 $i++;
             }
-            // var_dump($data);
             return $data;
+            //    return $data;
         } else {
-            var_dump('Estas en el else');
+            return 0;
         }
+    }
 
+    public static function getRequisadosAll($num_orden, $id_articulo)
+    {
+        $requisadoMP = DB::table('view_articulos_detalles')
+            ->where('num_orden',  $num_orden)
+            ->where('ID_ARTICULO',  $id_articulo)
+            ->get();
+
+        return $requisadoMP;
+    }
+
+    public static function addRequisa(Request $request)
+    {
+        if ($request->ajax()) {
+            try {
+                //dd($request);
+                $requisado = new pc_requisado_detalles();
+                $requisado->num_orden    = $request->input('num_orden');
+                $requisado->id_articulos = $request->input('id_articulo');
+                $requisado->cantidad     = $request->input('cantidad');
+                $requisado->tipo         = $request->input('tipo');
+                $requisado->save();
+            } catch (Exception $e) {
+                $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+                return response()->json($mensaje);
+            }
+        }
     }
 }

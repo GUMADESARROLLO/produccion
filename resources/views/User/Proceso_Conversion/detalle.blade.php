@@ -23,6 +23,11 @@
         /* background: linear-gradient(to bottom, white 0%, #0F85FC 100%);*/
         margin-inline: 5px;
     }
+
+    .custom {
+        min-width: 70%;
+        min-height: 100%;
+    }
 </style>
 @endsection
 @section('content')
@@ -225,8 +230,8 @@
                                 </div>
 
 
-                                <div class="modal fade modal-fullscreen" id="mdlMatPrima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                <div class="modal fade" id="mdlMatPrima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog custom">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="id_articulo_descripcion"></h5> <span id="id_articulo"></span>
@@ -237,49 +242,41 @@
                                             <div class="modal-body">
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6" hidden>
-                                                        <p class="text-muted m-2">Orden de Producción No. </p>
                                                         <input type="text" class="form-control" id="num_orden" value="{{$Orden}}">
-                                                        <small class="">Digite el número de orden</small>
-                                                    </div>
-                                                    <input class="form-control" type="hidden" id="id_elemento">
-
-                                                    <div class="form-group col-md-6" hidden>
-                                                        <p class="text-muted">Producto</p>
-                                                        <select class="form-control" id="id_select_producto">
-                                                            <option value="0">...</option>
-                                                            <option value="13">ROLLO JUMBO ECOPLUS (KG)</option>
-                                                            <option value="35">ROLLO JUMBO GENERICO (KG)</option>
-                                                        </select>
-                                                        <small class="">Seleccione el tipo de producto</small>
+                                                        <input class="form-control" id="id_elemento">
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="producto">Tipo</label>
-                                                        <select id="requisadoE" class="form-control">
-                                                            <option id="" value="">-- Select --</option>
-                                                        </select>
-                                                        <small id="productoHelp" class="form-text text-muted">Seleccione
-                                                            un Tipo de entrada</small>
+                                                    <div class="form-group col-md-4">
+                                                        <p class="text-muted m-2">LP Inicial </p>
+                                                        <input type="text" class="form-control" id="lp_inicial" onkeypress="soloNumeros(event.keyCode, event, $(this).val())">
+                                                        <small class="">Indique la cantidad</small>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="cantidad">Cantidad</label>
-                                                        <input type="text" class="form-control" id="cantidad" onkeypress="soloNumeros(event.keyCode, event, $(this).val())">
-                                                        <small class="form-text text-muted">Indique la cantidad</small>
+                                                    <div class="form-group col-md-4">
+                                                        <p class="text-muted m-2">LP Final </p>
+                                                        <input type="text" class="form-control" id="lp_final" onkeypress="soloNumeros(event.keyCode, event, $(this).val())">
+                                                        <small class="">Indique la cantidad</small>
                                                     </div>
-                                                    <p id="msg"></p>
+                                                    <div class="form-group col-md-4">
+                                                        <p class="text-muted m-2">Merma </p>
+                                                        <input type="text" class="form-control" id="merma" onkeypress="soloNumeros(event.keyCode, event, $(this).val())">
+                                                        <small class="">Indique la cantidad</small>
+                                                    </div>
                                                 </div>
-                                                <table class="table  table-bordered mt-5" id='tbJR'>
-                                                    <thead>
-                                                        <tr class="bg-primary  text-white">
-                                                            <th WIDTH="50%">ACTIVIDAD</th>
-                                                            <th WIDTH="50%">JR</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id='tbodyJR' >
-                                                       
-                                                    </tbody>
-                                                </table>
+                                                <div class="container-fluid m-0 p-0">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-11">
+                                                            <h5 class="text-center">Lista de requisas</h5>
+                                                        </div>
+                                                        <div class="form-group col-md-1">
+                                                            <div class="container justify-content-end d-flex m-0 p-0">
+                                                                <button class="btn btn-primary" id="btnAddReq"><i class="fas fa-plus ml-2"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <table class="table table-bordered" id="tbRequisas" width="100%">
+                                                    </table>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-info" id="btnSave">
@@ -298,4 +295,5 @@
         </div>
     </div>
     <!-- [ Main Content ] end -->
+
     @endsection

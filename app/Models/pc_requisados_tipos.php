@@ -12,7 +12,7 @@ class pc_requisados_tipos extends Model{
     protected $table = "pc_requisados_tipos";
     public    $timestamps = false;
 
-    public static function getRequisados()
+    public static function getRequisados_tipos()
     {
         return pc_requisados_tipos::all();
     }
