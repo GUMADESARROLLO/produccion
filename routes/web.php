@@ -226,6 +226,7 @@ Route::get('/getRequisadosMP/{numOrden}/{id_articulo}', 'User\ProcesoConversionC
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');
 Route::get('/doc_printer/{codigo}', 'User\ProcesoConversionController@doc_printer')->name('doc_printer/{codigo}');
+Route::post('/GuardarTiempoParo', 'User\ProcesoConversionController@GuardarTiempoParo')->name('/GuardarTiempoParo');
 
 
 

@@ -6,6 +6,7 @@ use App\Models\detalle_pc_ordenes;
 use App\Models\pc_ordenes_produccion;
 use App\Models\pc_requisado_detalles;
 use App\Models\pc_requisados_tipos;
+use App\Models\pc_detalle_tiempos_paro;
 use App\Models\ProcesoConversion;
 use Exception;
 use Illuminate\Http\Request;
@@ -72,7 +73,11 @@ class ProcesoConversionController extends Controller
         //return response()->json($obj);
     }
     
-
+    public function GuardarTiempoParo(Request $request)
+    {
+        $response = pc_detalle_tiempos_paro::Insertar($request);
+        return response()->json($response);
+    }
     public function actualizarCantidad(Request $request)
     {
         $response = pc_requisado_detalles::actualizarCantidad($request);

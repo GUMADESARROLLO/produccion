@@ -148,7 +148,7 @@
                         <div class="row">
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
-                                <div class="card">
+                                <div class="card" >
                                     <div class="card-header">
 
                                     </div>
@@ -167,8 +167,8 @@
                                     </div>
                                 </div>
 
-                                <div class="card">
-                                    <div class="card-header">
+                                <div class="card" >
+                                    <div class="card-header" >
                                         <h5>MATERIA PRIMA DIRECTA (M.P)</h5>
                                     </div>
                                     <div class="form-group col-md-12">
@@ -187,8 +187,9 @@
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-header">
+                                    <div class="card-header ">
                                         <h5>TIEMPOS PAROS</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>+</button>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
@@ -206,6 +207,23 @@
                                 </div>
 
                                 <!-- [ modal proceso conversión] end -->
+
+                                <div class="modal fade modal-fullscreen" id="mdlHorasParo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="id_articulo_descripcion"> INGRESO DE TIEMPOS PARO </h5> <span id=""> </span>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <table class="table table-hover" id="tbl_modal_TiemposParos" width="100%"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="modal fade modal-fullscreen" id="mdlMatPrima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">

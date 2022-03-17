@@ -66,3 +66,48 @@ SELECT
 		T0.MERMA
 	FROM
 		VIEW_AGRUPADO_DETALLE_REQUISAS T0 WHERE ( T0.LP_INICIAL + T0.REQUISADO ) > 0
+
+//view_articulos_detalles
+SELECT
+	T0.id,
+	T0.num_orden,
+	T1.ID_ARTICULO,
+	T1.ARTICULO,
+	T1.DESCRIPCION_CORTA,
+	SUM(T0.cantidad) AS CANTIDAD,
+	T0.TIPO AS ID_TIPO_REQUISA,
+	T2.NOMBRE AS TIPO_REQUISA,
+	T0.created_at fecha_creacion
+FROM
+	pc_requisado_detalles T0
+	INNER JOIN pc_productos_ordenes T1 ON T1.ID_ARTICULO = T0.id_articulos
+	INNER JOIN pc_requisados_tipos T2 ON T2.ID = T0.TIPO	
+	INNER JOIN view_proceso_seco_ordenes_produccion T3 ON T0.num_orden = T3.num_orden
+	WHERE T0.TIPO <> 5
+	GROUP BY T0.num_orden,T0.id_articulos,T0.TIPO,T0.id
+	ORDER BY T0.TIPO
+
+// VIEW_DETALLES_TIEMPOS_PAROS
+	SELECT
+	T3.id_row,
+		T3.num_orden,
+		T3.nombre,
+    coalesce(sum(case when T3.turno = "Dia" then T3.cantidad end), 0) as Dia,
+    coalesce(sum(case when T3.turno = "Noche" then T3.cantidad end), 0) as Noche,
+		coalesce(sum(case when T3.turno = "Dia" then T3.numero_personas end), 0) as Personal_Dia,
+		coalesce(sum(case when T3.turno = "Noche" then T3.numero_personas end), 0) as Personal_Noche
+from ( SELECT
+	T2.id as id_row,
+	T0.num_orden,
+	T2.ID as id_tiempo_paro,
+	T2.NOMBRE as nombre,	
+	T0.cantidad,
+	T0.numero_personas,
+	T1.id AS id_turno,
+	T1.turno
+FROM
+	pc_detalle_tiempos_paro T0
+	INNER JOIN turnos T1 ON T1.ID = T0.id_turno
+	INNER JOIN pc_tiempos_paros T2 ON T2.id = T0.id_tipo_tiempo_paro
+	WHERE T2.ACTIVO ='S') T3
+group by id_tiempo_paro,T3.num_orden,T3.id_row

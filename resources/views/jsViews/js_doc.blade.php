@@ -2,6 +2,7 @@
     var dtConversion;
 
     $(document).ready(function() {
+        
         id_orden = $("#id_num_orden").text()
 
         $('#tbl_search_producto').on('keyup', function() {
@@ -363,7 +364,7 @@
                         });
                         break;
                     case 'dtaTiemposParos':
-                        $('#tblTiemposParos').DataTable({
+                        let table_horas_paro =  $('#tblTiemposParos').DataTable({
                             "data": item['data'],
                             "destroy": true,
                             "info": false,
@@ -383,9 +384,13 @@
                                 "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
                                 "search": "BUSCAR"
                             },
-                            'columns': [{
+                            "order": [[ 0, "asc" ]],
+                            'columns': [ {
+                                    "title": "ID",
+                                    "data": "ID_ROW"
+                                },{
                                     "title": "DESCRIPCION DE LA ACTIVIDAD",
-                                    "data": "DESCRIPCION_CORTA",
+                                    "data": "ARTICULO",
                                     "render": function(data, type, row, meta) {
                                         return '<span class="text-success"><sup>+</sup></span>' + data
 
@@ -393,19 +398,20 @@
                                 },
                                 {
                                     "title": "DIA",
-                                    "data": "BULTO"
+                                    "data": "Dia"
                                 },
+                               
                                 {
                                     "title": "NOCHE",
-                                    "data": "BULTO"
+                                    "data": "Noche"
                                 },
                                 {
                                     "title": "TOTAL HRS",
-                                    "data": "KG"
+                                    "data": "Total_Hrs"
                                 },
                                 {
                                     "title": "No. Personas",
-                                    "data": "KG"
+                                    "data": "num_personas"
                                 },
 
                             ],
@@ -415,12 +421,16 @@
                                 },
                                 {
                                     "className": "dt-right",
+                                    "targets": [2,3,4,5]
+                                },
+                                {
+                                    "className": "dt-left",
                                     "targets": []
                                 },
                                 {
                                     "visible": false,
                                     "searchable": false,
-                                    "targets": []
+                                    "targets": [0]
                                 },
                                 {
                                     "width": "10%",
@@ -435,8 +445,19 @@
 
                             }
                         });
+
                         $("#tblTiemposParos_length").hide();
                         $("#tblTiemposParos_filter").hide();
+                       
+
+                            
+                            
+
+            // alert('Row:'+$(this).parent().find('td').html().trim());
+            
+
+                            /**/
+           
                         break;
 
                     default:
@@ -473,6 +494,127 @@
             }
         }
     }
+    $('#id_btn_add_hrs_paro').on('click', function() {
+        
+        var table = $('#tblTiemposParos').DataTable();
+        var data = table.rows().data();
+
+        $('#mdlHorasParo').modal('show');
+            $('#tbl_modal_TiemposParos').DataTable({
+                "data": data,
+                "destroy": true,
+                "info": false,
+                "bPaginate": false,
+                "lengthMenu": [
+                    [100, -1],
+                    [100, "Todo"]
+                ],
+                "language": {
+                    "zeroRecords": "NO HAY COINCIDENCIAS",
+                    "paginate": {
+                        "first": "Primera",
+                        "last": "Última ",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "lengthMenu": "MOSTRAR _MENU_",
+                    "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                    "search": "BUSCAR"
+                },
+                "order": [[ 0, "asc" ]],
+                'columns': [ 
+                    {"title": "ID", "data": "ID_ROW"},
+                    {"title": "DESCRIPCION DE LA ACTIVIDAD","data": "ARTICULO"},
+                    {"title": "DIA","data": "Dia"},
+                    {"title": "NOCHE","data": "Noche"},
+                ],
+                "columnDefs": [
+                    {"className": "dt-center","targets": []},
+                    {"className": "dt-right","targets": [2,3,]},
+                    {"className": "dt-left","targets": []},
+                    {"visible": false,"searchable": false,"targets": [0]},
+                    {"width": "10%","targets": []},
+                    {"width": "15%","targets": []},
+                ]
+            });
+            $("#tbl_modal_TiemposParos_length").hide();
+            $("#tbl_modal_TiemposParos_filter").hide();
+
+
+	
+                var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
+
+
+                        $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) { 
+                            var dtaRow = tbl_mdl_tiempos_paro.row( this ).data();
+                            var visIdx = $(this).index()
+
+                            if( visIdx != 0 && visIdx != 3){
+
+                                
+                                var valor           = $(this).html().trim();
+                                var valor_columna   = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
+                                var num_orden       = $('#id_num_orden').text();
+                                var ARTICULO        = dtaRow['ARTICULO'];
+                                var idturno         = (valor_columna=='DIA') ? 1 : 2
+
+
+                                valor = valor.replace(/[',]+/g, '');
+
+                                Swal.fire({
+                                    title: ARTICULO,
+                                    text: "Para el Turno de " + valor_columna,
+                                    input: 'text',
+                                    target: document.getElementById('mdlHorasParo'),
+                                    inputPlaceholder: 'Digite la cantidad',
+                                    inputAttributes: {
+                                        id: 'cantidad',
+                                        required: 'true',
+                                        onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+                                    },
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Guardar',
+                                    showLoaderOnConfirm: true,
+                                    inputValue: valor,  
+                                    inputValidator: (value) => {
+                                        if (!value) {
+                                            return 'Digita la cantidad por favor';
+                                        }
+
+                                        if (isNaN(value)) {
+                                            return 'Formato incorrecto';
+                                        } else {
+                                            $.ajax({
+                                                url: "../GuardarTiempoParo",
+                                                data: {
+                                                    id_tipo_tiempo_paro : dtaRow['ID_ROW'],
+                                                    num_orden           : num_orden,
+                                                    cantidad            : value,
+                                                    idturno             : idturno
+                                                },
+                                                type: 'post',
+                                                async: true,
+                                                success: function(response) {
+                                                    swal("Genial!", "Guardado exitosamente", "success");
+                                                },
+                                                error: function(response) {
+                                                    swal("Oops", "No se ha podido guardar!", "error");
+                                                }
+                                            }).done(function(data) {
+                                                setTimeout(function() {
+                                                    location.reload();
+                                                }, 2000);
+                                            });
+                                        }
+                                }
+                            })
+
+
+                            }
+                        })
+                        
+    })
+
     $('#btnSave').on('click', function() {
         let numOrden = $('#id_num_orden').text(),
             tipo = $('#requisadoE').val(),

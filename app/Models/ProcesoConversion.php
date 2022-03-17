@@ -27,10 +27,11 @@ class ProcesoConversion extends Model {
         );
         $Array_Tiempos_Paros[] = array(
             'tipo' => 'dtaTiemposParos',
-            'data' => ProcesoConversion::get_info_producto($data_orden['peso_procent'],$data_orden['id_productor'],$data_orden['num_orden'])
+            'data' => ProcesoConversion::get_tiempos_paro($data_orden['num_orden'])
         );
 
         $array_merge = array_merge($Array_Info,$Array_Producto,$Array_Materia,$Array_Tiempos_Paros);
+        //$array_merge = array_merge($Array_Tiempos_Paros);
         return $array_merge;
 
     }
@@ -53,6 +54,41 @@ class ProcesoConversion extends Model {
                 $json['hrs_trabajadas']     = number_format($value->Hrs_trabajadas,2);
                 $json['peso_procent']       = number_format($value->PESO_PORCENT,2);
                 $json['total_bultos_und']   = number_format($value->TOTAL_BULTOS_UNDS,2);
+                
+                $i++;
+            }
+        }
+
+        return $json;
+        $sql_server->close();
+    }
+    public static function get_tiempos_paro($num_orden){
+        
+        $items_productos = DB::table('pc_tiempos_paros')->where('ACTIVO', 'S')->get();
+        $datos_productos = DB::table('view_proceso_seco_detalles_tiempos_paros')->where('num_orden', $num_orden)->get()->toArray();
+        $json = array();
+        $i = 0;
+        //DD($datos_productos);
+        if( count($items_productos)>0 ){
+            foreach ($items_productos as $key => $value) {
+
+                $json[$i]['ID_ROW']        = $value->ID;
+                $json[$i]['ARTICULO']           = $value->NOMBRE;
+                
+               $found_key = array_search($value->ID, array_column($datos_productos, 'id_row'));
+
+               //DD($found_key);
+                if ($found_key !== false) {                    
+                    $json[$i]['Dia']            = number_format($datos_productos[$found_key]->Dia,2);
+                    $json[$i]['Noche']          = number_format($datos_productos[$found_key]->Noche,2);
+                    $json[$i]['Total_Hrs']      = number_format($datos_productos[$found_key]->Dia + $datos_productos[$found_key]->Noche,2);
+                    $json[$i]['num_personas']   = number_format($datos_productos[$found_key]->Personal_Dia + $datos_productos[$found_key]->Personal_Noche,2);                    
+                }else{                    
+                    $json[$i]['Dia']            = number_format(0.00,2);
+                    $json[$i]['Noche']          = number_format(0.00,2);
+                    $json[$i]['Total_Hrs']      = number_format(0.00,2);
+                    $json[$i]['num_personas']   = number_format(0.00,2);
+                }
                 
                 $i++;
             }
