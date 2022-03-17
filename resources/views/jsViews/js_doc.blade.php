@@ -1,5 +1,6 @@
 <script type="text/javascript">
     var dtConversion;
+    var dtRequisas = '';
 
     $(document).ready(function() {
         id_orden = $("#id_num_orden").text()
@@ -107,64 +108,36 @@
                         $("#tblMateriaPrima_length").hide();
                         $("#tblMateriaPrima_filter").hide();
                         $('#tblMateriaPrima tbody').on('click', "tr", function() {
-
-                            /*var data = table_materia.row( this ).data();
-                            clearFields();
-                            
-                            
-                            $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
-                            $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);*/
-
-                            mostrarReq();
+                            $('#mdlMatPrima').modal('show');
 
                             var data = table_materia.row(this).data();
-                            let id_articulo = data['ID_ARTICULO'];
-                            let articulo = data['ARTICULO'];
-                            let descripcion = data['DESCRIPCION_CORTA'];
-
-                            $('#nombre_mp').text(descripcion);
-                            $('#codigo').text(articulo);
-
-
+                            var id_articulo = data['ID_ARTICULO'];
+                            var articulo = data['ARTICULO'];
+                            var descripcion = data['DESCRIPCION_CORTA'];
+                            var num_orden = $('#id_num_orden').text();
+                            clearRequisas();
+                            mostrarRequisado(num_orden, id_articulo, 2);
+                            getRequisadoMP(num_orden, id_articulo);
                             $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
                             $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);
-                            let numOrden = $('#id_num_orden').val();
-                            console.log(data);
-                            //  clearFields();
-                            $('#mdlAddOrden').modal('show');
+                            $('#id_elemento').text(id_articulo);
 
-                            var num_orden = $('#id_num_orden').text();
-                            var elemento = document.getElementById("id_elemento").value = id_articulo;
+                            $('#tbRequisas tbody').on('click', "tr", function(event) {
+                                var tipo_requisa, id_requisa, cantidad, nombre;
+                                var data = dtRequisas.row(this).data();
 
-
-                            $('#mdlMatPrima').modal('show');
-                            $('#cantidad').val('');
-                            getRequisadoMPBynumOrden(num_orden, id_articulo);
-
-                            $('#tbJR tbody').on('click', "tr", function(event) {
-
-                                //console.log($(this).children().next().attr('id'));
-
-                                let tipo_requisa = $(this).children().next().attr('id');
-                                let cantidad = $(this).children().next().text();
-                                let nombre = '';
-
-                                if (tipo_requisa == 1) {
-                                    nombre = 'LP INICIAL';
-                                } else if (tipo_requisa == 2) {
-                                    nombre = 'REQUISADO';
-                                } else if (tipo_requisa == 3) {
-                                    nombre = 'LP FINAL';
-                                } else if (tipo_requisa == 4) {
-                                    nombre = 'MERMA';
-                                }
-                                $('#mdlAddOrden').modal('hide');
-
+                                var cantidad = data['cantidad'];
+                                var id_requisa = data['id'];
+                                tipo_requisa = 2;
+                                cantidad = cantidad.replace(/[',]+/g, '');
+                                console.log(data);
+                                nombre = 'REQUISADO';
                                 Swal.fire({
                                     title: nombre,
                                     text: "Ingrese la cantidad",
                                     input: 'text',
                                     inputPlaceholder: 'Digite la cantidad',
+                                    target: document.getElementById('mdlMatPrima'),
                                     inputAttributes: {
                                         id: 'cantidad',
                                         required: 'true',
@@ -183,12 +156,13 @@
                                             return 'Formato incorrecto';
                                         } else {
                                             $.ajax({
-                                                url: "../requisado_jr",
+                                                url: "../actualizarMP",
                                                 data: {
                                                     cantidad: value,
-                                                    num_orden: numOrden,
+                                                    num_orden: num_orden,
                                                     id_articulo: id_articulo,
                                                     tipo: tipo_requisa,
+                                                    id_requisa: id_requisa,
                                                 },
                                                 type: 'post',
                                                 async: true,
@@ -200,23 +174,12 @@
                                                     swal("Oops", "No se ha podido guardar!", "error");
                                                 }
                                             }).done(function(data) {
-                                                setTimeout(function() {
-                                                    location.reload();
-                                                }, 2000);
-                                                $('#mdlAddOrden').modal('show');
-
+                                                mostrarRequisado(num_orden, id_articulo, 2);
                                             });
                                         }
-                                        $('#mdlAddOrden').modal('show');
-
                                     }
                                 })
-
                             });
-
-
-                            //soloNumeros(event.keyCode, event, $(this).val());
-
                         });
                         break;
                     case 'dtaProducto':
@@ -311,6 +274,7 @@
                             let id_articulo = data['ID_ARTICULO'];
                             let num_orden = $('#id_num_orden').text();
                             cantidad = cantidad.replace(/[',]+/g, '');
+
                             Swal.fire({
                                 title: data.DESCRIPCION_CORTA,
                                 text: "Ingrese la cantidad de Bultos",
@@ -473,29 +437,187 @@
             }
         }
     }
+
+    function mostrarRequisado(numOrden, id_articulo, tipo) {
+        dtRequisas = $('#tbRequisas').DataTable({ // Costos por ORDEN
+            "ajax": {
+                "url": '../getRequisadosMP/' + numOrden + '/' + id_articulo + '/' + tipo,
+                'dataSrc': '',
+            },
+            "destroy": true,
+            "ordering": false,
+            "info": false,
+            "bPaginate": false,
+            "bfilter": false,
+            "searching": false,
+            "language": {
+                "emptyTable": `<p class="text-center">AGREGUE UNA REQUISA</p>`
+            },
+            "columns": [{
+                    "title": "ID",
+                    "data": "id"
+                },
+                {
+                    "title": "Fecha",
+                    "data": "fecha_creacion"
+                },
+                {
+                    "title": "Cantidad",
+                    "data": "cantidad",
+                },
+                {
+                    "title": "Eliminar",
+                    "data": "id",
+                    "render": function(data, type, row, meta) {
+                        return '<div class="row justify-content-center">' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-x text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
+                            '</div>'
+                    }
+                },
+            ],
+            "columnDefs": [{
+                    "targets": [1, 2],
+                    "width": '45%',
+                    "className": "dt-center",
+                }, {
+                    "targets": [0],
+                    "visible": false
+                }, {
+                    "targets": [3],
+                    "width": '10%',
+                    "className": "dt-center",
+                }
+            ]
+        });
+
+        $("#tbRequisas_filter").hide();
+        $("#tbRequisas_length").hide();
+    }
+
+    function getRequisadoMP(numOrden, id_articulo) {
+
+        $.ajax({
+            url: '../getRequisadosAll/' + numOrden + '/' + id_articulo,
+            data: {},
+            type: 'get',
+            async: true,
+            success: function(data) {
+                data.forEach(element => {
+                    if (element.ID_TIPO_REQUISA == 1) {
+                        $('#lp_inicial').val(numeral(element.CANTIDAD).format('00.00'));
+                    } else if (element.ID_TIPO_REQUISA == 3) {
+                        $('#lp_final').val(numeral(element.CANTIDAD).format('00.00'));
+                    } else if (element.ID_TIPO_REQUISA == 4) {
+                        $('#merma').val(numeral(element.CANTIDAD).format('00.00'));
+                    }
+                });
+            },
+            error: function(response) {
+                mensaje(response.responseText, 'error');
+            }
+        }).done(function(data) {});
+
+    }
+
+    function clearRequisas() {
+        $('#lp_inicial').val('');
+        $('#lp_final').val('');
+        $('#merma').val('');
+    }
+
+    $('#btnAddReq').on('click', function() {
+        var num_orden = $('#id_num_orden').text(),
+            tipo_requisa = 2,
+            id_articulo = $('#id_elemento').text();
+        console.log(id_articulo);
+
+        Swal.fire({
+            title: 'Nueva Requisa',
+            text: "Ingrese la cantidad",
+            input: 'text',
+            inputPlaceholder: 'Digite la cantidad',
+            inputAttributes: {
+                id: 'cantidad',
+                required: 'true',
+                onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            showLoaderOnConfirm: true,
+            target: document.getElementById('mdlMatPrima'),
+            inputValue: $('#cantidad').text(),
+            inputValidator: (value) => {
+                console.log(value);
+                if (!value) {
+                    return 'Digita la cantidad por favor';
+                }
+                value = value.replace(/[',]+/g, '');
+                if (isNaN(value)) {
+                    return 'Formato incorrecto';
+                } else {
+                    $.ajax({
+                        url: "../addRequisa",
+                        data: {
+                            cantidad: value,
+                            num_orden: num_orden,
+                            id_articulo: id_articulo,
+                            tipo: tipo_requisa,
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            console.log(response);
+                            swal("Saved!", "Guardado exitosamente", "success");
+                        },
+                        error: function(response) {
+                            swal("Oops", "No se ha podido guardar!", "error");
+                        }
+                    }).done(function(data) {
+                        mostrarRequisado(num_orden, id_articulo, 2);
+                    });
+                }
+            }
+        })
+
+    });
+
     $('#btnSave').on('click', function() {
-        let numOrden = $('#id_num_orden').text(),
-            tipo = $('#requisadoE').val(),
-            cantidad = $('#cantidad').val(),
-            id_elemento = $('#id_elemento').val();
-        console.log(numOrden);
+        var data = [];
+        var num_orden = $('#id_num_orden').text(),
+            id_articulo = $('#id_elemento').text(),
+            lp_inicial = $('#lp_inicial').val(),
+            lp_final = $('#lp_final').val(),
+            merma = $('#merma').val();
+
+        data[0] = { // 1 levantado de piso
+            num_orden: num_orden,
+            tipo: 1,
+            cantidad: lp_inicial,
+            id_articulo: id_articulo,
+        };
+
+        data[1] = { // 1 levantado de piso
+            num_orden: num_orden,
+            tipo: 3,
+            cantidad: lp_final, // cantidad
+            id_articulo: id_articulo,
+        };
+        data[2] = { // 1 levantado de piso
+            num_orden: num_orden,
+            tipo: 4,
+            cantidad: merma, // cantidad
+            id_articulo: id_articulo,
+        };
+
         $.ajax({
             url: "../guardarMatP",
             data: {
-                num_orden: numOrden,
-                tipo: tipo,
-                cantidad: cantidad,
-                id_elemento: id_elemento
+                data: data
             },
             type: 'post',
             async: true,
             success: function(response) {
-                if (response == 1) {
-                    mensaje('Orden duplicada, por favor verifique el N°. Orden', 'warning');
-                } else {
-                    mensaje(response.responseText, 'success');
-                    $('#mdlMatPrima').modal('hide');
-                }
+                mensaje(response.responseText, 'success');
             },
             error: function(response) {
                 mensaje(response.responseText, 'error');
@@ -503,105 +625,5 @@
         }).done(function(data) {
             location.reload();
         });
-
     });
-
-    function mostrarReq() {
-        var Articulos = '';
-        $.ajax({
-            url: '../getRequisados',
-            type: 'get',
-            dataType: 'json',
-            success: function(response) {
-                $.each(response, function(index, value) {
-                    // APPEND OR INSERT DATA TO SELECT ELEMENT.
-                    Articulos += '<option  value="' + value.ID + '">' + value.NOMBRE + '</option>'
-
-                });
-                $('#requisadoE').empty().append(Articulos);
-            }
-        });
-        $('#requisadoE').change(function() {
-            $('#msg').text('Selected Item: ' + this.options[this.selectedIndex].value);
-        });
-        //var tipo_req = $('#requisadoE').val();
-
-
-    }
-
-    function soloNumeros(caracter, e, numeroVal) {
-        var numero = numeroVal;
-        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
-            e.preventDefault();
-            swal.showValidationError('No se puede iniciar con un punto');
-        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
-            e.preventDefault();
-            swal.showValidationError('No puede haber mas de dos puntos');
-        } else {
-            const soloNumeros = new RegExp("^[0-9]+$");
-            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
-                e.preventDefault();
-                swal.showValidationError(
-                    'No se pueden escribir letras, solo se permiten datos númericos'
-                );
-            }
-        }
-    }
-
-    function getRequisadoMPBynumOrden(numOrden, id_articulo) {
-        var i = 0;
-        $("#tbodyJR").empty();
-        $.ajax({
-            type: 'get',
-            url: '../getRequisadosMP/' + numOrden + '/' + id_articulo,
-            dataType: "json",
-            data: {},
-            success: function(data) {
-
-                console.log(data);
-                if (data == 0) {
-                    const HTML = `
-                        <tr>
-                            <th>LEVANTAMIENTO DE PISO INCIAL</th>
-                            <td id="1"></td></tr>
-                        <tr>
-                            <th>REQUISADO</th>
-                        <td id="2"></td>
-                        </tr>
-                        <tr>
-                            <th>LEVANTAMIENTO DE PISO FINAL</th>
-                            <td id="3"></td>
-                        </tr>
-                        <tr>
-                            <th>MERMA</th>
-                            <td id="4"></td>
-                        </tr>
-                    `;
-                    $("#tbodyJR").append(HTML);
-                } else {
-                    data.forEach(element => {
-                        if (element.tipo == 1) { // LP INICIAL
-                        }
-                        if (element.tipo == 2) { // REQUISADO
-                        }
-                        if (element.tipo == 3) { // LP FINAL
-                        }
-                        if (element.tipo == 4) { // MERMA
-                        }
-                        const HTML = `
-                        <tr>
-                            <th>LEVANTAMIENTO DE PISO INCIAL</th>
-                            <td id="1">` + element.cantidad + `</td>
-                        </tr>
-                    `;
-                        $("#tbodyJR").append(HTML);
-                    });
-                    console.log('no es nulo');
-                }
-            },
-            error: function(response) {
-                mensaje(response.responseText, 'error');
-            }
-        });
-    }
 </script>

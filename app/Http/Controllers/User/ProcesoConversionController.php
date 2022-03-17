@@ -81,12 +81,12 @@ class ProcesoConversionController extends Controller
 
     public function guardarMatP(Request $request)
     {
-        $response = pc_requisado_detalles::guardarRequisado($request);
+        $response = pc_requisado_detalles::guardarMatP($request);
         return response()->json($response);
     }
 
-    public function getRequisados(){
-        $requisados = pc_requisados_tipos::getRequisados();
+    public function getRequisados_tipos(){
+        $requisados = pc_requisados_tipos::getRequisados_tipos();
         return response()->json($requisados);
     }
 
@@ -95,12 +95,24 @@ class ProcesoConversionController extends Controller
         return response()->json($requisados);
     }
 
-    public function getRequisadosMP($numOrden,$articulo){
-        $requisados = pc_requisado_detalles::getRequisadosMP($numOrden,$articulo);
+    public function getRequisadosMP($numOrden,$articulo,$tipo){
+        $requisados = pc_requisado_detalles::getRequisadosMP($numOrden,$articulo,$tipo);
         return response()->json($requisados);
     }
 
+    public function actualizarMP(Request $request){
+        $response = pc_requisado_detalles::actualizarMP($request);
+        return response()->json($response);
+    }   
 
+    public function addRequisa(Request $request){
+        $response = pc_requisado_detalles::addRequisa($request);
+        return response()->json($response);
+    } 
     
+    public function getRequisadosAll($num_orden, $id_articulo){
+        $requisados = pc_requisado_detalles::getRequisadosAll($num_orden, $id_articulo);
+        return response()->json($requisados);
+    }
     
 }
