@@ -125,5 +125,9 @@ class ProcesoConversionController extends Controller
         $requisados = pc_requisado_detalles::eliminarRequisaPC($request);
         return response()->json($requisados);
     }
+    public function updateFechafinal(Request $request){
+        $requisados = pc_ordenes_produccion::updateFechafinal($request);
+        return response()->json($requisados);
+    }
     
 }

@@ -831,22 +831,64 @@
         });
     }
 
-    $('#id_fecha_final').on('click', function() {
-        let flatpickrInstance
+    $('#fecha_hora_final').on('mouseover', function() {
+        $(this).addClass('color-focus');
+    });
 
+    $('#fecha_hora_final').on('mouseleave', function() {
+        $(this).removeClass('color-focus');
+    });
+
+    $('#fecha_hora_final').on('click', function() {
+        let fecha_final, hora_final, num_orden;
+        num_orden = $("#id_num_orden").text();
+
+        console.log(num_orden);
         Swal.fire({
-            title: 'Please enter departure date',
-            html: '<input class="swal2-input" id="expiry-date">',
+            title: 'Fecha final',
+            html: '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA FINAL:</p></div>' +
+                '<div class="form-group col-md-8"><input type="date" class="form-control" id="add_fecha_final"></div></div>' +
+                '<div class="form-row"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">HORA FINAL:</p></div>' +
+                '<div class="form-group col-md-8"><input type="time" class="form-control mt-2" id="add_hora_final"></div></div>',
             stopKeydownPropagation: false,
+            confirmButtonText: 'Guardar',
+            showCancelButton: true,
             preConfirm: () => {
-                if (flatpickrInstance.selectedDates[0] < new Date()) {
-                    Swal.showValidationMessage(`The departure date can't be in the past`)
+                fecha_final = $('#add_fecha_final').val();
+                hora_final = $('#add_hora_final').val();
+
+                console.log(fecha_final);
+                if (fecha_final == '') {
+                    return swal.showValidationError(
+                        'Seleccione una fecha por favor'
+                    );
                 }
-            },
-            willOpen: () => {
-                flatpickrInstance = flatpickr(
-                    Swal.getPopup().querySelector('#expiry-date')
-                )
+                if (hora_final == '') {
+                    return swal.showValidationError(
+                        'Seleccione una hora por favor'
+                    );
+                }
+
+                $.ajax({
+                    url: '../updateFechafinal',
+                    data: {
+                        num_orden: num_orden,
+                        fecha_final: fecha_final,
+                        hora_final: hora_final
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        Swal.fire('Saved!', 'la fecha se ha actualizado', 'success')
+                    },
+                    error: function(response) {
+                        mensaje(response.responseText, 'error');
+                    }
+                }).done(function(data) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                });
             }
         })
     });

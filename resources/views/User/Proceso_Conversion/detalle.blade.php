@@ -8,6 +8,7 @@
         cursor: pointer;
         color: #5E5E5E;
         text-decoration: none;
+        
     }
 
     .dataTables_paginate {
@@ -27,6 +28,9 @@
     .custom {
         min-width: 70%;
         min-height: 100%;
+    }
+    .color-focus{
+        color: #0894ff !important;
     }
 </style>
 @endsection
@@ -54,9 +58,8 @@
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> - </h3>
                                 <div class="nk-block-des text-right text-soft ">
                                     <span id="id_fecha_inicial"> 0</span> - <span id="id_hora_inicial">0</span> al
-                                    <span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span>
+                                    <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></a> 
                                 </div>
-                               
                             </div>
                         </div>
                     </div>
