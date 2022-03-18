@@ -8,6 +8,7 @@
         cursor: pointer;
         color: #5E5E5E;
         text-decoration: none;
+        
     }
 
     .dataTables_paginate {
@@ -28,6 +29,7 @@
         min-width: 70%;
         min-height: 100%;
     }
+    
     u.dotted{
         border-bottom: 1px dashed #999;
         text-decoration: none; 
@@ -59,6 +61,9 @@
     .border-left-warning {
         border-left: .25rem solid #f6c23e !important;
     }
+    .color-focus{
+        color: #0894ff !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -86,7 +91,7 @@
                                 <div class="nk-block-des text-right text-soft ">
                                     
                                     <span id="id_fecha_inicial"> 0</span> - <span id="id_hora_inicial">0</span> al
-                                    <u class="dotted"> <span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></u>
+                                    <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></a> 
                                 </div>
                             </div>
                         </div>
@@ -293,7 +298,7 @@
                                     <div class="modal-dialog custom">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="id_articulo_descripcion"></h5> <span id="id_articulo"></span>
+                                                <h5 class="modal-title" id="id_descripcion"></h5> <span id="id_articulo"></span>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>

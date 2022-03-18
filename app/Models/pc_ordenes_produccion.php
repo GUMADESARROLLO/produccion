@@ -11,7 +11,7 @@ class pc_ordenes_produccion extends Model
 {
 
     protected $table = "pc_ordenes_produccion";
-    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final','estado'];
+    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final', 'estado'];
     public    $timestamps = false;
 
     public static function guardar($data, $orden)
@@ -23,7 +23,7 @@ class pc_ordenes_produccion extends Model
         }
         try {
             DB::transaction(function () use ($data) {
-                
+
                 $array = array();
                 $i = 0;
                 $orden = new pc_ordenes_produccion();
@@ -51,7 +51,7 @@ class pc_ordenes_produccion extends Model
         try {
             DB::transaction(function () use ($request) {
                 $id = $request->input('id');
-                $ordenes =   pc_ordenes_produccion::where('id',  $id )->update([
+                $ordenes =   pc_ordenes_produccion::where('id',  $id)->update([
                     'estado' => 'N',
                 ]);
                 return response()->json($ordenes);
@@ -63,5 +63,26 @@ class pc_ordenes_produccion extends Model
         }
     }
 
-    
+    public static function updateFechafinal(Request $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $num_orden = $request->input('num_orden');
+                $fecha_final = $request->input('fecha_final');
+                $hora_final = $request->input('hora_final');
+
+                $fecha_hora_final = $fecha_final . ' ' . $hora_final . ':00';
+
+                $ordenes =   pc_ordenes_produccion::where('num_orden',  $num_orden)
+                ->where('estado','S')->update([
+                    'fecha_hora_final' => $fecha_hora_final,
+                ]);
+                return response()->json($ordenes);
+            });
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return response()->json($mensaje);
+        }
+    }
 }

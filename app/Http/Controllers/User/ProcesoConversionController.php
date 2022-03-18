@@ -16,6 +16,8 @@ class ProcesoConversionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        setlocale(LC_ALL,"es_ES");
+
     }
     public function index()
     {
@@ -122,6 +124,14 @@ class ProcesoConversionController extends Controller
     
     public function getRequisadosAll($num_orden, $id_articulo){
         $requisados = pc_requisado_detalles::getRequisadosAll($num_orden, $id_articulo);
+        return response()->json($requisados);
+    }
+    public function eliminarRequisaPC(Request $request){
+        $requisados = pc_requisado_detalles::eliminarRequisaPC($request);
+        return response()->json($requisados);
+    }
+    public function updateFechafinal(Request $request){
+        $requisados = pc_ordenes_produccion::updateFechafinal($request);
         return response()->json($requisados);
     }
     

@@ -3,7 +3,7 @@
     var dtRequisas = '';
 
     $(document).ready(function() {
-        
+
         id_orden = $("#id_num_orden").text()
 
         $('#tbl_search_producto').on('keyup', function() {
@@ -126,11 +126,13 @@
                             clearRequisas();
                             mostrarRequisado(num_orden, id_articulo, 2);
                             getRequisadoMP(num_orden, id_articulo);
+                            console.log(data);
                             $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
-                            $("#id_articulo_descripcion").text(data.DESCRIPCION_CORTA);
+                            $("#id_descripcion").text(data.DESCRIPCION_CORTA);
                             $('#id_elemento').text(id_articulo);
 
-                            $('#tbRequisas tbody').on('click', "tr", function(event) {
+                            $('#tbRequisas tbody').on('click', "td", function(event) {
+                                var visIdx = $(this).index();
                                 var tipo_requisa, id_requisa, cantidad, nombre;
                                 var data = dtRequisas.row(this).data();
 
@@ -140,55 +142,57 @@
                                 var id_requisa = data['id'];
                                 tipo_requisa = 2;
                                 cantidad = cantidad.replace(/[',]+/g, '');
-                                console.log(data);
+
                                 nombre = 'REQUISADO';
-                                Swal.fire({
-                                    title: nombre,
-                                    text: "Ingrese la cantidad",
-                                    input: 'text',
-                                    inputPlaceholder: 'Digite la cantidad',
-                                    target: document.getElementById('mdlMatPrima'),
-                                    inputAttributes: {
-                                        id: 'cantidad',
-                                        required: 'true',
-                                        onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
-                                    },
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Guardar',
-                                    showLoaderOnConfirm: true,
-                                    inputValue: cantidad,
-                                    inputValidator: (value) => {
-                                        if (!value) {
-                                            return 'Digita la cantidad por favor';
+                                if (visIdx == 1) {
+                                    Swal.fire({
+                                        title: nombre,
+                                        text: "Ingrese la cantidad",
+                                        input: 'text',
+                                        inputPlaceholder: 'Digite la cantidad',
+                                        target: document.getElementById('mdlMatPrima'),
+                                        inputAttributes: {
+                                            id: 'cantidad',
+                                            required: 'true',
+                                            onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+                                        },
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Guardar',
+                                        showLoaderOnConfirm: true,
+                                        inputValue: cantidad,
+                                        inputValidator: (value) => {
+                                            if (!value) {
+                                                return 'Digita la cantidad por favor';
+                                            }
+                                            value = value.replace(/[',]+/g, '');
+                                            if (isNaN(value)) {
+                                                return 'Formato incorrecto';
+                                            } else {
+                                                $.ajax({
+                                                    url: "../actualizarMP",
+                                                    data: {
+                                                        cantidad: value,
+                                                        num_orden: num_orden,
+                                                        id_articulo: id_articulo,
+                                                        tipo: tipo_requisa,
+                                                        id_requisa: id_requisa,
+                                                    },
+                                                    type: 'post',
+                                                    async: true,
+                                                    success: function(response) {
+                                                        console.log(response);
+                                                        swal("Saved!", "Guardado exitosamente", "success");
+                                                    },
+                                                    error: function(response) {
+                                                        swal("Oops", "No se ha podido guardar!", "error");
+                                                    }
+                                                }).done(function(data) {
+                                                    mostrarRequisado(num_orden, id_articulo, 2);
+                                                });
+                                            }
                                         }
-                                        value = value.replace(/[',]+/g, '');
-                                        if (isNaN(value)) {
-                                            return 'Formato incorrecto';
-                                        } else {
-                                            $.ajax({
-                                                url: "../actualizarMP",
-                                                data: {
-                                                    cantidad: value,
-                                                    num_orden: num_orden,
-                                                    id_articulo: id_articulo,
-                                                    tipo: tipo_requisa,
-                                                    id_requisa: id_requisa,
-                                                },
-                                                type: 'post',
-                                                async: true,
-                                                success: function(response) {
-                                                    console.log(response);
-                                                    swal("Exito!", "Guardado exitosamente", "success");
-                                                },
-                                                error: function(response) {
-                                                    swal("Oops", "No se ha podido guardar!", "error");
-                                                }
-                                            }).done(function(data) {
-                                                mostrarRequisado(num_orden, id_articulo, 2);
-                                            });
-                                        }
-                                    }
-                                })
+                                    })
+                                }
                             });
                         });
                         break;
@@ -339,7 +343,7 @@
                         });
                         break;
                     case 'dtaTiemposParos':
-                        let table_horas_paro =  $('#tblTiemposParos').DataTable({
+                        let table_horas_paro = $('#tblTiemposParos').DataTable({
                             "data": item['data'],
                             "destroy": true,
                             "info": false,
@@ -360,11 +364,13 @@
                                 "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
                                 "search": "BUSCAR"
                             },
-                            "order": [[ 0, "asc" ]],
-                            'columns': [ {
+                            "order": [
+                                [0, "asc"]
+                            ],
+                            'columns': [{
                                     "title": "ID",
                                     "data": "ID_ROW"
-                                },{
+                                }, {
                                     "title": "DESCRIPCION DE LA ACTIVIDAD",
                                     "data": "ARTICULO",
                                     "render": function(data, type, row, meta) {
@@ -376,7 +382,7 @@
                                     "title": "DIA",
                                     "data": "Dia"
                                 },
-                               
+
                                 {
                                     "title": "NOCHE",
                                     "data": "Noche"
@@ -397,7 +403,7 @@
                                 },
                                 {
                                     "className": "dt-right",
-                                    "targets": [2,3,4,5]
+                                    "targets": [2, 3, 4, 5]
                                 },
                                 {
                                     "className": "dt-left",
@@ -424,16 +430,7 @@
 
                         $("#tblTiemposParos_length").hide();
                         $("#tblTiemposParos_filter").hide();
-                       
 
-                            
-                            
-
-            // alert('Row:'+$(this).parent().find('td').html().trim());
-            
-
-                            /**/
-           
                         break;
 
                     default:
@@ -471,130 +468,163 @@
         }
     }
     $('#id_btn_add_hrs_paro').on('click', function() {
-        
+
         var table = $('#tblTiemposParos').DataTable();
         var data = table.rows().data();
 
         $('#mdlHorasParo').modal('show');
-            $('#tbl_modal_TiemposParos').DataTable({
-                "data": data,
-                "destroy": true,
-                "info": false,
-                "bPaginate": false,
-                "lengthMenu": [
-                    [100, -1],
-                    [100, "Todo"]
-                ],
-                "language": {
-                    "zeroRecords": "NO HAY COINCIDENCIAS",
-                    "paginate": {
-                        "first": "Primera",
-                        "last": "Última ",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    },
-                    "lengthMenu": "MOSTRAR _MENU_",
-                    "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                    "search": "BUSCAR"
+        $('#tbl_modal_TiemposParos').DataTable({
+            "data": data,
+            "destroy": true,
+            "info": false,
+            "bPaginate": false,
+            "lengthMenu": [
+                [100, -1],
+                [100, "Todo"]
+            ],
+            "language": {
+                "zeroRecords": "NO HAY COINCIDENCIAS",
+                "paginate": {
+                    "first": "Primera",
+                    "last": "Última ",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
                 },
-                "order": [[ 0, "asc" ]],
-                'columns': [ 
-                    {"title": "ID", "data": "ID_ROW"},
-                    {"title": "DESCRIPCION DE LA ACTIVIDAD","data": "ARTICULO"},
-                    {"title": "DIA","data": "Dia"},
-                    {"title": "NOCHE","data": "Noche"},
-                ],
-                "columnDefs": [
-                    {"className": "dt-center","targets": []},
-                    {"className": "dt-right","targets": [2,3,]},
-                    {"className": "dt-left","targets": []},
-                    {"visible": false,"searchable": false,"targets": [0]},
-                    {"width": "10%","targets": []},
-                    {"width": "15%","targets": []},
-                ]
-            });
-            $("#tbl_modal_TiemposParos_length").hide();
-            $("#tbl_modal_TiemposParos_filter").hide();
+                "lengthMenu": "MOSTRAR _MENU_",
+                "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                "search": "BUSCAR"
+            },
+            "order": [
+                [0, "asc"]
+            ],
+            'columns': [{
+                    "title": "ID",
+                    "data": "ID_ROW"
+                },
+                {
+                    "title": "DESCRIPCION DE LA ACTIVIDAD",
+                    "data": "ARTICULO"
+                },
+                {
+                    "title": "DIA",
+                    "data": "Dia"
+                },
+                {
+                    "title": "NOCHE",
+                    "data": "Noche"
+                },
+            ],
+            "columnDefs": [{
+                    "className": "dt-center",
+                    "targets": []
+                },
+                {
+                    "className": "dt-right",
+                    "targets": [2, 3, ]
+                },
+                {
+                    "className": "dt-left",
+                    "targets": []
+                },
+                {
+                    "visible": false,
+                    "searchable": false,
+                    "targets": [0]
+                },
+                {
+                    "width": "10%",
+                    "targets": []
+                },
+                {
+                    "width": "15%",
+                    "targets": []
+                },
+            ]
+        });
+        $("#tbl_modal_TiemposParos_length").hide();
+        $("#tbl_modal_TiemposParos_filter").hide();
 
 
-	
-                var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
+
+        var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
 
 
-                        $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) { 
-                            var dtaRow = tbl_mdl_tiempos_paro.row( this ).data();
-                            var visIdx = $(this).index()
+        $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) {
+            var dtaRow = tbl_mdl_tiempos_paro.row(this).data();
+            var visIdx = $(this).index()
 
-                            if( visIdx != 0 && visIdx != 3){
-
-                                
-                                var valor           = $(this).html().trim();
-                                var valor_columna   = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
-                                var num_orden       = $('#id_num_orden').text();
-                                var ARTICULO        = dtaRow['ARTICULO'];
-                                var idturno         = (valor_columna=='DIA') ? 1 : 2
+            if (visIdx != 0 && visIdx != 3) {
 
 
-                                valor = valor.replace(/[',]+/g, '');
+                var valor = $(this).html().trim();
+                var valor_columna = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
+                var num_orden = $('#id_num_orden').text();
+                var ARTICULO = dtaRow['ARTICULO'];
+                var idturno = (valor_columna == 'DIA') ? 1 : 2
 
-                                Swal.fire({
-                                    title: ARTICULO,
-                                    text: "Para el Turno de " + valor_columna,
-                                    input: 'text',
-                                    target: document.getElementById('mdlHorasParo'),
-                                    inputPlaceholder: 'Digite la cantidad',
-                                    inputAttributes: {
-                                        id: 'cantidad',
-                                        required: 'true',
-                                        onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
-                                    },
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Guardar',
-                                    showLoaderOnConfirm: true,
-                                    inputValue: valor,  
-                                    inputValidator: (value) => {
-                                        if (!value) {
-                                            return 'Digita la cantidad por favor';
-                                        }
 
-                                        if (isNaN(value)) {
-                                            return 'Formato incorrecto';
-                                        } else {
-                                            $.ajax({
-                                                url: "../GuardarTiempoParo",
-                                                data: {
-                                                    id_tipo_tiempo_paro : dtaRow['ID_ROW'],
-                                                    num_orden           : num_orden,
-                                                    cantidad            : value,
-                                                    idturno             : idturno
-                                                },
-                                                type: 'post',
-                                                async: true,
-                                                success: function(response) {
-                                                    swal("Genial!", "Guardado exitosamente", "success");
-                                                },
-                                                error: function(response) {
-                                                    swal("Oops", "No se ha podido guardar!", "error");
-                                                }
-                                            }).done(function(data) {
-                                                setTimeout(function() {
-                                                    location.reload();
-                                                }, 2000);
-                                            });
-                                        }
+                valor = valor.replace(/[',]+/g, '');
+
+                Swal.fire({
+                    title: ARTICULO,
+                    text: "Para el Turno de " + valor_columna,
+                    input: 'text',
+                    target: document.getElementById('mdlHorasParo'),
+                    inputPlaceholder: 'Digite la cantidad',
+                    inputAttributes: {
+                        id: 'cantidad',
+                        required: 'true',
+                        onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Guardar',
+                    showLoaderOnConfirm: true,
+                    inputValue: valor,
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Digita la cantidad por favor';
+                        }
+
+                        if (isNaN(value)) {
+                            return 'Formato incorrecto';
+                        } else {
+                            $.ajax({
+                                url: "../GuardarTiempoParo",
+                                data: {
+                                    id_tipo_tiempo_paro: dtaRow['ID_ROW'],
+                                    num_orden: num_orden,
+                                    cantidad: value,
+                                    idturno: idturno
+                                },
+                                type: 'post',
+                                async: true,
+                                success: function(response) {
+                                    swal("Genial!", "Guardado exitosamente", "success");
+                                },
+                                error: function(response) {
+                                    swal("Oops", "No se ha podido guardar!", "error");
                                 }
-                            })
+                            }).done(function(data) {
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000);
+                            });
+                        }
+                    }
+                })
 
 
-                            }
-                        })
-                        
+            }
+        })
+
     })
-function mostrarRequisado(numOrden, id_articulo, tipo) {
+
+    function mostrarRequisado(numOrden, id_articulo, tipo) {
         dtRequisas = $('#tbRequisas').DataTable({ // Costos por ORDEN
             "ajax": {
                 "url": '../getRequisadosMP/' + numOrden + '/' + id_articulo + '/' + tipo,
-                'dataSrc': '',},
+                'dataSrc': '',
+            },
             "destroy": true,
             "ordering": false,
             "info": false,
@@ -621,24 +651,23 @@ function mostrarRequisado(numOrden, id_articulo, tipo) {
                     "data": "id",
                     "render": function(data, type, row, meta) {
                         return '<div class="row justify-content-center">' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-x text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-x text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ',event)"></i></div>' +
                             '</div>'
                     }
                 },
             ],
             "columnDefs": [{
-                    "targets": [1, 2],
-                    "width": '45%',
-                    "className": "dt-center",
-                }, {
-                    "targets": [0],
-                    "visible": false
-                }, {
-                    "targets": [3],
-                    "width": '10%',
-                    "className": "dt-center",
-                }
-            ]
+                "targets": [1, 2],
+                "width": '45%',
+                "className": "dt-center",
+            }, {
+                "targets": [0],
+                "visible": false
+            }, {
+                "targets": [3],
+                "width": '10%',
+                "className": "dt-center",
+            }]
         });
 
         $("#tbRequisas_filter").hide();
@@ -764,23 +793,23 @@ function mostrarRequisado(numOrden, id_articulo, tipo) {
             lp_final = $('#lp_final').val(),
             merma = $('#merma').val();
 
-        data[0] = { // 1 levantado de piso
+        data[0] = {
             num_orden: num_orden,
             tipo: 1,
             cantidad: lp_inicial,
             id_articulo: id_articulo,
         };
 
-        data[1] = { // 1 levantado de piso
+        data[1] = {
             num_orden: num_orden,
             tipo: 3,
-            cantidad: lp_final, // cantidad
+            cantidad: lp_final,
             id_articulo: id_articulo,
         };
-        data[2] = { // 1 levantado de piso
+        data[2] = {
             num_orden: num_orden,
             tipo: 4,
-            cantidad: merma, // cantidad
+            cantidad: merma,
             id_articulo: id_articulo,
         };
 
@@ -800,5 +829,104 @@ function mostrarRequisado(numOrden, id_articulo, tipo) {
         }).done(function(data) {
             location.reload();
         });
+    });
+
+    function Eliminar(id, event) {
+        let id_articulo = $('#id_elemento').text(),
+            num_orden = $('#id_num_orden').text(),
+            tipo = 2;
+        console.log(id);
+        Swal.fire({
+            title: '¿Estas Seguro de eliminar la requisa?',
+            text: "¡Esta acción no podrá ser revertida!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminalo!',
+            target: document.getElementById('mdlMatPrima'),
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                $.ajax({
+                    url: '../eliminarRequisaPC',
+                    data: {
+                        id: id
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        Swal.fire('Eliminado!', 'la requisa se ha eliminado', 'success')
+                    },
+                    error: function(response) {
+                        mensaje(response.responseText, 'error');
+                    }
+                }).done(function(data) {
+                    mostrarRequisado(num_orden, id_articulo, tipo);
+                });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
+    }
+
+    $('#fecha_hora_final').on('mouseover', function() {
+        $(this).addClass('color-focus');
+    });
+
+    $('#fecha_hora_final').on('mouseleave', function() {
+        $(this).removeClass('color-focus');
+    });
+
+    $('#fecha_hora_final').on('click', function() {
+        let fecha_final, hora_final, num_orden;
+        num_orden = $("#id_num_orden").text();
+
+        console.log(num_orden);
+        Swal.fire({
+            title: 'Fecha final',
+            html: '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA FINAL:</p></div>' +
+                '<div class="form-group col-md-8"><input type="date" class="form-control" id="add_fecha_final"></div></div>' +
+                '<div class="form-row"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">HORA FINAL:</p></div>' +
+                '<div class="form-group col-md-8"><input type="time" class="form-control mt-2" id="add_hora_final"></div></div>',
+            stopKeydownPropagation: false,
+            confirmButtonText: 'Guardar',
+            showCancelButton: true,
+            preConfirm: () => {
+                fecha_final = $('#add_fecha_final').val();
+                hora_final = $('#add_hora_final').val();
+
+                console.log(fecha_final);
+                if (fecha_final == '') {
+                    return swal.showValidationError(
+                        'Seleccione una fecha por favor'
+                    );
+                }
+                if (hora_final == '') {
+                    return swal.showValidationError(
+                        'Seleccione una hora por favor'
+                    );
+                }
+
+                $.ajax({
+                    url: '../updateFechafinal',
+                    data: {
+                        num_orden: num_orden,
+                        fecha_final: fecha_final,
+                        hora_final: hora_final
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        Swal.fire('Saved!', 'la fecha se ha actualizado', 'success')
+                    },
+                    error: function(response) {
+                        mensaje(response.responseText, 'error');
+                    }
+                }).done(function(data) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                });
+            }
+        })
     });
 </script>
