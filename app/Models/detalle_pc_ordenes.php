@@ -13,9 +13,8 @@ class detalle_pc_ordenes extends Model
     public $timestamps = false;
     protected $table = "view_proceso_seco_ordenes_produccion";
 
-   public static function getOrdenes()
-    {
-        return detalle_pc_ordenes::all();
+    public static function getOrdenes($from, $to){
+        return detalle_pc_ordenes::whereBetween('fecha_hora_inicio', [$from, $to])->get();
     }
     
 

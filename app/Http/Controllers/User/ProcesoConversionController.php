@@ -27,8 +27,12 @@ class ProcesoConversionController extends Controller
         return view('User.Proceso_Conversion.detalle',compact('Orden'));
     }
 
-    public function getOrdenes(){
-        $ordenes = detalle_pc_ordenes::getOrdenes();
+    public function getOrdenes(Request $request){
+
+        $from   = $request->input('f1').' 00:00:00';
+        $to     = $request->input('f2').' 23:59:59';
+
+        $ordenes = detalle_pc_ordenes::getOrdenes($from, $to);
         return response()->json($ordenes);
     }
 
@@ -55,7 +59,7 @@ class ProcesoConversionController extends Controller
     public function doc_printer($Orden){        
         
         $data_orden = ProcesoConversion::getJson($Orden);
-
+        
         //$data_orden[0]['data']['jr_total_kg'] = array_sum(array_column($data_orden[1]['data'], 'KG'));  
 
         $data_orden[0]['data']['jr_total_kg'] = number_format(array_sum( str_replace(['', ',', '.'], ['', '', '.'],array_column($data_orden[1]['data'], 'KG')) ),2, '.', ',');
@@ -64,6 +68,7 @@ class ProcesoConversionController extends Controller
             'Informacion_Orden' =>  $data_orden[0]['data'],
             'Producto'          =>  $data_orden[1]['data'],
             'Materia_prima'     =>  $data_orden[2]['data'],
+            'Tempos_paro'     =>  $data_orden[3]['data'],
         ];
         
         //dd($data_orden[1]['data']);

@@ -15,6 +15,11 @@
             table.search(this.value).draw();
         });
 
+        
+        
+
+
+
         $.getJSON("../jsonInfoOrder/" + id_orden, function(json) {
             $.each(json, function(i, item) {
                 switch (item['tipo']) {
@@ -34,6 +39,7 @@
                             "data": item['data'],
                             "destroy": true,
                             "info": false,
+                            "bPaginate": false,
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -111,6 +117,7 @@
                         $('#tblMateriaPrima tbody').on('click', "tr", function() {
                             $('#mdlMatPrima').modal('show');
 
+
                             var data = table_materia.row(this).data();
                             var id_articulo = data['ID_ARTICULO'];
                             var articulo = data['ARTICULO'];
@@ -126,6 +133,8 @@
                             $('#tbRequisas tbody').on('click', "tr", function(event) {
                                 var tipo_requisa, id_requisa, cantidad, nombre;
                                 var data = dtRequisas.row(this).data();
+
+                                var visIdx = $(this).index()
 
                                 var cantidad = data['cantidad'];
                                 var id_requisa = data['id'];
@@ -169,7 +178,7 @@
                                                 async: true,
                                                 success: function(response) {
                                                     console.log(response);
-                                                    swal("Saved!", "Guardado exitosamente", "success");
+                                                    swal("Exito!", "Guardado exitosamente", "success");
                                                 },
                                                 error: function(response) {
                                                     swal("Oops", "No se ha podido guardar!", "error");
@@ -188,6 +197,7 @@
                             "data": item['data'],
                             "destroy": true,
                             "info": false,
+                            "bPaginate": false,
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -263,6 +273,7 @@
                                 Total = api.column(4).data().reduce(function(a, b) {
                                     return intVal(a) + intVal(b);
                                 }, 0);
+                                console.log(Total)
                                 $('#id_jr_total').text(numeral(Total).format('0,0.00'));
                             }
                         });
@@ -308,7 +319,7 @@
                                             type: 'post',
                                             async: true,
                                             success: function(response) {
-                                                swal("Saved!", "Guardado exitosamente", "success");
+                                                swal("Exito!", "Guardado exitosamente", "success");
                                             },
                                             error: function(response) {
                                                 swal("Oops", "No se ha podido guardar!", "error");
@@ -332,6 +343,7 @@
                             "data": item['data'],
                             "destroy": true,
                             "info": false,
+                            "bPaginate": false,
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -664,6 +676,30 @@ function mostrarRequisado(numOrden, id_articulo, tipo) {
         $('#merma').val('');
     }
 
+    $('#id_fecha_final,#icon_fecha_final').on('click', function() {
+            var num_orden = $('#id_num_orden').text();
+
+            let flatpickrInstance
+            Swal.fire({
+            title: 'Nº ' + num_orden,
+            html: '<input class="swal2-input" id="expiry-date">',
+            stopKeydownPropagation: false,
+                preConfirm: (value) => {
+                    console.log(value)
+                },
+                willOpen: () => {
+                    
+                }
+            })
+
+            flatpickr(".swal2-input", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+            })
+
+        
+        });
+
     $('#btnAddReq').on('click', function() {
         var num_orden = $('#id_num_orden').text(),
             tipo_requisa = 2,
@@ -706,7 +742,7 @@ function mostrarRequisado(numOrden, id_articulo, tipo) {
                         async: true,
                         success: function(response) {
                             console.log(response);
-                            swal("Saved!", "Guardado exitosamente", "success");
+                            swal("Exito!", "Guardado exitosamente", "success");
                         },
                         error: function(response) {
                             swal("Oops", "No se ha podido guardar!", "error");

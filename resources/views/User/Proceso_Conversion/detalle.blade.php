@@ -28,6 +28,37 @@
         min-width: 70%;
         min-height: 100%;
     }
+    u.dotted{
+        border-bottom: 1px dashed #999;
+        text-decoration: none; 
+    }
+    .dBorder {
+        border: 1px solid #ccc !important;  
+    }
+    .text-primary {
+        color: #4e73df !important;
+    }
+    .text-success {
+        color: #1cc88a !important;
+    }
+    .text-info {
+        color: #36b9cc !important;
+    }
+    .text-warning {
+        color: #f6c23e !important;
+    }
+    .border-left-primary {
+        border-left: .25rem solid #4e73df !important;
+    }
+    .border-left-success {
+        border-left: .25rem solid #1cc88a !important;
+    }
+    .border-left-info {
+        border-left: .25rem solid #36b9cc !important;
+    }
+    .border-left-warning {
+        border-left: .25rem solid #f6c23e !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -53,8 +84,9 @@
                             <div class="nk-block-head-content">
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> - </h3>
                                 <div class="nk-block-des text-right text-soft ">
+                                    
                                     <span id="id_fecha_inicial"> 0</span> - <span id="id_hora_inicial">0</span> al
-                                    <span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span>
+                                    <u class="dotted"> <span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></u>
                                 </div>
                             </div>
                         </div>
@@ -65,62 +97,84 @@
                 <div class="main-body">
                     <div class="page-wrapper">
                         <div class="row g-gs ">
-                            <div class="col-lg-3 dBorder">
+                            <div class="col-lg-3">
                                 <div class="row g-gs ">
                                     <div class="col-md-12 col-lg-12 ">
-                                        <div class="card card-bordered ">
-                                            <div class="card-inner ">
-                                                <div class="card-title-group align-start mb-0">
-                                                    <div class="card-title">
-                                                        <h6 class="title">PESO %</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="card-amount">
-                                                    <span class="amount"> <span class="currency" id="id_peso_porcent"> 0 </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <div class="card card-bordered border-left-primary">
 
-                                </div>
-
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="row g-gs">
-                                    <div class="col-md-12 col-lg-12">
-                                        <div class="card card-bordered ">
-                                            <div class="card-inner ">
-                                                <div class="card-title-group align-start mb-0">
-                                                    <div class="card-title">
-                                                        <h6 class="title">JR TOTAL (KG)</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="card-amount">
-                                                    <span class="amount"> <span class="currency" id="id_jr_total"> 0.00 </span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="row g-gs">
-                                    <div class="col-md-12 col-lg-12">
-                                        <div class="card card-bordered">
                                             <div class="card-inner">
-                                                <div class="card-title-group align-start mb-0">
-                                                    <div class="card-title">
-                                                        <h6 class="title">HORAS TRABAJADAS</h6>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="card-title-group align-start mb-0">
+                                                            <div class="card-title">
+                                                                <h6 class="text-xs  text-primary text-uppercase mb-1">PESO %</h6>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="card-amount">
+                                                            <span class="amount" id=""><span class="currency" id="id_peso_porcent">0.00</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-info-circle  fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
+                                            </div> 
+                                        </div>
+                                    </div>
 
-                                                <div class="card-amount">
-                                                    <span class="amount" style="color: red" id="id_hrs_trabajadas"> 0.00 </span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="row g-gs">
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="card card-bordered border-left-success">
+                                            <div class="card-inner">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="card-title-group align-start mb-0">
+                                                            <div class="card-title">
+                                                                <h6 class="text-xs font-weight-bold text-success text-uppercase mb-1">JR TOTAL (KG)</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-amount">
+                                                            <span class="amount" id=""><span class="currency" id="id_jr_total">0.00</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-info-circle fa-2x text-gray-300"></i>
+                                                    </div>
                                                 </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
 
+                                </div>
+
+                            </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="row g-gs">
+                                    <div class="col-md-12 col-lg-12">                                        
+                                        <div class="card card-bordered border-left-info">                                            
+                                            <div class="card-inner">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="card-title-group align-start mb-0">
+                                                            <div class="card-title">
+                                                                <h6 class="text-xs font-weight-bold text-info text-uppercase mb-1"> HORAS TRABAJADAS</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-amount">
+                                                            <span class="amount" style="color: red" id="id_hrs_trabajadas"> 0.00 </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-calendar fa-2x text-gray-300" id="icon_fecha_final"></i>
+                                                        
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -131,18 +185,23 @@
                             <div class="col-lg-3">
                                 <div class="row g-gs">
                                     <div class="col-md-12 col-lg-12">
-                                        <div class="card card-bordered">
+                                        <div class="card card-bordered border-left-warning">
                                             <div class="card-inner">
-                                                <div class="card-title-group align-start mb-0">
-                                                    <div class="card-title">
-                                                        <h6 class="title">TOTAL DE BULTOS (UNDS)</h6>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="card-title-group align-start mb-0">
+                                                            <div class="card-title">
+                                                            <h6 class="text-xs font-weight-bold text-warning text-uppercase mb-1">TOTAL DE BULTOS (UNDS)</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-amount">
+                                                            <span class="amount" ><span class="currency" id="id_total_bultos_und">0.00</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-flag fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
-                                                <div class="card-amount">
-                                                    <span class="amount"> <span class="currency" id="id_total_bultos_und">0.00</span>
-
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +216,7 @@
                                     <div class="card-header">
 
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <i class="material-icons text-black ml-1">search</i>
@@ -176,7 +235,7 @@
                                     <div class="card-header" >
                                         <h5>MATERIA PRIMA DIRECTA (M.P)</h5>
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <i class="material-icons text-black ml-1">search</i>
@@ -196,7 +255,7 @@
                                         <h5>TIEMPOS PAROS</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>+</button>
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
                                             <span class="input-group-text" id="basic-addon1">
                                                 <i class="material-icons text-black ml-1">search</i>

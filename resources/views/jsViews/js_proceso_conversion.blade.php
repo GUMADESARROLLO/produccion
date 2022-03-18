@@ -6,10 +6,29 @@
             var table = $('#tblConversion').DataTable();
             table.search(this.value).draw();
         });
-        $('#tblConversion').DataTable({
-            'ajax': {
-                "url": "getOrdenes",
-                'dataSrc': '',
+        
+
+        inicializaControlFecha();
+        getOrdenes();
+       
+        $("#id_search_desde, #id_search_hasta").on('click', function() {
+            getOrdenes();
+        })
+    });
+
+    function getOrdenes(){
+
+        f1      = $("#id_fecha_desde").val();
+        f2      = $("#id_fecha_hasta").val();
+
+        $('#tblConversion').DataTable({            
+            'ajax':{
+            'url':'getOrdenes',
+            'dataSrc': '',
+                data: {
+                    'f1' : f1,
+                    'f2' : f2,
+                }
             },
             "destroy": true,
             "info": false,
@@ -34,7 +53,11 @@
                 },
                 {
                     "title": "N° ORDEN",
-                    "data": "num_orden"
+                    "data": "num_orden",
+                    "render": function(data, type, row, meta) {
+                        return '<span class="text-primary" onclick="Editar(' + row.id + ')">'+data+'</span>' 
+
+                    }
                 },
                 {
                     "title": "PRODUCTO",
@@ -82,7 +105,6 @@
                     "data": "id",
                     "render": function(data, type, row, meta) {
                         return '<div class="row justify-content-center">' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-edit-2 text-c-blue f-30 m-r-10" onclick="Editar(' + row.id + ')"></i></div>' +
                             '<div class="col-3 d-flex justify-content-center"><i class="feather icon-trash-2 text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
                             '<div class="col-3 d-flex justify-content-center"><i class="far fa-file-pdf text-c-red f-30 m-r-10" onclick="Printer(' + row.id + ')"></i></div>' +
                             '</div>'
@@ -91,7 +113,7 @@
             ],
             "columnDefs": [{
                     "className": "dt-center",
-                    "targets": [1, 2, 3, 4, 8]
+                    "targets": [01, 2, 3, 4, 8]
                 },
                 {
                     "className": "dt-right",
@@ -119,10 +141,7 @@
 
         $("#tblConversion_length").hide();
         $("#tblConversion_filter").hide();
-
-        inicializaControlFecha();
-        // $('#tblConversion > thead').addClass('bg-primary text-white');
-    });
+    }
     function Printer(gPosition){
         var table = $('#tblConversion').DataTable();
         var row = table.rows().data();

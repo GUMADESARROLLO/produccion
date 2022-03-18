@@ -164,8 +164,8 @@
             </tr>
         </thead>
         <tbody>
-            @if (count($data['Materia_prima']) > 0)
-                @foreach($data['Materia_prima'] as $key)
+            @if (count($data['Tempos_paro']) > 0)
+                @foreach($data['Tempos_paro'] as $key)
 
                 @php 
                     $suma        = 0; 
@@ -176,12 +176,11 @@
                         
                     @endphp
                     <tr>
-                        <td>{{ $key['DESCRIPCION_CORTA'] }}</td>
-                        <td align="right">{{ $key['REQUISA'] }}</td>
-                        <td align="right">{{ $key['PISO'] }}</td>
-                        <td align="right">{{ $key['PERSO_PORCENT'] }}</td>
-                        <td align="right">{{ $key['MERMA'] }}</td>
-                        <td align="right">{{ $key['MERMA_PORCENT'] }}</td>
+                        <td>{{ $key['ARTICULO'] }}</td>
+                        <td align="right">{{ $key['Dia'] }}</td>
+                        <td align="right">{{ $key['Noche'] }}</td>
+                        <td align="right">{{ $key['Total_Hrs'] }}</td>
+                        <td align="right">{{ $key['num_personas'] }}</td>
                     </tr>
                     @php 
                         $count_linea++;

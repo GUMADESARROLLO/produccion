@@ -78,9 +78,11 @@
   <script src="{{ asset('js/Numeral.js') }}"></script>
   <script src="{{ asset('js/daterangepicker.js') }}"></script>
   <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+  
   <script src="{{ asset('js/sweetalert2.all.js') }}"></script>
   <script src="{{ asset('js/js_general.js') }}"></script>
-       <!-- JS PLUGINS -->
+
+  <!-- JS PLUGINS -->
   @yield('scriptsPlugins')
   @yield('metodosjs')
 </body>

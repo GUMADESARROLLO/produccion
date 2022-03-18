@@ -48,20 +48,38 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>Lista de ordenes</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='btnAdd'>+</button>
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-row mr-3 ml-3 mt-3">
+                                        <div class="form-group col-md-8">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="material-icons text-black ml-1">search</i>
-                                            </span>
                                             <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                            <div class="input-group-prepend" id="btnAdd">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <i class="material-icons icon-blue ml-1">add</i>
-                                                </span>
+                                            
+                                        </div>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <div class="input-group ">                                            
+                                                <input type="text" class="input-fecha form-control" id="id_fecha_desde">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text" id="id_search_desde">
+                                                        <i class="material-icons icon-blue ml-1">search</i>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="form-group col-md-2">
+                                            <div class="input-group ">                                            
+                                                <input type="text" class="input-fecha form-control" id="id_fecha_hasta">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text" id="id_search_hasta">
+                                                        <i class="material-icons icon-blue ml-1">search</i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
                                     </div>
+                                    
                                     <div class="form-group col-md-12">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="tblConversion" width="99%">
