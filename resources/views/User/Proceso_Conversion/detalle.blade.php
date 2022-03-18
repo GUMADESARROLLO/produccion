@@ -91,7 +91,9 @@
                                 <div class="nk-block-des text-right text-soft ">
                                     
                                     <span id="id_fecha_inicial"> 0</span> - <span id="id_hora_inicial">0</span> al
-                                    <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></a> 
+                                    <u class="dotted">
+                                        <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></a> 
+                                    </u>
                                 </div>
                             </div>
                         </div>

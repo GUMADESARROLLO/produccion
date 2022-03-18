@@ -79,6 +79,12 @@ class ProcesoConversionController extends Controller
         return $pdf->download('Orden.pdf');
         //return response()->json($obj);
     }
+
+    public function GuardarNumeroPersona(Request $request)
+    {
+        $response = pc_detalle_tiempos_paro::GuardarNumeroPersona($request);
+        return response()->json($response);
+    }
     
     public function GuardarTiempoParo(Request $request)
     {

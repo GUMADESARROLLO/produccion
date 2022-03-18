@@ -126,7 +126,6 @@
                             clearRequisas();
                             mostrarRequisado(num_orden, id_articulo, 2);
                             getRequisadoMP(num_orden, id_articulo);
-                            console.log(data);
                             $("#id_articulo").html("- [ " + data.ARTICULO + " ]");
                             $("#id_descripcion").text(data.DESCRIPCION_CORTA);
                             $('#id_elemento').text(id_articulo);
@@ -180,8 +179,7 @@
                                                     type: 'post',
                                                     async: true,
                                                     success: function(response) {
-                                                        console.log(response);
-                                                        swal("Saved!", "Guardado exitosamente", "success");
+                                                        swal("Exito!", "Guardado exitosamente", "success");
                                                     },
                                                     error: function(response) {
                                                         swal("Oops", "No se ha podido guardar!", "error");
@@ -277,7 +275,7 @@
                                 Total = api.column(4).data().reduce(function(a, b) {
                                     return intVal(a) + intVal(b);
                                 }, 0);
-                                console.log(Total)
+                                
                                 $('#id_jr_total').text(numeral(Total).format('0,0.00'));
                             }
                         });
@@ -293,7 +291,7 @@
 
                             Swal.fire({
                                 title: data.DESCRIPCION_CORTA,
-                                text: "Ingrese la cantidad de Bultos",
+                                text: "Ingrese la cantidad ",
                                 input: 'text',
                                 inputPlaceholder: 'Digite la cantidad',
                                 inputAttributes: {
@@ -430,6 +428,65 @@
 
                         $("#tblTiemposParos_length").hide();
                         $("#tblTiemposParos_filter").hide();
+                        
+                        $('#tblTiemposParos tbody').on('click', "td", function(event) {                            
+                            
+                            var data = table_horas_paro.row(this).data();
+                            let id_articulo = data['ID_ROW'];
+                            let cantidad = data['num_personas'];
+                            let num_orden = $('#id_num_orden').text();
+                            cantidad = cantidad.replace(/[',]+/g, '');
+
+                            Swal.fire({
+                                title: "Nº de Personas",
+                                text: "Ingrese la cantidad ",
+                                input: 'text',
+                                inputPlaceholder: 'Digite la cantidad',
+                                inputAttributes: {
+                                    id: 'cantidad',
+                                    required: 'true',
+                                    onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+                                },
+                                showCancelButton: true,
+                                confirmButtonText: 'Guardar',
+                                showLoaderOnConfirm: true,
+                                inputValue: cantidad,
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Digita la cantidad por favor';
+                                    }
+                                    value = value.replace(/[',]+/g, '');
+                                    if (isNaN(value)) {
+                                        return 'Formato incorrecto';
+                                    } else {
+                                        $.ajax({
+                                            url: "../GuardarNumeroPersona",
+                                            data: {
+                                                cantidad: value,
+                                                num_orden: num_orden,
+                                                id_articulo: id_articulo
+                                            },
+                                            type: 'post',
+                                            async: true,
+                                            success: function(response) {
+                                                swal("Exito!", "Guardado exitosamente", "success");
+                                            },
+                                            error: function(response) {
+                                                swal("Oops", "No se ha podido guardar!", "error");
+                                            }
+                                        }).done(function(data) {
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 2000);
+                                        });
+                                    }
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {}
+                            })
+
+                            
+                        });
 
                         break;
 
@@ -467,6 +524,9 @@
             }
         }
     }
+    
+   
+
     $('#id_btn_add_hrs_paro').on('click', function() {
 
         var table = $('#tblTiemposParos').DataTable();
@@ -546,12 +606,15 @@
 
 
 
-        var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
-
+       
 
         $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) {
+
+            var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
+            
             var dtaRow = tbl_mdl_tiempos_paro.row(this).data();
             var visIdx = $(this).index()
+
 
             if (visIdx != 0 && visIdx != 3) {
 
@@ -705,35 +768,12 @@
         $('#merma').val('');
     }
 
-    $('#id_fecha_final,#icon_fecha_final').on('click', function() {
-            var num_orden = $('#id_num_orden').text();
-
-            let flatpickrInstance
-            Swal.fire({
-            title: 'Nº ' + num_orden,
-            html: '<input class="swal2-input" id="expiry-date">',
-            stopKeydownPropagation: false,
-                preConfirm: (value) => {
-                    console.log(value)
-                },
-                willOpen: () => {
-                    
-                }
-            })
-
-            flatpickr(".swal2-input", {
-                enableTime: true,
-                dateFormat: "Y-m-d H:i",
-            })
-
-        
-        });
 
     $('#btnAddReq').on('click', function() {
         var num_orden = $('#id_num_orden').text(),
-            tipo_requisa = 2,
-            id_articulo = $('#id_elemento').text();
-        console.log(id_articulo);
+        tipo_requisa = 2,
+        id_articulo = $('#id_elemento').text();
+        
 
         Swal.fire({
             title: 'Nueva Requisa',
@@ -751,7 +791,6 @@
             target: document.getElementById('mdlMatPrima'),
             inputValue: $('#cantidad').text(),
             inputValidator: (value) => {
-                console.log(value);
                 if (!value) {
                     return 'Digita la cantidad por favor';
                 }
@@ -770,7 +809,7 @@
                         type: 'post',
                         async: true,
                         success: function(response) {
-                            console.log(response);
+                            
                             swal("Exito!", "Guardado exitosamente", "success");
                         },
                         error: function(response) {
@@ -784,7 +823,6 @@
         })
 
     });
-
     $('#btnSave').on('click', function() {
         var data = [];
         var num_orden = $('#id_num_orden').text(),
@@ -833,9 +871,9 @@
 
     function Eliminar(id, event) {
         let id_articulo = $('#id_elemento').text(),
-            num_orden = $('#id_num_orden').text(),
-            tipo = 2;
-        console.log(id);
+        num_orden = $('#id_num_orden').text(),
+        tipo = 2;
+            
         Swal.fire({
             title: '¿Estas Seguro de eliminar la requisa?',
             text: "¡Esta acción no podrá ser revertida!",
@@ -876,11 +914,10 @@
         $(this).removeClass('color-focus');
     });
 
-    $('#fecha_hora_final').on('click', function() {
+    $('#fecha_hora_final,#icon_fecha_final ').on('click', function() {
         let fecha_final, hora_final, num_orden;
         num_orden = $("#id_num_orden").text();
 
-        console.log(num_orden);
         Swal.fire({
             title: 'Fecha final',
             html: '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA FINAL:</p></div>' +
@@ -894,7 +931,6 @@
                 fecha_final = $('#add_fecha_final').val();
                 hora_final = $('#add_hora_final').val();
 
-                console.log(fecha_final);
                 if (fecha_final == '') {
                     return swal.showValidationError(
                         'Seleccione una fecha por favor'

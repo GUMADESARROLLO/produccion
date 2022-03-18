@@ -56,4 +56,44 @@ class pc_detalle_tiempos_paro extends Model
             return response()->json($mensaje);
         }
     }
+    public static function GuardarNumeroPersona(Request $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                
+                $id_articulo    = $request->input('id_articulo');
+                $num_orden      = $request->input('num_orden');
+                $cantidad       = $request->input('cantidad');
+
+                $id_usuario     = 1;
+
+                $id_exist = DB::table('pc_detalle_tiempos_paro')
+                    ->select('id')
+                    ->where('num_orden',  $num_orden)
+                    ->where('id_tipo_tiempo_paro', $id_articulo)
+                    ->get()->first();
+                    
+                if (!is_null($id_exist)) {
+                    $id = $id_exist->id;
+                    $response =   pc_detalle_tiempos_paro::where('id',  $id)->update([
+                        'numero_personas' => $cantidad,
+                    ]);
+                    return response()->json(1);
+                } else {
+                    $requisado = new pc_detalle_tiempos_paro();
+                    $requisado->id_tipo_tiempo_paro = $id_articulo;
+                    $requisado->num_orden           = $num_orden;                
+                    $requisado->numero_personas     = $cantidad;
+                    $requisado->id_usuario          = $id_usuario;
+                    $requisado->id_turno            = 1;
+                    $requisado->save();
+
+                    return response()->json($requisado);
+                }
+            });
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+            return response()->json($mensaje);
+        }
+    }
 }
