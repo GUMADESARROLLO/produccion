@@ -222,6 +222,8 @@ Route::post('/actualizarMP', 'User\ProcesoConversionController@actualizarMP')->n
 Route::get('/getRequisadosMP/{numOrden}/{id_articulo}/{tipo}', 'User\ProcesoConversionController@getRequisadosMP')->name('getRequisadosMP/{numOrden}/{id_articulo}/{tipo}');
 Route::get('/getRequisadosAll/{numOrden}/{id_articulo}', 'User\ProcesoConversionController@getRequisadosAll')->name('getRequisadosAll/{numOrden}/{id_articulo}');
 Route::post('/addRequisa', 'User\ProcesoConversionController@addRequisa')->name('addRequisa');
+Route::post('/eliminarRequisaPC', 'User\ProcesoConversionController@eliminarRequisaPC')->name('eliminarRequisaPC');
+
 
 
 

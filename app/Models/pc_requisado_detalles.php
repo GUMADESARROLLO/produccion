@@ -13,8 +13,6 @@ class pc_requisado_detalles extends Model
 
     protected $table = "pc_requisado_detalles";
     protected $fillable = ['num_orden', 'id_articulos', 'cantidad', 'tipo'];
-    public    $timestamps = false;
-
     public static function actualizarCantidad(Request $request)
     {
         try {
@@ -82,6 +80,7 @@ class pc_requisado_detalles extends Model
                             $requisa->id_articulos       =   $requisado['id_articulo'];
                             $requisa->cantidad           =   $requisado['cantidad'];
                             $requisa->tipo               =   $requisado['tipo'];
+                            $requisa->created_at         =  date('Y-m-d H:i:s');
                             $requisa->save();
                         }
                     }
@@ -146,8 +145,7 @@ class pc_requisado_detalles extends Model
                 $data[$i]['cantidad']           =  number_format($value->CANTIDAD,2);
                 $data[$i]['id_tipo_requisa']    =  $value->ID_TIPO_REQUISA;
                 $data[$i]['tipo_requisa']       =  $value->TIPO_REQUISA;
-                $data[$i]['fecha_creacion']     = date("Y-m-d", strtotime($value->fecha_creacion));
-
+                $data[$i]['fecha_creacion']     =   strftime('%a %d de %b %G', strtotime($value->fecha_creacion)); 
                 $i++;
             }
             return $data;
@@ -171,13 +169,27 @@ class pc_requisado_detalles extends Model
     {
         if ($request->ajax()) {
             try {
-                //dd($request);
+                //dd($request);LlL
                 $requisado = new pc_requisado_detalles();
                 $requisado->num_orden    = $request->input('num_orden');
                 $requisado->id_articulos = $request->input('id_articulo');
                 $requisado->cantidad     = $request->input('cantidad');
                 $requisado->tipo         = $request->input('tipo');
                 $requisado->save();
+            } catch (Exception $e) {
+                $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+                return response()->json($mensaje);
+            }
+        }
+    }
+    public static function eliminarRequisaPC(Request $request)
+    {
+        if ($request->ajax()) {
+            try {
+                //dd($request);
+                $id =  $request->input('id');
+                $delete = pc_requisado_detalles::where('id', $id )->delete();
+                return  $delete;               
             } catch (Exception $e) {
                 $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
                 return response()->json($mensaje);

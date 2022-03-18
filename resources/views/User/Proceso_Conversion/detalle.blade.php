@@ -56,6 +56,7 @@
                                     <span id="id_fecha_inicial"> 0</span> - <span id="id_hora_inicial">0</span> al
                                     <span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span>
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -234,7 +235,7 @@
                                     <div class="modal-dialog custom">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="id_articulo_descripcion"></h5> <span id="id_articulo"></span>
+                                                <h5 class="modal-title" id="id_descripcion"></h5> <span id="id_articulo"></span>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
