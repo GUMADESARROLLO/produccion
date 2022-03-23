@@ -81,19 +81,21 @@
                                 <div class="nk-block-des text-soft">
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{url('/conversion')}}">Ordenes Conversion</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:">Detalle</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:" id="id_temp">Ver Detalles</a></li>
                                     </ul>
                                 </div>
 
                             </div>
                             <div class="nk-block-head-content">
-                                <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> - </h3>
-                                <div class="nk-block-des text-right text-soft ">
-                                    
-                                    <span id="id_fecha_inicial"> 0</span> - <span id="id_hora_inicial">0</span> al
+                                <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> </h3>
+                                <div class="nk-block-des text-right text-soft ">                                    
+                                    <span id="id_fecha_inicial"> 0</span> <span id="id_hora_inicial">0</span> al
                                     <u class="dotted">
-                                        <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> - <span id="id_hora_final">0</span></a> 
+                                        <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> <span id="id_hora_final">0</span></a> 
                                     </u>
+                                </div>
+                                <div class="nk-block-des text-right text-soft ">                                    
+                                    <span id=""> Hrs Trabajadas</span> : <span id="id_hrs_total_trabajadas">00:00:00</span>
                                 </div>
                             </div>
                         </div>
@@ -273,6 +275,24 @@
                                     <div class="form-group col-md-12 mb-3">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="tblTiemposParos" width="100%"></table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade modal-fullscreen" id="mdlDetallesOrdes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="id_articulo_descripcion"> Detalles</h5> <span id=""> </span>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                    <div id="id_tbl_temp">
+                                                        
+                                                    </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -6,14 +6,17 @@ SELECT
 	T1.nombre,
 	T0.fecha_hora_inicio,
 	T0.fecha_hora_final,
-	( UNIX_TIMESTAMP(T0.fecha_hora_final) - UNIX_TIMESTAMP(T0.fecha_hora_inicio) ) / 3600 AS Hrs_trabajadas,
+	TIMEDIFF(T0.fecha_hora_final,T0.fecha_hora_inicio) hrs_total_trabajadas,	
+	CASE
+    WHEN(( UNIX_TIMESTAMP(T0.fecha_hora_final) - UNIX_TIMESTAMP(T0.fecha_hora_inicio) ) / 3600 ) >= 24 THEN (( UNIX_TIMESTAMP(T0.fecha_hora_final) - UNIX_TIMESTAMP(T0.fecha_hora_inicio) ) / 7200 ) 
+    ELSE (( UNIX_TIMESTAMP(T0.fecha_hora_final) - UNIX_TIMESTAMP(T0.fecha_hora_inicio) ) / 3600 )
+	END AS Hrs_trabajadas,
 	IFNULL((SELECT T2.PESO_PORCENT FROM view_proceso_seco_estadisticas T2 WHERE T2.num_orden = T0.num_orden AND T2.ID_ARTICULO =T0.id_jr),0) PESO_PORCENT,
 	IFNULL((SELECT SUM(T1.PRODUCTO) FROM view_agrupado_detalle_requisas T1 WHERE T1.num_orden = T0.num_orden) ,0) TOTAL_BULTOS_UNDS
 FROM
 	pc_ordenes_produccion T0
 	INNER JOIN productos T1 ON T1.idProducto = T0.id_productor
 	WHERE T0.estado='S'
-
 
 // view_proceso_seco_data_meteria_prima
 SELECT
@@ -70,6 +73,7 @@ SELECT
 //view_articulos_detalles
 SELECT
 	T0.id,
+	T1.ID_PRODUCTO,
 	T0.num_orden,
 	T1.ID_ARTICULO,
 	T1.ARTICULO,
@@ -111,3 +115,25 @@ FROM
 	INNER JOIN pc_tiempos_paros T2 ON T2.id = T0.id_tipo_tiempo_paro
 	WHERE T2.ACTIVO ='S') T3
 group by id_tiempo_paro,T3.num_orden,T3.id_row
+
+
+//bBASE PARA EL PROCEDIMIENTO DE ALMACENADO QUE ME DEVOLVERA ESTA TABLA 
+SELECT t1.num_orden,
+	t1.ARTICULO,t1.TIPO_REQUISA,
+		case when t1.ARTICULO = "2IN00067" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM1',
+		case when t1.ARTICULO = "2IN00078" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM2',
+		case when t1.ARTICULO = "1IN00114" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM3',
+		case when t1.ARTICULO = "1IN00027" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM4',
+		case when t1.ARTICULO = "1IN00103" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM5',
+		case when t1.ARTICULO = "1IN00141" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM6',
+		case when t1.ARTICULO = "1IN00021" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM7',
+		case when t1.ARTICULO = "1IN00067" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM8',
+		case when t1.ARTICULO = "1IN00092" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM9',
+		case when t1.ARTICULO = "1IN00052" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM10',
+		case when t1.ARTICULO = "1IN00100" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM11',
+		case when t1.ARTICULO = "1IN00112" then GROUP_CONCAT(t1.CANTIDAD) end as 'ITEM12'
+FROM
+	view_articulos_detalles t1 
+	GROUP BY t1.num_orden,t1.ARTICULO,t1.ID_TIPO_REQUISA
+ORDER BY
+	t1.ID_TIPO_REQUISA	

@@ -13,8 +13,10 @@ class pc_requisado_detalles extends Model
 
     protected $table = "pc_requisado_detalles";
     protected $fillable = ['num_orden', 'id_articulos', 'cantidad', 'tipo'];
+    
     public static function actualizarCantidad(Request $request)
     {
+        
         try {
             DB::transaction(function () use ($request) {
 
@@ -129,7 +131,7 @@ class pc_requisado_detalles extends Model
     {
         $i = 0;
         $data = array();
-
+        setlocale(LC_TIME, "spanish");
         $requisadoMP = DB::table('view_articulos_detalles')
             ->where('num_orden',  $num_orden)
             ->where('ID_ARTICULO',  $id_articulo)

@@ -236,6 +236,8 @@ Route::get('/doc_printer/{codigo}', 'User\ProcesoConversionController@doc_printe
 Route::post('/GuardarTiempoParo', 'User\ProcesoConversionController@GuardarTiempoParo')->name('/GuardarTiempoParo');
 Route::post('/GuardarNumeroPersona', 'User\ProcesoConversionController@GuardarNumeroPersona')->name('/GuardarNumeroPersona');
 
+Route::get('/datos_detalles/{codigo}', 'User\ProcesoConversionController@datos_detalles')->name('/datos_detalles/{codigo}');
+
 
 
 

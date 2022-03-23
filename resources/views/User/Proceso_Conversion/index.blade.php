@@ -109,8 +109,9 @@
                                                         <p class="text-muted">Producto</p>
                                                         <select class="form-control" id="id_select_producto">
                                                             <option value="0">...</option>
-                                                            <option value="13">ROLLO JUMBO ECOPLUS (KG)</option>
-                                                            <option value="35">ROLLO JUMBO GENERICO (KG)</option>
+                                                            <option value="53">PAPEL HIGIENICO ECOPLUS</option>
+                                                            <option value="75">PAPEL HIGIENICO GENERICO</option>
+                                                            <option value="94">PAPEL HIGIENICO VUENO</option>
                                                         </select>
                                                         <small class="">Seleccione el tipo de producto</small>
                                                     </div>

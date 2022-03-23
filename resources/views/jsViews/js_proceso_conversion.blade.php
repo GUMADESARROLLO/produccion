@@ -18,8 +18,8 @@
 
     function getOrdenes(){
 
-        f1      = $("#id_fecha_desde").val();
-        f2      = $("#id_fecha_hasta").val();
+        f1  = $("#id_fecha_desde").val();
+        f2  = $("#id_fecha_hasta").val();
 
         $('#tblConversion').DataTable({            
             'ajax':{
@@ -113,7 +113,7 @@
             ],
             "columnDefs": [{
                     "className": "dt-center",
-                    "targets": [01, 2, 3, 4, 8]
+                    "targets": [1, 2, 3, 4]
                 },
                 {
                     "className": "dt-right",
@@ -125,17 +125,9 @@
                     "targets": [0]
                 },
                 {
-                    "width": "10%",
-                    "targets": [0, 1, 6]
+                    "width": "11%",
+                    "targets": [1,5,6]
                 },
-                {
-                    "width": "15%",
-                    "targets": [2]
-                },
-                {
-                    "width": "10%",
-                    "targets": [8]
-                }
             ],
         });
 
@@ -192,10 +184,12 @@
         if (fechaInicial == '') {
             return mensaje('Por favor seleccione la fecha inicial', 'error');
         }
-        if (jumborroll == 35) {
+        if (jumborroll == 75) {
             producto = 2;
-        } else if (jumborroll == 13) {
+        } else if (jumborroll == 53) {
             producto = 1;
+        } else if (jumborroll == 94){
+            producto = 7;
         }
 
         fecha_hora_inicio = fechaInicial + ' ' + hora + ':00';

@@ -24,6 +24,7 @@
             $.each(json, function(i, item) {
                 switch (item['tipo']) {
                     case 'dtaOrden':
+                        
                         $("#id_peso_porcent").text(item['data'].peso_procent)
                         $("#id_nombre_articulos").text(item['data'].nombre)
                         $("#id_fecha_inicial").text(item['data'].fecha_inicio)
@@ -32,6 +33,7 @@
                         $("#id_hora_final").text(item['data'].hora_final);
                         $("#id_hrs_trabajadas").text(item['data'].hrs_trabajadas);
                         $("#id_total_bultos_und").text(item['data'].total_bultos_und);
+                        $("#id_hrs_total_trabajadas").text(item['data'].hrs_total_trabajadas);
 
                         break;
                     case 'dtaMateria':
@@ -40,6 +42,7 @@
                             "destroy": true,
                             "info": false,
                             "bPaginate": false,
+                            "order": [[ 7, "asc" ]],
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -64,7 +67,7 @@
                                     "title": "DESCRIPCION_CORTA",
                                     "data": "DESCRIPCION_CORTA",
                                     "render": function(data, type, row, meta) {
-                                        return '<span class="text-success"><sup>+</sup></span>' + data
+                                        return '<u class="dotted">' + data + '</u>'
 
                                     }
                                 },
@@ -77,7 +80,7 @@
                                     "data": "PISO"
                                 },
                                 {
-                                    "title": "PESO %",
+                                    "title": "CONSUMO",
                                     "data": "PERSO_PORCENT"
                                 },
                                 {
@@ -85,9 +88,14 @@
                                     "data": "MERMA"
                                 },
                                 {
-                                    "title": "MERMA %",
+                                    "title": "%",
                                     "data": "MERMA_PORCENT"
                                 },
+                                {
+                                    "title": "ID_ARTICULO",
+                                    "data": "ID_ARTICULO"
+                                },
+                                
                             ],
                             "columnDefs": [{
                                     "className": "dt-center",
@@ -100,7 +108,7 @@
                                 {
                                     "visible": false,
                                     "searchable": false,
-                                    "targets": []
+                                    "targets": [7]
                                 },
                                 {
                                     "width": "10%",
@@ -200,6 +208,7 @@
                             "destroy": true,
                             "info": false,
                             "bPaginate": false,
+                            "order": [[ 5, "asc" ]],
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -224,7 +233,7 @@
                                     "title": "DESCRIPCION_CORTA",
                                     "data": "DESCRIPCION_CORTA",
                                     "render": function(data, type, row, meta) {
-                                        return '<span class="text-success"><sup>+</sup></span>' + data
+                                        return '<u class="dotted">' + data + '</u>'
 
                                     }
                                 },
@@ -240,6 +249,10 @@
                                     "title": "KG",
                                     "data": "KG"
                                 },
+                                {
+                                    "title": "ID_ARTICULO",
+                                    "data": "ID_ARTICULO"
+                                },
 
                             ],
                             "columnDefs": [{
@@ -253,7 +266,7 @@
                                 {
                                     "visible": false,
                                     "searchable": false,
-                                    "targets": []
+                                    "targets": [5]
                                 },
                                 {
                                     "width": "10%",
@@ -372,7 +385,7 @@
                                     "title": "DESCRIPCION DE LA ACTIVIDAD",
                                     "data": "ARTICULO",
                                     "render": function(data, type, row, meta) {
-                                        return '<span class="text-success"><sup>+</sup></span>' + data
+                                        return '<u class="dotted">' + data + '</u>'
 
                                     }
                                 },
@@ -393,6 +406,7 @@
                                     "title": "No. Personas",
                                     "data": "num_personas"
                                 },
+                                
 
                             ],
                             "columnDefs": [{
@@ -525,96 +539,84 @@
         }
     }
     
-   
-
-    $('#id_btn_add_hrs_paro').on('click', function() {
-
-        var table = $('#tblTiemposParos').DataTable();
-        var data = table.rows().data();
-
-        $('#mdlHorasParo').modal('show');
-        $('#tbl_modal_TiemposParos').DataTable({
-            "data": data,
-            "destroy": true,
-            "info": false,
-            "bPaginate": false,
-            "lengthMenu": [
-                [100, -1],
-                [100, "Todo"]
-            ],
-            "language": {
-                "zeroRecords": "NO HAY COINCIDENCIAS",
-                "paginate": {
-                    "first": "Primera",
-                    "last": "Última ",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+    function detalles_tiempos_paros(){
+        $.getJSON("../jsonInfoOrder/" + id_orden, function(json) {
+            $('#tbl_modal_TiemposParos').DataTable({
+                "data": json[3]['data'],
+                "destroy": true,
+                "info": false,
+                "bPaginate": false,
+                "lengthMenu": [
+                    [100, -1],
+                    [100, "Todo"]
+                ],
+                "language": {
+                    "zeroRecords": "NO HAY COINCIDENCIAS",
+                    "paginate": {
+                        "first": "Primera",
+                        "last": "Última ",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "lengthMenu": "MOSTRAR _MENU_",
+                    "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                    "search": "BUSCAR"
                 },
-                "lengthMenu": "MOSTRAR _MENU_",
-                "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                "search": "BUSCAR"
-            },
-            "order": [
-                [0, "asc"]
-            ],
-            'columns': [{
-                    "title": "ID",
-                    "data": "ID_ROW"
-                },
-                {
-                    "title": "DESCRIPCION DE LA ACTIVIDAD",
-                    "data": "ARTICULO"
-                },
-                {
-                    "title": "DIA",
-                    "data": "Dia"
-                },
-                {
-                    "title": "NOCHE",
-                    "data": "Noche"
-                },
-            ],
-            "columnDefs": [{
-                    "className": "dt-center",
-                    "targets": []
-                },
-                {
-                    "className": "dt-right",
-                    "targets": [2, 3, ]
-                },
-                {
-                    "className": "dt-left",
-                    "targets": []
-                },
-                {
-                    "visible": false,
-                    "searchable": false,
-                    "targets": [0]
-                },
-                {
-                    "width": "10%",
-                    "targets": []
-                },
-                {
-                    "width": "15%",
-                    "targets": []
-                },
-            ]
-        });
-        $("#tbl_modal_TiemposParos_length").hide();
-        $("#tbl_modal_TiemposParos_filter").hide();
-
-
-
-       
-
-        $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) {
+                "order": [
+                    [0, "asc"]
+                ],
+                'columns': [{
+                        "title": "ID",
+                        "data": "ID_ROW"
+                    },
+                    {
+                        "title": "DESCRIPCION DE LA ACTIVIDAD",
+                        "data": "ARTICULO"
+                    },
+                    {
+                        "title": "DIA",
+                        "data": "Dia"
+                    },
+                    {
+                        "title": "NOCHE",
+                        "data": "Noche"
+                    },
+                ],
+                "columnDefs": [{
+                        "className": "dt-center",
+                        "targets": []
+                    },
+                    {
+                        "className": "dt-right",
+                        "targets": [2, 3, ]
+                    },
+                    {
+                        "className": "dt-left",
+                        "targets": []
+                    },
+                    {
+                        "visible": false,
+                        "searchable": false,
+                        "targets": [0]
+                    },
+                    {
+                        "width": "10%",
+                        "targets": []
+                    },
+                    {
+                        "width": "15%",
+                        "targets": []
+                    },
+                ]
+            });
+            $("#tbl_modal_TiemposParos_length").hide();
+            $("#tbl_modal_TiemposParos_filter").hide();
+            $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) {
 
             var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
             
             var dtaRow = tbl_mdl_tiempos_paro.row(this).data();
             var visIdx = $(this).index()
-
 
             if (visIdx != 0 && visIdx != 3) {
 
@@ -662,24 +664,81 @@
                                 type: 'post',
                                 async: true,
                                 success: function(response) {
-                                    swal("Genial!", "Guardado exitosamente", "success");
+                                    detalles_tiempos_paros()
                                 },
                                 error: function(response) {
                                     swal("Oops", "No se ha podido guardar!", "error");
                                 }
                             }).done(function(data) {
                                 setTimeout(function() {
-                                    location.reload();
+                                    detalles_tiempos_paros()
                                 }, 2000);
                             });
                         }
                     }
                 })
-
-
             }
-        })
 
+            })
+
+        })
+    }
+    $('#id_temp').on('click', function() {
+        $('#mdlDetallesOrdes').modal('show');
+        $.getJSON("../datos_detalles/" + id_orden, function(json) {
+
+            var producto_01 = Object.keys(json['ITEM1']).map(key => {
+                return json['ITEM1'][key];
+            })
+
+            var producto_02 = Object.keys(json['ITEM2']).map(key => {
+                return json['ITEM2'][key];
+            })
+            
+            index_01 = producto_01.findIndex(x => x.ACTIVIDAD ==="LP INICIAL");
+            index_03 = producto_01.findIndex(x => x.ACTIVIDAD ==="MERMA");
+            index_04 = producto_01.findIndex(x => x.ACTIVIDAD ==="LP FINAL");
+            
+
+            var LP_INICIAL_row_1 = producto_01[index_01]['VALORES'];
+            var MERMA_row_1 = producto_01[index_03]['VALORES'];
+            var LP_FINAL_row_1 = producto_01[index_04]['VALORES'];
+
+            index_02 = producto_02.findIndex(x => x.ACTIVIDAD ==="LP INICIAL");
+            index_05 = producto_02.findIndex(x => x.ACTIVIDAD ==="MERMA");
+            index_06 = producto_02.findIndex(x => x.ACTIVIDAD ==="LP FINAL");
+
+            var LP_INICIAL_row_2 = producto_02[index_02]['VALORES'];
+            var MERMA_row_2 = producto_02[index_05]['VALORES'];
+            var LP_FINAL_row_2 = producto_02[index_06]['VALORES'];
+
+            var data = [
+                ["ACTIVIDAD", "JUMBO ROLL", "TUBOS KRAFT"],
+                ["LP INICIAL ", LP_INICIAL_row_1, LP_INICIAL_row_2],                
+                ["LP FINAL ", LP_FINAL_row_1, LP_FINAL_row_2],
+                ["MERMA ", MERMA_row_1, MERMA_row_2]]
+
+            var cityTable = makeTable($("#id_tbl_temp"), data);
+
+        })
+        
+    })
+    function makeTable(container, data) {
+        var table = $("<table/>").addClass('table table-hover');
+        $.each(data, function(rowIndex, r) {
+            var row = $("<tr/>");
+            $.each(r, function(colIndex, c) { 
+                row.append($("<t"+(rowIndex == 0 ?  "h" : "d")+"/>").text(c));
+            });
+            table.append(row);
+        });
+        return container.append(table);
+    }
+    
+    $('#id_btn_add_hrs_paro').on('click', function() {
+        $('#mdlHorasParo').modal('show');
+        detalles_tiempos_paros()
+        
     })
 
     function mostrarRequisado(numOrden, id_articulo, tipo) {

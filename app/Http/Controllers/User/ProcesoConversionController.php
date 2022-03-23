@@ -58,6 +58,13 @@ class ProcesoConversionController extends Controller
         return response()->json($obj);
     }
 
+    public function datos_detalles($Orden)
+    {
+        $obj = ProcesoConversion::datos_detalles($Orden);
+        return response()->json($obj);
+    }
+
+
     public function doc_printer($Orden){        
         
         $data_orden = ProcesoConversion::getJson($Orden);

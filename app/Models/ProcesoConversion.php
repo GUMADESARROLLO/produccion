@@ -4,12 +4,69 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\pc_view_temp;
 
 class ProcesoConversion extends Model {
+
+
     
+    public static function datos_detalles($num_orden){
+
+        $data_orden = ProcesoConversion::get_info_orden($num_orden);
+
+        $json = array();
+        $obj_unset = array();
+        $Array_Tipos_Datos = array();
+        $i = 1;
+        $t = 0;
+
+        $datos_productos = DB::table('pc_requisados_tipos')->select("NOMBRE")->where('ID', '<>',5)->get()->toArray();
+        $VIEW_TEMP = pc_view_temp::getRows($num_orden,$data_orden['id_productor']);
+        
+        foreach($datos_productos as $key => $value){
+            $Array_Tipos_Datos[$t] = $value->NOMBRE;
+            $t++;
+        }
+
+        for($c=1; $c <= 12 ; $c++){
+
+            $str_ITEM = "ITEM".$c; 
+            
+            foreach($VIEW_TEMP as $key){    
+                if(!is_null($key[$str_ITEM])){
+                    $obj_unset[$i]= $key['TIPO_REQUISA'];
+                    $json[$str_ITEM][$i]['ACTIVIDAD']   = $key['TIPO_REQUISA'];
+                    $json[$str_ITEM][$i]['VALORES']     = $key[$str_ITEM]; 
+                    $i++;
+                }
+                
+            }
+            $diff_result = array_diff($Array_Tipos_Datos, $obj_unset);
+
+            
+            foreach($diff_result as $key => $value){
+                $json[$str_ITEM][$i]['ACTIVIDAD']      = $value;
+                $json[$str_ITEM][$i]['VALORES']        = "0.00"; 
+                
+                $i++;
+            }
+            
+            
+            $obj_unset = array();
+            
+
+            $i=1;
+
+
+        }
+
+        
+
+        return $json;
+    }
     public static function getJson($Orden){
         $array_merge = array();
-
+        setlocale(LC_TIME, "spanish");
         $data_orden = ProcesoConversion::get_info_orden($Orden);
 
         $Array_Info[] = array(
@@ -43,6 +100,7 @@ class ProcesoConversion extends Model {
 
         if( count($datos_ordenes)>0 ){
             foreach ($datos_ordenes as $key => $value) {
+                
                 $json['id']                 = $value->id;
                 $json['id_productor']       = $value->id_productor;
                 $json['num_orden']          = $value->num_orden;
@@ -51,16 +109,17 @@ class ProcesoConversion extends Model {
                 $json['hora_inicio']        = date('h:i a', strtotime($value->fecha_hora_inicio));
                 $json['fecha_final']        = strftime('%a %d de %b %G', strtotime($value->fecha_hora_final));
                 $json['hora_final']         = date('h:i a', strtotime($value->fecha_hora_final));
-                $json['hrs_trabajadas']     = number_format($value->Hrs_trabajadas,2);
+                $json['hrs_trabajadas']     = number_format($value->Hrs_trabajadas,2);                
                 $json['peso_procent']       = number_format($value->PESO_PORCENT,2);
                 $json['total_bultos_und']   = number_format($value->TOTAL_BULTOS_UNDS,2);
+
+                $json['hrs_total_trabajadas']     =  $value->hrs_total_trabajadas;
                 
                 $i++;
             }
         }
 
         return $json;
-        $sql_server->close();
     }
     public static function get_tiempos_paro($num_orden){
         
@@ -95,7 +154,6 @@ class ProcesoConversion extends Model {
         }
 
         return $json;
-        $sql_server->close();
     }
     public static function get_info_producto($peso_porcent,$id_productor,$num_orden){
         
@@ -127,7 +185,6 @@ class ProcesoConversion extends Model {
         }
 
         return $json;
-        $sql_server->close();
     }
     public static function get_materia_prima($peso_porcent,$id_productor,$num_orden){
         $items_productos = DB::table('pc_productos_ordenes')->where('id_producto', $id_productor)->where('TIPO', 'MATERIA_PRIMA')->get();
@@ -163,7 +220,5 @@ class ProcesoConversion extends Model {
         }
 
         return $json;
-        $sql_server->close();
     }
-
 }
