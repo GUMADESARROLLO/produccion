@@ -114,7 +114,8 @@ class ProcesoConversion extends Model {
                 $json['total_bultos_und']   = number_format($value->TOTAL_BULTOS_UNDS,2);
 
                 $json['hrs_total_trabajadas']     =  $value->hrs_total_trabajadas;
-                
+                $json['comentario']               =  $value->comentario;
+ 
                 $i++;
             }
         }

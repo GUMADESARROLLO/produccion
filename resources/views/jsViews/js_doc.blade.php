@@ -15,8 +15,8 @@
             table.search(this.value).draw();
         });
 
-        
-        
+
+
 
 
 
@@ -24,7 +24,7 @@
             $.each(json, function(i, item) {
                 switch (item['tipo']) {
                     case 'dtaOrden':
-                        
+
                         $("#id_peso_porcent").text(item['data'].peso_procent)
                         $("#id_nombre_articulos").text(item['data'].nombre)
                         $("#id_fecha_inicial").text(item['data'].fecha_inicio)
@@ -34,6 +34,7 @@
                         $("#id_hrs_trabajadas").text(item['data'].hrs_trabajadas);
                         $("#id_total_bultos_und").text(item['data'].total_bultos_und);
                         $("#id_hrs_total_trabajadas").text(item['data'].hrs_total_trabajadas);
+                        $("#comentario").text(item['data'].comentario);
 
                         break;
                     case 'dtaMateria':
@@ -42,7 +43,9 @@
                             "destroy": true,
                             "info": false,
                             "bPaginate": false,
-                            "order": [[ 7, "asc" ]],
+                            "order": [
+                                [7, "asc"]
+                            ],
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -95,7 +98,7 @@
                                     "title": "ID_ARTICULO",
                                     "data": "ID_ARTICULO"
                                 },
-                                
+
                             ],
                             "columnDefs": [{
                                     "className": "dt-center",
@@ -208,7 +211,9 @@
                             "destroy": true,
                             "info": false,
                             "bPaginate": false,
-                            "order": [[ 5, "asc" ]],
+                            "order": [
+                                [5, "asc"]
+                            ],
                             "lengthMenu": [
                                 [100, -1],
                                 [100, "Todo"]
@@ -288,7 +293,7 @@
                                 Total = api.column(4).data().reduce(function(a, b) {
                                     return intVal(a) + intVal(b);
                                 }, 0);
-                                
+
                                 $('#id_jr_total').text(numeral(Total).format('0,0.00'));
                             }
                         });
@@ -406,7 +411,7 @@
                                     "title": "No. Personas",
                                     "data": "num_personas"
                                 },
-                                
+
 
                             ],
                             "columnDefs": [{
@@ -442,9 +447,9 @@
 
                         $("#tblTiemposParos_length").hide();
                         $("#tblTiemposParos_filter").hide();
-                        
-                        $('#tblTiemposParos tbody').on('click', "td", function(event) {                            
-                            
+
+                        $('#tblTiemposParos tbody').on('click', "td", function(event) {
+
                             var data = table_horas_paro.row(this).data();
                             let id_articulo = data['ID_ROW'];
                             let cantidad = data['num_personas'];
@@ -499,7 +504,7 @@
                                 if (result.isConfirmed) {}
                             })
 
-                            
+
                         });
 
                         break;
@@ -538,8 +543,8 @@
             }
         }
     }
-    
-    function detalles_tiempos_paros(){
+
+    function detalles_tiempos_paros() {
         $.getJSON("../jsonInfoOrder/" + id_orden, function(json) {
             $('#tbl_modal_TiemposParos').DataTable({
                 "data": json[3]['data'],
@@ -613,71 +618,71 @@
             $("#tbl_modal_TiemposParos_filter").hide();
             $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) {
 
-            var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
-            
-            var dtaRow = tbl_mdl_tiempos_paro.row(this).data();
-            var visIdx = $(this).index()
+                var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
 
-            if (visIdx != 0 && visIdx != 3) {
+                var dtaRow = tbl_mdl_tiempos_paro.row(this).data();
+                var visIdx = $(this).index()
 
-
-                var valor = $(this).html().trim();
-                var valor_columna = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
-                var num_orden = $('#id_num_orden').text();
-                var ARTICULO = dtaRow['ARTICULO'];
-                var idturno = (valor_columna == 'DIA') ? 1 : 2
+                if (visIdx != 0 && visIdx != 3) {
 
 
-                valor = valor.replace(/[',]+/g, '');
+                    var valor = $(this).html().trim();
+                    var valor_columna = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
+                    var num_orden = $('#id_num_orden').text();
+                    var ARTICULO = dtaRow['ARTICULO'];
+                    var idturno = (valor_columna == 'DIA') ? 1 : 2
 
-                Swal.fire({
-                    title: ARTICULO,
-                    text: "Para el Turno de " + valor_columna,
-                    input: 'text',
-                    target: document.getElementById('mdlHorasParo'),
-                    inputPlaceholder: 'Digite la cantidad',
-                    inputAttributes: {
-                        id: 'cantidad',
-                        required: 'true',
-                        onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Guardar',
-                    showLoaderOnConfirm: true,
-                    inputValue: valor,
-                    inputValidator: (value) => {
-                        if (!value) {
-                            return 'Digita la cantidad por favor';
+
+                    valor = valor.replace(/[',]+/g, '');
+
+                    Swal.fire({
+                        title: ARTICULO,
+                        text: "Para el Turno de " + valor_columna,
+                        input: 'text',
+                        target: document.getElementById('mdlHorasParo'),
+                        inputPlaceholder: 'Digite la cantidad',
+                        inputAttributes: {
+                            id: 'cantidad',
+                            required: 'true',
+                            onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Guardar',
+                        showLoaderOnConfirm: true,
+                        inputValue: valor,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Digita la cantidad por favor';
+                            }
+
+                            if (isNaN(value)) {
+                                return 'Formato incorrecto';
+                            } else {
+                                $.ajax({
+                                    url: "../GuardarTiempoParo",
+                                    data: {
+                                        id_tipo_tiempo_paro: dtaRow['ID_ROW'],
+                                        num_orden: num_orden,
+                                        cantidad: value,
+                                        idturno: idturno
+                                    },
+                                    type: 'post',
+                                    async: true,
+                                    success: function(response) {
+                                        detalles_tiempos_paros()
+                                    },
+                                    error: function(response) {
+                                        swal("Oops", "No se ha podido guardar!", "error");
+                                    }
+                                }).done(function(data) {
+                                    setTimeout(function() {
+                                        detalles_tiempos_paros()
+                                    }, 2000);
+                                });
+                            }
                         }
-
-                        if (isNaN(value)) {
-                            return 'Formato incorrecto';
-                        } else {
-                            $.ajax({
-                                url: "../GuardarTiempoParo",
-                                data: {
-                                    id_tipo_tiempo_paro: dtaRow['ID_ROW'],
-                                    num_orden: num_orden,
-                                    cantidad: value,
-                                    idturno: idturno
-                                },
-                                type: 'post',
-                                async: true,
-                                success: function(response) {
-                                    detalles_tiempos_paros()
-                                },
-                                error: function(response) {
-                                    swal("Oops", "No se ha podido guardar!", "error");
-                                }
-                            }).done(function(data) {
-                                setTimeout(function() {
-                                    detalles_tiempos_paros()
-                                }, 2000);
-                            });
-                        }
-                    }
-                })
-            }
+                    })
+                }
 
             })
 
@@ -694,19 +699,19 @@
             var producto_02 = Object.keys(json['ITEM2']).map(key => {
                 return json['ITEM2'][key];
             })
-            
-            index_01 = producto_01.findIndex(x => x.ACTIVIDAD ==="LP INICIAL");
-            index_03 = producto_01.findIndex(x => x.ACTIVIDAD ==="MERMA");
-            index_04 = producto_01.findIndex(x => x.ACTIVIDAD ==="LP FINAL");
-            
+
+            index_01 = producto_01.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+            index_03 = producto_01.findIndex(x => x.ACTIVIDAD === "MERMA");
+            index_04 = producto_01.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+
 
             var LP_INICIAL_row_1 = producto_01[index_01]['VALORES'];
             var MERMA_row_1 = producto_01[index_03]['VALORES'];
             var LP_FINAL_row_1 = producto_01[index_04]['VALORES'];
 
-            index_02 = producto_02.findIndex(x => x.ACTIVIDAD ==="LP INICIAL");
-            index_05 = producto_02.findIndex(x => x.ACTIVIDAD ==="MERMA");
-            index_06 = producto_02.findIndex(x => x.ACTIVIDAD ==="LP FINAL");
+            index_02 = producto_02.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+            index_05 = producto_02.findIndex(x => x.ACTIVIDAD === "MERMA");
+            index_06 = producto_02.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
             var LP_INICIAL_row_2 = producto_02[index_02]['VALORES'];
             var MERMA_row_2 = producto_02[index_05]['VALORES'];
@@ -714,31 +719,33 @@
 
             var data = [
                 ["ACTIVIDAD", "JUMBO ROLL", "TUBOS KRAFT"],
-                ["LP INICIAL ", LP_INICIAL_row_1, LP_INICIAL_row_2],                
+                ["LP INICIAL ", LP_INICIAL_row_1, LP_INICIAL_row_2],
                 ["LP FINAL ", LP_FINAL_row_1, LP_FINAL_row_2],
-                ["MERMA ", MERMA_row_1, MERMA_row_2]]
+                ["MERMA ", MERMA_row_1, MERMA_row_2]
+            ]
 
             var cityTable = makeTable($("#id_tbl_temp"), data);
 
         })
-        
+
     })
+
     function makeTable(container, data) {
         var table = $("<table/>").addClass('table table-hover');
         $.each(data, function(rowIndex, r) {
             var row = $("<tr/>");
-            $.each(r, function(colIndex, c) { 
-                row.append($("<t"+(rowIndex == 0 ?  "h" : "d")+"/>").text(c));
+            $.each(r, function(colIndex, c) {
+                row.append($("<t" + (rowIndex == 0 ? "h" : "d") + "/>").text(c));
             });
             table.append(row);
         });
         return container.append(table);
     }
-    
+
     $('#id_btn_add_hrs_paro').on('click', function() {
         $('#mdlHorasParo').modal('show');
         detalles_tiempos_paros()
-        
+
     })
 
     function mostrarRequisado(numOrden, id_articulo, tipo) {
@@ -830,9 +837,9 @@
 
     $('#btnAddReq').on('click', function() {
         var num_orden = $('#id_num_orden').text(),
-        tipo_requisa = 2,
-        id_articulo = $('#id_elemento').text();
-        
+            tipo_requisa = 2,
+            id_articulo = $('#id_elemento').text();
+
 
         Swal.fire({
             title: 'Nueva Requisa',
@@ -868,7 +875,7 @@
                         type: 'post',
                         async: true,
                         success: function(response) {
-                            
+
                             swal("Exito!", "Guardado exitosamente", "success");
                         },
                         error: function(response) {
@@ -930,9 +937,9 @@
 
     function Eliminar(id, event) {
         let id_articulo = $('#id_elemento').text(),
-        num_orden = $('#id_num_orden').text(),
-        tipo = 2;
-            
+            num_orden = $('#id_num_orden').text(),
+            tipo = 2;
+
         Swal.fire({
             title: '¿Estas Seguro de eliminar la requisa?',
             text: "¡Esta acción no podrá ser revertida!",
@@ -1079,29 +1086,54 @@
 
     // Add Comment
     $('#btn_guardar_comment').on('click', function() {
-        var comentario = $('#comentario').val();
-        if(comentario === ''){
-            return mensaje('No se ha ingresado ningun comentario', 'warning');
-        }
-        $.ajax({
-                    url: '../addComment',
-                    data: {
-                        num_orden: num_orden,
-                        comentario: comentario,
-                    },
-                    type: 'post',
-                    async: true,
-                    success: function(response) {
-                        mensaje('El comentario ha sido agregado', 'success');
-                    },
-                    error: function(response) {
-                        mensaje(response.responseText, 'error');
-                    }
-                }).done(function(data) {
+        var comentario = $('#comentario').val(),
+            num_orden = $("#id_num_orden").text();;
+        if (comentario === '') {
+            Swal.fire({
+                title: '¡Comentario vacio!',
+                text: "¿Desea guardarlo de todos modos?",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Continuar",
+                closeOnConfirm: false,
+            }).then((result) => {
+                if (result.dismiss) {
+                    Swal.fire('Cancelado!', 'Cambios no guardados', 'error')
                     setTimeout(function() {
                         location.reload();
-                    }, 1000);
-                });
+                    }, 2000);
+                } else {
+                    addComment(num_orden, comentario);
+                }
+            });
+        } else {
+            addComment(num_orden, comentario);
+        }
     });
 
+    function addComment(num_orden, comentario) {
+        $.ajax({
+            url: '../addComment',
+            data: {
+                num_orden: num_orden,
+                comentario: comentario,
+            },
+            type: 'post',
+            async: true,
+            success: function(response) {
+                Swal.fire('Guardado!', 'Cambios Guardados', 'success')
+            },
+            error: function(response) {
+                mensaje(response.responseText, 'error');
+            }
+        }).done(function(data) {
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        });
+    }
+
+    
 </script>

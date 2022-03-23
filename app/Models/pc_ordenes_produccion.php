@@ -11,7 +11,7 @@ class pc_ordenes_produccion extends Model
 {
 
     protected $table = "pc_ordenes_produccion";
-    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final', 'estado'];
+    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final', 'comentario','estado'];
     public    $timestamps = false;
 
     public static function guardar($data, $orden)
@@ -88,5 +88,22 @@ class pc_ordenes_produccion extends Model
 
     public static function addComment(Request $request){
 
+        try {
+            DB::transaction(function () use ($request) {
+                $num_orden   = $request->input('num_orden');
+                $comentario = $request->input('comentario');
+
+
+                $ordenes =   pc_ordenes_produccion::where('num_orden',  $num_orden)
+                ->where('estado','S')->update([
+                    'comentario' => $comentario,
+                ]);
+                return response()->json($ordenes);
+            });
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return response()->json($mensaje);
+        }
     }
 }
