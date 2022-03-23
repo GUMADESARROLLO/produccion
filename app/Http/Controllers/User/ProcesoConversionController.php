@@ -140,5 +140,10 @@ class ProcesoConversionController extends Controller
         $requisados = pc_ordenes_produccion::updateFechafinal($request);
         return response()->json($requisados);
     }
+
+    public function addComment(Request $request){
+        $requisados = pc_ordenes_produccion::addComment($request);
+        return response()->json($requisados);
+    }
     
 }

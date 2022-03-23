@@ -85,4 +85,8 @@ class pc_ordenes_produccion extends Model
             return response()->json($mensaje);
         }
     }
+
+    public static function addComment(Request $request){
+
+    }
 }
