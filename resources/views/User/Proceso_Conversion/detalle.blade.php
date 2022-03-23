@@ -8,7 +8,7 @@
         cursor: pointer;
         color: #5E5E5E;
         text-decoration: none;
-        
+
     }
 
     .dataTables_paginate {
@@ -29,39 +29,49 @@
         min-width: 70%;
         min-height: 100%;
     }
-    
-    u.dotted{
+
+    u.dotted {
         border-bottom: 1px dashed #999;
-        text-decoration: none; 
+        text-decoration: none;
     }
+
     .dBorder {
-        border: 1px solid #ccc !important;  
+        border: 1px solid #ccc !important;
     }
+
     .text-primary {
         color: #4e73df !important;
     }
+
     .text-success {
         color: #1cc88a !important;
     }
+
     .text-info {
         color: #36b9cc !important;
     }
+
     .text-warning {
         color: #f6c23e !important;
     }
+
     .border-left-primary {
         border-left: .25rem solid #4e73df !important;
     }
+
     .border-left-success {
         border-left: .25rem solid #1cc88a !important;
     }
+
     .border-left-info {
         border-left: .25rem solid #36b9cc !important;
     }
+
     .border-left-warning {
         border-left: .25rem solid #f6c23e !important;
     }
-    .color-focus{
+
+    .color-focus {
         color: #0894ff !important;
     }
 </style>
@@ -119,7 +129,7 @@
                                                                 <h6 class="text-xs  text-primary text-uppercase mb-1">PESO %</h6>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="card-amount">
                                                             <span class="amount" id=""><span class="currency" id="id_peso_porcent">0.00</span>
                                                         </div>
@@ -128,7 +138,7 @@
                                                         <i class="fas fa-info-circle  fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
 
@@ -155,18 +165,18 @@
                                                         <i class="fas fa-info-circle fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
 
                             </div>
-                            
+
                             <div class="col-lg-3">
                                 <div class="row g-gs">
-                                    <div class="col-md-12 col-lg-12">                                        
-                                        <div class="card card-bordered border-left-info">                                            
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="card card-bordered border-left-info">
                                             <div class="card-inner">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
@@ -181,7 +191,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <i class="fas fa-calendar fa-2x text-gray-300" id="icon_fecha_final"></i>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,11 +210,11 @@
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start mb-0">
                                                             <div class="card-title">
-                                                            <h6 class="text-xs font-weight-bold text-warning text-uppercase mb-1">TOTAL DE BULTOS (UNDS)</h6>
+                                                                <h6 class="text-xs font-weight-bold text-warning text-uppercase mb-1">TOTAL DE BULTOS (UNDS)</h6>
                                                             </div>
                                                         </div>
                                                         <div class="card-amount">
-                                                            <span class="amount" ><span class="currency" id="id_total_bultos_und">0.00</span>
+                                                            <span class="amount"><span class="currency" id="id_total_bultos_und">0.00</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
@@ -221,7 +231,7 @@
                         <div class="row">
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
-                                <div class="card" >
+                                <div class="card">
                                     <div class="card-header">
 
                                     </div>
@@ -240,8 +250,8 @@
                                     </div>
                                 </div>
 
-                                <div class="card" >
-                                    <div class="card-header" >
+                                <div class="card">
+                                    <div class="card-header">
                                         <h5>MATERIA PRIMA DIRECTA (M.P)</h5>
                                     </div>
                                     <div class="form-group col-md-12" style="display:none">
@@ -309,7 +319,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                            <table class="table table-hover" id="tbl_modal_TiemposParos" width="100%"></table>
+                                                <table class="table table-hover" id="tbl_modal_TiemposParos" width="100%"></table>
                                             </div>
                                         </div>
                                     </div>
@@ -373,13 +383,32 @@
                                     </div>
                                 </div>
 
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>COMENTARIOS</h5>
+                                    </div>
+                                    <div class="card-block pt-2">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="container d-flex justify-content-end">
+                                                <button class="btn btn-primary mt-3 add-row-dt-hp mr-0" id="btn_guardar_comment" type="submit">
+                                                    GUARDAR
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- [ Main Content ] end -->
+        <!-- [ Main Content ] end -->
 
-    @endsection
+        @endsection

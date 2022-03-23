@@ -224,6 +224,8 @@ Route::get('/getRequisadosAll/{numOrden}/{id_articulo}', 'User\ProcesoConversion
 Route::post('/addRequisa', 'User\ProcesoConversionController@addRequisa')->name('addRequisa');
 Route::post('/eliminarRequisaPC', 'User\ProcesoConversionController@eliminarRequisaPC')->name('eliminarRequisaPC');
 Route::post('/updateFechafinal', 'User\ProcesoConversionController@updateFechafinal')->name('updateFechafinal');
+Route::post('/addComment', 'User\ProcesoConversionController@addComment')->name('addComment');
+
 
 
 

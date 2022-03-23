@@ -1024,4 +1024,84 @@
             }
         })
     });
+
+    $('#fecha_hora_final,#icon_fecha_final ').on('click', function() {
+        let fecha_final, hora_final, num_orden;
+        num_orden = $("#id_num_orden").text();
+
+        Swal.fire({
+            title: 'Fecha final',
+            html: '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA FINAL:</p></div>' +
+                '<div class="form-group col-md-8"><input type="date" class="form-control" id="add_fecha_final"></div></div>' +
+                '<div class="form-row"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">HORA FINAL:</p></div>' +
+                '<div class="form-group col-md-8"><input type="time" class="form-control mt-2" id="add_hora_final"></div></div>',
+            stopKeydownPropagation: false,
+            confirmButtonText: 'Guardar',
+            showCancelButton: true,
+            preConfirm: () => {
+                fecha_final = $('#add_fecha_final').val();
+                hora_final = $('#add_hora_final').val();
+
+                if (fecha_final == '') {
+                    return swal.showValidationError(
+                        'Seleccione una fecha por favor'
+                    );
+                }
+                if (hora_final == '') {
+                    return swal.showValidationError(
+                        'Seleccione una hora por favor'
+                    );
+                }
+
+                $.ajax({
+                    url: '../updateFechafinal',
+                    data: {
+                        num_orden: num_orden,
+                        fecha_final: fecha_final,
+                        hora_final: hora_final
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        Swal.fire('Saved!', 'la fecha se ha actualizado', 'success')
+                    },
+                    error: function(response) {
+                        mensaje(response.responseText, 'error');
+                    }
+                }).done(function(data) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                });
+            }
+        })
+    });
+
+    // Add Comment
+    $('#btn_guardar_comment').on('click', function() {
+        var comentario = $('#comentario').val();
+        if(comentario === ''){
+            return mensaje('No se ha ingresado ningun comentario', 'warning');
+        }
+        $.ajax({
+                    url: '../addComment',
+                    data: {
+                        num_orden: num_orden,
+                        comentario: comentario,
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        mensaje('El comentario ha sido agregado', 'success');
+                    },
+                    error: function(response) {
+                        mensaje(response.responseText, 'error');
+                    }
+                }).done(function(data) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                });
+    });
+
 </script>
