@@ -293,7 +293,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="id_articulo_descripcion"> Detalles</h5> <span id=""> </span>
+                                                <h5 class="modal-title justify-content-center" id="id_articulo_descripcion">PROCESO DE CONVERSIÓN - DETALLES DE LA ORDEN</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -370,7 +370,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <table class="table table-bordered" id="tbRequisas" width="100%">
+                                                    <table class="table table-hover" id="tbRequisas" width="100%">
                                                     </table>
                                                 </div>
                                             </div>

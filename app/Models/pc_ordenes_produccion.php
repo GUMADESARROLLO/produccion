@@ -11,7 +11,7 @@ class pc_ordenes_produccion extends Model
 {
 
     protected $table = "pc_ordenes_produccion";
-    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final', 'comentario','estado'];
+    protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final', 'comentario', 'estado'];
     public    $timestamps = false;
 
     public static function guardar($data, $orden)
@@ -74,9 +74,9 @@ class pc_ordenes_produccion extends Model
                 $fecha_hora_final = $fecha_final . ' ' . $hora_final . ':00';
 
                 $ordenes =   pc_ordenes_produccion::where('num_orden',  $num_orden)
-                ->where('estado','S')->update([
-                    'fecha_hora_final' => $fecha_hora_final,
-                ]);
+                    ->where('estado', 'S')->update([
+                        'fecha_hora_final' => $fecha_hora_final,
+                    ]);
                 return response()->json($ordenes);
             });
         } catch (Exception $e) {
@@ -86,7 +86,8 @@ class pc_ordenes_produccion extends Model
         }
     }
 
-    public static function addComment(Request $request){
+    public static function addComment(Request $request)
+    {
 
         try {
             DB::transaction(function () use ($request) {
@@ -95,9 +96,9 @@ class pc_ordenes_produccion extends Model
 
 
                 $ordenes =   pc_ordenes_produccion::where('num_orden',  $num_orden)
-                ->where('estado','S')->update([
-                    'comentario' => $comentario,
-                ]);
+                    ->where('estado', 'S')->update([
+                        'comentario' => $comentario,
+                    ]);
                 return response()->json($ordenes);
             });
         } catch (Exception $e) {
@@ -106,4 +107,5 @@ class pc_ordenes_produccion extends Model
             return response()->json($mensaje);
         }
     }
+
 }

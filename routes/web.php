@@ -232,6 +232,7 @@ Route::post('/addComment', 'User\ProcesoConversionController@addComment')->name(
 
 
 
+
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');
 Route::get('/doc_printer/{codigo}', 'User\ProcesoConversionController@doc_printer')->name('doc_printer/{codigo}');
