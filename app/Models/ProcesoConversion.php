@@ -28,7 +28,7 @@ class ProcesoConversion extends Model {
             $t++;
         }
 
-        for($c=1; $c <= 12 ; $c++){
+        for($c=1; $c <= 13 ; $c++){
 
             $str_ITEM = "ITEM".$c; 
             

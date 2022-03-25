@@ -697,119 +697,92 @@
                 return json['ITEM2'][key];
             })
 
-            index_01 = producto_01.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
-            index_03 = producto_01.findIndex(x => x.ACTIVIDAD === "MERMA");
-            index_04 = producto_01.findIndex(x => x.ACTIVIDAD === "LP FINAL");
-            index_07 = producto_01.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+            index_p101 = producto_01.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+            index_p102 = producto_01.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+            index_p103 = producto_01.findIndex(x => x.ACTIVIDAD === "MERMA");
+            index_p104 = producto_01.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
-            var LP_INICIAL_row_1 = producto_01[index_01]['VALORES'];
-            var MERMA_row_1 = producto_01[index_03]['VALORES'];
-            var LP_FINAL_row_1 = producto_01[index_04]['VALORES'];
-            var REQUISADO_row_1 = producto_01[index_07]['VALORES'];
+            index_p201 = producto_02.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+            index_p202 = producto_02.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+            index_p203 = producto_02.findIndex(x => x.ACTIVIDAD === "MERMA");
+            index_p204 = producto_02.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
+            var LP_INICIAL_row_1_p1 = producto_01[index_p101]['VALORES'];
+            var REQUISADO_row_1_p1 = producto_01[index_p102]['VALORES'];
+            var MERMA_row_1_p1 = producto_01[index_p103]['VALORES'];
+            var LP_FINAL_row_1_p1 = producto_01[index_p104]['VALORES'];
 
-            index_02 = producto_02.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
-            index_05 = producto_02.findIndex(x => x.ACTIVIDAD === "MERMA");
-            index_06 = producto_02.findIndex(x => x.ACTIVIDAD === "LP FINAL");
-            index_08 = producto_02.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+            var LP_INICIAL_row_2_p2 = producto_02[index_p201]['VALORES'];
+            var REQUISADO_row_2_p2 = producto_02[index_p202]['VALORES'];
+            var MERMA_row_2_p2 = producto_02[index_p203]['VALORES'];
+            var LP_FINAL_row_2_p2 = producto_02[index_p204]['VALORES'];
 
+            var REQUISADOS_P1 = REQUISADO_row_1_p1.split(",");
+            var REQUISADOS_P2 = REQUISADO_row_2_p2.split(",");
 
-            var LP_INICIAL_row_2 = producto_02[index_02]['VALORES'];
-            var MERMA_row_2 = producto_02[index_05]['VALORES'];
-            var LP_FINAL_row_2 = producto_02[index_06]['VALORES'];
-            var REQUISADO_row_2 = producto_02[index_08]['VALORES'];
-
-            var REQUISADOS_P1 = REQUISADO_row_1.split(",");
-            var REQUISADOS_P2 = REQUISADO_row_2.split(",");
-
-            arrayRequisas = [];
+            var arrayRequisas = [];
             var totalRequisado1 = 0;
             var totalRequisado2 = 0;
+            var indexMax, indexOut1;
+            var P1_R_lenght = REQUISADOS_P1.length;
+            var P2_R_lenght = REQUISADOS_P2.length;
 
-            //console.log(REQUISADOS_P1.length);
-            //console.log(REQUISADOS_P2.length);
+            if (P1_R_lenght > P2_R_lenght) {
+                indexMax = P1_R_lenght;
+                indexOut1 = indexMax - P2_R_lenght;
+                addElement(indexOut1, REQUISADOS_P2);
 
-            var fila = '';
-            var i = 0;
-            if (REQUISADOS_P1.length > REQUISADOS_P2.length) {
-                $.each(REQUISADOS_P1, function(rowIndex1, r1) { //8
-                    $.each(REQUISADOS_P2, function(rowIndex2, r2) { //8*6 = 48/6
-                        if (rowIndex1 == rowIndex2) {
-                            arrayRequisas[i] = {
-                                row: r1 + ',' + r2
-                            }
-                            i++;
-                            totalRequisado2 += parseFloat(r2);
-
-                        }
-                    });
-                    if (rowIndex1 >= REQUISADOS_P2.length) {
-                        arrayRequisas[rowIndex1] = {
-                            row: r1 + ',' + 0
-                        }
-                    }
-                    totalRequisado1 += parseFloat(r1);
-                });
-            } else if (REQUISADOS_P1.length < REQUISADOS_P2.length) {
-                $.each(REQUISADOS_P2, function(rowIndex1, r1) {
-                    $.each(REQUISADOS_P1, function(rowIndex2, r2) {
-                        if (rowIndex2 == rowIndex1) {
-                            arrayRequisas[i] = {
-                                row: r2 + ',' + r1
-                            }
-                            i++;
-                            totalRequisado1 += parseFloat(r2);
-                        }
-                    });
-                    if (rowIndex1 >= REQUISADOS_P1.length) {
-                        arrayRequisas[rowIndex1] = {
-                            row: 0 + ',' + r1
-                        }
-                    }
-                    totalRequisado2 += parseFloat(r1);
-                });
-            } else {
-                $.each(REQUISADOS_P1, function(rowIndex1, r1) { //8
-                    $.each(REQUISADOS_P2, function(rowIndex2, r2) { //8*6 = 48
-                        if (rowIndex1 == rowIndex2) {
-                            arrayRequisas[i] = {
-                                row: r1 + ',' + r2
-                            }
-                            i++;
-                            totalRequisado2 += parseFloat(r2);
-                        }
-                    });
-                    totalRequisado1 += parseFloat(r1);
-
-                });
+            } else if (P2_R_lenght > P1_R_lenght) {
+                indexMax = P2_R_lenght;
+                indexOut1 = indexMax - P2_R_lenght;
+                addElement(indexOut1, REQUISADOS_P1);
             }
 
-            var consumoP1 = parseFloat(LP_INICIAL_row_1) + parseFloat(totalRequisado1) - parseFloat(MERMA_row_1) - parseFloat(LP_FINAL_row_1);
-            var merma_porcentual_P1 = parseFloat(MERMA_row_1) / (consumoP1 + parseFloat(MERMA_row_1)) * 100;
-            var peso = $('#id_peso_porcent').text();
-            var consumoP2 = parseFloat(LP_INICIAL_row_2) + parseFloat(totalRequisado2) - parseFloat(LP_FINAL_row_2);
-            var merma_porcentual_P2 = (parseFloat(MERMA_row_2)) / (consumoP2 + parseFloat(MERMA_row_2)) * 100;
-            var merma_kg = parseFloat(MERMA_row_2) * 0.20;
+            arrayRequisas[0] = {
+                row_1: REQUISADOS_P1,
+                row_2: REQUISADOS_P2,
+            };
 
-            LP_INICIAL_row_1 = numeral(LP_INICIAL_row_1).format('0,0.00');
-            LP_INICIAL_row_2 = numeral(LP_INICIAL_row_2).format('0,0.00');
-            LP_FINAL_row_1 = numeral(LP_FINAL_row_1).format('0,0.00');
-            LP_FINAL_row_2 = numeral(LP_FINAL_row_2).format('0,0.00');
-            MERMA_row_1 = numeral(MERMA_row_1).format('0,0.00');
-            MERMA_row_2 = numeral(MERMA_row_2).format('0,0.00');
+            arrayRequisas.forEach(element => {
+                for (var j = 0; j < element.row_1.length; j++) {
+                    totalRequisado1 += parseFloat(element.row_1[j]);
+                    totalRequisado2 += parseFloat(element.row_2[j]);
+                }
+            });
+
+            var consumoP1 = parseFloat(LP_INICIAL_row_1_p1) + parseFloat(totalRequisado1) - parseFloat(MERMA_row_1_p1) - parseFloat(LP_FINAL_row_1_p1);
+            var consumoP2 = parseFloat(LP_INICIAL_row_2_p2) + parseFloat(totalRequisado2) - parseFloat(LP_FINAL_row_2_p2);
+
+            var merma_porcentual_P1 = parseFloat(MERMA_row_1_p1) / (consumoP1 + parseFloat(MERMA_row_1_p1)) * 100;
+            var merma_porcentual_P2 = parseFloat(MERMA_row_2_p2) / (consumoP2 + parseFloat(MERMA_row_2_p2)) * 100;
+
+            var peso = $('#id_peso_porcent').text();
+            var merma_kg = parseFloat(MERMA_row_2_p2) * 0.20;
+
+            LP_INICIAL_row_1_p1 = numeral(LP_INICIAL_row_1_p1).format('0,0.00');
+            LP_INICIAL_row_2_p2 = numeral(LP_INICIAL_row_2_p2).format('0,0.00');
+
+            LP_FINAL_row_1_p1 = numeral(LP_FINAL_row_1_p1).format('0,0.00');
+            LP_FINAL_row_2_p2 = numeral(LP_FINAL_row_2_p2).format('0,0.00');
+
+            MERMA_row_1_p1 = numeral(MERMA_row_1_p1).format('0,0.00');
+            MERMA_row_2_p2 = numeral(MERMA_row_2_p2).format('0,0.00');
+
             merma_kg = numeral(merma_kg).format('0,0.00');
+
             merma_porcentual_P1 = numeral(merma_porcentual_P1).format('0,0.00');
             merma_porcentual_P2 = numeral(merma_porcentual_P2).format('0,0.00');
+
             consumoP1 = numeral(consumoP1).format('0,0.00');
             consumoP2 = numeral(consumoP2).format('0,0.00');
 
             var data = [
                 ["ACTIVIDAD", "JUMBO ROLL", "TUBOS KRAFT"],
-                ["LP INICIAL ", LP_INICIAL_row_1, LP_INICIAL_row_2],
+                ["LP INICIAL ", LP_INICIAL_row_1_p1, LP_INICIAL_row_2_p2],
                 [arrayRequisas],
-                ["LP FINAL ", LP_FINAL_row_1, LP_FINAL_row_2],
-                ["MERMA (KG)", MERMA_row_1, merma_kg],
-                ["MERMA (UND) ", '0.00', MERMA_row_2],
+                ["LP FINAL ", LP_FINAL_row_1_p1, LP_FINAL_row_2_p2],
+                ["MERMA (KG)", MERMA_row_1_p1, merma_kg],
+                ["MERMA (UND) ", '0.00', MERMA_row_2_p2],
                 ["MERMA (%)", merma_porcentual_P1, merma_porcentual_P2],
                 ["CONSUMO ", consumoP1, consumoP2],
                 ["PESO ", peso, '0.00'],
@@ -830,8 +803,8 @@
                 return json['ITEM8'][key];
             })
 
-            var producto_05 = Object.keys(json['ITEM8']).map(key => {
-                return json['ITEM8'][key];
+            var producto_05 = Object.keys(json['ITEM9']).map(key => {
+                return json['ITEM9'][key];
             })
 
             index_p301 = producto_03.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
@@ -904,7 +877,7 @@
                 row_3: REQUISADOS_P5
             }
 
-            console.log(arrayRequisas2);
+            // console.log(arrayRequisas2);
             var totalRequisadoP3 = 0,
                 totalRequisadoP4 = 0,
                 totalRequisadoP5 = 0;
@@ -972,7 +945,7 @@
             cityTable = makeTable($("#id_tbl_temp"), data, 2);
             //$("#id_tbl_temp > table > tr > th").addClass("bg-primary text-white");
 
-            /******************  @EMPAQUE_PRIMARIO  **********************/
+            /*************************************  @EMPAQUE_PRIMARIO  **********************/
 
             var producto_06 = Object.keys(json['ITEM4']).map(key => {
                 return json['ITEM4'][key];
@@ -985,7 +958,7 @@
             var producto_08 = Object.keys(json['ITEM10']).map(key => {
                 return json['ITEM10'][key];
             })
-           
+
             var producto_09 = Object.keys(json['ITEM5']).map(key => {
                 return json['ITEM5'][key];
             })
@@ -1093,8 +1066,8 @@
                 row_4: REQUISADOS_P9
 
             }
-            console.log('/**********************@EMPAQUE PRIMARIO ****************************/')
-            console.log(arrayRequisas3);
+            console.log('/********************** @EMPAQUE PRIMARIO ****************************/')
+            //console.log(arrayRequisas3);
             var totalRequisadoP6 = 0,
                 totalRequisadoP7 = 0,
                 totalRequisadoP8 = 0,
@@ -1106,23 +1079,43 @@
                     totalRequisadoP7 += parseFloat(element.row_2[j]);
                     totalRequisadoP8 += parseFloat(element.row_3[j]);
                     totalRequisadoP9 += parseFloat(element.row_4[j]);
-
-                    // console.log('Cantidades= ' + element.row_1[j] + ' ' + element.row_2[j] + ' ' + element.row_3[j]);
                 }
             });
+
+            var Num_bolsonesP6 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text();
+            // console.log(Num_bolsonesP6);
 
             var consumoP6 = parseFloat(LP_INICIAL_row_1_p6) + totalRequisadoP6 - parseFloat(LP_FINAL_row_1_p6);
             var consumoP7 = parseFloat(LP_INICIAL_row_2_p7) + totalRequisadoP7 - parseFloat(LP_FINAL_row_2_p7);
             var consumoP8 = parseFloat(LP_INICIAL_row_3_p8) + totalRequisadoP8 - parseFloat(LP_FINAL_row_3_p8);
             var consumoP9 = parseFloat(LP_INICIAL_row_4_p9) + totalRequisadoP9 - parseFloat(LP_FINAL_row_4_p9);
 
-            console.log(totalRequisadoP9);
-
-
             var merma_porcentual_P6 = parseFloat(MERMA_row_1_p6) / (consumoP6 + parseFloat(MERMA_row_1_p6)) * 100;
             var merma_porcentual_P7 = parseFloat(MERMA_row_2_p7) / (consumoP7 + parseFloat(MERMA_row_2_p7)) * 100;
             var merma_porcentual_P8 = parseFloat(MERMA_row_3_p8) / (consumoP8 + parseFloat(MERMA_row_3_p8)) * 100;
             var merma_porcentual_P9 = parseFloat(MERMA_row_4_p9) / (consumoP9 + parseFloat(MERMA_row_4_p9)) * 100;
+            // cantidad = cantidad.replace(/[',]+/g, '');
+
+            var rollos_esperados_P6 = consumoP6 / 0.0035;
+            var bolsones_producir_P6 = parseFloat(rollos_esperados_P6 / 24);
+            var No_bolsones_P6 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text().replace(/[',]+/g, '');
+            var diferencial_P6 = (parseFloat(bolsones_producir_P6) - parseFloat(No_bolsones_P6));
+
+            var No_bolsones_P7 = $('#tblProductos > tbody > tr:nth-child(3) > td:nth-child(3)').text().replace(/[',]+/g, '');
+            var rollos_esperados_P7 = consumoP7 / 0.003;
+            var bolsones_producir_P7 = rollos_esperados_P7 / 24;
+            var diferencial_P7 = (parseFloat(bolsones_producir_P7) - parseFloat(No_bolsones_P7));
+
+            var No_bolsones_P8 = $('#tblProductos > tbody > tr:nth-child(1) > td:nth-child(3)').text().replace(/[',]+/g, '');;
+            var rollos_esperados_P8 = consumoP8 / 70;
+            var bolsones_producir_P8 = rollos_esperados_P8 / 24;
+            var diferencial_P8 = (parseFloat(bolsones_producir_P8) - parseFloat(No_bolsones_P8));
+
+            var No_bolsones_P9 = $('#tblProductos > tbody > tr:nth-child(8) > td:nth-child(3)').text().replace(/[',]+/g, '');
+            var rollos_esperados_P9 = No_bolsones_P9 / 4;
+            var bolsones_producir_P9 = No_bolsones_P9 * 4;
+            var diferencial_P9 = (consumoP9 - parseFloat(bolsones_producir_P9));
+
 
             consumoP6 = numeral(consumoP6).format('0,0.00');
             consumoP7 = numeral(consumoP7).format('0,0.00');
@@ -1139,18 +1132,35 @@
             LP_INICIAL_row_3_p8 = numeral(LP_INICIAL_row_3_p8).format('0,0.00');
             LP_INICIAL_row_4_p9 = numeral(LP_INICIAL_row_4_p9).format('0,0.00');
 
-
             LP_FINAL_row_1_p6 = numeral(LP_FINAL_row_1_p6).format('0,0.00');
             LP_FINAL_row_2_p7 = numeral(LP_FINAL_row_2_p7).format('0,0.00');
             LP_FINAL_row_3_p8 = numeral(LP_FINAL_row_3_p8).format('0,0.00');
             LP_FINAL_row_4_p9 = numeral(LP_FINAL_row_4_p9).format('0,0.00');
-
 
             MERMA_row_1_p6 = numeral(MERMA_row_1_p6).format('0,0.00');
             MERMA_row_2_p7 = numeral(MERMA_row_2_p7).format('0,0.00');
             MERMA_row_3_p8 = numeral(MERMA_row_3_p8).format('0,0.00');
             MERMA_row_4_p9 = numeral(MERMA_row_4_p9).format('0,0.00');
 
+            rollos_esperados_P6 = numeral(rollos_esperados_P6).format('0,0.00');
+            bolsones_producir_P6 = numeral(bolsones_producir_P6).format('0,0.00');
+            No_bolsones_P6 = numeral(No_bolsones_P6).format('0,0.00');
+            diferencial_P6 = numeral(diferencial_P6).format('0,0.00');
+
+            diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
+            bolsones_producir_P7 = numeral(bolsones_producir_P7).format('0,0.00');
+            No_bolsones_P7 = numeral(No_bolsones_P7).format('0,0.00');
+            diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
+
+            rollos_esperados_P8 = numeral(rollos_esperados_P8).format('0,0.00');
+            bolsones_producir_P8 = numeral(bolsones_producir_P8).format('0,0.00');
+            No_bolsones_P8 = numeral(No_bolsones_P8).format('0,0.00');
+            diferencial_P8 = numeral(diferencial_P8).format('0,0.00');
+
+            rollos_esperados_P9 = numeral(rollos_esperados_P9).format('0,0.00');
+            bolsones_producir_P9 = numeral(bolsones_producir_P9).format('0,0.00');
+            No_bolsones_P9 = numeral(No_bolsones_P9).format('0,0.00');
+            diferencial_P9 = numeral(diferencial_P9).format('0,0.00');
 
             data = [
                 ["ACTIVIDAD", "PAPIEL ECO. COG.27", "CHOLIN COG.52", "FOURPACK COG.100", "CHOLIN 6 PACK COG.103"],
@@ -1160,16 +1170,127 @@
                 ["MERMA (UND)", MERMA_row_1_p6, MERMA_row_2_p7, MERMA_row_3_p8, MERMA_row_4_p9],
                 ["MERMA (%)", merma_porcentual_P6, merma_porcentual_P7, merma_porcentual_P8, merma_porcentual_P9],
                 ["CONSUMO ", consumoP6, consumoP7, consumoP8, consumoP9],
+                ["ROLLOS ESPERADOS ", rollos_esperados_P6, rollos_esperados_P7, rollos_esperados_P8, rollos_esperados_P9],
+                ["BOLSONES A PRODUCIR ", bolsones_producir_P6, bolsones_producir_P7, bolsones_producir_P8, bolsones_producir_P9],
+                ["No. BOLSONES", No_bolsones_P6, No_bolsones_P7, No_bolsones_P8, No_bolsones_P9],
+                ["DIFERENCIAL", diferencial_P6, diferencial_P7, diferencial_P8, diferencial_P9],
+
+
             ]
-            
+
             cityTable = makeTable($("#id_tbl_temp"), data, 3);
-            $("#id_tbl_temp > table > tr > th").addClass("bg-primary text-white");
+
+            /******************  @QUIMICOS  **********************/
+
+            var quimico_01 = Object.keys(json['ITEM7']).map(key => {
+                return json['ITEM7'][key];
+            })
+
+            var quimico_02 = Object.keys(json['ITEM13']).map(key => {
+                return json['ITEM13'][key];
+            })
+
+            index_q101 = quimico_01.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+            index_q102 = quimico_01.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+            index_q103 = quimico_01.findIndex(x => x.ACTIVIDAD === "MERMA");
+            index_q104 = quimico_01.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+
+            index_q201 = quimico_02.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+            index_q202 = quimico_02.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+            index_q203 = quimico_02.findIndex(x => x.ACTIVIDAD === "MERMA");
+            index_q204 = quimico_02.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+
+            var LP_INICIAL_row_1_q1 = quimico_01[index_q101]['VALORES'];
+            var REQUISADO_row_1_q1 = quimico_01[index_q102]['VALORES'];
+            var MERMA_row_1_q1 = quimico_01[index_q103]['VALORES'];
+            var LP_FINAL_row_1_q1 = quimico_01[index_q104]['VALORES'];
+
+            var LP_INICIAL_row_2_q2 = quimico_02[index_q201]['VALORES'];
+            var REQUISADO_row_2_q2 = quimico_02[index_q202]['VALORES'];
+            var MERMA_row_2_q2 = quimico_02[index_q203]['VALORES'];
+            var LP_FINAL_row_2_q2 = quimico_02[index_q204]['VALORES'];
+
+            var REQUISADOS_Q1 = REQUISADO_row_1_q1.split(",");
+            var REQUISADOS_Q2 = REQUISADO_row_2_q2.split(",");
+
+            var totalRequisadoQ1 = 0;
+            var totalRequisadoQ2 = 0;
+            var arrayRequisasQ = [];
+            var indexMax, indexOut1;
+            var Q1_R_lenght = REQUISADOS_Q1.length;
+            var Q2_R_lenght = REQUISADOS_Q2.length;
+
+            if (Q1_R_lenght > Q2_R_lenght) {
+                indexMax = Q1_R_lenght;
+                indexOut1 = indexMax - Q2_R_lenght;
+                addElement(indexOut1, REQUISADOS_Q2);
+
+            } else if (Q2_R_lenght > Q1_R_lenght) {
+                indexMax = Q2_R_lenght;
+                indexOut1 = indexMax - Q2_R_lenght;
+                addElement(indexOut1, REQUISADOS_Q1);
+            }
+
+            arrayRequisasQ[0] = {
+                row_1: REQUISADOS_Q1,
+                row_2: REQUISADOS_Q2,
+            };
+
+            arrayRequisasQ.forEach(element => {
+                for (var j = 0; j < element.row_1.length; j++) {
+                    totalRequisadoQ1 += parseFloat(element.row_1[j]);
+                    totalRequisadoQ2 += parseFloat(element.row_2[j]);
+
+                }
+            });
+
+            var consumoQ1 = parseFloat(LP_INICIAL_row_1_q1) + parseFloat(totalRequisadoQ1) - parseFloat(MERMA_row_1_q1) - parseFloat(LP_FINAL_row_1_q1);
+            var consumoQ2 = parseFloat(LP_INICIAL_row_2_q2) + parseFloat(totalRequisadoQ2) - parseFloat(MERMA_row_2_q2) - parseFloat(LP_FINAL_row_2_q2);
+
+            var merma_porcentual_Q1 = (parseFloat(MERMA_row_1_q1)) / (consumoQ1 + parseFloat(MERMA_row_1_q1)) * 100;
+            var merma_porcentual_Q2 = (parseFloat(MERMA_row_2_q2)) / (consumoQ2 + parseFloat(MERMA_row_2_q2)) * 100;
+
+            //console.log(merma_porcentual_Q1);
+            LP_INICIAL_row_1_q1 = numeral(LP_INICIAL_row_1_q1).format('0,0.00');
+            LP_INICIAL_row_2_q2 = numeral(LP_INICIAL_row_2_q2).format('0,0.00');
+
+            LP_FINAL_row_1_q1 = numeral(LP_FINAL_row_1_q1).format('0,0.00');
+            LP_FINAL_row_2_q2 = numeral(LP_FINAL_row_2_q2).format('0,0.00');
+
+            MERMA_row_1_q1 = numeral(MERMA_row_1_q1).format('0,0.00');
+            MERMA_row_2_q2 = numeral(MERMA_row_2_q2).format('0,0.00');
+
+            merma_porcentual_Q1 = numeral(merma_porcentual_Q1).format('0,0.00');
+            merma_porcentual_Q2 = numeral(merma_porcentual_Q2).format('0,0.00');
+
+            consumoQ1 = numeral(consumoQ1).format('0,0.00');
+            consumoQ2 = numeral(consumoQ2).format('0,0.00');
+
+
+            //¿COMO REALIZAN Y A QUE ITEM CORRESPONDE LO DEL PESO DEL GLN(KG)
+            var data = [
+                ["ACTIVIDAD", "ACEITE (Gln)", "PAM"],
+                ["LP INICIAL ", LP_INICIAL_row_1_q1, LP_INICIAL_row_2_q2],
+                [arrayRequisasQ],
+                ["LP FINAL ", LP_FINAL_row_1_q1, LP_FINAL_row_2_q2],
+                ["MERMA", MERMA_row_1_q1, MERMA_row_2_q2],
+                ["MERMA (%)", merma_porcentual_Q1, merma_porcentual_Q2],
+                ["CONSUMO ", consumoQ1, consumoQ2],
+                ["PESO DEL GLN(KG)", '1', '0.26'],
+            ]
+            var cityTable = makeTable($("#id_tbl_temp"), data, 4);
+                $("#id_tbl_temp > table > tr > th").addClass("bg-indigo-dim");
+                var periodo = $('#id_fecha_inicial').text() + ' ' + $('#id_hora_inicial').text() + ' Al ' + $('#id_fecha_final').text() + ' ' + $('#id_hora_final').text();
+                $("#periodo").text(periodo);
+               // $("#id_tbl_temp > table > tr > td").addClass("bg-indigo-dim");
+
+            // $("#id_tbl_temp > table > tr > th").addClass("bg-primary text-white");
         })
     })
 
     function makeTable(container, data, typeItem) {
         var row2
-        var table = $("<table/>").addClass('table table-hover');
+        var table = $("<table/>").addClass('table table-hover mt-4');
         $.each(data, function(rowIndex, r) {
             var row = $("<tr/>");
             row2 = '';
@@ -1179,21 +1300,24 @@
                 });
             } else if (rowIndex === 2) { //requisados
                 if (typeItem == 1) { //JR + TUBOS KRAFT
+                    table.append(`<thead><tr><th colspan="3" class="bg-gray text-white text-center"><h6>MATERIA PRIMA</h6></th></tr></thead>`);
+
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            requisa = element.row.split(',');
-                            // console.log('REQUISA ' + requisa[0] + requisa[1]);
-                            row2 += `<tr>
-                                <td> REQUISA</td> ` +
-                                `<td>` + numeral(parseFloat(requisa[0])).format('0,0.00') + `</td>` +
-                                `<td>` + numeral(requisa[1]).format('0,0.00') + `</td>` + `</td>
-                                </tr>`;
+                            for (var j = 0; j < element.row_1.length; j++) {
+                                row2 += `<tr>
+                                  <td> REQUISA</td> ` +
+                                    `<td>` + numeral(element.row_1[j]).format('0,0.00') + `</td>` +
+                                    `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>
+                                 </tr>`;
+                            }
                         });
                     });
+                   
                 } else if (typeItem === 2) { // SOBREEMPAQUE
+                    table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>SOBREMPAQUE</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            console.log(r);
                             for (var j = 0; j < element.row_1.length; j++) {
                                 row2 += `<tr>
                                   <td> REQUISA</td> ` +
@@ -1205,10 +1329,10 @@
                             }
                         });
                     });
-                }else if (typeItem === 3) { // EMPAQUE PRIMARIO
+                } else if (typeItem === 3) { // EMPAQUE PRIMARIO
+                    table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>EMPAQUE PRIMARIO</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            console.log(r);
                             for (var j = 0; j < element.row_1.length; j++) {
                                 row2 += `<tr>
                                   <td> REQUISA</td> ` +
@@ -1217,6 +1341,19 @@
                                     `<td>` + numeral(element.row_3[j]).format('0,0.00') + `</td>` + `</td>` +
                                     `<td>` + numeral(element.row_4[j]).format('0,0.00') + `</td>` + `</td>
                                       </tr>`;
+                            }
+                        });
+                    });
+                } else if (typeItem === 4) { //  QUIMICOS
+                    table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>QUIMICOS</h6></th></tr></thead>`);
+                    $.each(r, function(index, item) {
+                        item.forEach(element => {
+                            for (var j = 0; j < element.row_1.length; j++) {
+                                row2 += `<tr>
+                                  <td> REQUISA</td> ` +
+                                    `<td>` + numeral(parseFloat(element.row_1[j])).format('0,0.00') + `</td>` +
+                                    `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>
+                                 </tr>`;
                             }
                         });
                     });

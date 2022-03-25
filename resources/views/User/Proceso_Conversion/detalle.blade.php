@@ -29,6 +29,10 @@
         min-width: 70%;
         min-height: 100%;
     }
+    .custom_detail {
+        min-width: 80%;
+        min-height: 100%;
+    }
 
     u.dotted {
         border-bottom: 1px dashed #999;
@@ -289,11 +293,14 @@
                                     </div>
                                 </div>
 
-                                <div class="modal fade modal-fullscreen" id="mdlDetallesOrdes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                <div class="modal fade " id="mdlDetallesOrdes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog custom">
                                         <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title justify-content-center" id="id_articulo_descripcion">PROCESO DE CONVERSIÓN - DETALLES DE LA ORDEN</h5>
+                                            <div class="modal-header bg-primary text-white">
+                                                <div class="container ">
+                                                     <h5 class="modal-title d-flex justify-content-center" id="">PROCESO DE CONVERSIÓN - DETALLES DE LA ORDEN</h5>
+                                                     <h5 class="modal-title d-flex justify-content-center" id="periodo"> </h5>
+                                                </div>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
