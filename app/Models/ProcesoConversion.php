@@ -19,7 +19,7 @@ class ProcesoConversion extends Model {
         $Array_Tipos_Datos = array();
         $i = 1;
         $t = 0;
-
+        $id_producto =  $data_orden['id_productor'];
         $datos_productos = DB::table('pc_requisados_tipos')->select("NOMBRE")->where('ID', '<>',5)->get()->toArray();
         $VIEW_TEMP = pc_view_temp::getRows($num_orden,$data_orden['id_productor']);
         
@@ -28,7 +28,7 @@ class ProcesoConversion extends Model {
             $t++;
         }
 
-        for($c=1; $c <= 13 ; $c++){
+        for($c=1; $c <= 14 ; $c++){
 
             $str_ITEM = "ITEM".$c; 
             
@@ -59,7 +59,7 @@ class ProcesoConversion extends Model {
 
 
         }
-
+        $json['producto'][0]= $id_producto;
         
 
         return $json;

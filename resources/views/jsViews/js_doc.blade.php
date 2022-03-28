@@ -687,11 +687,23 @@
         $('#mdlDetallesOrdes').modal('show');
         $.getJSON("../datos_detalles/" + id_orden, function(json) {
 
-            /******************  @JR AND @TUBOS_KRAFT  **********************/
+            /********************  @PRODUCTO  ******************************/
+            var producto = Object.keys(json['producto']).map(key => {
+                return json['producto'][key];
+            });
+            var id_producto = producto[0];
 
-            var producto_01 = Object.keys(json['ITEM1']).map(key => {
-                return json['ITEM1'][key];
-            })
+            /******************  @JR AND @TUBOS_KRAFT  **********************/
+            if (id_producto == 2) { // Papel generico
+                var producto_01 = Object.keys(json['ITEM14']).map(key => {
+                    return json['ITEM14'][key];
+                })
+            } else {
+                var producto_01 = Object.keys(json['ITEM1']).map(key => {
+                    return json['ITEM1'][key];
+                })
+            }
+
 
             var producto_02 = Object.keys(json['ITEM2']).map(key => {
                 return json['ITEM2'][key];
@@ -723,20 +735,10 @@
             var arrayRequisas = [];
             var totalRequisado1 = 0;
             var totalRequisado2 = 0;
-            var indexMax, indexOut1;
-            var P1_R_lenght = REQUISADOS_P1.length;
-            var P2_R_lenght = REQUISADOS_P2.length;
 
-            if (P1_R_lenght > P2_R_lenght) {
-                indexMax = P1_R_lenght;
-                indexOut1 = indexMax - P2_R_lenght;
-                addElement(indexOut1, REQUISADOS_P2);
-
-            } else if (P2_R_lenght > P1_R_lenght) {
-                indexMax = P2_R_lenght;
-                indexOut1 = indexMax - P2_R_lenght;
-                addElement(indexOut1, REQUISADOS_P1);
-            }
+            //Añadir elementos si algun Q es mayor
+            maxElement(REQUISADOS_P1.length, REQUISADOS_P2.length, REQUISADOS_P2);
+            maxElement(REQUISADOS_P2.length, REQUISADOS_P1.length, REQUISADOS_P1);
 
             arrayRequisas[0] = {
                 row_1: REQUISADOS_P1,
@@ -751,13 +753,16 @@
             });
 
             var consumoP1 = parseFloat(LP_INICIAL_row_1_p1) + parseFloat(totalRequisado1) - parseFloat(MERMA_row_1_p1) - parseFloat(LP_FINAL_row_1_p1);
-            var consumoP2 = parseFloat(LP_INICIAL_row_2_p2) + parseFloat(totalRequisado2) - parseFloat(LP_FINAL_row_2_p2);
+            var consumoP2 = 0;
+
+            id_producto == 2 ? consumoP2 = parseFloat(LP_INICIAL_row_2_p2) + parseFloat(totalRequisado2) - parseFloat(MERMA_row_2_p2) - parseFloat(LP_FINAL_row_2_p2) : consumoP2 = parseFloat(LP_INICIAL_row_2_p2) + parseFloat(totalRequisado2) - parseFloat(LP_FINAL_row_2_p2);
 
             var merma_porcentual_P1 = parseFloat(MERMA_row_1_p1) / (consumoP1 + parseFloat(MERMA_row_1_p1)) * 100;
             var merma_porcentual_P2 = parseFloat(MERMA_row_2_p2) / (consumoP2 + parseFloat(MERMA_row_2_p2)) * 100;
 
             var peso = $('#id_peso_porcent').text();
-            var merma_kg = parseFloat(MERMA_row_2_p2) * 0.20;
+            var merma_kg = 0;
+            id_producto == 2 ? merma_kg = parseFloat(MERMA_row_2_p2) / 0.20 : merma_kg = parseFloat(MERMA_row_2_p2) * 0.20;
 
             LP_INICIAL_row_1_p1 = numeral(LP_INICIAL_row_1_p1).format('0,0.00');
             LP_INICIAL_row_2_p2 = numeral(LP_INICIAL_row_2_p2).format('0,0.00');
@@ -843,33 +848,15 @@
 
             var arrayRequisas2 = [];
 
-            var indexMax, indexOut1, indexOut2;
-            var P3_R_lenght = REQUISADOS_P3.length;
-            var P4_R_lenght = REQUISADOS_P4.length;
-            var P5_R_lenght = REQUISADOS_P5.length;
-
-            if (P3_R_lenght > P4_R_lenght && P3_R_lenght > P5_R_lenght) {
-                indexMax = P3_R_lenght; //4
-                indexOut1 = indexMax - P4_R_lenght; //1
-                indexOut2 = indexMax - P5_R_lenght; //1
-                addElement(indexOut1, REQUISADOS_P4);
-                addElement(indexOut2, REQUISADOS_P5);
-                /*for (var i = 1; i <= indexOut1; i++) {REQUISADOS_P4.push('0.00');}
-                for (var i = 1; i <= indexOut2; i++) {REQUISADOS_P5.push('0.00');}*/
-            } else if (P4_R_lenght > P3_R_lenght && P4_R_lenght > P5_R_lenght) {
-                indexMax = P4_R_lenght; //4
-                indexOut1 = indexMax - P3_R_lenght;
-                indexOut2 = indexMax - P5_R_lenght;
-                addElement(indexOut1, REQUISADOS_P3);
-                addElement(indexOut2, REQUISADOS_P5);
-
-            } else if (P5_R_lenght > P3_R_lenght && P5_R_lenght > P4_R_lenght) {
-                indexMax = P5_R_lenght; //4
-                indexOut1 = indexMax - P3_R_lenght;
-                indexOut2 = indexMax - P4_R_lenght;
-                addElement(indexOut1, REQUISADOS_P3);
-                addElement(indexOut2, REQUISADOS_P4);
-            } else {}
+            //Añadir elementos si P3 es mayor
+            maxElement(REQUISADOS_P3.length, REQUISADOS_P4.length, REQUISADOS_P4);
+            maxElement(REQUISADOS_P3.length, REQUISADOS_P5.length, REQUISADOS_P5);
+            //Añadir elementos si P4 es mayor
+            maxElement(REQUISADOS_P4.length, REQUISADOS_P3.length, REQUISADOS_P5);
+            maxElement(REQUISADOS_P4.length, REQUISADOS_P5.length, REQUISADOS_P5);
+            //Añadir elementos si P5 es mayor
+            maxElement(REQUISADOS_P5.length, REQUISADOS_P3.length, REQUISADOS_P3);
+            maxElement(REQUISADOS_P5.length, REQUISADOS_P4.length, REQUISADOS_P4);
 
             arrayRequisas2[0] = {
                 row_1: REQUISADOS_P3,
@@ -891,27 +878,37 @@
                 }
             });
 
+            var total_bultos = $("#id_total_bultos_und").text().replace(/[',]+/g, '');
             var consumoP3 = parseFloat(LP_INICIAL_row_1_p3) + totalRequisadoP3 - parseFloat(MERMA_row_1_p3) - parseFloat(LP_FINAL_row_1_p3);
             var consumoP4 = parseFloat(LP_INICIAL_row_2_p4) + totalRequisadoP4 - parseFloat(MERMA_row_2_p4) - parseFloat(LP_FINAL_row_2_p4);
             var consumoP5 = parseFloat(LP_INICIAL_row_3_p5) + totalRequisadoP5 - parseFloat(MERMA_row_3_p5) - parseFloat(LP_FINAL_row_3_p5);
 
-            consumoP3 = numeral(consumoP3).format('0,0.00');
-            consumoP4 = numeral(consumoP4).format('0,0.00');
-            consumoP5 = numeral(consumoP5).format('0,0.00');
-
             var merma_porcentual_P3 = parseFloat(MERMA_row_1_p3) / (consumoP3 + parseFloat(MERMA_row_1_p3)) * 100;
             var merma_porcentual_P4 = parseFloat(MERMA_row_2_p4) / (consumoP4 + parseFloat(MERMA_row_2_p4)) * 100;
             var merma_porcentual_P5 = parseFloat(MERMA_row_3_p5) / (consumoP5 + parseFloat(MERMA_row_3_p5)) * 100;
-
-            merma_porcentual_P3 = numeral(merma_porcentual_P3).format('0,0.00');
-            merma_porcentual_P4 = numeral(merma_porcentual_P4).format('0,0.00');
-            merma_porcentual_P5 = numeral(merma_porcentual_P5).format('0,0.00');
 
             var consumoTotal_SE = consumoP3 + consumoP4 + consumoP5;
             var merma_porcentual_total = merma_porcentual_P3 + merma_porcentual_P4 + merma_porcentual_P5;
             var merma_total = parseFloat(MERMA_row_1_p3) + parseFloat(MERMA_row_2_p4) + parseFloat(MERMA_row_3_p5);
             var lp_final_total = parseFloat(LP_FINAL_row_1_p3) + parseFloat(LP_FINAL_row_2_p4) + parseFloat(LP_FINAL_row_3_p5);
             var lp_inicial_total = parseFloat(LP_INICIAL_row_1_p3) + parseFloat(LP_INICIAL_row_2_p4) + parseFloat(LP_INICIAL_row_3_p5);
+
+            var faltante_P3 = consumoP3 - parseFloat(total_bultos);
+            var faltante_P4 = consumoP4 - parseFloat(total_bultos);
+
+            var sobrante_P3 = parseFloat(total_bultos) - consumoP3;
+            var sobrante_P4 = parseFloat(total_bultos) - consumoP4;
+
+            var faltante_total = faltante_P3 + faltante_P4;
+            var sobrante_total = sobrante_P3 + sobrante_P4;
+
+            consumoP3 = numeral(consumoP3).format('0,0.00');
+            consumoP4 = numeral(consumoP4).format('0,0.00');
+            consumoP5 = numeral(consumoP5).format('0,0.00');
+
+            merma_porcentual_P3 = numeral(merma_porcentual_P3).format('0,0.00');
+            merma_porcentual_P4 = numeral(merma_porcentual_P4).format('0,0.00');
+            merma_porcentual_P5 = numeral(merma_porcentual_P5).format('0,0.00');
 
             consumoTotal_SE = numeral(consumoTotal_SE).format('0,0.00');
             merma_porcentual_total = numeral(merma_porcentual_total).format('0,0.00')
@@ -923,13 +920,21 @@
             LP_INICIAL_row_2_p4 = numeral(LP_INICIAL_row_2_p4).format('0,0.00');
             LP_INICIAL_row_3_p5 = numeral(LP_INICIAL_row_3_p5).format('0,0.00');
 
-            LP_FINAL_row_1_p3 = numeral(LP_INICIAL_row_1_p3).format('0,0.00');
+            LP_FINAL_row_1_p3 = numeral(LP_FINAL_row_1_p3).format('0,0.00');
             LP_FINAL_row_2_p4 = numeral(LP_FINAL_row_2_p4).format('0,0.00');
             LP_FINAL_row_3_p5 = numeral(LP_FINAL_row_3_p5).format('0,0.00');
 
             MERMA_row_1_p3 = numeral(MERMA_row_1_p3).format('0,0.00');
             MERMA_row_2_p4 = numeral(MERMA_row_2_p4).format('0,0.00');
             MERMA_row_3_p5 = numeral(MERMA_row_3_p5).format('0,0.00');
+
+            faltante_P3 = numeral(faltante_P3).format('0,0.00');
+            faltante_P4 = numeral(faltante_P4).format('0,0.00');
+            sobrante_P3 = numeral(sobrante_P3).format('0,0.00');
+            sobrante_P4 = numeral(sobrante_P4).format('0,0.00');
+
+            faltante_total = numeral(faltante_total).format('0,0.00');
+            sobrante_total = numeral(sobrante_total).format('0,0.00');
 
             data = [
                 ["ACTIVIDAD", "COG. 114", "COG. 67 ", "COG.92", "TOTAL BOLSAS"],
@@ -939,6 +944,10 @@
                 ["MERMA (UND)", MERMA_row_1_p3, MERMA_row_2_p4, MERMA_row_3_p5, merma_total],
                 ["MERMA (%)", merma_porcentual_P3, merma_porcentual_P4, merma_porcentual_P5, merma_porcentual_total],
                 ["CONSUMO ", consumoP3, consumoP4, consumoP5, consumoTotal_SE],
+                ["FALTANTE ", faltante_P3, faltante_P4, '-', faltante_total],
+                ["SOBRANTE ", sobrante_P3, sobrante_P4, '-', sobrante_total],
+
+
             ]
 
             // $("#id_tbl_temp").empty();
@@ -946,239 +955,400 @@
             //$("#id_tbl_temp > table > tr > th").addClass("bg-primary text-white");
 
             /*************************************  @EMPAQUE_PRIMARIO  **********************/
+            if (id_producto == 1 || id_producto == 7) {
+                var producto_06 = Object.keys(json['ITEM4']).map(key => {
+                    return json['ITEM4'][key];
+                })
 
-            var producto_06 = Object.keys(json['ITEM4']).map(key => {
-                return json['ITEM4'][key];
-            })
+                var producto_07 = Object.keys(json['ITEM11']).map(key => {
+                    return json['ITEM11'][key];
+                })
 
-            var producto_07 = Object.keys(json['ITEM11']).map(key => {
-                return json['ITEM11'][key];
-            })
+                var producto_08 = Object.keys(json['ITEM10']).map(key => {
+                    return json['ITEM10'][key];
+                })
 
-            var producto_08 = Object.keys(json['ITEM10']).map(key => {
-                return json['ITEM10'][key];
-            })
+                var producto_09 = Object.keys(json['ITEM5']).map(key => {
+                    return json['ITEM5'][key];
+                })
 
-            var producto_09 = Object.keys(json['ITEM5']).map(key => {
-                return json['ITEM5'][key];
-            })
+                var producto_10 = Object.keys(json['ITEM6']).map(key => { // PAPEL VUENO COD.141
+                    return json['ITEM6'][key];
+                })
 
-            index_p601 = producto_06.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
-            index_p602 = producto_06.findIndex(x => x.ACTIVIDAD === "REQUISADO");
-            index_p603 = producto_06.findIndex(x => x.ACTIVIDAD === "MERMA");
-            index_p604 = producto_06.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+                index_p601 = producto_06.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+                index_p602 = producto_06.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+                index_p603 = producto_06.findIndex(x => x.ACTIVIDAD === "MERMA");
+                index_p604 = producto_06.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
-            index_p701 = producto_07.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
-            index_p702 = producto_07.findIndex(x => x.ACTIVIDAD === "REQUISADO");
-            index_p703 = producto_07.findIndex(x => x.ACTIVIDAD === "MERMA");
-            index_p704 = producto_07.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+                index_p701 = producto_07.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+                index_p702 = producto_07.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+                index_p703 = producto_07.findIndex(x => x.ACTIVIDAD === "MERMA");
+                index_p704 = producto_07.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
-            index_p801 = producto_08.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
-            index_p802 = producto_08.findIndex(x => x.ACTIVIDAD === "REQUISADO");
-            index_p803 = producto_08.findIndex(x => x.ACTIVIDAD === "MERMA");
-            index_p804 = producto_08.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+                index_p801 = producto_08.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+                index_p802 = producto_08.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+                index_p803 = producto_08.findIndex(x => x.ACTIVIDAD === "MERMA");
+                index_p804 = producto_08.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
-            index_p901 = producto_09.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
-            index_p902 = producto_09.findIndex(x => x.ACTIVIDAD === "REQUISADO");
-            index_p903 = producto_09.findIndex(x => x.ACTIVIDAD === "MERMA");
-            index_p904 = producto_09.findIndex(x => x.ACTIVIDAD === "LP FINAL");
+                index_p901 = producto_09.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+                index_p902 = producto_09.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+                index_p903 = producto_09.findIndex(x => x.ACTIVIDAD === "MERMA");
+                index_p904 = producto_09.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
-            var LP_INICIAL_row_1_p6 = producto_06[index_p601]['VALORES'];
-            var REQUISADO_row_1_p6 = producto_06[index_p602]['VALORES'];
-            var MERMA_row_1_p6 = producto_06[index_p603]['VALORES'];
-            var LP_FINAL_row_1_p6 = producto_06[index_p604]['VALORES'];
+                index_p10_01 = producto_10.findIndex(x => x.ACTIVIDAD === "LP INICIAL");
+                index_p10_02 = producto_10.findIndex(x => x.ACTIVIDAD === "REQUISADO");
+                index_p10_03 = producto_10.findIndex(x => x.ACTIVIDAD === "MERMA");
+                index_p10_04 = producto_10.findIndex(x => x.ACTIVIDAD === "LP FINAL");
 
-            var LP_INICIAL_row_2_p7 = producto_07[index_p701]['VALORES'];
-            var REQUISADO_row_2_p7 = producto_07[index_p702]['VALORES'];
-            var MERMA_row_2_p7 = producto_07[index_p703]['VALORES'];
-            var LP_FINAL_row_2_p7 = producto_07[index_p704]['VALORES'];
+                var LP_INICIAL_row_1_p6 = producto_06[index_p601]['VALORES'];
+                var REQUISADO_row_1_p6 = producto_06[index_p602]['VALORES'];
+                var MERMA_row_1_p6 = producto_06[index_p603]['VALORES'];
+                var LP_FINAL_row_1_p6 = producto_06[index_p604]['VALORES'];
 
-            var LP_INICIAL_row_3_p8 = producto_08[index_p801]['VALORES'];
-            var REQUISADO_row_3_p8 = producto_08[index_p802]['VALORES'];
-            var MERMA_row_3_p8 = producto_08[index_p803]['VALORES'];
-            var LP_FINAL_row_3_p8 = producto_08[index_p804]['VALORES'];
+                var LP_INICIAL_row_2_p7 = producto_07[index_p701]['VALORES'];
+                var REQUISADO_row_2_p7 = producto_07[index_p702]['VALORES'];
+                var MERMA_row_2_p7 = producto_07[index_p703]['VALORES'];
+                var LP_FINAL_row_2_p7 = producto_07[index_p704]['VALORES'];
 
-            var LP_INICIAL_row_4_p9 = producto_09[index_p901]['VALORES'];
-            var REQUISADO_row_4_p9 = producto_09[index_p902]['VALORES'];
-            var MERMA_row_4_p9 = producto_09[index_p903]['VALORES'];
-            var LP_FINAL_row_4_p9 = producto_09[index_p904]['VALORES'];
+                var LP_INICIAL_row_3_p8 = producto_08[index_p801]['VALORES'];
+                var REQUISADO_row_3_p8 = producto_08[index_p802]['VALORES'];
+                var MERMA_row_3_p8 = producto_08[index_p803]['VALORES'];
+                var LP_FINAL_row_3_p8 = producto_08[index_p804]['VALORES'];
 
-            var REQUISADOS_P6 = REQUISADO_row_1_p6.split(",");
-            var REQUISADOS_P7 = REQUISADO_row_2_p7.split(",");
-            var REQUISADOS_P8 = REQUISADO_row_3_p8.split(",");
-            var REQUISADOS_P9 = REQUISADO_row_4_p9.split(",");
+                var LP_INICIAL_row_4_p9 = producto_09[index_p901]['VALORES'];
+                var REQUISADO_row_4_p9 = producto_09[index_p902]['VALORES'];
+                var MERMA_row_4_p9 = producto_09[index_p903]['VALORES'];
+                var LP_FINAL_row_4_p9 = producto_09[index_p904]['VALORES'];
 
-            var arrayRequisas3 = [];
+                var LP_INICIAL_row_5_p10 = producto_10[index_p10_01]['VALORES'];
+                var REQUISADO_row_5_p10 = producto_10[index_p10_02]['VALORES'];
+                var MERMA_row_5_p10 = producto_10[index_p10_03]['VALORES'];
+                var LP_FINAL_row_5_p10 = producto_10[index_p10_04]['VALORES'];
 
-            var indexMax, indexOut1, indexOut2, indexOut3;
-            var P6_R_lenght = REQUISADOS_P6.length;
-            var P7_R_lenght = REQUISADOS_P7.length;
-            var P8_R_lenght = REQUISADOS_P8.length;
-            var P9_R_lenght = REQUISADOS_P9.length;
+                var REQUISADOS_P6 = REQUISADO_row_1_p6.split(",");
+                var REQUISADOS_P7 = REQUISADO_row_2_p7.split(",");
+                var REQUISADOS_P8 = REQUISADO_row_3_p8.split(",");
+                var REQUISADOS_P9 = REQUISADO_row_4_p9.split(",");
+                var REQUISADOS_P10 = REQUISADO_row_5_p10.split(",");
 
-            if (P6_R_lenght > P7_R_lenght && P6_R_lenght > P8_R_lenght && P6_R_lenght > P9_R_lenght) {
-                indexMax = P6_R_lenght;
-                indexOut1 = indexMax - P7_R_lenght;
-                indexOut2 = indexMax - P8_R_lenght;
-                indexOut3 = indexMax - P9_R_lenght;
+                var arrayRequisas3 = [];
 
-                addElement(indexOut1, REQUISADOS_P7);
-                addElement(indexOut2, REQUISADOS_P8);
-                addElement(indexOut3, REQUISADOS_P9);
+                //Añadir elementos si P6 es mayor
+                maxElement(REQUISADOS_P6.length, REQUISADOS_P7.length, REQUISADOS_P7);
+                maxElement(REQUISADOS_P6.length, REQUISADOS_P8.length, REQUISADOS_P8);
+                maxElement(REQUISADOS_P6.length, REQUISADOS_P9.length, REQUISADOS_P9);
+                maxElement(REQUISADOS_P6.length, REQUISADOS_P10.length, REQUISADOS_P10);
+                //Añadir elementos si P7 es mayor
+                maxElement(REQUISADOS_P7.length, REQUISADOS_P6.length, REQUISADOS_P6);
+                maxElement(REQUISADOS_P7.length, REQUISADOS_P8.length, REQUISADOS_P8);
+                maxElement(REQUISADOS_P7.length, REQUISADOS_P9.length, REQUISADOS_P9);
+                maxElement(REQUISADOS_P7.length, REQUISADOS_P10.length, REQUISADOS_P10);
+                //Añadir elementos si P8 es mayor
+                maxElement(REQUISADOS_P8.length, REQUISADOS_P6.length, REQUISADOS_P6);
+                maxElement(REQUISADOS_P8.length, REQUISADOS_P7.length, REQUISADOS_P7);
+                maxElement(REQUISADOS_P8.length, REQUISADOS_P9.length, REQUISADOS_P9);
+                maxElement(REQUISADOS_P8.length, REQUISADOS_P10.length, REQUISADOS_P10);
 
-            } else if (P7_R_lenght > P6_R_lenght && P7_R_lenght > P8_R_lenght && P7_R_lenght > P9_R_lenght) {
+                //Añadir elementos si P9 es mayor
+                maxElement(REQUISADOS_P9.length, REQUISADOS_P6.length, REQUISADOS_P6);
+                maxElement(REQUISADOS_P9.length, REQUISADOS_P7.length, REQUISADOS_P7);
+                maxElement(REQUISADOS_P9.length, REQUISADOS_P8.length, REQUISADOS_P8);
+                maxElement(REQUISADOS_P9.length, REQUISADOS_P10.length, REQUISADOS_P10);
 
-                indexMax = P7_R_lenght;
-                indexOut1 = indexMax - P6_R_lenght;
-                indexOut2 = indexMax - P8_R_lenght;
-                indexOut3 = indexMax - P9_R_lenght;
+                //Añadir elementos si P10 es mayor
+                maxElement(REQUISADOS_P10.length, REQUISADOS_P6.length, REQUISADOS_P6);
+                maxElement(REQUISADOS_P10.length, REQUISADOS_P7.length, REQUISADOS_P7);
+                maxElement(REQUISADOS_P10.length, REQUISADOS_P8.length, REQUISADOS_P8);
+                maxElement(REQUISADOS_P10.length, REQUISADOS_P9.length, REQUISADOS_P9);
 
-                addElement(indexOut1, REQUISADOS_P6);
-                addElement(indexOut2, REQUISADOS_P8);
-                addElement(indexOut3, REQUISADOS_P9);
+                arrayRequisas3[0] = {
+                    row_1: REQUISADOS_P6,
+                    row_2: REQUISADOS_P7,
+                    row_3: REQUISADOS_P8,
+                    row_4: REQUISADOS_P9,
+                    row_5: REQUISADOS_P10
 
-            } else if (P8_R_lenght > P6_R_lenght && P8_R_lenght > P7_R_lenght && P8_R_lenght > P9_R_lenght) {
-                indexMax = P8_R_lenght;
-                indexOut1 = indexMax - P6_R_lenght;
-                indexOut2 = indexMax - P7_R_lenght;
-                indexOut3 = indexMax - P9_R_lenght;
-
-                addElement(indexOut1, REQUISADOS_P6);
-                addElement(indexOut2, REQUISADOS_P7);
-                addElement(indexOut3, REQUISADOS_P9);
-
-            } else if (P9_R_lenght > P6_R_lenght && P9_R_lenght > P7_R_lenght && P9_R_lenght > P8_R_lenght) {
-
-                indexMax = P9_R_lenght;
-                indexOut1 = indexMax - P6_R_lenght;
-                indexOut2 = indexMax - P7_R_lenght;
-                indexOut3 = indexMax - P8_R_lenght;
-
-                addElement(indexOut1, REQUISADOS_P6);
-                addElement(indexOut2, REQUISADOS_P7);
-                addElement(indexOut3, REQUISADOS_P8);
-            }
-
-            arrayRequisas3[0] = {
-                row_1: REQUISADOS_P6,
-                row_2: REQUISADOS_P7,
-                row_3: REQUISADOS_P8,
-                row_4: REQUISADOS_P9
-
-            }
-            console.log('/********************** @EMPAQUE PRIMARIO ****************************/')
-            //console.log(arrayRequisas3);
-            var totalRequisadoP6 = 0,
-                totalRequisadoP7 = 0,
-                totalRequisadoP8 = 0,
-                totalRequisadoP9 = 0;
-
-            arrayRequisas3.forEach(element => {
-                for (var j = 0; j < element.row_1.length; j++) {
-                    totalRequisadoP6 += parseFloat(element.row_1[j]);
-                    totalRequisadoP7 += parseFloat(element.row_2[j]);
-                    totalRequisadoP8 += parseFloat(element.row_3[j]);
-                    totalRequisadoP9 += parseFloat(element.row_4[j]);
                 }
-            });
 
-            var Num_bolsonesP6 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text();
-            // console.log(Num_bolsonesP6);
+                //console.log(arrayRequisas3);
+                var totalRequisadoP6 = 0,
+                    totalRequisadoP7 = 0,
+                    totalRequisadoP8 = 0,
+                    totalRequisadoP9 = 0;
+                totalRequisadoP10 = 0;
 
-            var consumoP6 = parseFloat(LP_INICIAL_row_1_p6) + totalRequisadoP6 - parseFloat(LP_FINAL_row_1_p6);
-            var consumoP7 = parseFloat(LP_INICIAL_row_2_p7) + totalRequisadoP7 - parseFloat(LP_FINAL_row_2_p7);
-            var consumoP8 = parseFloat(LP_INICIAL_row_3_p8) + totalRequisadoP8 - parseFloat(LP_FINAL_row_3_p8);
-            var consumoP9 = parseFloat(LP_INICIAL_row_4_p9) + totalRequisadoP9 - parseFloat(LP_FINAL_row_4_p9);
+                arrayRequisas3.forEach(element => {
+                    for (var j = 0; j < element.row_1.length; j++) {
+                        totalRequisadoP6 += parseFloat(element.row_1[j]);
+                        totalRequisadoP7 += parseFloat(element.row_2[j]);
+                        totalRequisadoP8 += parseFloat(element.row_3[j]);
+                        totalRequisadoP9 += parseFloat(element.row_4[j]);
+                        totalRequisadoP10 += parseFloat(element.row_5[j]);
 
-            var merma_porcentual_P6 = parseFloat(MERMA_row_1_p6) / (consumoP6 + parseFloat(MERMA_row_1_p6)) * 100;
-            var merma_porcentual_P7 = parseFloat(MERMA_row_2_p7) / (consumoP7 + parseFloat(MERMA_row_2_p7)) * 100;
-            var merma_porcentual_P8 = parseFloat(MERMA_row_3_p8) / (consumoP8 + parseFloat(MERMA_row_3_p8)) * 100;
-            var merma_porcentual_P9 = parseFloat(MERMA_row_4_p9) / (consumoP9 + parseFloat(MERMA_row_4_p9)) * 100;
-            // cantidad = cantidad.replace(/[',]+/g, '');
+                    }
+                });
 
-            var rollos_esperados_P6 = consumoP6 / 0.0035;
-            var bolsones_producir_P6 = parseFloat(rollos_esperados_P6 / 24);
-            var No_bolsones_P6 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text().replace(/[',]+/g, '');
-            var diferencial_P6 = (parseFloat(bolsones_producir_P6) - parseFloat(No_bolsones_P6));
+                var Num_bolsonesP6 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text();
+                // console.log(Num_bolsonesP6);
 
-            var No_bolsones_P7 = $('#tblProductos > tbody > tr:nth-child(3) > td:nth-child(3)').text().replace(/[',]+/g, '');
-            var rollos_esperados_P7 = consumoP7 / 0.003;
-            var bolsones_producir_P7 = rollos_esperados_P7 / 24;
-            var diferencial_P7 = (parseFloat(bolsones_producir_P7) - parseFloat(No_bolsones_P7));
+                var consumoP6 = parseFloat(LP_INICIAL_row_1_p6) + totalRequisadoP6 - parseFloat(LP_FINAL_row_1_p6);
+                var consumoP7 = parseFloat(LP_INICIAL_row_2_p7) + totalRequisadoP7 - parseFloat(LP_FINAL_row_2_p7);
+                var consumoP8 = parseFloat(LP_INICIAL_row_3_p8) + totalRequisadoP8 - parseFloat(MERMA_row_3_p8) - parseFloat(LP_FINAL_row_3_p8);
+                var consumoP9 = parseFloat(LP_INICIAL_row_4_p9) + totalRequisadoP9 - parseFloat(MERMA_row_4_p9) - parseFloat(LP_FINAL_row_4_p9);
+                var consumoP10 = parseFloat(LP_INICIAL_row_5_p10) + totalRequisadoP10 - parseFloat(MERMA_row_5_p10) - parseFloat(LP_FINAL_row_5_p10);
 
-            var No_bolsones_P8 = $('#tblProductos > tbody > tr:nth-child(1) > td:nth-child(3)').text().replace(/[',]+/g, '');;
-            var rollos_esperados_P8 = consumoP8 / 70;
-            var bolsones_producir_P8 = rollos_esperados_P8 / 24;
-            var diferencial_P8 = (parseFloat(bolsones_producir_P8) - parseFloat(No_bolsones_P8));
+                var merma_porcentual_P6 = parseFloat(MERMA_row_1_p6) / (consumoP6 + parseFloat(MERMA_row_1_p6)) * 100;
+                var merma_porcentual_P7 = parseFloat(MERMA_row_2_p7) / (consumoP7 + parseFloat(MERMA_row_2_p7)) * 100;
+                var merma_porcentual_P8 = parseFloat(MERMA_row_3_p8) / (consumoP8 + parseFloat(MERMA_row_3_p8)) * 100;
+                var merma_porcentual_P9 = parseFloat(MERMA_row_4_p9) / (consumoP9 + parseFloat(MERMA_row_4_p9)) * 100;
+                var merma_porcentual_P10 = parseFloat(MERMA_row_5_p10) / (consumoP10 + parseFloat(MERMA_row_5_p10)) * 100;
 
-            var No_bolsones_P9 = $('#tblProductos > tbody > tr:nth-child(8) > td:nth-child(3)').text().replace(/[',]+/g, '');
-            var rollos_esperados_P9 = No_bolsones_P9 / 4;
-            var bolsones_producir_P9 = No_bolsones_P9 * 4;
-            var diferencial_P9 = (consumoP9 - parseFloat(bolsones_producir_P9));
+                /********************************************************************************************************** */
+                if (id_producto == 1) { //PAPEL HIGIENICO ECOPLUS
+                    //PAPIEL EXOPLIUS COG.27
+                    var rollos_esperados_P6 = consumoP6 / 0.0035;
+                    var bolsones_producir_P6 = parseFloat(rollos_esperados_P6 / 24);
+                    var No_bolsones_P6 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var diferencial_P6 = (parseFloat(bolsones_producir_P6) - parseFloat(No_bolsones_P6));
+                    //CHOLIN COD.52 PRODUCTO 7
+                    var No_bolsones_P7 = $('#tblProductos > tbody > tr:nth-child(3) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var rollos_esperados_P7 = consumoP7 / 0.003;
+                    var bolsones_producir_P7 = rollos_esperados_P7 / 24;
+                    var diferencial_P7 = (parseFloat(bolsones_producir_P7) - parseFloat(No_bolsones_P7));
+                    //FOURPACK COD.100 
+                    var No_bolsones_P8 = $('#tblProductos > tbody > tr:nth-child(1) > td:nth-child(3)').text().replace(/[',]+/g, '');;
+                    var rollos_esperados_P8 = consumoP8 / 70;
+                    var bolsones_producir_P8 = rollos_esperados_P8 / 24;
+                    var diferencial_P8 = (parseFloat(bolsones_producir_P8) - parseFloat(No_bolsones_P8));
+                    //CHOLIN 6 PACK COG.103
+                    var No_bolsones_P9 = $('#tblProductos > tbody > tr:nth-child(8) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var rollos_esperados_P9 = No_bolsones_P9 / 4;
+                    var bolsones_producir_P9 = No_bolsones_P9 * 4;
+                    var diferencial_P9 = (consumoP9 - parseFloat(bolsones_producir_P9));
+                    //PAPEL VUENO COD.141
+                    var No_bolsones_P10 = $('#tblProductos > tbody > tr:nth-child(9) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var rollos_esperados_P10 = No_bolsones_P10 / 4;
+                    var bolsones_producir_P10 = No_bolsones_P10 * 4;
+                    var diferencial_P10 = (consumoP10 - parseFloat(bolsones_producir_P10));
 
+                    var EP_bolson_P8 = 6;
+                    var EP_utilizado_P8 = EP_bolson_P8 * 24;
 
-            consumoP6 = numeral(consumoP6).format('0,0.00');
-            consumoP7 = numeral(consumoP7).format('0,0.00');
-            consumoP8 = numeral(consumoP8).format('0,0.00');
-            consumoP9 = numeral(consumoP9).format('0,0.00');
-
-            merma_porcentual_P6 = numeral(merma_porcentual_P6).format('0,0.00');
-            merma_porcentual_P7 = numeral(merma_porcentual_P7).format('0,0.00');
-            merma_porcentual_P8 = numeral(merma_porcentual_P8).format('0,0.00');
-            merma_porcentual_P9 = numeral(merma_porcentual_P9).format('0,0.00');
-
-            LP_INICIAL_row_1_p6 = numeral(LP_INICIAL_row_1_p6).format('0,0.00');
-            LP_INICIAL_row_2_p7 = numeral(LP_INICIAL_row_2_p7).format('0,0.00');
-            LP_INICIAL_row_3_p8 = numeral(LP_INICIAL_row_3_p8).format('0,0.00');
-            LP_INICIAL_row_4_p9 = numeral(LP_INICIAL_row_4_p9).format('0,0.00');
-
-            LP_FINAL_row_1_p6 = numeral(LP_FINAL_row_1_p6).format('0,0.00');
-            LP_FINAL_row_2_p7 = numeral(LP_FINAL_row_2_p7).format('0,0.00');
-            LP_FINAL_row_3_p8 = numeral(LP_FINAL_row_3_p8).format('0,0.00');
-            LP_FINAL_row_4_p9 = numeral(LP_FINAL_row_4_p9).format('0,0.00');
-
-            MERMA_row_1_p6 = numeral(MERMA_row_1_p6).format('0,0.00');
-            MERMA_row_2_p7 = numeral(MERMA_row_2_p7).format('0,0.00');
-            MERMA_row_3_p8 = numeral(MERMA_row_3_p8).format('0,0.00');
-            MERMA_row_4_p9 = numeral(MERMA_row_4_p9).format('0,0.00');
-
-            rollos_esperados_P6 = numeral(rollos_esperados_P6).format('0,0.00');
-            bolsones_producir_P6 = numeral(bolsones_producir_P6).format('0,0.00');
-            No_bolsones_P6 = numeral(No_bolsones_P6).format('0,0.00');
-            diferencial_P6 = numeral(diferencial_P6).format('0,0.00');
-
-            diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
-            bolsones_producir_P7 = numeral(bolsones_producir_P7).format('0,0.00');
-            No_bolsones_P7 = numeral(No_bolsones_P7).format('0,0.00');
-            diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
-
-            rollos_esperados_P8 = numeral(rollos_esperados_P8).format('0,0.00');
-            bolsones_producir_P8 = numeral(bolsones_producir_P8).format('0,0.00');
-            No_bolsones_P8 = numeral(No_bolsones_P8).format('0,0.00');
-            diferencial_P8 = numeral(diferencial_P8).format('0,0.00');
-
-            rollos_esperados_P9 = numeral(rollos_esperados_P9).format('0,0.00');
-            bolsones_producir_P9 = numeral(bolsones_producir_P9).format('0,0.00');
-            No_bolsones_P9 = numeral(No_bolsones_P9).format('0,0.00');
-            diferencial_P9 = numeral(diferencial_P9).format('0,0.00');
-
-            data = [
-                ["ACTIVIDAD", "PAPIEL ECO. COG.27", "CHOLIN COG.52", "FOURPACK COG.100", "CHOLIN 6 PACK COG.103"],
-                ["LP INICIAL ", LP_INICIAL_row_1_p6, LP_INICIAL_row_2_p7, LP_INICIAL_row_3_p8, LP_INICIAL_row_4_p9],
-                [arrayRequisas3],
-                ["LP FINAL ", LP_FINAL_row_1_p6, LP_FINAL_row_2_p7, LP_FINAL_row_3_p8, LP_FINAL_row_4_p9],
-                ["MERMA (UND)", MERMA_row_1_p6, MERMA_row_2_p7, MERMA_row_3_p8, MERMA_row_4_p9],
-                ["MERMA (%)", merma_porcentual_P6, merma_porcentual_P7, merma_porcentual_P8, merma_porcentual_P9],
-                ["CONSUMO ", consumoP6, consumoP7, consumoP8, consumoP9],
-                ["ROLLOS ESPERADOS ", rollos_esperados_P6, rollos_esperados_P7, rollos_esperados_P8, rollos_esperados_P9],
-                ["BOLSONES A PRODUCIR ", bolsones_producir_P6, bolsones_producir_P7, bolsones_producir_P8, bolsones_producir_P9],
-                ["No. BOLSONES", No_bolsones_P6, No_bolsones_P7, No_bolsones_P8, No_bolsones_P9],
-                ["DIFERENCIAL", diferencial_P6, diferencial_P7, diferencial_P8, diferencial_P9],
+                    var EP_bolson_P9 = 4;
+                    var EP_utilizado_P9 = EP_bolson_P9 * 24;
 
 
-            ]
+                    consumoP6 = numeral(consumoP6).format('0,0.00');
+                    consumoP7 = numeral(consumoP7).format('0,0.00');
+                    consumoP8 = numeral(consumoP8).format('0,0.00');
+                    consumoP9 = numeral(consumoP9).format('0,0.00');
+                    consumoP10 = numeral(consumoP10).format('0,0.00');
 
-            cityTable = makeTable($("#id_tbl_temp"), data, 3);
+                    merma_porcentual_P6 = numeral(merma_porcentual_P6).format('0,0.00');
+                    merma_porcentual_P7 = numeral(merma_porcentual_P7).format('0,0.00');
+                    merma_porcentual_P8 = numeral(merma_porcentual_P8).format('0,0.00');
+                    merma_porcentual_P9 = numeral(merma_porcentual_P9).format('0,0.00');
+                    merma_porcentual_P10 = numeral(merma_porcentual_P10).format('0,0.00');
+
+                    LP_INICIAL_row_1_p6 = numeral(LP_INICIAL_row_1_p6).format('0,0.00');
+                    LP_INICIAL_row_2_p7 = numeral(LP_INICIAL_row_2_p7).format('0,0.00');
+                    LP_INICIAL_row_3_p8 = numeral(LP_INICIAL_row_3_p8).format('0,0.00');
+                    LP_INICIAL_row_4_p9 = numeral(LP_INICIAL_row_4_p9).format('0,0.00');
+                    LP_INICIAL_row_5_p10 = numeral(LP_INICIAL_row_5_p10).format('0,0.00');
+
+                    LP_FINAL_row_1_p6 = numeral(LP_FINAL_row_1_p6).format('0,0.00');
+                    LP_FINAL_row_2_p7 = numeral(LP_FINAL_row_2_p7).format('0,0.00');
+                    LP_FINAL_row_3_p8 = numeral(LP_FINAL_row_3_p8).format('0,0.00');
+                    LP_FINAL_row_4_p9 = numeral(LP_FINAL_row_4_p9).format('0,0.00');
+                    LP_FINAL_row_5_p10 = numeral(LP_FINAL_row_5_p10).format('0,0.00');
+
+                    MERMA_row_1_p6 = numeral(MERMA_row_1_p6).format('0,0.00');
+                    MERMA_row_2_p7 = numeral(MERMA_row_2_p7).format('0,0.00');
+                    MERMA_row_3_p8 = numeral(MERMA_row_3_p8).format('0,0.00');
+                    MERMA_row_4_p9 = numeral(MERMA_row_4_p9).format('0,0.00');
+                    MERMA_row_5_p10 = numeral(MERMA_row_5_p10).format('0,0.00');
+
+                    rollos_esperados_P6 = numeral(rollos_esperados_P6).format('0,0.00');
+                    bolsones_producir_P6 = numeral(bolsones_producir_P6).format('0,0.00');
+                    No_bolsones_P6 = numeral(No_bolsones_P6).format('0,0.00');
+                    diferencial_P6 = numeral(diferencial_P6).format('0,0.00');
+
+                    rollos_esperados_P7 = numeral(diferencial_P7).format('0,0.00');
+                    bolsones_producir_P7 = numeral(bolsones_producir_P7).format('0,0.00');
+                    No_bolsones_P7 = numeral(No_bolsones_P7).format('0,0.00');
+                    diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
+
+                    rollos_esperados_P8 = numeral(rollos_esperados_P8).format('0,0.00');
+                    bolsones_producir_P8 = numeral(bolsones_producir_P8).format('0,0.00');
+                    No_bolsones_P8 = numeral(No_bolsones_P8).format('0,0.00');
+                    diferencial_P8 = numeral(diferencial_P8).format('0,0.00');
+
+                    EP_bolson_P8 = numeral(EP_bolson_P8).format('0,0.00');
+                    EP_utilizado_P8 = numeral(EP_utilizado_P8).format('0,0.00');
+
+                    rollos_esperados_P9 = numeral(rollos_esperados_P9).format('0,0.00');
+                    bolsones_producir_P9 = numeral(bolsones_producir_P9).format('0,0.00');
+                    No_bolsones_P9 = numeral(No_bolsones_P9).format('0,0.00');
+                    diferencial_P9 = numeral(diferencial_P9).format('0,0.00');
+
+                    EP_bolson_P9 = numeral(EP_bolson_P9).format('0,0.00');
+                    EP_utilizado_P9 = numeral(EP_utilizado_P9).format('0,0.00');
+
+                    rollos_esperados_P10 = numeral(rollos_esperados_P10).format('0,0.00');
+                    bolsones_producir_P10 = numeral(bolsones_producir_P10).format('0,0.00');
+                    No_bolsones_P10 = numeral(No_bolsones_P10).format('0,0.00');
+                    diferencial_P10 = numeral(diferencial_P10).format('0,0.00');
+
+
+
+                    data = [
+                        ["ACTIVIDAD", "PAPIEL ECO. COG.27", "CHOLIN COG.52", "FOURPACK COG.100", "CHOLIN 6 PACK COG.103", "PAPEL VUENO COG.141"],
+                        ["LP INICIAL ", LP_INICIAL_row_1_p6, LP_INICIAL_row_2_p7, LP_INICIAL_row_3_p8, LP_INICIAL_row_4_p9, LP_INICIAL_row_5_p10],
+                        [arrayRequisas3],
+                        ["LP FINAL ", LP_FINAL_row_1_p6, LP_FINAL_row_2_p7, LP_FINAL_row_3_p8, LP_FINAL_row_4_p9, LP_FINAL_row_5_p10],
+                        ["MERMA (UND)", MERMA_row_1_p6, MERMA_row_2_p7, MERMA_row_3_p8, MERMA_row_4_p9, MERMA_row_5_p10],
+                        ["MERMA (%)", merma_porcentual_P6, merma_porcentual_P7, merma_porcentual_P8, merma_porcentual_P9, merma_porcentual_P10],
+                        ["CONSUMO ", consumoP6, consumoP7, consumoP8, consumoP9, consumoP10],
+                        ["E/P - POR BOLSON", '0.00', '0.00', EP_bolson_P8, EP_bolson_P9, '0.00'],
+                        ["E/P -UTILIZADO", '0.00', '0.00', EP_utilizado_P8, EP_utilizado_P9, '0.00'],
+                        ["ROLLOS ESPERADOS ", rollos_esperados_P6, rollos_esperados_P7, rollos_esperados_P8, rollos_esperados_P9, rollos_esperados_P10],
+                        ["BOLSONES A PRODUCIR ", bolsones_producir_P6, bolsones_producir_P7, bolsones_producir_P8, bolsones_producir_P9, bolsones_producir_P10],
+                        ["No. BOLSONES", No_bolsones_P6, No_bolsones_P7, No_bolsones_P8, No_bolsones_P9, No_bolsones_P10],
+                        ["DIFERENCIAL", diferencial_P6, diferencial_P7, '-', '-', '-'],
+                        ["FALTANTE", '-', '-', '-', '-', '-'],
+                        ["SOBRANTE", '-', '-', '-', '-', '-'],
+
+                    ]
+
+                    cityTable = makeTable($("#id_tbl_temp"), data, 3);
+
+                } else if (id_producto == 7) {
+                    /**********@VUENO */
+                    //PAPEL VUENO COD.141
+                    var No_bolsones_P10 = $('#tblProductos > tbody > tr:nth-child(1) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var rollos_esperados_P10 = No_bolsones_P10 / 4;
+                    var bolsones_producir_P10 = No_bolsones_P10 * 4;
+
+                    var EP_bolson_P10 = 24;
+                    var EP_utilizado_P10 = EP_bolson_P10 * No_bolsones_P10;
+                    var diferencial_P10 = (consumoP10 - parseFloat(bolsones_producir_P10));
+
+
+                    //PAPIEL ECOPLIUS COG.27
+                    var rollos_esperados_P6 = consumoP6 / 0.0035;
+                    var bolsones_producir_P6 = parseFloat(rollos_esperados_P6 / 24);
+                    var No_bolsones_P6 = $('#tblProductos > tbody > tr:nth-child(3) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var diferencial_P6 = (parseFloat(bolsones_producir_P6) - parseFloat(No_bolsones_P6));
+                    //CHOLIN COD.52
+                    var No_bolsones_P7 = $('#tblProductos > tbody > tr:nth-child(4) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var rollos_esperados_P7 = consumoP7 / 0.003;
+                    var bolsones_producir_P7 = rollos_esperados_P7 / 24;
+                    var diferencial_P7 = (parseFloat(bolsones_producir_P7) - parseFloat(No_bolsones_P7));
+                    //FOURPACK COD.100 
+                    var No_bolsones_P8 = $('#tblProductos > tbody > tr:nth-child(2) > td:nth-child(3)').text().replace(/[',]+/g, '');;
+                    var rollos_esperados_P8 = consumoP8 / 70;
+                    var bolsones_producir_P8 = rollos_esperados_P8 / 24;
+                    var EP_bolson_P8 = 6;
+                    var EP_utilizado_P8 = EP_bolson_P8 * No_bolsones_P8;
+                    var diferencial_P8 = consumoP8 - EP_utilizado_P8;
+                    //CHOLIN 6 PACK COG.103
+                    var No_bolsones_P9 = $('#tblProductos > tbody > tr:nth-child(9) > td:nth-child(3)').text().replace(/[',]+/g, '');
+                    var rollos_esperados_P9 = No_bolsones_P9 / 4;
+                    var bolsones_producir_P9 = No_bolsones_P9 * 4;
+                    var EP_bolson_P9 = 4;
+                    var EP_utilizado_P9 = EP_bolson_P9 * No_bolsones_P9;
+                    var diferencial_P9 = consumoP9 - EP_utilizado_P9;
+
+
+                    consumoP6 = numeral(consumoP6).format('0,0.00');
+                    consumoP7 = numeral(consumoP7).format('0,0.00');
+                    consumoP8 = numeral(consumoP8).format('0,0.00');
+                    consumoP9 = numeral(consumoP9).format('0,0.00');
+                    consumoP10 = numeral(consumoP10).format('0,0.00');
+
+                    merma_porcentual_P6 = numeral(merma_porcentual_P6).format('0,0.00');
+                    merma_porcentual_P7 = numeral(merma_porcentual_P7).format('0,0.00');
+                    merma_porcentual_P8 = numeral(merma_porcentual_P8).format('0,0.00');
+                    merma_porcentual_P9 = numeral(merma_porcentual_P9).format('0,0.00');
+                    merma_porcentual_P10 = numeral(merma_porcentual_P10).format('0,0.00');
+
+                    LP_INICIAL_row_1_p6 = numeral(LP_INICIAL_row_1_p6).format('0,0.00');
+                    LP_INICIAL_row_2_p7 = numeral(LP_INICIAL_row_2_p7).format('0,0.00');
+                    LP_INICIAL_row_3_p8 = numeral(LP_INICIAL_row_3_p8).format('0,0.00');
+                    LP_INICIAL_row_4_p9 = numeral(LP_INICIAL_row_4_p9).format('0,0.00');
+                    LP_INICIAL_row_5_p10 = numeral(LP_INICIAL_row_5_p10).format('0,0.00');
+
+                    LP_FINAL_row_1_p6 = numeral(LP_FINAL_row_1_p6).format('0,0.00');
+                    LP_FINAL_row_2_p7 = numeral(LP_FINAL_row_2_p7).format('0,0.00');
+                    LP_FINAL_row_3_p8 = numeral(LP_FINAL_row_3_p8).format('0,0.00');
+                    LP_FINAL_row_4_p9 = numeral(LP_FINAL_row_4_p9).format('0,0.00');
+                    LP_FINAL_row_5_p10 = numeral(LP_FINAL_row_5_p10).format('0,0.00');
+
+                    MERMA_row_1_p6 = numeral(MERMA_row_1_p6).format('0,0.00');
+                    MERMA_row_2_p7 = numeral(MERMA_row_2_p7).format('0,0.00');
+                    MERMA_row_3_p8 = numeral(MERMA_row_3_p8).format('0,0.00');
+                    MERMA_row_4_p9 = numeral(MERMA_row_4_p9).format('0,0.00');
+                    MERMA_row_5_p10 = numeral(MERMA_row_5_p10).format('0,0.00');
+
+                    rollos_esperados_P6 = numeral(rollos_esperados_P6).format('0,0.00');
+                    bolsones_producir_P6 = numeral(bolsones_producir_P6).format('0,0.00');
+                    No_bolsones_P6 = numeral(No_bolsones_P6).format('0,0.00');
+                    diferencial_P6 = numeral(diferencial_P6).format('0,0.00');
+
+                    diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
+                    bolsones_producir_P7 = numeral(bolsones_producir_P7).format('0,0.00');
+                    No_bolsones_P7 = numeral(No_bolsones_P7).format('0,0.00');
+                    diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
+
+                    rollos_esperados_P8 = numeral(rollos_esperados_P8).format('0,0.00');
+                    bolsones_producir_P8 = numeral(bolsones_producir_P8).format('0,0.00');
+                    No_bolsones_P8 = numeral(No_bolsones_P8).format('0,0.00');
+                    diferencial_P8 = numeral(diferencial_P8).format('0,0.00');
+
+                    EP_bolson_P8 = numeral(EP_bolson_P8).format('0,0.00');
+                    EP_utilizado_P8 = numeral(EP_utilizado_P8).format('0,0.00');
+
+                    rollos_esperados_P9 = numeral(rollos_esperados_P9).format('0,0.00');
+                    bolsones_producir_P9 = numeral(bolsones_producir_P9).format('0,0.00');
+                    No_bolsones_P9 = numeral(No_bolsones_P9).format('0,0.00');
+                    diferencial_P9 = numeral(diferencial_P9).format('0,0.00');
+
+                    EP_bolson_P9 = numeral(EP_bolson_P9).format('0,0.00');
+                    EP_utilizado_P9 = numeral(EP_utilizado_P9).format('0,0.00');
+
+                    rollos_esperados_P10 = numeral(rollos_esperados_P10).format('0,0.00');
+                    bolsones_producir_P10 = numeral(bolsones_producir_P10).format('0,0.00');
+                    No_bolsones_P10 = numeral(No_bolsones_P10).format('0,0.00');
+                    diferencial_P10 = numeral(diferencial_P10).format('0,0.00');
+
+                    EP_bolson_P10 = numeral(EP_bolson_P10).format('0,0.00');
+                    EP_utilizado_P10 = numeral(EP_utilizado_P10).format('0,0.00');
+
+                    data = [
+                        ["ACTIVIDAD", "PAPIEL ECO. COG.27", "CHOLIN COG.52", "FOURPACK COG.100", "CHOLIN 6 PACK COG.103", "PAPEL VUENO COG.141"],
+                        ["LP INICIAL ", LP_INICIAL_row_1_p6, LP_INICIAL_row_2_p7, LP_INICIAL_row_3_p8, LP_INICIAL_row_4_p9, LP_INICIAL_row_5_p10],
+                        [arrayRequisas3],
+                        ["LP FINAL ", LP_FINAL_row_1_p6, LP_FINAL_row_2_p7, LP_FINAL_row_3_p8, LP_FINAL_row_4_p9, LP_FINAL_row_5_p10],
+                        ["MERMA (UND)", MERMA_row_1_p6, MERMA_row_2_p7, MERMA_row_3_p8, MERMA_row_4_p9, MERMA_row_5_p10],
+                        ["MERMA (%)", merma_porcentual_P6, merma_porcentual_P7, merma_porcentual_P8, merma_porcentual_P9, merma_porcentual_P10],
+                        ["CONSUMO ", consumoP6, consumoP7, consumoP8, consumoP9, consumoP10],
+                        ["E/P - POR BOLSON", '0.00', '0.00', EP_bolson_P8, EP_bolson_P9, EP_bolson_P10],
+                        ["E/P -UTILIZADO", '0.00', '0.00', EP_utilizado_P8, EP_utilizado_P9, EP_utilizado_P10],
+                        ["ROLLOS ESPERADOS ", rollos_esperados_P6, rollos_esperados_P7, '-', '-', '-'],
+                        ["BOLSONES A PRODUCIR ", bolsones_producir_P6, bolsones_producir_P7, '-', '-', '-'],
+                        ["No. BOLSONES", No_bolsones_P6, No_bolsones_P7, No_bolsones_P8, No_bolsones_P9, No_bolsones_P10],
+                        ["DIFERENCIAL", diferencial_P6, diferencial_P7, '-', '-', '-'],
+                        ["FALTANTE", '-', '-', '-', '-', '-'],
+                        ["SOBRANTE", '-', '-', '-', '-', '-'],
+
+                    ]
+
+                    cityTable = makeTable($("#id_tbl_temp"), data, 3);
+                }
+
+
+            }
 
             /******************  @QUIMICOS  **********************/
 
@@ -1216,20 +1386,10 @@
             var totalRequisadoQ1 = 0;
             var totalRequisadoQ2 = 0;
             var arrayRequisasQ = [];
-            var indexMax, indexOut1;
-            var Q1_R_lenght = REQUISADOS_Q1.length;
-            var Q2_R_lenght = REQUISADOS_Q2.length;
 
-            if (Q1_R_lenght > Q2_R_lenght) {
-                indexMax = Q1_R_lenght;
-                indexOut1 = indexMax - Q2_R_lenght;
-                addElement(indexOut1, REQUISADOS_Q2);
-
-            } else if (Q2_R_lenght > Q1_R_lenght) {
-                indexMax = Q2_R_lenght;
-                indexOut1 = indexMax - Q2_R_lenght;
-                addElement(indexOut1, REQUISADOS_Q1);
-            }
+            //Añadir elementos si algun Q es mayor
+            maxElement(REQUISADOS_Q1.length, REQUISADOS_Q2.length, REQUISADOS_Q2);
+            maxElement(REQUISADOS_Q2.length, REQUISADOS_Q1.length, REQUISADOS_Q1);
 
             arrayRequisasQ[0] = {
                 row_1: REQUISADOS_Q1,
@@ -1276,13 +1436,13 @@
                 ["MERMA", MERMA_row_1_q1, MERMA_row_2_q2],
                 ["MERMA (%)", merma_porcentual_Q1, merma_porcentual_Q2],
                 ["CONSUMO ", consumoQ1, consumoQ2],
-                ["PESO DEL GLN(KG)", '1', '0.26'],
+                ["PESO DEL GLN(KG)", '-', '-'],
             ]
             var cityTable = makeTable($("#id_tbl_temp"), data, 4);
-                $("#id_tbl_temp > table > tr > th").addClass("bg-indigo-dim");
-                var periodo = $('#id_fecha_inicial').text() + ' ' + $('#id_hora_inicial').text() + ' Al ' + $('#id_fecha_final').text() + ' ' + $('#id_hora_final').text();
-                $("#periodo").text(periodo);
-               // $("#id_tbl_temp > table > tr > td").addClass("bg-indigo-dim");
+            $("#id_tbl_temp > table > tr > th").addClass("bg-indigo-dim");
+            var periodo = $('#id_fecha_inicial').text() + ' ' + $('#id_hora_inicial').text() + ' Al ' + $('#id_fecha_final').text() + ' ' + $('#id_hora_final').text();
+            $("#periodo").text(periodo);
+            // $("#id_tbl_temp > table > tr > td").addClass("bg-indigo-dim");
 
             // $("#id_tbl_temp > table > tr > th").addClass("bg-primary text-white");
         })
@@ -1313,7 +1473,7 @@
                             }
                         });
                     });
-                   
+
                 } else if (typeItem === 2) { // SOBREEMPAQUE
                     table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>SOBREMPAQUE</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
@@ -1330,7 +1490,7 @@
                         });
                     });
                 } else if (typeItem === 3) { // EMPAQUE PRIMARIO
-                    table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>EMPAQUE PRIMARIO</h6></th></tr></thead>`);
+                    table.append(`<thead><tr><th colspan="6" class="bg-gray text-white text-center"><h6>EMPAQUE PRIMARIO</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
                             for (var j = 0; j < element.row_1.length; j++) {
@@ -1339,7 +1499,8 @@
                                     `<td>` + numeral(parseFloat(element.row_1[j])).format('0,0.00') + `</td>` +
                                     `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>` +
                                     `<td>` + numeral(element.row_3[j]).format('0,0.00') + `</td>` + `</td>` +
-                                    `<td>` + numeral(element.row_4[j]).format('0,0.00') + `</td>` + `</td>
+                                    `<td>` + numeral(element.row_4[j]).format('0,0.00') + `</td>` + `</td> ` +
+                                    `<td>` + numeral(element.row_5[j]).format('0,0.00') + `</td>` + `</td> +
                                       </tr>`;
                             }
                         });
@@ -1761,9 +1922,12 @@
         });
     }
 
-    function addElement(index, array) {
-        for (var i = 1; i <= index; i++) {
-            array.push('0.00');
+    function maxElement(element1, element2, array) {
+        var index = element1 - element2;
+        if (element1 > element2) {
+            for (var i = 1; i <= index; i++) {
+                array.push('0.00');
+            }
         }
     }
 </script>
