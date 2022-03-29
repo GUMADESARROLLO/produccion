@@ -1138,6 +1138,13 @@
                     var EP_bolson_P9 = 4;
                     var EP_utilizado_P9 = EP_bolson_P9 * 24;
 
+                    var faltante_P8 = consumoP8 - (EP_bolson_P8 * No_bolsones_P8);
+                    var sobrante_P8 = (EP_bolson_P8 * No_bolsones_P8) - consumoP8;
+
+                    var faltante_P9 = consumoP9 - (EP_bolson_P9 * No_bolsones_P9);
+                    var Sobrante_P9 = (EP_bolson_P9 * No_bolsones_P9) - consumoP9;
+
+
 
                     consumoP6 = numeral(consumoP6).format('0,0.00');
                     consumoP7 = numeral(consumoP7).format('0,0.00');
@@ -1200,6 +1207,10 @@
                     No_bolsones_P10 = numeral(No_bolsones_P10).format('0,0.00');
                     diferencial_P10 = numeral(diferencial_P10).format('0,0.00');
 
+                    faltante_P8 = numeral(faltante_P8).format('0,0.00');
+                    sobrante_P8 = numeral(sobrante_P8).format('0,0.00');
+                    faltante_P9 = numeral(faltante_P9).format('0,0.00');
+                    Sobrante_P9 = numeral(Sobrante_P9).format('0,0.00');
 
 
                     data = [
@@ -1216,8 +1227,8 @@
                         ["BOLSONES A PRODUCIR ", bolsones_producir_P6, bolsones_producir_P7, bolsones_producir_P8, bolsones_producir_P9, bolsones_producir_P10],
                         ["No. BOLSONES", No_bolsones_P6, No_bolsones_P7, No_bolsones_P8, No_bolsones_P9, No_bolsones_P10],
                         ["DIFERENCIAL", diferencial_P6, diferencial_P7, '-', '-', '-'],
-                        ["FALTANTE", '-', '-', '-', '-', '-'],
-                        ["SOBRANTE", '-', '-', '-', '-', '-'],
+                        ["FALTANTE", '-', '-', faltante_P8, faltante_P9, '-'],
+                        ["SOBRANTE", '-', '-', sobrante_P8, Sobrante_P9, '-'],
 
                     ]
 
@@ -1260,6 +1271,17 @@
                     var EP_utilizado_P9 = EP_bolson_P9 * No_bolsones_P9;
                     var diferencial_P9 = consumoP9 - EP_utilizado_P9;
 
+                    var faltante_P8 = consumoP8 - (EP_bolson_P8 * No_bolsones_P8);
+                    var sobrante_P8 = (EP_bolson_P8 * No_bolsones_P8) - consumoP8;
+
+                    var faltante_P9 = consumoP9 - (EP_bolson_P9 * No_bolsones_P9);
+                    var Sobrante_P9 = (EP_bolson_P9 * No_bolsones_P9) - consumoP9;
+
+                    var faltante_P9 = consumoP9 - (EP_bolson_P9 * No_bolsones_P9);
+                    var Sobrante_P9 = (EP_bolson_P9 * No_bolsones_P9) - consumoP9;
+
+                    var faltante_P10 = consumoP10 - (EP_bolson_P10 * No_bolsones_P10);
+                    var Sobrante_P10 = (EP_bolson_P10 * No_bolsones_P10) - consumoP10;
 
                     consumoP6 = numeral(consumoP6).format('0,0.00');
                     consumoP7 = numeral(consumoP7).format('0,0.00');
@@ -1296,7 +1318,7 @@
                     No_bolsones_P6 = numeral(No_bolsones_P6).format('0,0.00');
                     diferencial_P6 = numeral(diferencial_P6).format('0,0.00');
 
-                    diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
+                    rollos_esperados_P7 = numeral(rollos_esperados_P7).format('0,0.00');
                     bolsones_producir_P7 = numeral(bolsones_producir_P7).format('0,0.00');
                     No_bolsones_P7 = numeral(No_bolsones_P7).format('0,0.00');
                     diferencial_P7 = numeral(diferencial_P7).format('0,0.00');
@@ -1325,6 +1347,13 @@
                     EP_bolson_P10 = numeral(EP_bolson_P10).format('0,0.00');
                     EP_utilizado_P10 = numeral(EP_utilizado_P10).format('0,0.00');
 
+                    faltante_P8 = numeral(faltante_P8).format('0,0.00');
+                    sobrante_P8 = numeral(sobrante_P8).format('0,0.00');
+                    faltante_P9 = numeral(faltante_P9).format('0,0.00');
+                    Sobrante_P9 = numeral(Sobrante_P9).format('0,0.00');
+                    faltante_P10 = numeral(faltante_P10).format('0,0.00');
+                    Sobrante_P10 = numeral(Sobrante_P10).format('0,0.00');
+
                     data = [
                         ["ACTIVIDAD", "PAPIEL ECO. COG.27", "CHOLIN COG.52", "FOURPACK COG.100", "CHOLIN 6 PACK COG.103", "PAPEL VUENO COG.141"],
                         ["LP INICIAL ", LP_INICIAL_row_1_p6, LP_INICIAL_row_2_p7, LP_INICIAL_row_3_p8, LP_INICIAL_row_4_p9, LP_INICIAL_row_5_p10],
@@ -1339,8 +1368,8 @@
                         ["BOLSONES A PRODUCIR ", bolsones_producir_P6, bolsones_producir_P7, '-', '-', '-'],
                         ["No. BOLSONES", No_bolsones_P6, No_bolsones_P7, No_bolsones_P8, No_bolsones_P9, No_bolsones_P10],
                         ["DIFERENCIAL", diferencial_P6, diferencial_P7, '-', '-', '-'],
-                        ["FALTANTE", '-', '-', '-', '-', '-'],
-                        ["SOBRANTE", '-', '-', '-', '-', '-'],
+                        ["FALTANTE", '-', '-', faltante_P8, faltante_P9, faltante_P10],
+                        ["SOBRANTE", '-', '-', sobrante_P8, Sobrante_P9 , Sobrante_P10],
 
                     ]
 
@@ -1449,8 +1478,8 @@
     })
 
     function makeTable(container, data, typeItem) {
-        var row2
-        var table = $("<table/>").addClass('table table-hover mt-4');
+        var row2, j = 0, requisas;
+        var table = $("<table/>").addClass('table table-hover table-bordered mt-4');
         $.each(data, function(rowIndex, r) {
             var row = $("<tr/>");
             row2 = '';
@@ -1460,28 +1489,28 @@
                 });
             } else if (rowIndex === 2) { //requisados
                 if (typeItem == 1) { //JR + TUBOS KRAFT
-                    table.append(`<thead><tr><th colspan="3" class="bg-gray text-white text-center"><h6>MATERIA PRIMA</h6></th></tr></thead>`);
+                   table.append(`<thead><tr><th colspan="3" class="bg-gray text-white text-center"><h6>MATERIA PRIMA</h6></th></tr></thead>`);
 
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            for (var j = 0; j < element.row_1.length; j++) {
-                                row2 += `<tr>
-                                  <td> REQUISA</td> ` +
+                            for (j; j < element.row_1.length; j++) {
+                                requisas += `<tr>` +
                                     `<td>` + numeral(element.row_1[j]).format('0,0.00') + `</td>` +
-                                    `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>
-                                 </tr>`;
+                                    `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>`;
                             }
                         });
                     });
+                    console.log(j);
+                    row2 += `<tr><td rowspan=`+(j+1)+`>REQUISA</td></tr>`;
+                    row2 += requisas;
 
                 } else if (typeItem === 2) { // SOBREEMPAQUE
                     table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>SOBREMPAQUE</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            for (var j = 0; j < element.row_1.length; j++) {
-                                row2 += `<tr>
-                                  <td> REQUISA</td> ` +
-                                    `<td>` + numeral(parseFloat(element.row_1[j])).format('0,0.00') + `</td>` +
+                            for (j; j < element.row_1.length; j++) {
+                                requisas += `<tr>` +
+                                    `<td>` + numeral(element.row_1[j]).format('0,0.00') + `</td>` +
                                     `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>` +
                                     `<td>` + numeral(element.row_3[j]).format('0,0.00') + `</td>` + `</td>` +
                                     `<td>` + numeral(parseFloat(element.row_1[j]) + parseFloat(element.row_2[j]) + parseFloat(element.row_3[j])).format('0,0.00') + `</td>` + `</td>
@@ -1489,14 +1518,18 @@
                             }
                         });
                     });
+                    
+                    console.log(j);
+                    row2 += `<tr><td rowspan=`+(j+1)+`>REQUISA</td></tr>`;
+                    row2 += requisas;
+                    
                 } else if (typeItem === 3) { // EMPAQUE PRIMARIO
                     table.append(`<thead><tr><th colspan="6" class="bg-gray text-white text-center"><h6>EMPAQUE PRIMARIO</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            for (var j = 0; j < element.row_1.length; j++) {
-                                row2 += `<tr>
-                                  <td> REQUISA</td> ` +
-                                    `<td>` + numeral(parseFloat(element.row_1[j])).format('0,0.00') + `</td>` +
+                            for (j; j < element.row_1.length; j++) {
+                                requisas += `<tr>` +
+                                    `<td>` + numeral(element.row_1[j]).format('0,0.00') + `</td>` +
                                     `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>` +
                                     `<td>` + numeral(element.row_3[j]).format('0,0.00') + `</td>` + `</td>` +
                                     `<td>` + numeral(element.row_4[j]).format('0,0.00') + `</td>` + `</td> ` +
@@ -1505,19 +1538,24 @@
                             }
                         });
                     });
+                    console.log(j);
+                    row2 += `<tr><td rowspan=`+(j+1)+`>REQUISA</td></tr>`;
+                    row2 += requisas;
                 } else if (typeItem === 4) { //  QUIMICOS
                     table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>QUIMICOS</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
-                            for (var j = 0; j < element.row_1.length; j++) {
-                                row2 += `<tr>
-                                  <td> REQUISA</td> ` +
-                                    `<td>` + numeral(parseFloat(element.row_1[j])).format('0,0.00') + `</td>` +
+                            for (j; j < element.row_1.length; j++) {
+                                requisas += `<tr>` +
+                                    `<td>` + numeral(element.row_1[j]).format('0,0.00') + `</td>` +
                                     `<td>` + numeral(element.row_2[j]).format('0,0.00') + `</td>` + `</td>
                                  </tr>`;
                             }
                         });
                     });
+                    console.log(j);
+                    row2 += `<tr><td rowspan=`+(j+1)+`>REQUISA</td></tr>`;
+                    row2 += requisas;
                 }
             }
             //row.append(row2);
@@ -1930,4 +1968,58 @@
             }
         }
     }
+
+
+    $('#fecha_hora_inicial').on('click', function() {
+        let fecha_inicial, hora_incial, num_orden;
+        num_orden = $("#id_num_orden").text();
+
+        Swal.fire({
+            title: 'Fecha inicial',
+            html:   '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA INICIAL:</p></div>' +
+                    '<div class="form-group col-md-8"><input type="date" class="form-control" id="add_fecha_inicial"></div></div>' +
+                    '<div class="form-row"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">HORA INICIAL:</p></div>' +
+                    '<div class="form-group col-md-8"><input type="time" class="form-control mt-2" id="add_hora_inicial"></div></div>',
+            stopKeydownPropagation: false,
+            confirmButtonText: 'Guardar',
+            showCancelButton: true,
+            preConfirm: () => {
+                fecha_inicial = $('#add_fecha_inicial').val();
+                hora_inicial = $('#add_hora_inicial').val();
+
+                if (fecha_inicial == '') {
+                    return swal.showValidationError(
+                        'Seleccione una fecha por favor'
+                    );
+                }
+                if (hora_inicial == '') {
+                    return swal.showValidationError(
+                        'Seleccione una hora por favor'
+                    );
+                }
+
+                $.ajax({
+                    url: '../updateFechaInicial',
+                    data: {
+                        num_orden: num_orden,
+                        fecha_inicial: fecha_inicial,
+                        hora_inicial: hora_inicial
+                    },
+                    type: 'post',
+                    async: true,
+                    success: function(response) {
+                        Swal.fire('Guardado!', 'la fecha se ha actualizado', 'success')
+                    },
+                    error: function(response) {
+                        mensaje(response.responseText, 'error');
+                    }
+                }).done(function(data) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                });
+            }
+        })
+    });
+
 </script>

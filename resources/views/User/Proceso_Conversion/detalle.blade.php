@@ -29,6 +29,7 @@
         min-width: 70%;
         min-height: 100%;
     }
+
     .custom_detail {
         min-width: 80%;
         min-height: 100%;
@@ -102,13 +103,15 @@
                             </div>
                             <div class="nk-block-head-content">
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> </h3>
-                                <div class="nk-block-des text-right text-soft ">                                    
-                                    <span id="id_fecha_inicial"> 0</span> <span id="id_hora_inicial">0</span> al
+                                <div class="nk-block-des text-right text-soft ">
                                     <u class="dotted">
-                                        <a href="#"  class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> <span id="id_hora_final">0</span></a> 
+                                        <a href="#" class="text-soft" id='fecha_hora_inicial'> <span id="id_fecha_inicial"> 0</span> <span id="id_hora_inicial">0</span></a> 
+                                    </u>al
+                                    <u class="dotted">
+                                        <a href="#" class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> <span id="id_hora_final">0</span></a>
                                     </u>
                                 </div>
-                                <div class="nk-block-des text-right text-soft ">                                    
+                                <div class="nk-block-des text-right text-soft ">
                                     <span id=""> Hrs Trabajadas</span> : <span id="id_hrs_total_trabajadas">00:00:00</span>
                                 </div>
                             </div>
@@ -298,17 +301,17 @@
                                         <div class="modal-content">
                                             <div class="modal-header bg-primary text-white">
                                                 <div class="container ">
-                                                     <h5 class="modal-title d-flex justify-content-center" id="">PROCESO DE CONVERSIÓN - DETALLES DE LA ORDEN</h5>
-                                                     <h5 class="modal-title d-flex justify-content-center" id="periodo"> </h5>
+                                                    <h5 class="modal-title d-flex justify-content-center" id="">PROCESO DE CONVERSIÓN - DETALLES DE LA ORDEN</h5>
+                                                    <h5 class="modal-title d-flex justify-content-center" id="periodo"> </h5>
                                                 </div>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                    <div id="id_tbl_temp">
-                                                        
-                                                    </div>
+                                                <div id="id_tbl_temp">
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

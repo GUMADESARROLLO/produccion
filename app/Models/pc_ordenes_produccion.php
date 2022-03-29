@@ -108,4 +108,28 @@ class pc_ordenes_produccion extends Model
         }
     }
 
+
+    public static function updateFechaInicial(Request $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $num_orden   = $request->input('num_orden');
+                $fecha_inicial = $request->input('fecha_inicial');
+                $hora_inicial  = $request->input('hora_inicial');
+
+                $fecha_hora_inicio = $fecha_inicial . ' ' . $hora_inicial . ':00';
+
+                $ordenes =   pc_ordenes_produccion::where('num_orden',  $num_orden)
+                    ->where('estado', 'S')->update([
+                        'fecha_hora_inicio' => $fecha_hora_inicio,
+                    ]);
+                return response()->json($ordenes);
+            });
+        } catch (Exception $e) {
+            $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
+
+            return response()->json($mensaje);
+        }
+    }
+
 }
