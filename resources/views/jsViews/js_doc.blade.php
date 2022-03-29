@@ -1969,7 +1969,14 @@
         }
     }
 
+    $('#fecha_hora_inicial').on('mouseover', function() {
+        $(this).addClass('color-focus');
+    });
 
+    $('#fecha_hora_inicial').on('mouseleave', function() {
+        $(this).removeClass('color-focus');
+    });
+    
     $('#fecha_hora_inicial').on('click', function() {
         let fecha_inicial, hora_incial, num_orden;
         num_orden = $("#id_num_orden").text();
