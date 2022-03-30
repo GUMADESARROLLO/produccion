@@ -105,7 +105,7 @@
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> </h3>
                                 <div class="nk-block-des text-right text-soft ">
                                     <u class="dotted">
-                                        <a href="#" class="text-soft" id='fecha_hora_inicial'> <span id="id_fecha_inicial"> 0</span> <span id="id_hora_inicial">0</span></a> 
+                                        <a href="#" class="text-soft" id='fecha_hora_inicial'> <span id="id_fecha_inicial"> 0</span> <span id="id_hora_inicial">0</span></a>
                                     </u>al
                                     <u class="dotted">
                                         <a href="#" class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 0</span> <span id="id_hora_final">0</span></a>
@@ -308,9 +308,52 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
+                                            <!-- Tabs de la orden de produccion -->
                                             <div class="modal-body">
-                                                <div id="id_tbl_temp">
+                                                <nav>
+                                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                        <a class="nav-item nav-link active" id="navMP" data-toggle="tab" href="#nav-mp" role="tab" aria-controls="nav-mp" aria-selected="true">MATERIA PRIMA</a>
+                                                        <a class="nav-item nav-link" id="navSbrEmpq" data-toggle="tab" href="#nav-se" role="tab" aria-controls="nav-se" aria-selected="false">SOBRE EMPAQUE</a>
+                                                        <a class="nav-item nav-link" id="navEP" data-toggle="tab" href="#nav-ep" role="tab" aria-controls="nav-ep" aria-selected="false">EMPAQUE PRIMARIO</a>
+                                                        <a class="nav-item nav-link" id="navQuimicos" data-toggle="tab" href="#nav-quimicos" role="tab" aria-controls="nav-quimicos" aria-selected="false">QUIMICOS</a>
+                                                    </div>
+                                                </nav>
+                                                <div class="tab-content  pt-1" id="nav-tabContent">
+                                                    <div class="tab-pane fade show active" id="nav-mp" role="tabpanel" aria-labelledby="navMP">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <table id="tblMP" class="table table-hover table-bordered mt-3">
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="nav-se" role="tabpanel" aria-labelledby="navSbrEmpq">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <table id="tblSbrEmpq" class="table table-hover table-bordered mt-3">
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="nav-ep" role="tabpanel" aria-labelledby="navEP">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <table id="tblEP" class="table table-hover table-bordered mt-3">
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="tab-pane fade" id="nav-quimicos" role="tabpanel" aria-labelledby="navQuimicos">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <table id="tblQuimicos" class="table table-hover table-bordered mt-3">
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="id_tbl_temp">
                                                 </div>
                                             </div>
                                         </div>
