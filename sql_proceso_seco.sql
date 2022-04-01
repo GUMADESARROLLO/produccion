@@ -1,3 +1,4 @@
+
 // view_proceso_seco_ordenes_produccion
 SELECT
 	T0.id,	
@@ -37,6 +38,7 @@ FROM
 	GROUP BY T0.num_orden,T0.id_articulos,T0.TIPO
 	ORDER BY T0.TIPO
 
+
 //VIEW_AGRUPADO_DETALLE_REQUISAS
 	SELECT	 
 		T0.num_orden,
@@ -52,6 +54,7 @@ FROM
 	GROUP BY
 		T0.ID_ARTICULO,
 		T0.num_orden
+
 
 
 

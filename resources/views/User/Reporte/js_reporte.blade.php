@@ -295,8 +295,8 @@
 
         if (typeof(last_row_) === "undefined") {
             indicador_4 = 1;
-            num_vinieta = '';
-            gsm___ = ""
+            num_vinieta = 0;
+            gsm___ = 20
             yank = ""
         } else {
             indicador_4 = parseInt(last_row_[0]) + 1
@@ -308,9 +308,9 @@
 
         dtJRoll.row.add([
             indicador_4,
-            `<input class="input-dt" type="text" value="` + 0 + `" placeholder="Codigo" id="vineta-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" placeholder="Cantidad" id="cant-kg-` + indicador_4 + `">`,
-            `<input class="input-dt" type="text" value="` + 0 + `" placeholder="Cantidad" id="cant-gsm-` + indicador_4 + `">`,
+            `<input class="input-dt" type="text" value="` + num_vinieta + `" placeholder="Codigo" id="vineta-` + indicador_4 + `">`,
+            `<input class="input-dt" type="number" onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;" placeholder="Cantidad" id="cant-kg-` + indicador_4 + `">`,
+            `<input class="input-dt" type="text" value="` + gsm___ + `" placeholder="Cantidad" id="cant-gsm-` + indicador_4 + `">`,
             `<input class="input-dt" type="text" value="` + yank + `" placeholder="Cantidad" id="yankee-` + indicador_4 + `">`,
         ]).draw(false);
     });
@@ -952,10 +952,10 @@
         dthrasEft.row.add([
             indicador_4,
             `<input type="text" class="input-fecha-dos form-control" id="fch-hrftv-` + indicador_4 + `">`,
-            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-dia-` + indicador_4 + `">`,
-            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-dia-` + indicador_4 + `">`,
-            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y1-noc-` + indicador_4 + `">`,
-            `<input class="input-dt datetimepicker_" type="text" placeholder="Cantidad" id="cantHrasEft-y2-noc-` + indicador_4 + `">`
+            `<input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y1-dia-` + indicador_4 + `">`,
+            `<input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y2-dia-` + indicador_4 + `">`,
+            `<input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y1-noc-` + indicador_4 + `">`,
+            `<input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y2-noc-` + indicador_4 + `">`
         ]).draw(false);
 
         $(function() {
@@ -1054,4 +1054,21 @@
     $(document).on('click', 'input.datetimepicker_:text', function() {
         var tr = $(this).parent().parent().removeClass('selected');
     });
+
+    function soloNumeros(caracter, e, numeroVal) {
+        var numero = numeroVal;
+        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
+            e.preventDefault();
+            mensaje('No puedes iniciar con un punto', 'warning');
+        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
+            e.preventDefault();
+            mensaje('No puede haber mas de dos puntos', 'warning');
+        } else {
+            const soloNumeros = new RegExp("^[0-9]+$");
+            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
+                e.preventDefault();
+                mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
+            }
+        }
+    }
 </script>
