@@ -25,17 +25,17 @@ Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('
 Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');
 //Route::get('/turno', 'User\configuracionController@turno')->name('turno');
 Route::get('/fibras', 'User\fibrasController@index')->name('fibras');
-Route::get('/fibras/nueva-fibra', 'User\fibrasController@index')->name('fibras/nueva');
+//Route::get('/fibras/nueva-fibra', 'User\fibrasController@index')->name('fibras/nueva');
 Route::get('/productos', 'User\produccionController@productos')->name('productos');
 Route::get('/maquinas', 'User\maquinasController@index')->name('maquinas');
-Route::get('/maquina/nueva-maquina', 'User\maquinasController@nueva')->name('maquina/nueva');
+Route::get('/maquina/nueva', 'User\maquinasController@nueva')->name('maquina/nueva');
 Route::get('/reporte', 'User\reporteController@index')->name('maquina/nueva');
 Route::get('/costos', 'User\CostoController@index')->name('costos');
 
 
 //QUIMICOS
 Route::get('/quimicos', 'User\QuimicoController@index')->name('quimicos');
-Route::get('/quimico/nuevo-quimico', 'User\QuimicoController@nuevoQuimico')->name('quimico/nuevo-quimico');
+//Route::get('/quimico/nuevo-quimico', 'User\QuimicoController@nuevoQuimico')->name('quimico/nuevo-quimico');
 Route::get('/quimico/nuevo', 'User\QuimicoController@nuevoQuimico')->name('quimico/nuevo');
 Route::post('/quimico/guardar-quimico', 'User\QuimicoController@guardarQuimico')->name('quimico/guardar-quimico');
 Route::get('/quimico/editar-quimico/{id}', 'User\QuimicoController@editarQuimico')->name('quimico/editar-quimico/{$id}');
@@ -99,7 +99,7 @@ Route::post('insumos/guardar', 'User\inventarioController@guardar')->name('insum
 
 //RUTAS FIBRAS
 Route::get('fibras/nueva','User\fibrasController@nuevaFibra')->name('fibras/nueva');
-Route::get('fibras/nueva-fibra', 'User\fibrasController@nuevaFibra')->name('fibras/nueva');
+//Route::get('fibras/nueva-fibra', 'User\fibrasController@nuevaFibra')->name('fibras/nueva');
 Route::get('fibras/editar/{id}', 'User\fibrasController@editarFibras')->name('producto/editar/{id}');
 Route::post('fibras/guardar', 'User\fibrasController@guardarFibra')->name('fibras/guardar');
 Route::post('fibras/actualizar', 'User\fibrasController@actualizarFibras')->name('producto/actualizar');
