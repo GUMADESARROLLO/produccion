@@ -79,7 +79,7 @@ class ProcesoConversionController extends Controller
             'Informacion_Orden' =>  $data_orden[0]['data'],
             'Producto'          =>  $data_orden[1]['data'],
             'Materia_prima'     =>  $data_orden[2]['data'],
-            'Tempos_paro'     =>  $data_orden[3]['data'],
+            'Tempos_paro'       =>  $data_orden[3]['data'],
         ];
 
         //dd($data_orden[1]['data']);

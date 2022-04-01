@@ -19,6 +19,10 @@
         padding: 0 10px;
         margin-inline: 5px;
     }
+    .icon-btn {
+        padding: 10px 12px 1px 20px;
+        border-radius:10px;
+    }
 </style>
 @endsection
 @section('content')
@@ -27,19 +31,7 @@
     <div class="pcoded-wrapper">
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
-                <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-10">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Proceso de Conversión</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- [ breadcrumb ] start -->
+                
                 <div class="main-body">
                     <div class="page-wrapper">
                         <div class="row">
@@ -47,37 +39,41 @@
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Lista de ordenes</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='btnAdd'>+</button>
+                                        <h5>Proceso de Conversión</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='btnAdd'>
+                                            <i class="material-icons text-blue">add_circle</i>
+                                        </button>
                                     </div>
                                     <div class="form-row mr-3 ml-3 mt-3">
-                                        <div class="form-group col-md-8">
-                                        <div class="input-group" style="width: 100%;" id="cont_search">
-                                            <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                            
+                                        
+                                    <div class="form-group col-md-7">
+                                            <div class="input-group" style="width: 100%;" id="cont_search">
+                                                <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                            </div>
                                         </div>
-                                        </div>
+
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
                                                 <input type="text" class="input-fecha form-control" id="id_fecha_desde">
-                                                <div class="input-group-prepend">
-                                                <span class="input-group-text" id="id_search_desde">
-                                                        <i class="material-icons icon-blue ml-1">search</i>
-                                                    </span>
-                                                </div>
+                                                
                                             </div>
                                         </div>
+
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
                                                 <input type="text" class="input-fecha form-control" id="id_fecha_hasta">
-                                                <div class="input-group-prepend">
-                                                <span class="input-group-text" id="id_search_hasta">
-                                                        <i class="material-icons icon-blue ml-1">search</i>
-                                                    </span>
-                                                </div>
+                                                
                                             </div>
                                         </div>
-                                       
+
+                                        <div class="form-group col-md-1 " > 
+                                            <a class="btn icon-btn btn-warning " href="#" id="id_search">                                                
+                                                <i class="material-icons text-black">search</i>
+                                            </a>
+                                        </div>
+                                            
+                                        
+
                                     </div>
                                     
                                     <div class="form-group col-md-12">
@@ -87,13 +83,14 @@
                                             </table>
                                         </div>
                                     </div>
+                                    
                                 </div>
 
                                 <div class="modal fade modal-fullscreen" id="mdlAddOrden" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Nueva orden de produccion</h5> <span id="id_row"></span>
+                                                <h5 class="modal-title">Información de la Orden de Producción</h5> <span id="id_row"></span>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -130,9 +127,9 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-info" id="btnSave">
-                                                    <i class="material-icons text-white ml-2">save</i>
-                                                </button>
+                                                <a class="btn icon-btn btn-primary" href="#" id="btnSave">                                                
+                                                    <i class="material-icons text-white">save</i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

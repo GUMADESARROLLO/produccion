@@ -11,7 +11,7 @@
         inicializaControlFecha();
         getOrdenes();
        
-        $("#id_search_desde, #id_search_hasta").on('click', function() {
+        $("#id_search").on('click', function() {
             getOrdenes();
         })
     });
@@ -105,8 +105,8 @@
                     "data": "id",
                     "render": function(data, type, row, meta) {
                         return '<div class="row justify-content-center">' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="feather icon-trash-2 text-c-red f-30 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="far fa-file-pdf text-c-red f-30 m-r-10" onclick="Printer(' + row.id + ')"></i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="material-icons text-danger" onclick="Eliminar(' + row.id + ')">delete</i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="material-icons text-danger" onclick="Printer(' + row.id + ')">picture_as_pdf</i></div>' +
                             '</div>'
                     }
                 },

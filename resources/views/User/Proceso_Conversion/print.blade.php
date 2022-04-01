@@ -10,7 +10,7 @@
         <tr>
             
             <td colspan=4 rowspan=0 align="left" ><b><i><font size=6 color="#000000">INNOVA INDUSTRIAL S,A</font></i></b></td>
-            <td colspan=3 rowspan=0 align="right"><b>ORDEN PRODUCCION No.</b></td>
+            <td colspan=3 rowspan=0 align="right"><b>No. ORDEN </b></td>
             <td colspan=3 rowspan=0 align="left" width="" ><b>{{$data['Informacion_Orden']['num_orden']}}</b></td>
         </tr>
         <tr>
@@ -29,8 +29,7 @@
             <td class="cabecera" style="background: #FFFFFF;">{{$data['Informacion_Orden']['fecha_inicio']}}</td>
             <td class="cabecera"  rowspan=3  >Horas Trabajdas</td>
             <td class="cabecera"  rowspan=3 style="background: #FFFFFF;" >{{$data['Informacion_Orden']['hrs_trabajadas']}}</td>
-            <td class="cabecera"  colspan=2 rowspan=3 >TOTAL DE BULTOS (UNDS)</td>
-            <td class="cabecera"  colspan=2 rowspan=3 style="background: #FFFFFF;">{{$data['Informacion_Orden']['total_bultos_und']}}</td>		
+            <td class="cabecera"  colspan=4 rowspan=2 >TOTAL DE BULTOS (UNDS)</td>
         </tr>
         <tr>
             <td class="cabecera">HORA INICIAL</td>
@@ -44,8 +43,9 @@
             <td class="cabecera" style="background: #FFFFFF;">{{$data['Informacion_Orden']['peso_procent']}}</td>
             <td class="cabecera">JR TOTAL (KG)</td>
             <td class="cabecera" style="background: #FFFFFF;">{{$data['Informacion_Orden']['jr_total_kg']}}</td>
-            
+            <td class="cabecera"  colspan=4 style="background: #FFFFFF;">{{$data['Informacion_Orden']['total_bultos_und']}}</td>
         </tr>
+        
     </table>
     
 
@@ -160,7 +160,7 @@
                 <th class="cabecera">DIA</th>
                 <th class="cabecera">NOCHE</th>
                 <th class="cabecera">TOTAL HRS</th>
-                <th class="cabecera" colspan="2">No. Personas</th>
+                <th class="cabecera" colspan="3">No. Personas</th>
             </tr>
         </thead>
         <tbody>

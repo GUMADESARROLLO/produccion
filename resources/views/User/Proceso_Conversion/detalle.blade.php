@@ -2,7 +2,6 @@
 @section('metodosjs')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/detailStyle.css') }}">
 @include('jsViews.js_doc')
-@include('jsViews.js_doc_mp')
 <style>
     a {
         cursor: pointer;
@@ -79,6 +78,25 @@
     .color-focus {
         color: #0894ff !important;
     }
+    .nav-tabs > .nav-item {
+        padding-left: 3.25rem;
+    }
+
+    @media (min-width: 768px) {
+        .nav-tabs .nav-item {
+            padding-left: 1.5rem;
+        }
+    }
+    @media (min-width: 992px) {
+        .nav-tabs .nav-item {
+            padding-left: 1.75rem;
+        }
+    }
+    @media (min-width: 1200px) {
+        .nav-tabs .nav-item {
+            padding-left: 2.25rem;
+        }
+    }
 </style>
 @endsection
 @section('content')
@@ -142,7 +160,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-info-circle  fa-2x text-gray-300"></i>
+                                                        <i class="fas fa-info-circle  fa-2x text-gray-300" id="id_icon_info"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +187,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-info-circle fa-2x text-gray-300"></i>
+                                                        <i class="fas fa-info-circle fa-2x text-gray-300" id="id_icon_info_2"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -238,6 +256,7 @@
                         <div class="row">
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
+                                
                                 <div class="card">
                                     <div class="card-header">
 
@@ -260,6 +279,9 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>MATERIA PRIMA DIRECTA (M.P)</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='btnInfo'>
+                                        <i class="material-icons text-black">info</i>
+                                        </button>
                                     </div>
                                     <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
@@ -279,7 +301,9 @@
                                 <div class="card">
                                     <div class="card-header ">
                                         <h5>TIEMPOS PAROS</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>+</button>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
+                                            <i class="material-icons text-blue">add_circle</i>
+                                        </button>
                                     </div>
                                     <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
@@ -440,6 +464,9 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>COMENTARIOS</h5>
+                                        <button type="submit" class="close" data-dismiss="modal" aria-label="Close" id='btn_guardar_comment'>
+                                            <i class="material-icons text-info">save</i>
+                                        </button>
                                     </div>
                                     <div class="card-block pt-2">
                                         <div class="row">
@@ -448,11 +475,7 @@
                                                     <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="container d-flex justify-content-end">
-                                                <button class="btn btn-primary mt-3 add-row-dt-hp mr-0" id="btn_guardar_comment" type="submit">
-                                                    GUARDAR
-                                                </button>
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>

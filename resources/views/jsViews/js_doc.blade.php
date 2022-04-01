@@ -1147,7 +1147,7 @@
     /**  detalles
      * 
      */
-    $('#id_temp').on('click', function() {
+    $('#id_temp,#btnInfo,#id_icon_info,#id_icon_info_2').on('click', function() {
         $('#mdlDetallesOrdes').modal('show');
         table = $('#tblMP');
         detalles_pc(table, 'tblMP');
