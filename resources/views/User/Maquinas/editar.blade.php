@@ -56,14 +56,14 @@
                                             {{ csrf_field() }}
                                             @foreach ($maquina as $m)
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label for="idMaquina"># de Maquina</label>
                                                         <input type="text" readonly class="form-control" name="idMaquina" id="idMaquina" value="{{ $m['idMaquina'] }}">
                                                         <small id="idMaquinaHelp" class="form-text text-muted" >Id de la Maquina</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-9">
+                                                <div class="col-md-7">
                                                     <div class="form-group">
                                                         <label for="nombre">Nombre de la Maquina</label>
                                                         <input type="text" class="form-control text-uppercase" name="nombre" id="nombre" value="{{ $m['nombre'] }}">
