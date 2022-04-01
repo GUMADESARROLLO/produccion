@@ -11,7 +11,7 @@
         inicializaControlFecha();
         getOrdenes();
 
-        $("#id_search_desde, #id_search_hasta").on('click', function() {
+        $("#id_search").on('click', function() {
             getOrdenes();
         })
     });
