@@ -169,4 +169,10 @@ class ProcesoConversionController extends Controller
         $requisados = pc_ordenes_produccion::updateFechaInicial($request);
         return response()->json($requisados);
     }
+
+    public function getTiemposParos($Orden)
+    {
+        $response = pc_detalle_tiempos_paro::getTiemposParos($Orden);
+        return response()->json($response);
+    }
 }

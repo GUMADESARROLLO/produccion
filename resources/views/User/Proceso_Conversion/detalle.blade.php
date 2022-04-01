@@ -346,7 +346,7 @@
                                                     <div class="tab-pane fade show active" id="nav-mp" role="tabpanel" aria-labelledby="navMP">
                                                         <div class="row">
                                                             <div class="col-sm-12">
-                                                                <table id="tblMP" class="table table-hover table-bordered mt-3">
+                                                                <table id="tblMP" class="table table-hover table-bordered mt-3 border-top-0 border-bottom-0 border-right-0">
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -475,7 +475,6 @@
                                                     <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4"></textarea>
                                                 </div>
                                             </div>
-                                           
                                         </div>
                                     </div>
                                 </div>

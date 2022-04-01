@@ -540,9 +540,10 @@
     }
 
     function detalles_tiempos_paros() {
-        $.getJSON("../jsonInfoOrder/" + id_orden, function(json) {
+
+        $.getJSON("../getTiemposParos/" + id_orden, function(json) {
             $('#tbl_modal_TiemposParos').DataTable({
-                "data": json[3]['data'],
+                'data': json,
                 "destroy": true,
                 "info": false,
                 "bPaginate": false,
@@ -679,7 +680,8 @@
                     })
                 }
 
-            })
+            });
+
 
         })
     }
@@ -1191,7 +1193,7 @@
             });
 
             var id_producto = producto[0];
-            
+
             if (id_producto == 2) {
                 $('#navEP').hide();
                 $('#nav-ep').hide();
@@ -1292,9 +1294,8 @@
                     ["ACTIVIDAD", "JUMBO ROLL", "TUBOS KRAFT"],
                     ["LP INICIAL ", LP_INICIAL_row_1_p1, LP_INICIAL_row_2_p2],
                     [arrayRequisas],
-                    ["LP FINAL ", LP_FINAL_row_1_p1, LP_FINAL_row_2_p2],
-                    ["MERMA (KG)", MERMA_row_1_p1, merma_kg],
-                    ["MERMA (UND) ", '0.00', MERMA_row_2_p2],
+                    ["LP FINAL ", LP_FINAL_row_1_p1, LP_FINAL_row_2_p2, "MERMA (KG)"],
+                    ["MERMA", MERMA_row_1_p1, MERMA_row_2_p2, merma_kg],
                     ["MERMA (%)", merma_porcentual_P1, merma_porcentual_P2],
                     ["CONSUMO ", consumoP1, consumoP2],
                     ["PESO ", peso, '0.00'],
@@ -2016,7 +2017,6 @@
             } else if (rowIndex === 2) { //requisados
                 if (tipo_requisa == 1) { //JR + TUBOS KRAFT
                     //   table.append(`<thead><tr><th colspan="3" class="bg-gray text-white text-center"><h6>MATERIA PRIMA</h6></th></tr></thead>`);
-
                     $.each(r, function(index, item) {
                         item.forEach(element => {
                             for (j; j < element.row_1.length; j++) {
@@ -2029,7 +2029,6 @@
                     row2 += `<tr><td rowspan=` + (j + 1) + `>REQUISA</td></tr>`;
                     row2 += requisas;
                 } else if (tipo_requisa === 2) { // SOBREEMPAQUE
-                    //  table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>SOBREMPAQUE</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
                             for (j; j < element.row_1.length; j++) {
@@ -2046,7 +2045,6 @@
                     row2 += requisas;
 
                 } else if (tipo_requisa === 3) { // EMPAQUE PRIMARIO
-                    // table.append(`<thead><tr><th colspan="6" class="bg-gray text-white text-center"><h6>EMPAQUE PRIMARIO</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
                             for (j; j < element.row_1.length; j++) {
@@ -2063,7 +2061,6 @@
                     row2 += `<tr><td rowspan=` + (j + 1) + `>REQUISA</td></tr>`;
                     row2 += requisas;
                 } else if (tipo_requisa === 4) { //  QUIMICOS
-                    // table.append(`<thead><tr><th colspan="5" class="bg-gray text-white text-center"><h6>QUIMICOS</h6></th></tr></thead>`);
                     $.each(r, function(index, item) {
                         item.forEach(element => {
                             for (j; j < element.row_1.length; j++) {
@@ -2080,9 +2077,10 @@
             }
             table.append(row);
             table.append(row2);
-            // table.find('thead th').addClass('bg-blue');
             table.find('tr:nth-child(1)').addClass('bg-blue text-light');
         });
         return container.append(table);
     }
+
+    
 </script>
