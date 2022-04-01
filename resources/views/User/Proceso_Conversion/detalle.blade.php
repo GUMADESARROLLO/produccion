@@ -109,8 +109,9 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between g-3">
-                            <div class="nk-block-head-content">
-                                ORDEN PRODUCCION No.<h3 class="nk-block-title page-title" id="id_num_orden">{{$Orden}}</h3>
+                            <div class="nk-block-head-content ">
+                                ORDEN PRODUCCION No.<a href="../doc_printer/{{$Orden}}"><i class="material-icons text-danger" >picture_as_pdf</i></a>
+                                <h3 class="nk-block-title page-title" id="id_num_orden">{{$Orden}}</h3>
                                 <div class="nk-block-des text-soft">
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{url('/conversion')}}">Ordenes Conversion</a></li>
@@ -259,7 +260,7 @@
                                 
                                 <div class="card">
                                     <div class="card-header">
-
+                                    <h5>PRODUCCION</h5>
                                     </div>
                                     <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
@@ -298,27 +299,62 @@
                                     </div>
                                 </div>
 
-                                <div class="card">
-                                    <div class="card-header ">
-                                        <h5>TIEMPOS PAROS</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
-                                            <i class="material-icons text-blue">add_circle</i>
-                                        </button>
-                                    </div>
-                                    <div class="form-group col-md-12" style="display:none">
-                                        <div class="input-group" style="width: 100%;" id="cont_search">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="material-icons text-black ml-1">search</i>
-                                            </span>
-                                            <input type="text" id="tbl_search_materia_prima" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                <div class="row g-gs">
+                                    <div class="col-lg-7">
+                                        <div class="row g-gs ">
+                                            <div class="col-md-12 col-lg-12 ">
+                                                <div class="card">
+                                                    <div class="card-header ">
+                                                        <h5>TIEMPOS PAROS</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
+                                                            <i class="material-icons text-blue">add_circle</i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="form-group col-md-12" style="display:none">
+                                                        <div class="input-group" style="width: 100%;" id="cont_search">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                <i class="material-icons text-black ml-1">search</i>
+                                                            </span>
+                                                            <input type="text" id="tbl_search_materia_prima" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12 mb-3">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover" id="tblTiemposParos" width="100%"></table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-12 mb-3">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" id="tblTiemposParos" width="100%"></table>
+                                    <div class="col-lg-5">
+                                        <div class="row g-gs ">
+                                            <div class="col-md-12 col-lg-12 ">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>COMENTARIOS</h5>
+                                                        <button type="submit" class="close" data-dismiss="modal" aria-label="Close" id='btn_guardar_comment'>
+                                                            <i class="material-icons text-info">save</i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="card-block pt-2">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                
+
+                                
 
                                 <div class="modal fade " id="mdlDetallesOrdes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog custom">
@@ -461,23 +497,7 @@
                                 </div>
 
 
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5>COMENTARIOS</h5>
-                                        <button type="submit" class="close" data-dismiss="modal" aria-label="Close" id='btn_guardar_comment'>
-                                            <i class="material-icons text-info">save</i>
-                                        </button>
-                                    </div>
-                                    <div class="card-block pt-2">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <textarea class="form-control" placeholder="Ingrese su comentario" name="comentario" id="comentario" rows="4"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

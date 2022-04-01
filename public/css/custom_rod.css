@@ -31,11 +31,6 @@ html{
 }
 
 
-nav {
-    background-color: #3f4d67 !important;
-    color: #a9b7d0 !important;
-}
-
 ul{
 
 }
@@ -69,6 +64,8 @@ body {
 #menu_gral {
     width: 100%;
     margin: 1.5rem auto;
+    background-color: #3f4d67 !important;
+    color: #a9b7d0 !important;
 }
 #menu_gral ul {
     list-style-type: none;
