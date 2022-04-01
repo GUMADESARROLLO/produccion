@@ -17,9 +17,9 @@
                                         <h5 class="m-b-10">Editar Producto</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                         <li class="breadcrumb-item"><a href="{{url('/productos')}}">Productos</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Editar Producto</a></li>
                                     </ul>
@@ -57,7 +57,7 @@
                                                 {{ csrf_field() }}
                                                 @foreach ($producto as $p)
                                                     <div class="row">
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-4" hidden>
                                                             <div class="form-group">
                                                                 <label for="idProducto">Id del Producto</label>
                                                                 <input type="text" readonly class="form-control"
@@ -67,7 +67,7 @@
                                                                     del Turno</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="codigo">Codigo del Producto</label>
                                                                 <input type="text" class="form-control text-uppercase"
@@ -77,7 +77,7 @@
                                                                     el nuevo codigo del producto</small>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="nombre">Nombre del Producto</label>
                                                                 <input type="text" class="form-control text-uppercase"
@@ -85,6 +85,26 @@
                                                                        value="{{ $p['nombre'] }}">
                                                                 <small id="nombreHelp" class="form-text text-muted">Escriba
                                                                     el nuevo nombre del producto</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="descripcion">Descripcion del Producto</label>
+                                                                <input type="text" class="form-control text-uppercase"
+                                                                       name="descripcion" id="descripcion"
+                                                                       value="{{ $p['descripcion'] }}">
+                                                                <small id="descripcionHelp" class="form-text text-muted">Escriba
+                                                                    la nueva descripcion del producto</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="unidad">Unidad de Medida del Producto</label>
+                                                                <input type="text" class="form-control text-uppercase"
+                                                                       name="unidad" id="unidad"
+                                                                       value="{{ $p['unidad'] }}">
+                                                                <small id="unidadHelp" class="form-text text-muted">Escriba
+                                                                    la nueva unidad del producto</small>
                                                             </div>
                                                         </div>
                                                     </div>

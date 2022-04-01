@@ -1,33 +1,173 @@
 <script type="text/javascript">
-    var dtHP;
+    var dtHP, dtCostoOrden, dtOrder;
     var indicador_1 = 0;
+    $(document).ready(function() {
+        dtHP = $('#dtHrsProd').DataTable({
+            "destroy": true,
+            "ordering": false,
+            "info": false,
+            "bPaginate": false,
+            "bfilter": false,
+            "searching": false,
+            "language": {
+                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "className": "dt-center",
+                "visible": false
+            }]
+        });
 
-    dtHP = $('#dtHrsProd').DataTable({
-        "destroy": true,
-        "ordering": false,
-        "info": false,
-        "bPaginate": false,
-        "bfilter": false,
-        "searching": false,
-        "language": {
-            "emptyTable": `<p class="text-center">Agrega horas productivas</p>`
-        },
-        "columnDefs": [{
-            "targets": [0],
-            "className": "dt-center",
-            "visible": false
-        }]
+        dtCostoOrden = $('#dtCostoOrden').DataTable({ // Costos por ORDEN
+            "ajax": {
+                "url": "getCostoOrden",
+                'dataSrc': '',
+            },
+            "order": [
+                [0, "desc"]
+            ],
+            "info": false,
+            "destroy": true,
+            "bPaginate": true,
+            "pagingType": "full",
+            "language": {
+                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "search": "BUSCAR",
+                "oPaginate": {
+                    sNext: " Siguiente ",
+                    sPrevious: " Anterior ",
+                    sFirst: "Primero ",
+                    sLast: " Ultimo",
+                },
+            },
+            "columns": [{
+                    "title": "#Orden",
+                    "data": "numOrden"
+                },
+                {
+                    "title": "Producto",
+                    "data": "producto"
+                },
+                {
+                    "title": "Fecha Inicio",
+                    "data": "fechaInicio"
+                },
+                {
+                    "title": "Fecha Final",
+                    "data": "fechaFinal"
+                },
+                {
+                    "title": "Detalle",
+                    "data": "numOrden",
+                    "render": function(data, type, row) {
+                        return '<a href="costo-orden/detalle/' + data + '" target="_blank"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
+                    }
+                },
+            ],
+            "columnDefs": [{
+                "targets": [0],
+                "className": "dt-center",
+            }, {
+                "targets": [1],
+                "width": '35%',
+                "className": "dt-center",
+            }]
+        });
+
+        $("#dtCostoOrden_filter").hide();
+        $("#dtCostoOrden_length").hide();
+        $('#cont_search').show();
+        $('#InputBuscar').on('keyup', function() {
+            var table = $('#dtCostoOrden').DataTable();
+            table.search(this.value).draw();
+        });
+
+        dtOrder = $('#dtOrder').DataTable({ //SOLO COSTOS
+            "ajax": {
+                "url": "getCostos",
+                'dataSrc': '',
+            },
+            "order": [
+                [4, "desc"]
+            ],
+            "destroy": true,
+            "bPaginate": true,
+            "pagingType": "full",
+            "info": false,
+            "language": {
+                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "search": "BUSCAR",
+                "oPaginate": {
+                    sNext: " Siguiente ",
+                    sPrevious: " Anterior ",
+                    sFirst: "Primero ",
+                    sLast: " Ultimo",
+                },
+            },
+            "columns": [{
+                    "title": "CODIGO",
+                    "data": "codigo"
+                },
+                {
+                    "title": "DESCRIPCION",
+                    "data": "descripcion"
+                },
+                {
+                    "title": "U/M",
+                    "data": "unidad_medida"
+                },
+                {
+                    "title": "Estado",
+                    "data": "estado",
+                    "render": function(data, type, row) {
+                        if (data) {
+                            return '<span class="badge badge-success">Activo</span>'
+                        } else {
+                            '<span class="badge badge-danger">Inactivo</span>'
+                        }
+                    }
+                },
+                {
+                    "title": "Detalle",
+                    "data": "id",
+                    "render": function(data, type, row) {
+                        return '<a href="#!" onclick="deleteCosto(' + data + ')"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a><a href="costos/editar/' + data + '">' +
+                            '<i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>';
+                    }
+                },
+            ],
+            "columnDefs": [{
+                "targets": [0],
+                "className": "dt-center",
+            }, {
+                "targets": [1],
+                "width": '35%',
+                "className": "dt-center",
+            }]
+        });
+
+        $("#dtOrder_filter").hide();
+        $("#dtOrder_length").hide();
+        $('#cont_search').show();
+        $('#InputBuscar').on('keyup', function() {
+            var table = $('#dtOrder').DataTable();
+            table.search(this.value).draw();
+        });
+
+
+
+        $("#numOrden").hide();
+
+        $(document).on('click', '#btnNuevoCostoO', function() {
+            var numOrden = $("#numOrden").val();
+            const URLlast = "/produccion/costo-orden/nuevo/" + numOrden;
+            $('#btnNuevoCostoO').attr('href', "/produccion/costo-orden/nuevo/" + numOrden);
+            console.log(URLlast);
+        });
     });
-
-    $("#numOrden").hide();
-
-    $(document).on('click', '#btnNuevoCostoO', function() {
-        var numOrden = $("#numOrden").val();
-        const URLlast = "/produccion/costo-orden/nuevo/" + numOrden;
-        $('#btnNuevoCostoO').attr('href', "/produccion/costo-orden/nuevo/" + numOrden);
-        console.log(URLlast);
-    });
-
     $(document).on('click', '#btnEditar', function() {
         var numOrden = $("#numOrden").val();
         const URLlast = "/produccion/costo-orden/nuevo/" + numOrden;
@@ -58,13 +198,13 @@
                 type: 'post',
                 async: true,
                 success: function(resultado) {
-                    alert("Las horas han sido agregadas correctamente");
+                    mensaje("Las horas han sido agregadas correctamente", "success");
                 }
             }).done(function(data) {
                 $("#formdataord").submit();
             });
         } else {
-            alert('Digite los horas trabajadas para cada yankee')
+            mensaje('Digite las horas trabajadas para cada yankee', 'info')
         }
     });
 
@@ -84,7 +224,7 @@
             datatype: 'json',
             data: {},
             success: function(data) {
-                $('#tasaCambio').text('C$ ' + data[0]['TipoCambio']);
+                $('#tasaCambio').text(data[0]['TipoCambio']);
             },
             error: function() {
 
@@ -112,8 +252,9 @@
                 tasaCambio: tasaCambio,
             },
             success: function(response) {
-                mensaje(response.responseText, 'success');
+                //mensaje(response.responseText, 'success');
                 $('#txtTasaCambio').text(tasaCambio);
+                mensaje("El tipo de cambio ha sido agregado correctamente", "success");
             },
             error: function() {}
         })
@@ -135,6 +276,4 @@
              console.log($(this).val());
          })*/
     });
-
-
 </script>

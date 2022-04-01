@@ -51,60 +51,7 @@
                             <div class="col-xl-12 col-md-6">
                                 <div class="card card-event">
                                     <div class="card-block">
-                                        <div class="row ">
-                                            <div class="col-12 border-right">
-                                                <div class="card card-event" id="card-JRDetail">
-                                                    <div class="card-block p-2 ">
-                                                        <div class="row align-items-center justify-content-center">
-                                                            <div class="col-6">
-                                                                <h5 class="m-0" >Total de jumbo roll</h5>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <input readonly  class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-block p-1 table-border-style">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtJumboRollDetail" style="padding: 0 !important; margin: 0 !important;">
-                                                                <thead class="">
-                                                                    <tr class="text-center">
-                                                                        <th rowspan="2" class="text-center p-1"></th>
-                                                                        <th rowspan="2" class="text-center p-1">
-                                                                            <p> Residuos del pulper </p>
-                                                                        </th>
-                                                                        <th rowspan="2" class="text-center p-1">
-                                                                            <p> Lavadora tetrapack</p>
-                                                                        </th>
-                                                                        <th colspan="2" rowspan="1" class="p-0">
-                                                                            <p>Merma yankee Dry</p>
-                                                                        </th>
-                                                                    <tr class="text-center">
-                                                                        <th class="p-0">Y1</th>
-                                                                        <th class="p-0">Y2</th>
-                                                                    </tr>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody class="text-center">
-                                                                    @foreach ($jumborollDT as $key => $jr)
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->residuo_pulper }}" placeholder="Cantidad" id="rp"> </td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->lavadora_tetrapack }}" placeholder="Cantidad" id="lt"> </td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_1 }}" placeholder="Cantidad" id="mr-y1"></td>
-                                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_2 }}" placeholder="Cantidad" id="mr-y2"></td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                            <button class="mt-5 btn btn-success float-right" id="btnJRdetail">Guardar</button>
-                                                            <!-- <button class="btn btn-danger float-right" id="quitRowdtBATH">Quitar</button>  -->
-                                                            <!-- <button class="btn btn-light add-row-dt-bach float-right">Agregar</button> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="row ">
                                             <div class="col-12">
                                                 <div class="row align-items-center justify-content-center">
@@ -120,35 +67,35 @@
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($electricidad) )
-                                                                            <form>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoInicialElec" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" class="form-control" id="consumoInicialElec">
-                                                                                    </div>
+                                                                        <form>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoInicialElec" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" class="form-control" id="consumoInicialElec">
                                                                                 </div>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoFinalElec" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" class="form-control" id="consumoFinalElec">
-                                                                                    </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoFinalElec" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" class="form-control" id="consumoFinalElec">
                                                                                 </div>
-                                                                            </form>
+                                                                            </div>
+                                                                        </form>
                                                                         @else
-                                                                            <form>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoInicialElec" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" value="{{ $electricidad->inicial }}" class="form-control" id="consumoInicialElec">
-                                                                                    </div>
+                                                                        <form>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoInicialElec" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" value="{{ $electricidad->inicial }}" class="form-control" id="consumoInicialElec">
                                                                                 </div>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoFinalElec" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" value="{{ $electricidad->final }}" class="form-control" id="consumoFinalElec">
-                                                                                    </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoFinalElec" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" value="{{ $electricidad->final }}" class="form-control" id="consumoFinalElec">
                                                                                 </div>
-                                                                            </form>
+                                                                            </div>
+                                                                        </form>
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -162,35 +109,35 @@
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($consumo_agua) )
-                                                                            <form>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" class="form-control" id="consumoInicialAgua">
-                                                                                    </div>
+                                                                        <form>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" class="form-control" id="consumoInicialAgua">
                                                                                 </div>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" class="form-control" id="consumoFinalAgua">
-                                                                                    </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" class="form-control" id="consumoFinalAgua">
                                                                                 </div>
-                                                                            </form>
+                                                                            </div>
+                                                                        </form>
                                                                         @else
-                                                                            <form>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" class="form-control" id="consumoInicialAgua" value="{{ $consumo_agua->inicial }}">
-                                                                                    </div>
+                                                                        <form>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoInicialAgua" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" class="form-control" id="consumoInicialAgua" value="{{ $consumo_agua->inicial }}">
                                                                                 </div>
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" value="{{ $consumo_agua->final }}" class="form-control" id="consumoFinalAgua">
-                                                                                    </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoFinalAgua" class="col-sm-5 col-form-label">Final {{ date('g:i a', strtotime($orden->horaFinal)) }} : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" value="{{ $consumo_agua->final }}" class="form-control" id="consumoFinalAgua">
                                                                                 </div>
-                                                                            </form>
+                                                                            </div>
+                                                                        </form>
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -204,35 +151,35 @@
                                                                 <div class="row d-flex align-items-center">
                                                                     <div class="col-12">
                                                                         @if( is_null($consumo_gas) )
-                                                                            <form>
-                                                                                <!--<div class="form-group row">
+                                                                        <form>
+                                                                            <!--<div class="form-group row">
                                                                                     <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial : </label>
                                                                                     <div class="col-sm-7">
                                                                                         <input type="number" class="form-control" id="consumoInicialGas">
                                                                                     </div>
                                                                                 </div>-->
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Total : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" class="form-control" id="consumoFinalGas">
-                                                                                    </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoFinalGas" class="col-sm-5 col-form-label">Total : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" class="form-control" id="consumoFinalGas">
                                                                                 </div>
-                                                                            </form>
+                                                                            </div>
+                                                                        </form>
                                                                         @else
-                                                                            <form>
-                                                                                <!--<div class="form-group row">
+                                                                        <form>
+                                                                            <!--<div class="form-group row">
                                                                                     <label for="consumoInicialGas" class="col-sm-5 col-form-label">Inicial {{ date('g:i a', strtotime($orden->horaInicio)) }} : </label>
                                                                                     <div class="col-sm-7">
                                                                                         <input type="number" class="form-control" id="consumoInicialGas" value="{{ $consumo_gas->inicial }}">
                                                                                     </div>
                                                                                 </div>-->
-                                                                                <div class="form-group row">
-                                                                                    <label for="consumoFinalGas" class="col-sm-5 col-form-label">Total : </label>
-                                                                                    <div class="col-sm-7">
-                                                                                        <input type="number" value="{{ $consumo_gas->final }}" class="form-control" id="consumoFinalGas">
-                                                                                    </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="consumoFinalGas" class="col-sm-5 col-form-label">Total : </label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="number" value="{{ $consumo_gas->final }}" class="form-control" id="consumoFinalGas">
                                                                                 </div>
-                                                                            </form>
+                                                                            </div>
+                                                                        </form>
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -264,7 +211,7 @@
                                                 @if( is_null($pulpeo) )
                                                 <input value="" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @else
-                                                <input value="{{ $pulpeo->tiempoPulpeo }} min" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
+                                                <input value="{{ $pulpeo->tiempoPulpeo }}" class="input-dt float-right" id="tiempo-pulpeo" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @endif
                                             </div>
                                         </div>
@@ -319,7 +266,7 @@
                                                 @if( is_null($lavado) )
                                                 <input value="" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @else
-                                                <input value="{{ $lavado->tiempoLavado }} min" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
+                                                <input value="{{ $lavado->tiempoLavado }}" class="input-dt float-right" id="tiempo-lavado" style="font-size: 1.3em;" type="text" placeholder="Digite la cantidad">
                                                 @endif
                                             </div>
                                         </div>
@@ -403,16 +350,16 @@
                                                             <input type="text" class="input-fecha-dos form-control" id="fch-tm-{{ $tm->id }}" value="{{ $tm->fecha }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-dia-{{ $tm->id }}" value="{{ $tm->y1_dia }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-dia-{{ $tm->id }}" value="{{ $tm->y1_dia }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-dia-{{ $tm->id }}" value="{{ $tm->y2_dia }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-dia-{{ $tm->id }}" value="{{ $tm->y2_dia }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-noc-{{ $tm->id }}" value="{{ $tm->y1_noche }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y1-noc-{{ $tm->id }}" value="{{ $tm->y1_noche }}">
                                                         </td>
                                                         <td class="dt-center">
-                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-noc-{{ $tm->id }}" value="{{ $tm->y2_noche }} min">
+                                                            <input class="input-dt" type="text" placeholder="Cantidad" id="cant-y2-noc-{{ $tm->id }}" value="{{ $tm->y2_noche }}">
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -443,11 +390,120 @@
                                 </div> -->
                             <!-- [ JUMBO ROLL ] end -->
 
+                            <!-- YANKEE DRYER   -->
+                            <!-- HORAS EFECTIVA POR CONTADOR -->
+                            <div class="col-xl-12 col-md-6">
+                                <div class="card card-event">
+                                    <div class="card-block border-bottom">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-12">
+                                                <h5 class="m-0">Yankee Dryer - Horas efectiva por contador</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-block table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-border-style" id="dtHrasEfectivas">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="1"></th>
+                                                        <th colspan="1"></th>
+                                                        <th class="text-center" colspan="2">
+                                                            <h6 class="text-uppercase font-weight-bold">Día</h6>
+                                                        </th>
+                                                        <th class="text-center" colspan="2">
+                                                            <h6 class="text-uppercase font-weight-bold">Noche</h6>
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="text-center">
+                                                        <th class="text-center">#</th>
+                                                        <th>Fecha</th>
+                                                        <th>Y1</th>
+                                                        <th>Y2</th>
+                                                        <th>Y1</th>
+                                                        <th>Y2</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($hrasEfectivas as $key => $hf)
+                                                    @if($hf->estado == 1)
+
+                                                    <tr class="unread">
+                                                        <td class="dt-center">{{ $hf->id }}</td>
+                                                        <td class="dt-center">
+                                                            <input type="text" class="input-fecha-dos form-control" id="fch-hrftv-{{ $hf->id }}" value="{{ $hf->fecha }}">
+                                                        </td>
+                                                        <td class="dt-center">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y1-dia-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y1_dia ))}}">
+                                                        </td>
+                                                        <td class="dt-center">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y2-dia-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y2_dia ))}}">
+                                                        </td>
+                                                        <td class="dt-center">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y1-noc-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y1_noche)) }}">
+                                                        </td>
+                                                        <td class="dt-center">
+                                                            <input class="input-dt" type="time" placeholder="Cantidad" id="cantHrasEft-y2-noc-{{ $hf->id }}" value="{{ date("H:i", strtotime( $hf->y2_noche ))}}">
+                                                        </td>
+                                                    </tr>
+                                                    @endif
+                                                    @endforeach
+                                                </tbody>
+                                                <tfoot class="text-center">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[0]['dia'] }}
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[1]['dia'] }}
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[0]['noche'] }}
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="mt-2">
+                                                                    <span class="text-dark" style="font-size: 1rem; font-weight: 700;">
+                                                                        {{ $yk_hrasEftvs[1]['noche'] }}
+                                                                    </span>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            <button class="btn btn-primary float-right" id="btnHrasEfv">Guardar</button>
+                                            <button class="btn btn-danger float-right" id="quitRowdtHrasEfv">Quitar</button>
+                                            <button class="btn btn-light add-row-dt-hrasEft float-right">Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- [ JUMBO ROLL ] start -->
                             <div class="col-xl-12 col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Jumbo Roll</h5>
+                                        <!-- <h5>Jumbo Roll</h5>-->
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col-6">
+                                                <h5 class="m-0">Total de jumbo roll</h5>
+                                            </div>
+                                            <div class="col-6">
+                                                <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         @foreach ($jumboroll as $key => $jr)
@@ -555,6 +611,63 @@
                                 </div>
                                 <!-- [ JUMBO ROLL ] end -->
                             </div>
+
+
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-12 border-right">
+                                <div class="card card-event" id="card-JRDetail">
+                                    <div class="card-block p-2 ">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="">
+                                                <h5 class="m-0" style="font-size: 1.3em;">Residuos</h5>
+                                            </div>
+                                            <!-- <div class="col-6">
+                                                <input readonly class="input-dt float-right" id="totalJR" style="font-size: 1.3em;" type="text" placeholder="cantidad de jumbo roll">
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="card-block p-1 table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="dtJumboRollDetail" style="padding: 0 !important; margin: 0 !important;">
+                                                <thead class="">
+                                                <tr class="text-center">
+                                                    <th rowspan="2" class="text-center p-1"></th>
+                                                    <th rowspan="2" class="text-center p-1">
+                                                        <p> Residuos del pulper </p>
+                                                    </th>
+                                                    <th rowspan="2" class="text-center p-1">
+                                                        <p> Lavadora tetrapack</p>
+                                                    </th>
+                                                    <th colspan="2" rowspan="1" class="p-0">
+                                                        <p>Merma yankee Dry</p>
+                                                    </th>
+                                                <tr class="text-center">
+                                                    <th class="p-0">Y1</th>
+                                                    <th class="p-0">Y2</th>
+                                                </tr>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="text-center">
+                                                @foreach ($jumborollDT as $key => $jr)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->residuo_pulper }}" placeholder="Cantidad" id="rp"> </td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->lavadora_tetrapack }}" placeholder="Cantidad" id="lt"> </td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_1 }}" placeholder="Cantidad" id="mr-y1"></td>
+                                                        <td><input class="input-dt" type="text" value="{{ $jr->merma_yankee_dry_2 }}" placeholder="Cantidad" id="mr-y2"></td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                            <button class="mt-5 btn btn-success float-right" id="btnJRdetail">Guardar</button>
+                                            <!-- <button class="btn btn-danger float-right" id="quitRowdtBATH">Quitar</button>  -->
+                                            <!-- <button class="btn btn-light add-row-dt-bach float-right">Agregar</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- [ Main Content ] end -->
                     </div>
@@ -596,15 +709,3 @@
 </div>
 <!-- [ MODAL ] end -->
 @endsection
-
-<thead>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr>
-        <th></th>
-    <tr>
-        <th></th>

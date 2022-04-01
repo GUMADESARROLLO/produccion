@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('metodosjs')
-    @include('jsViews.js_quimicos')
+@include('jsViews.js_quimicos')
 @endsection
 
 @section('scriptsPlugins')
@@ -19,11 +19,11 @@
                         <div class="row align-items-center">
                             <div class="col-md-10">
                                 <div class="page-header-title">
-                                    <h5 class="m-b-10">Costos</h5>
+                                    <h5 class="m-b-10">Quimicos</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="javascript:">Quimico</a></li>
                                 </ul>
                             </div>
@@ -43,38 +43,15 @@
                                     <div class="card-header">
                                         <h5>Lista de Quimicos</h5>
                                     </div>
+                                    <div class="input-group mt-4 ml-2" style="width: 98%;" id="cont_search">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                        </div>
+                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
                                     <div class="card-block table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>ID</th>
-                                                        <th>CÓDIGO</th>
-                                                        <th>DESCRIPCIÓN</th>
-                                                        <th>ESTADO</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($quimico as $key => $q)
-                                                    <tr class="unread">
-                                                        <td class="dt-center">{{ $q->idQuimico}}</td>
-                                                        <td class="dt-center">{{ $q->codigo }}</td>
-                                                        <td class="dt-center">{{ $q->descripcion }}</td>
-                                                        <td class="dt-center">
-                                                            @if ( $q->estado )
-                                                            <span class="badge badge-success">Activo</span>
-                                                            @else
-                                                            <span class="badge badge-danger">Inactivo</span>
-                                                            @endif
-                                                        </td>
-                                                        <td class="dt-center">
-                                                            <a href="#!" onclick="deleteQuimico({{$q['idQuimico']}})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
-                                                            <a href="quimico/editar-quimico/{{$q['idQuimico']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
+                                            <table class="table table-hover" id="tblQuimicos">
                                             </table>
                                         </div>
                                     </div>

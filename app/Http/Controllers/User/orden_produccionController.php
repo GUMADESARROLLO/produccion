@@ -9,6 +9,7 @@ use App\Models\ConsumoGas;
 use App\Models\DetalleProduccion;
 use App\Models\electricidad;
 use App\Models\fibras;
+use App\Models\horas_efectivas;
 use App\Models\jumboroll;
 use App\Models\jumboroll_detalle;
 use App\Models\maquinas;
@@ -25,9 +26,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use \Carbon\Carbon;
+use App\Traits\ModelScopes;
+use Exception;
 
 class orden_produccionController extends Controller
 {
+    use ModelScopes;
     public function __construct()
     {
         $this->middleware('auth');
@@ -63,7 +67,7 @@ class orden_produccionController extends Controller
                 }
 
 
-                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'] ;
+                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
@@ -80,6 +84,7 @@ class orden_produccionController extends Controller
         $i = 0;
 
         $mo_directa = $this->calcularManoObraDirecta($idOP);
+        $yk_hrasEftvs = $this->calcularHrasEftvs($idOP);
 
         $ord_produccion = orden_produccion::where('numOrden', $idOP)->get()->first();
         $producto = productos::select('nombre')->where('idProducto', $ord_produccion->producto)->get()->first();
@@ -103,6 +108,8 @@ class orden_produccionController extends Controller
             ->where('quimico_maquina.numOrden', $idOP)
             ->get();
 
+        $horas_efectivas = horas_efectivas::where('numOrden', $idOP);
+
         if (count($mp_directa) > 0 && $totalMPTPACK->total != '') {
             $produccionNeta = $this->calcularProduccionNeta($idOP);
             $mermaYankeeDry = $this->calcularMermaYankeeDry($idOP);
@@ -113,18 +120,20 @@ class orden_produccionController extends Controller
             $consumo_agua = $this->calcularConsumoAgua($idOP);
             $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
-//            $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
-//            $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
-            if($produccion_total == 0 || $produccion_total == ''){
+
+            if ($produccion_total == 0 || $produccion_total == '') {
                 $estandar_electricidad = 0;
                 $estandar_gas = 0;
-            }else {
-                $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
-                $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
+            } else {
+                $estandar_electricidad = ($electricidad['totalProcesoH'] / $produccion_total) * 1000;
+                $estandar_gas = ($consumo_gas['total'] / $produccion_total) * 1000;
             }
+            $Tonelada_dia = (($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0 && $ord_produccion->hrsTrabajadas>0)?
+                            number_format(($produccionNeta->produccionNeta / ($ord_produccion->hrsTrabajadas / 24)) / 1000, 2): 0);
 
             if ($mermaYankeeDry->merma > 0 && $produccionNeta->produccionNeta > 0) {
                 $porcentMermaYankeeDry = ($mermaYankeeDry->merma / ($produccionNeta->produccionNeta + $mermaYankeeDry->merma)) * 100;
+
             } else {
                 $porcentMermaYankeeDry = 0;
             }
@@ -155,12 +164,14 @@ class orden_produccionController extends Controller
             $consumo_gas = $this->calcularConsumoGas($idOP);
             $produccion_total = $mermaYankeeDry->merma + $produccionNeta->produccionNeta;
 
-            if($produccion_total == 0 || $produccion_total == ''){
+            $Tonelada_dia = 0;
+
+            if ($produccion_total == 0 || $produccion_total == '') {
                 $estandar_electricidad = 0;
                 $estandar_gas = 0;
-            }else {
-                $estandar_electricidad = ($electricidad['totalProcesoH']/ $produccion_total)*1000;
-                $estandar_gas = ($consumo_gas['total']/ $produccion_total)*1000;
+            } else {
+                $estandar_electricidad = ($electricidad['totalProcesoH'] / $produccion_total) * 1000;
+                $estandar_gas = ($consumo_gas['total'] / $produccion_total) * 1000;
             }
 
             $porcentMermaYankeeDry = 0;
@@ -169,7 +180,6 @@ class orden_produccionController extends Controller
 
             $factorFibral = 0;
         }
-
         $orden = new orden(
             $ord_produccion->idOrden,
             $ord_produccion->numOrden,
@@ -193,15 +203,18 @@ class orden_produccionController extends Controller
             $electricidad,
             $consumo_agua,
             $consumo_gas,
-            number_format($factorFibral, 2)
-
+            number_format($factorFibral, 2),
+            $Tonelada_dia
         );
 
-        return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina']));
+        return view('User.Orden_Produccion.detalle', compact(['orden', 'mp_directa', 'mo_directa', 'quimico_maquina', 'yk_hrasEftvs']));
     }
 
     public function crear()
     {
+        /*$productos = productos::where('estado', 1)->get()->toArray();
+        $usuarios = usuario::usuarioByRole();
+        return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios']));*/
         $idOrd = orden_produccion::latest('numOrden')->first();
         $fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
         $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
@@ -218,7 +231,7 @@ class orden_produccionController extends Controller
         )
             ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
             ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
-            ->where('mp_directa.numOrden', intval($idOrd->numOrden))
+            ->where('mp_directa.numOrden', $idOrd->numOrden)
             ->get();
 
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
@@ -231,7 +244,7 @@ class orden_produccionController extends Controller
         )
             ->join('quimicos', 'quimico_maquina.idQuimico', '=', 'quimicos.IdQuimico')
             ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
-            ->where('quimico_maquina.numOrden', intval($idOrd->numOrden))
+            ->where('quimico_maquina.numOrden', $idOrd->numOrden)
             ->get();
 
         return view('User.Orden_Produccion.crear', compact([
@@ -243,9 +256,10 @@ class orden_produccionController extends Controller
     public function guardar(Request $request)
     {
         //dd($request);
-        $messages = array(
+        //$response = '';
+        /*$messages = array(
             'required' => 'El :attribute es un campo requerido',
-            'unique' => 'Ya existe una orden de trabajo para este turno'
+            'unique' => 'Ya existe una orden de trabajo con este codigo'
         );
 
         $validator = Validator::make($request->all(), [
@@ -254,67 +268,57 @@ class orden_produccionController extends Controller
             'fecha01' => 'required|date',
             'fecha02' => 'required|date',
             'hora01' => 'required',
-            'hora02' => 'required',
-            'hrsTrabajadas' => 'required|'
+            'hora02' => 'required'
         ], $messages);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
-        }
-        if ($request->hrsTrabajadas < 0) {
+            //return response($validator);
+        }*/
+        /*if ($request->hrsTrabajadas < 0) {
+
             return Redirect::back()->withErrors("Las horas trabajados no pueden ser menores a 0")->withInput();
-        }
-        if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
+        }*/
+        /*if (date("Y-m-d", strtotime($request->fecha02)) < date("Y-m-d", strtotime($request->fecha01))) {
             return Redirect::back()->withErrors("La fecha final no puede ser menor a la fecha inicial")->withInput();
-        }
-        /*if (date("H:i", strtotime($request->hora02)) < date("H:i", strtotime($request->hora01))) {
-            return Redirect::back()->withErrors("La hora final no puede ser menor a la hora inicial")->withInput();
         }*/
 
-        /*DB::transaction(function () use ($request){
+        if($request->ajax()){
+            try {
+                $orden_repetida= orden_produccion::where('numOrden', '=', $request->input('numOrden'))->first();
+                if(!is_null($orden_repetida)){
+                    return response()->json(true);
+                }else{
+                    DB::transaction(function () use ($request) {
 
-        });*/
-        /*$success = false; //flag
-        db::beginTransaction();
-        try {
-                $ordProd = new orden_produccion();
-                $ordProd->producto = $request->producto;
-                $ordProd->numOrden = $request->numOrden;
-                $ordProd->idUsuario = $request->jefe;
-                $ordProd->hrsTrabajadas = $request->hrsTrabajadas;
-                $ordProd->fechaInicio = date("Y-m-d", strtotime($request->fecha01));
-                $ordProd->fechaFinal = date("Y-m-d", strtotime($request->fecha02));
-                $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
-                $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
-                $ordProd->estado = 1;
-                $ordProd->save();
+                        $ordProd = new orden_produccion();
+                        $ordProd->numOrden = $request->input('numOrden');
+                        $ordProd->producto = $request->input('producto');
+                        $ordProd->idUsuario = $request->input('jefe');
+                        $ordProd->hrsTrabajadas = $request->input('hrsTrabajadas') <= 0 || $request->input('hrsTrabajadas') == "" ? 0 : $request->input('hrsTrabajadas');
+                        $ordProd->fechaInicio = date("Y-m-d", strtotime($request->input('fecha01')));
+                        $ordProd->fechaFinal = date("Y-m-d", strtotime($request->input('fecha02')));
+                        $ordProd->horaInicio = date("H:i", strtotime($request->input('hora01')));
+                        $ordProd->horaFinal = date("H:i", strtotime($request->input('hora02')));
+                        $ordProd->estado = 1;
+                        $ordProd->save();
 
-                $success = true;
-                if ($success) {
-                    DB::commit();
+                        return  response()->json($ordProd);
+                        //return redirect()->route('orden-produccion/editar/{id}', [$request->numOrden])->with('message-success', 'Se creo la Orden de Produccion con exito :)');
+                    });
                 }
-        } catch (\Exception $e){
-            DB::rollback();
-            $success = false;
-            return ["error" => $e->getMessage()];
 
-        }*/
+            } catch (Exception $e) {
+                $mensaje =  'Excepción capturada: ' . $e->getMessage() . "\n";
 
-        $ordProd = new orden_produccion();
-        $ordProd->producto = $request->producto;
-        $ordProd->numOrden = $request->numOrden;
-        $ordProd->idUsuario = $request->jefe;
-        $ordProd->hrsTrabajadas = $request->hrsTrabajadas;
-        $ordProd->fechaInicio = date("Y-m-d", strtotime($request->fecha01));
-        $ordProd->fechaFinal = date("Y-m-d", strtotime($request->fecha02));
-        $ordProd->horaInicio = date("H:i", strtotime($request->hora01));
-        $ordProd->horaFinal = date("H:i", strtotime($request->hora02));
-        $ordProd->estado = 1;
-        $ordProd->save();
+                return response()->json($mensaje);
+            }
 
-        //return ["success" => "Data Inserted"];
-        //return redirect()->route('orden-produccion');
-        return redirect()->back()->with('message-success', 'Se creo la Orden de Produccion con exito :)');
+        }
+
+
+        return redirect()->route('orden-produccion/editar/{id}', [$request->numOrden])->with('message-success', 'Se creo la Orden de Produccion con exito :)');
+
     }
 
     public function editar($idOP)
@@ -322,15 +326,20 @@ class orden_produccionController extends Controller
         $fibras = array();
         $quimicos = array();
         $i = 0;
+
         $usuarios = usuario::usuarioByRole();
         $orden = orden_produccion::where('numOrden', $idOP)->where('estado', 1)->get();
         $productos = productos::where('estado', 1)->get();
+
+        //return view('User.Orden_Produccion.editar', compact(['orden', 'usuarios', 'productos']));
+
         $fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
         $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
         $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
         $mp_directa = mp_directa::where('numOrden', $idOP)->get();
-        //$quimico_maquina = QuimicoMaquina::where('numOrden', $idOP)->get();
-        $quimico_maquina = QuimicoMaquina::select(
+        $quimico_maquina = QuimicoMaquina::where('numOrden', $idOP)->get();
+
+        /*$quimico_maquina = QuimicoMaquina::select(
             'quimico_maquina.*',
             'quimicos.descripcion',
             'maquinas.nombre',
@@ -341,6 +350,18 @@ class orden_produccionController extends Controller
             ->join('maquinas', 'quimico_maquina.idMaquina', '=', 'maquinas.idMaquina')
             ->where('quimico_maquina.numOrden', $idOP)
             ->get();
+        $mp_directa = mp_directa::select(
+            'mp_directa.*',
+            'fibras.descripcion',
+            'maquinas.nombre',
+            'fibras.idFibra',
+            'maquinas.idMaquina'
+        )
+            ->join('fibras', 'mp_directa.idFibra', '=', 'fibras.idFibra')
+            ->join('maquinas', 'mp_directa.idMaquina', '=', 'maquinas.idMaquina')
+            ->where('mp_directa.numOrden', $idOP)
+            ->get();*/
+        //dd($quimico_maquina, $mp_directa);
 
         return view('User.Orden_Produccion.editar', compact(
             'orden',
@@ -428,8 +449,13 @@ class orden_produccionController extends Controller
             $t_pulpeo_noche = 0;
         }
         if ($t_lavado) {
-            $t_lavado_dia = ($t_lavado->cantDia * $t_pulpeo->tiempoPulpeo) / 60;
-            $t_lavado_noche = ($t_lavado->cantNoche * $t_pulpeo->tiempoPulpeo) / 60;
+            if($t_pulpeo){
+                $t_lavado_dia = ($t_lavado->cantDia * $t_pulpeo->tiempoPulpeo) / 60;
+                $t_lavado_noche = ($t_lavado->cantNoche * $t_pulpeo->tiempoPulpeo) / 60;
+            } else {
+                $t_lavado_dia = 0;
+                $t_lavado_noche = 0;
+            }
         } else {
             $t_lavado_dia = 0;
             $t_lavado_noche = 0;
@@ -783,6 +809,12 @@ class orden_produccionController extends Controller
     public function guardarMP(Request $request)
     {
         $i = 0;
+        $countF = 0;
+        //$countMP_E = 0;
+        $arrayF_select = array();
+        $arrayF_select2 = array();
+        $j = 0;
+
         $numOrden = $request->input('codigo');
         $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
         $arrayFibra = $request->input('data');
@@ -790,9 +822,11 @@ class orden_produccionController extends Controller
             if ($request->isMethod('post')) {
                 $array = array();
                 if (is_null($arrayFibra)) {
-                    return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
+                    return response()->json(1);
+                    // return response("Por favor ingrese materia prima,los datos estan vacios)", 400);
                 } else {
                     foreach ($request->input('data') as $key) {
+                        array_push($arrayF_select, $key['fibra']);
                         if ($key['maquina'] !== 'undefined' && $key['fibra'] !== 'undefined' && $key['cantidad'] !== 'undefined') {
                             $array[$i]['id'] = $key['id'];
                             $array[$i]['numOrden'] = $key['orden'];
@@ -803,8 +837,24 @@ class orden_produccionController extends Controller
                             $i++;
                         }
                     }
-                    if (count($array) > 0) {
+                    if (count($array) >= 0) {
                         //mp_directa::where('numOrden', $numOrden)->delete();
+                        $arrayF_select2 = array_unique($arrayF_select);
+                        if (count($arrayF_select2) > 0) {
+                            foreach ($arrayF_select2 as $select_) {
+                                //echo "  MO #  " . $select_;
+                                $j++;
+                            }
+                            if (count($arrayF_select2) < count($arrayF_select)) {
+                                //return response()->json("Ha ingresado materias primas repetidas");
+                                return response("Oh no! Ha ingresado materias primas repetidas D:", 400);
+                            }/* else if (count($arrayF_select2) === count($arrayF_select)) {
+                                return response()->json("Ha ingresado materias primas diferentes");
+                            }*/
+
+                            //return response()->json(count($arrayF_select2));
+                            //return redirect()->back()->with('message-failed', 'No se guardo con exito :(, existe una materia prima repetida, por favor elija otra');
+                        }
                         foreach ($array as $dataMP) {
                             $mpE = mp_directa::where([
                                 ['numOrden', '=', $numOrden],
@@ -832,6 +882,8 @@ class orden_produccionController extends Controller
                                 $mpd->save();
                             }
                         }
+                        return response("El registro de fibras en la orden ha sido exitoso :)", 200);
+
                         /*mp_directa::where('numOrden', $numOrden)
                         ->update([
                             'estado' => 0
@@ -841,7 +893,6 @@ class orden_produccionController extends Controller
                     }
 
                     //return response()->json($response);
-                    return response("El registro de fibras en la orden ha sido exitoso :)", 200);
                 }
             }
             //return response("El registro de fibras en la orden ha sido exitoso :)", 200);
@@ -988,13 +1039,13 @@ class orden_produccionController extends Controller
                 $data[$i]['id'] = $key['id'];
                 $data[$i]['idMaquina'] = $key['idMaquina'];
 
-                $maquinas = maquinas::where([['idMaquina',$key['idMaquina']],['estado', 1]])->get(); // obtengo la maquina seleccionada
-                foreach($maquinas as $m){
+                $maquinas = maquinas::where([['idMaquina', $key['idMaquina']], ['estado', 1]])->get(); // obtengo la maquina seleccionada
+                foreach ($maquinas as $m) {
                     $data[$i]['nombreMaquina'] = $m['nombre'];
                 }
                 $data[$i]['idFibra'] = $key['idFibra'];
                 $fibras = fibras::where([['idfibra', $key['idFibra']], ['estado', 1]])->get(); //obtengo la fibra seleccionada
-                foreach($fibras as $f){
+                foreach ($fibras as $f) {
                     $data[$i]['nombreFibra'] = $f['descripcion'];
                 }
                 $data[$i]['numOrden'] = $key['numOrden'];
@@ -1003,23 +1054,23 @@ class orden_produccionController extends Controller
             }
         }
 
-       foreach ($qm_directa_ as $key) {
+        foreach ($qm_directa_ as $key) {
             if ($key['idMaquina'] !== '' && $key['idQuimico'] !== '' && $key['cantidad'] !== '') {
                 $data[$i]['id'] = $key['id'];
                 $data[$i]['idMaquina'] = $key['idMaquina'];
 
-                $maquinas = maquinas::where([['idMaquina',$key['idMaquina']],['estado', 1]])->get(); // obtengo la maquina seleccionada
-                foreach($maquinas as $m){
+                $maquinas = maquinas::where([['idMaquina', $key['idMaquina']], ['estado', 1]])->get(); // obtengo la maquina seleccionada
+                foreach ($maquinas as $m) {
                     $data[$i]['nombreMaquina'] = $m['nombre'];
                 }
                 $quimicos = Quimicos::where([['idQuimico', 1], ['estado', 1]])->get(); //obtengo el quimico seleccionado
-                foreach($quimicos as $q){
+                foreach ($quimicos as $q) {
                     $data[$i]['nombreQuimico'] = $q['descripcion'];
                 }
                 $data[$i]['idQuimico'] = $key['idQuimico'];
                 $data[$i]['numOrden'] = $key['numOrden'];
                 $data[$i]['cantidad'] = $key['cantidad'];
-               // $array[$i]['estado'] = 1;
+                // $array[$i]['estado'] = 1;
                 $i++;
             }
         }
@@ -1027,7 +1078,48 @@ class orden_produccionController extends Controller
 
         //return view('User.Orden_Produccion.crear', compact(['qm_directa_', 'maquinas', 'quimicos']));
     }
+
+    public function getOrdersProductions(){
+        $array = array();
+        $i = 0;
+        $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
+
+        if (count($ord_produccion) > 0) {
+            foreach ($ord_produccion as $key) {
+                $array[$i]['idOrden'] = $key['idOrden'];
+                $array[$i]['numOrden'] = $key['numOrden'];
+                $fibra = productos::select('nombre')->where('idProducto', $key['producto'])->get()->first();
+                $array[$i]['producto'] = $fibra->nombre;
+
+                /** Produccion Real **/
+                $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
+                    $array[$i]['prod_real'] = 0;
+                } else {
+                    $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
+                }
+
+                /** Merma Total **/
+                $detalle_merma_total = DetalleProduccion::select('merma_total')->where('numOrden', $key['numOrden'])->get()->first();
+                if (is_null($detalle_merma_total) || $detalle_merma_total == '') {
+                    $array[$i]['merma_total'] = 0;
+                } else {
+                    $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
+                }
+
+
+                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+
+                $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
+                $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
+                $array[$i]['estado'] = $key['estado'];
+                $i++;
+            }
+        }
+        return response()->json($array);
+    }
 }
+
 
 class orden
 {
@@ -1051,11 +1143,13 @@ class orden
     public $porcentResiduosPulper;
     public $porcentLavadoraTetrapack;
     public $electricidad;
-    public $consumoAgua;
+    public $consumo_agua;
     public $consumoGas;
     public $factorFibral;
+    public $Tonelada_dia;
 
-    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal, $estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumoAgua, $consumoGas, $factorFibral)
+
+    public function __construct($idOrden, $numOrden, $producto, $usuario, $hrsTrabajadas, $fechaInicio, $fechaFinal, $horaInicio, $horaFinal, $produccionNeta, $produccionTotal, $estandar_electricidad, $estandar_gas, $mermaYankeeDry, $residuosPulper, $lavadoraTetrapack, $porcentMermaYankeeDry, $porcentResiduosPulper, $porcentLavadoraTetrapack, $electricidad, $consumo_agua, $consumoGas, $factorFibral, $Tonelada_dia)
     {
         $this->idOrden = $idOrden;
         $this->numOrden = $numOrden;
@@ -1077,8 +1171,9 @@ class orden
         $this->porcentResiduosPulper = $porcentResiduosPulper;
         $this->porcentLavadoraTetrapack = $porcentLavadoraTetrapack;
         $this->electricidad = $electricidad;
-        $this->consumoAgua = $consumoAgua;
+        $this->consumo_agua = $consumo_agua;
         $this->consumoGas = $consumoGas;
         $this->factorFibral = $factorFibral;
+        $this->Tonelada_dia = $Tonelada_dia;
     }
 }

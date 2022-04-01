@@ -1,6 +1,5 @@
 <script type="text/javascript">
-    var dtMPD;
-    var dtQM;
+    var dtMPD, dtQM, dtProduccion;
     var indicador_1 = 0;
 
     /******** Cargar funcion al inicio del DOM ************/
@@ -10,6 +9,90 @@
                 format: 'LT'
             });
         });
+
+        dtProduccion = $('#tblOrder_produccion').DataTable({ // Costos por ORDEN
+            "ajax": {
+                "url": "getOrder_produccion",
+                'dataSrc': '',
+            },
+            "order": [
+                [0, "desc"]
+            ],
+            "destroy": true,
+            "bPaginate": true,
+            "info": false,
+            "pagingType": "full",
+            "language": {
+                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "search": "BUSCAR",
+                "oPaginate": {
+                    sNext: " Siguiente ",
+                    sPrevious: " Anterior ",
+                    sFirst: "Primero ",
+                    sLast: " Ultimo",
+                },
+            },
+            "columns": [{
+                    "title": "NO. ORDEN",
+                    "data": "numOrden"
+                },
+                {
+                    "title": "PRODUCTO",
+                    "data": "producto"
+                },
+                {
+                    "title": "FECHA INICIO",
+                    "data": "fechaInicio",
+                },
+                {
+                    "title": "FECHA FINAL",
+                    "data": "fechaFinal"
+                },
+                {
+                    "title": "PROD.REAL(kg)",
+                    "data": "prod_real"
+                },
+                {
+                    "title": "PROD.TOTAL(kg)",
+                    "data": "prod_total"
+                },
+                {
+                    "title": "ESTADO",
+                    "data": "estado",
+                    "render": function(data, type, row) {
+                        if (data) {
+                            return '<span class = "badge badge-success"> Activo </span>'
+                        } else {
+                            return '<span class = "badge badge-danger" > Inactivo </span>'
+                        }
+                    }
+                },
+                {
+                    "title": "OPCIONES",
+                    "data": "numOrden",
+                    "render": function(data, type, row) {
+                        return  '<a href="orden-produccion/reporte/' + data + '" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>' +
+                                '<a href="orden-produccion/editar/' + data + '" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>' +
+                                '<a href="orden-produccion/detalle/' + data + '" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
+                    }
+                },
+            ],
+            "columnDefs": [{
+                    "targets": [0],
+                    "className": "dt-center",
+                }
+            ]
+        });
+
+        $("#tblOrder_produccion_filter").hide();
+        $("#tblOrder_produccion_length").hide();
+        $('#cont_search').show();
+        $('#InputBuscar').on('keyup', function() {
+            var table = $('#tblOrder_produccion').DataTable();
+            table.search(this.value).draw();
+        });
+
         /****** Fibras - Agregar filas ******/
         dtMPD = $('#dtMPD').DataTable({
             "destroy": true,
@@ -59,6 +142,7 @@
             dtQM.row('.selected').remove().draw(false);
         });
     });
+
     /****** Fibras - Añadir o remover filas ******/
     $('#dtMPD tbody').on('click', 'tr', function(e) {
         e.preventDefault();
@@ -206,31 +290,13 @@
         })
     });
 
-    /********** Guardar datos de orden de produccion ***********/
-    $(document).on('click', '#btnguardar', function(e) {
-        /*var table_qm = $('#dtQM').DataTable();
-        var form_data_qm  = table_qm.rows().data().toArray();
-        $.each( form_data_qm, function( key, item ) {
-            var id_txt = $(item[3]).attr('id')
-            var xd = $("#" + id_txt).val();
 
-            console.log(xd);
-        });*/
-        e.preventDefault();
-        //codigo = $('#numOrden').val();
-        if (validarForm(e) !== true) {
-            return false
-        } else {
-            $("#formdataord").submit();
-        }
-    });
-    /********** Guardar datos de orden de produccion ***********/
 
     /********** Guardar informacion de fibras ***********/
     $(document).on('click', '#btnGFibras', function(e) {
         e.preventDefault();
         var codigo = $('#numOrden').val();
-        
+        //alert(codigo);
         var i = 0;
         /********** variables de Fibras ***********/
         //var last_row = dtMPD.row(":last").data();
@@ -282,20 +348,29 @@
                 async: true,
                 success: function(response) {
                     //console.log('Exito en guardar fibras');
-                    mensaje(response.responseText, 'success');
+                    //alert(response);
+                    if (response == 1) {
+                        mensaje("Ingrese materias primas por favor ", 'error');
+                    } else if (response == 2) {
+                        mensaje("No se guardo con exito :(, ya existe esta materia prima, por favor elija otra ", 'error');
+                    } else if (response == false) {
+                        mensaje(response.responseText, 'error');
+                    } else {
+                        mensaje(response.responseText, 'success');
+                    }
                 },
                 error: function(response) {
                     mensaje(response.responseText, 'error');
                 }
             }).done(function(data) {
-                location.reload();
+                // location.reload();
             });
             //console.log('El arreglo esta vacio :(');
+
+        } else {
             return mensaje('Los datos en materia prima estan vacios :(', 'error');
-
         }
-
-        /********** Ajax de Quimicos ***********/
+        /********** Ajax de Fibras ***********/
     });
     /********** Guardar informacion de fibras ***********/
 
@@ -364,7 +439,7 @@
                     mensaje(response.responseText, 'error');
                 }
             }).done(function(data) {
-                location.reload();
+                //location.reload();
             });
         } else {
             //console.log('El arreglo esta vacio :(');
@@ -372,84 +447,14 @@
         }
         /********** Ajax de Quimicos ***********/
     });
-
     /********** Guardar informacion de quimicos ***********/
 
-    /********** funciones extras para validacion ***********/
-    function soloNumeros(caracter, e, numeroVal) {
-        var numero = numeroVal;
-        if (String.fromCharCode(caracter) === "." && numero.length === 0) {
-            e.preventDefault();
-            mensaje('No puedes iniciar con un punto', 'warning');
-        } else if (numero.includes(".") && String.fromCharCode(caracter) === ".") {
-            e.preventDefault();
-            mensaje('No puede haber mas de dos puntos', 'warning');
-        } else {
-            const soloNumeros = new RegExp("^[0-9]+$");
-            if (!soloNumeros.test(String.fromCharCode(caracter)) && !(String.fromCharCode(caracter) === ".")) {
-                e.preventDefault();
-                mensaje('No se pueden escribir letras, solo se permiten datos númericos', 'warning');
-            }
-        }
-    }
 
-    $('#hrsTrabajadas').on('keypress', function(e) {
-        soloNumeros(e.keyCode, e, $('#hrsTrabajadas').val());
-    });
 
-    function validarForm(e) {
-        e.preventDefault();
-        var codigo = $('#numOrden').val();
-        var fecha1 = $("#fecha01").val();
-        var fecha2 = $("#fecha02").val();
-        var horaInicio = $("#hora01").val();
-        var horaFin = $("#hora02").val();
-        var horasT = $("#hrsTrabajadas").val();
-        var last_row = dtMPD.row(":last").data();
-        var last_rowq = dtQM.row(":last").data();
 
-        /*if (typeof (last_row) === "undefined") {
-            //e.preventDefault();
-            mensaje("Ingrese al menos un registro en la tabla de Materia Prima Directa", "error");
-            return false;
 
-        } else if (typeof (last_rowq) === "undefined") {
-            //e.preventDefault();
-            mensaje("Ingrese al menos un registro en la tabla de Quimicos directos", "error");
-            return false;
 
-        } else */
 
-        if (fecha1 === '') {
-            //e.preventDefault();
-            mensaje("Debe ingresar una fecha inicial para la orden", "error");
-            return false;
-
-        } else if (fecha2 === '') {
-            //e.preventDefault();
-            mensaje("Debe ingresar una fecha final para la orden", "error");
-            return false;
-
-        } else if (horaInicio === '') {
-            //e.preventDefault();
-            mensaje("Debe ingresar una hora inicial para la orden", "error");
-            return false;
-
-        } else if (horaFin === '') {
-            //e.preventDefault();
-            mensaje("Debe ingresar una hora final para la orden", "error");
-            return false;
-
-        } else if (horasT === '') {
-            mensaje("Debe ingresar una horas trabajadas de la orden", "error");
-            return false;
-        } else if (codigo === '') {
-            //e.preventDefault();
-            mensaje("Debe ingresar un numero de orden", "error");
-            return false;
-        }
-        return true;
-    }
     /*********** Cargar registros en datatable**************/
     $(window).on("load", function() {
         var numOrden = $('#numOrden').val();
@@ -469,12 +474,12 @@
                         option1 += `<option value='` + element.idFibra + `'>` + element.nombreFibra + `</option>`
                         option2 += `<option value='` + element.idMaquina + `'>` + element.nombreMaquina + `</option>`
                         dtMPD.row.add([
-                            element.id,`<select disabled class="mb-3 form-control " id="maquinaf-prev-` +  element.id + `">` + option2 + `</select>`,
-                            `<select disabled class="mb-3 form-control" id="fibras-prev-` +  element.id + `">` + option1 + `</select>`,
+                            element.id, `<select disabled class="mb-3 form-control " id="maquinaf-prev-` + element.id + `">` + option2 + `</select>`,
+                            `<select disabled class="mb-3 form-control" id="fibras-prev-` + element.id + `">` + option1 + `</select>`,
                             `<input required="required" class="input-dt" type="text"  placeholder="Cantidad" id="cantidadf-prev-` +
                             element.id + `" onpaste="return false" value="` + element.cantidad + `" >`,
                         ]).draw(false);
-                    } 
+                    }
                     if (element.idQuimico != null) {
                         var option1q = '';
                         var option2q = '';
@@ -482,16 +487,16 @@
                         option2q += `<option value='` + element.idMaquina + `'>` + element.nombreMaquina + `</option>`
                         dtQM.row.add([
                             element.id,
-                            `<select disabled class="mb-3 form-control " id="maquinaq-prev-` +  element.id + `">` + option2q + `</select>`,
-                            `<select disabled class="mb-3 form-control" id="quimicos-prev-` +  element.id + `">` + option1q + `</select>`,
+                            `<select disabled class="mb-3 form-control " id="maquinaq-prev-` + element.id + `">` + option2q + `</select>`,
+                            `<select disabled class="mb-3 form-control" id="quimicos-prev-` + element.id + `">` + option1q + `</select>`,
                             `<input required="required" class="input-dt qm-cant" type="text"  placeholder="Cantidad" id="cantidadq-prev-` +
                             element.id + `" onpaste="return false" value="` + element.cantidad + `" >`,
                         ]).draw(false);
-                    } 
+                    }
                 });
             },
             error: function(data) {
-                console.log('Fuck no funciono');
+
             }
         });
     });

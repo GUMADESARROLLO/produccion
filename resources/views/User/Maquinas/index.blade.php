@@ -18,8 +18,8 @@
                                     <h5 class="m-b-10">Maquinas</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="javascript:">Maquinas</a></li>
                                 </ul>
                             </div>
@@ -38,7 +38,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h5>Lista de Maquinas</h5>
-                                    </div>  
+                                    </div>
                                     <div class="card-block table-border-style">
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="dtFibras">
@@ -61,7 +61,7 @@
                                                             @else
                                                             <span class="badge badge-danger">Inactivo</span>
                                                             @endif
-                                                        </td>                                                        
+                                                        </td>
                                                         <td class="dt-center">
                                                             <a href="#!" onclick="deleteMaquina({{$maq->idMaquina}})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
                                                             <a href="maquina/editar/{{ $maq->idMaquina }}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>

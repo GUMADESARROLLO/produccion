@@ -5,10 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\configuracionModel;
-use App\Models\turnos;
+use App\Models\Turno;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
-use DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class configuracionController extends Controller
 {
@@ -19,16 +19,16 @@ class configuracionController extends Controller
 
     public function index()
     {
-        return view('User.Configuracion.index');
+        //return view('User.Configuracion.index');
     }
 
     public function turnos() {
-        $turnos = turnos::where('estado', 1)->orderBy('horaInicio', 'asc')->get();
+        $turnos = Turno::where('estado', 1)->orderBy('horaInicio', 'asc')->get();
         $message = [
             'mensaje' =>  '',
             'tipo' => ''
         ];
-        return view('User.Turnos.index', compact('turnos', 'message'));
+        //return view('User.Turnos.index', compact('turnos', 'message'));
     }
 
     public function crearTurno() {
@@ -36,11 +36,11 @@ class configuracionController extends Controller
             'mensaje' =>  '',
             'tipo' => ''
         ];
-        return view('User.Turnos.crear', $message);
+        //return view('User.Turnos.crear', $message);
     }
 
     public function validaSiExisteElTurno($time1, $time2) {
-        $validador = DB::table('turnos')
+        $validador = DB::table('turno')
             ->where('estado', 1)
             ->when($time1, function ($query) use ($time1) {
                 return $query->where('horaFinal','>', $time1);
@@ -74,11 +74,11 @@ class configuracionController extends Controller
         $time1 = date("H:i", strtotime($request->horaInicio));
         $time2 = date("H:i", strtotime($request->horaFin));
         $validateHora = configuracionController::validaSiExisteElTurno($time1, $time2);
-        
+
         if ($validateHora) {
             return redirect()->back()->with('message-error', 'El horario especificado coincide con otro turno guardado previamente :/');
         }else {
-            $turnos = new turnos();
+            $turnos = new Turno();
             $turnos->turno = $request->nombre;
             $turnos->horaInicio = date("H:i", strtotime($request->horaInicio));
             $turnos->horaFinal = date("H:i", strtotime($request->horaFin));
@@ -91,18 +91,18 @@ class configuracionController extends Controller
     }
 
     public function editarTurno($idTurno) {
-        $turnos = turnos::where('idTurno', $idTurno)->get()->toArray();
+        $turnos = Turno::where('idTurno', $idTurno)->get()->toArray();
 
         $message = [
             'mensaje' =>  '',
             'tipo' => ''
         ];
 
-        return view('User.Turnos.editar', compact(['message', 'turnos']));
+        //return view('User.Turnos.editar', compact(['message', 'turnos']));
     }
 
     public function eliminarTurno($idTurno) {
-        turnos::where('idTurno', $idTurno)
+        Turno::where('idTurno', $idTurno)
         ->update([
             'estado' => 0
         ]);
@@ -119,17 +119,20 @@ class configuracionController extends Controller
             'horaFin' => 'required'
         ]);
 
-        if ($validatedData) {
+        if ($validatedData)
+        {
             $idTurno    = $request->idTurno;
             $time1      = date("H:i:s", strtotime($request->horaInicio));
             $time2      = date("H:i:s", strtotime($request->horaFin));
 
-            $turnos = turnos::where('idTurno', $request->idTurno)->get()->toArray();
+            $turnos = Turno::where('idTurno', $request->idTurno)->get()->toArray();
 
-            if ( count($turnos)>0 ) {
+            if ( count($turnos)>0 )
+            {
 
-                if ( $turnos[0]['horaInicio']==$time1 && $turnos[0]['horaFinal']==$time2 ) {
-                    turnos::where('idTurno', $idTurno)
+                if ( $turnos[0]['horaInicio']==$time1 && $turnos[0]['horaFinal']==$time2 )
+                {
+                    Turno::where('idTurno', $idTurno)
                     ->update([
                     'turno'          => $request->nombre,
                     'descripcion'    => ($request->descripcion=='')?'N/D':$request->descripcion
@@ -137,9 +140,10 @@ class configuracionController extends Controller
 
                     return redirect()->action('User\configuracionController@editarTurnoSuccess');
 
-                }else {
+                }
+                else {
 
-                    turnos::where('idTurno', $idTurno)
+                    Turno::where('idTurno', $idTurno)
                     ->update([
                         'estado'          => 0
                     ]);
@@ -160,7 +164,7 @@ class configuracionController extends Controller
                             'tipo' => 'alert alert-success'
                         ];
 
-                        turnos::where('idTurno', $request->idTurno)
+                        Turno::where('idTurno', $request->idTurno)
                             ->update([
                                 'turno'          => $request->nombre,
                                 'horaInicio'     => date("H:i", strtotime($request->horaInicio)),

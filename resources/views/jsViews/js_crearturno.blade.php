@@ -38,9 +38,9 @@ function deleteTurno(idTurno) {
     }).then((result) => {
       mensaje('Actualizado con exito', 'success');
       if (result.value) {
-        $.getJSON("turnos/eliminar/"+idTurno, function(json) { 
+        $.getJSON("turno/eliminar/"+idTurno, function(json) {
             if (json==true) {
-                location.reload();                
+                location.reload();
             }
         })
       }

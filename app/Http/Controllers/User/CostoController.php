@@ -33,7 +33,7 @@ class CostoController extends Controller
         );
 
         $validator = Validator::make($request->all(), [
-            'codigocosto' => 'required|numeric|digits_between:1,11',
+            'codigocosto' => 'required',
             'descripcioncosto' => 'required',
             'unidadmedidacosto' => 'required'
         ], $messages);
@@ -67,9 +67,9 @@ class CostoController extends Controller
         );
 
         $validator = Validator::make($request->all(), [
-            'codigo' => 'required|digits_between:1,11',
+            'codigo' => 'required',
             'descripcion' => 'required',
-            'unidad_medida' => 'required|digits_between:1,11'
+            'unidad_medida' => 'required'
         ], $messages);
 
         if ($validator->fails()) {
@@ -84,6 +84,11 @@ class CostoController extends Controller
             ]);
 
         return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
+    }
+    public function getCostos()
+    {
+        $costo = costo::where('estado', 1)->orderBy('id', 'asc')->get();
+        return response()->json($costo);
     }
 
 }

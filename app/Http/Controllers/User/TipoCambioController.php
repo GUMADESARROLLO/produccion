@@ -9,29 +9,19 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-
-//use Redirect;
-
 class TipoCambioController extends Controller
 {
 
-    /*public function index()
-    {
-        $TipoCambio = TipoCambio::where('estado', 1)->orderBy('id', 'asc')->get();
-
-        $TipoCambio = DB::connection('sql')->table('FACTURA')->select('TIPO_CAMBIO')->get()->last();
-
-
-        return view('User.Costo.index', compact('costo'));
-    }*/
-
     public function getTipoCambio($date){
         $json = array();
+
+
         $date_tc = date('Y-m-d H:i:s'.'.000', strtotime($date));
+        
         $TipoCambio = TipoCambio::where('FECHA', '=', $date_tc)->pluck('MONTO')->first();
         $json[0]['TipoCambio'] = number_format($TipoCambio,4);
-        return response()->json($json);
 
+        return response()->json($json);
     }
 
     public function actualizarTC(Request $request){
@@ -39,9 +29,6 @@ class TipoCambioController extends Controller
         ->update([
             'tipo_cambio' => $request->input('tasaCambio'),
         ]);
-       
-  
-
         return response()->json($response);
     }
 

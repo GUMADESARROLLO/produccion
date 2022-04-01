@@ -8,5 +8,5 @@ class TipoCambio extends Model
 {
     protected $connection = 'sqlsrv';
     public $timestamps = false;
-    protected $table = "umk.TIPO_CAMBIO_HIST";
+    protected $table = "Softland.umk.TIPO_CAMBIO_HIST";
 }

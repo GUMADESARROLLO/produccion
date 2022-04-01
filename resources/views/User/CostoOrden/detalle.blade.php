@@ -17,9 +17,9 @@
                                     <h5 class="m-b-10">Lista Costos por Orden</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                     </li>
-                                    <!--<li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/costo-orden')}}">Lista de
                                             ordenes</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:"> Lista de Costos por Orden</a>
@@ -59,7 +59,7 @@
                                                 <thead>
                                                     <tr class="text-center">
 
-                                                        <th>ID</th>
+                                                        <th>#</th>
                                                         <th>DESCRIPCIÓN</th>
                                                         <th>UNIDAD DE MEDIDA</th>
                                                         <th>CANTIDAD</th>
@@ -71,7 +71,7 @@
                                                 <tbody>
                                                     @foreach ($costoOrdenL as $key => $co)
                                                     <tr class="unread">
-                                                        <td class="dt-center">{{ $co->costo_id }}</td>
+                                                        <td class="dt-center">{{ $key+1 }}</td>
                                                         <td class="dt-center">{{ $co->descripcion }}</td>
                                                         <td class="dt-center">{{ $co->unidad_medida }}</td>
                                                         <td class="dt-center">{{ $co->cantidad }}</td>
@@ -79,8 +79,8 @@
 
 
                                                         <td class="dt-center">
-                                                            <a href="#!" onclick="deleteCostoOrden()"><i
-                                                                    class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>
+                                                            <!--<a href="#!" onclick="deleteCostoOrden()"><i
+                                                                    class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>-->
                                                             <a href="editar/{{ $co->id }}" target="_blank"
                                                                 id="btnEditar">
                                                                 <i
@@ -97,9 +97,9 @@
                                                         </th>
                                                         <th>
                                                             @if(isset($detalle_orden))
-                                                            <h5 id="ctCordobas">C$ {{ number_format($detalle_orden,2) }}</h5>
+                                                            <h5 id="ctCordobas">{{ number_format($detalle_orden,2) }}</h5>
                                                             @else
-                                                            <h5 id="ctCordobas">C$ {{ number_format(0,2) }}</h5>
+                                                            <h5 id="ctCordobas">{{ number_format(0,2) }}</h5>
                                                             @endif
                                                         </th>
                                                     </tr>
@@ -242,7 +242,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h4 class=" text-center text-danger mb-0" id="tasaCambio">C$ 0.0000</h4>
+                                <h4 class=" text-center text-danger mb-0" >C$<span aria-hidden="true" id="tasaCambio"> 0.0000 </span></h4>
                                 <div class="form-group">
                                     <label for="fechatc">Fecha</label>
                                         <input type="text" class="input-fecha form-control" name="fechatc" id="fechatc">

@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class configuracionModel extends Model {
 
     public static function getTurnos() {
-        return DB::table('turnos')->where('estado',1)->orderby('idTurno', 'asc')->get()->toArray();        
-    }   
+        return DB::table('turno')->where('estado',1)->orderby('idTurno', 'asc')->get()->toArray();
+    }
 
 }

@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Quimicos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Redirect;
-
-
-
+use Illuminate\Support\Facades\Redirect;
 
 class QuimicoController extends Controller
 {
@@ -33,12 +30,14 @@ class QuimicoController extends Controller
     {
 
         $messages = array(
-            'required' => 'El :attribute es un campo requerido'
+            'required' => 'El :attribute es un campo requerido',
+            'unique' => 'El :attribute es un dato unico'
         );
 
         $validator = Validator::make($request->all(), [
             'descripcion' => 'required|max:100',
-            'codigo'        => 'required|max:20'
+            'codigo'        => 'required|max:20|unique:Quimicos',
+            'unidad'        => 'required|max:20'
         ], $messages);
 
         if ($validator->fails()) {
@@ -49,10 +48,11 @@ class QuimicoController extends Controller
         $quimico = new Quimicos();
         $quimico->codigo  = $request->codigo;
         $quimico->descripcion  = $request->descripcion;
+        $quimico->unidad  = $request->unidad;
         $quimico->estado  = 1;
         $quimico->save();
 
-        return redirect()->back()->with('message-success', 'Se guardo con exito :)');
+        return redirect()->back()->with('message-success', 'Se guardo el quimico con exito :)');
     }
 
     public function editarQuimico($quimico)
@@ -72,8 +72,9 @@ class QuimicoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'idQuimico' =>'required',
-            'codigo' =>'required|max:20',
-            'descripcion' => 'required|max:100'
+            'codigo' =>'required|max:20|unique:Quimicos',
+            'descripcion' => 'required|max:100',
+            'unidad' => 'required|max:100'
         ], $messages);
 
         if ($validator->fails()) {
@@ -83,10 +84,11 @@ class QuimicoController extends Controller
         Quimicos::where('idQuimico', $request->idQuimico)
             ->update([
                 'codigo'               => $request->codigo,
-                'descripcion'          => $request->descripcion
+                'descripcion'          => $request->descripcion,
+                'unidad'               => $request->unidad
             ]);
 
-        return redirect()->back()->with('message-success', 'Se actualizo el producto con exito :)');
+        return redirect()->back()->with('message-success', 'Se actualizo el quimico con exito :)');
     }
 
     public function eliminarQuimico($idQuimico) {
@@ -97,5 +99,10 @@ class QuimicoController extends Controller
 
         return (response()->json(true));
     }
-    //
+
+    public function getQuimicos() {
+        $fibras = Quimicos::where('estado', 1)->get();
+
+        return response()->json($fibras);
+    }
 }

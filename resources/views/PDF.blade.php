@@ -215,14 +215,25 @@
                 </tr>
                 <tr>
                     <th class="text-left cell-color">COSTO UNITARIO (KG)</th>
-                    <td WIDTH="100px" class="text-center">C$ {{ number_format(($do->costo_total/($do->prod_real + $do->merma_total)),2)}}</td>
-                    <td WIDTH="100px" class="text-center">$ {{ number_format((($do->costo_total/($do->prod_real + $do->merma_total))/$do->tipo_cambio),2)}}</td>
+                    <td WIDTH="100px" class="text-center">C$ {{ number_format(($do->costo_total/($do->prod_real + $do->merma_total)),4)}}</td>
+                    @if ($do->tipo_cambio == 0)
+                    <td WIDTH="100px" class="text-center">$ {{ number_format(0,4)}}</td>
 
+                    @else
+                    <td WIDTH="100px" class="text-center">$ {{ number_format((($do->costo_total/($do->prod_real + $do->merma_total))/$do->tipo_cambio),4)}}</td>
+
+                    @endif
+                    
                 </tr>
                 <tr>
                     <th class="text-left cell-color">COSTO (TON)</th>
-                    <td class="text-center">C$ {{ number_format((($do->costo_total/($do->prod_real + $do->merma_total))*1000),2)}}</td>
-                    <td class="text-center">$ {{ number_format(((($do->costo_total/($do->prod_real + $do->merma_total))*1000)/$do->tipo_cambio),2)}}</td>
+                    <td class="text-center">C$ {{ number_format((($do->costo_total/($do->prod_real + $do->merma_total))*1000),4)}}</td>
+                    @if ($do->tipo_cambio == 0)
+                    <td class="text-center">$ {{ number_format(0,4)}}</td>
+                    @else
+                    <td class="text-center">$ {{ number_format(((($do->costo_total/($do->prod_real + $do->merma_total))*1000)/$do->tipo_cambio),4)}}</td>
+                    @endif
+                    
                 </tr>
             </table>
         </div>
@@ -246,14 +257,14 @@
                         <td class="dt-center">{{ $co->codigo}}</td>
                         <td class="dt-center text-left">{{ $co->descripcion }}</td>
                         <td class="dt-center">{{ $co->unidad_medida }}</td>
-                        <td class="dt-center text-right">{{ number_format($co->cantidad,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,2)}}</td>
-                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,2) }}</td>
+                        <td class="dt-center text-right">{{ number_format($co->cantidad,4)}}</td>
+                        <td class="dt-center text-right">C$ {{ number_format($co->costo_unitario,4)}}</td>
+                        <td class="dt-center text-right">C$ {{ number_format($co->subtotal,4) }}</td>
                     </tr>
                     @endforeach
                     <tr>
                         <td class="text-right" colspan="5" > <strong>COSTO TOTAL</strong> </td>
-                        <td class="text-right">C$ {{number_format($do->costo_total,2)}}</td>
+                        <td class="text-right">C$ {{number_format($do->costo_total,4)}}</td>
                     </tr>
                 </tbody>
             </table>

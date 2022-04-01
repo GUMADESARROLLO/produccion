@@ -17,9 +17,9 @@
                                         <h5 class="m-b-10">Nuevo Producto</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                        <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                         <li class="breadcrumb-item"><a href="{{url('/productos')}}">Productos</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Nuevo</a></li>
                                     </ul>
@@ -56,7 +56,7 @@
                                             <form method="post" action="{{url('producto/guardar')}}">
                                                 {{ csrf_field() }}
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="codigo">Codigo del Producto</label>
                                                             <input type="text" class="form-control" name="codigo"
@@ -65,13 +65,31 @@
                                                                 el codigo del nuevo producto</small>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="nombre">Nombre del Producto</label>
                                                             <input type="text" class="form-control" name="nombre"
                                                                    id="nombre" value="{{old('nombre')}}">
                                                             <small id="nombreHelp" class="form-text text-muted">Escriba
                                                                 el nombre del nuevo producto</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="descripcion">Descripcion del Producto</label>
+                                                            <input type="text" class="form-control" name="descripcion"
+                                                                   id="descripcion" value="{{old('descripcion')}}">
+                                                            <small id="descripcionHelp" class="form-text text-muted">Escriba
+                                                                la descripcion del nuevo producto</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="unidad">Unidad de Medida del Producto</label>
+                                                            <input type="text" class="form-control" name="unidad"
+                                                                   id="unidad" value="{{old('unidad')}}">
+                                                            <small id="unidadHelp" class="form-text text-muted">Escriba
+                                                                la unidad del nuevo producto</small>
                                                         </div>
                                                     </div>
                                                 </div>

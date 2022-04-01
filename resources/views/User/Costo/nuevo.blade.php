@@ -17,9 +17,9 @@
                                         <h5 class="m-b-10">Nuevo Costo</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                         <li class="breadcrumb-item"><a href="{{url('/costos')}}">Costos</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Nuevo</a></li>
                                     </ul>
@@ -56,7 +56,7 @@
                                             <form method="post" action="{{url('costos/guardar')}}">
                                                 {{ csrf_field() }}
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="codigocosto">Codigo del costo</label>
                                                             <input type="text" class="form-control" name="codigocosto"
@@ -65,9 +65,8 @@
                                                                 el codigo del nuevo costo</small>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
+
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="descripcioncosto">Descripcion del costo</label>
                                                             <input type="text" class="form-control"
@@ -77,9 +76,8 @@
                                                                 la descripcion del nuevo costo</small>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
+
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="unidadmedidacosto">Unidad de Medida del
                                                                 costo</label>

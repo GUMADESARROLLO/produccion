@@ -17,8 +17,8 @@
                                     <h5 class="m-b-10">Editar Fibra</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
+                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
                                     <li class="breadcrumb-item"><a href="{{url('/fibras')}}">Fibras</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:">Editar Fibra</a></li>
                                 </ul>
@@ -56,25 +56,32 @@
                                             {{ csrf_field() }}
                                             @foreach ($fibra as $f)
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-3" hidden>
                                                     <div class="form-group">
                                                         <label for="idFibra">Id del Producto</label>
                                                         <input type="text" readonly class="form-control" name="idFibra" id="idFibra" value="{{ $f['idFibra'] }}">
                                                         <small id="idFibraHelp" class="form-text text-muted">Id de la Fibra</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="codigo">Código del producto</label>
                                                         <input type="text"  class="form-control" name="codigo" id="codigo" value="{{ $f['codigo'] }}">
                                                         <small id="idFibraHelp" class="form-text text-muted">Código de la Fibra</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="nombre">Nombre del Fibra</label>
                                                         <input type="text" class="form-control text-uppercase" name="nombre" id="nombre" value="{{ $f['descripcion'] }}">
                                                         <small id="nombreHelp" class="form-text text-muted">Escriba el nuevo nombre de la Fibra</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="unidad">Unidad de la Fibra</label>
+                                                        <input type="text" class="form-control text-uppercase" name="unidad" id="unidad" value="{{ $f['unidad'] }}">
+                                                        <small id="unidadHelp" class="form-text text-muted">Escriba la nueva unidad de la Fibra</small>
                                                     </div>
                                                 </div>
                                             </div>
