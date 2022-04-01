@@ -322,7 +322,7 @@
                                                     <div class="tab-pane fade show active" id="nav-mp" role="tabpanel" aria-labelledby="navMP">
                                                         <div class="row">
                                                             <div class="col-sm-12">
-                                                                <table id="tblMP" class="table table-hover table-bordered mt-3">
+                                                                <table id="tblMP" class="table table-hover table-bordered mt-3 border-top-0 border-bottom-0 border-right-0">
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -449,9 +449,7 @@
                                                 </div>
                                             </div>
                                             <div class="container d-flex justify-content-end">
-                                                <button class="btn btn-primary mt-3 add-row-dt-hp mr-0" id="btn_guardar_comment" type="submit">
-                                                    GUARDAR
-                                                </button>
+                                                <button class="btn btn-primary mt-3 add-row-dt-hp mr-0" id="btn_guardar_comment" type="submit">GUARDAR</button>
                                             </div>
                                         </div>
                                     </div>

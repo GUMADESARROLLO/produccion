@@ -6,28 +6,28 @@
             var table = $('#tblConversion').DataTable();
             table.search(this.value).draw();
         });
-        
+
 
         inicializaControlFecha();
         getOrdenes();
-       
+
         $("#id_search_desde, #id_search_hasta").on('click', function() {
             getOrdenes();
         })
     });
 
-    function getOrdenes(){
+    function getOrdenes() {
 
-        f1  = $("#id_fecha_desde").val();
-        f2  = $("#id_fecha_hasta").val();
+        f1 = $("#id_fecha_desde").val();
+        f2 = $("#id_fecha_hasta").val();
 
-        $('#tblConversion').DataTable({            
-            'ajax':{
-            'url':'getOrdenes',
-            'dataSrc': '',
+        $('#tblConversion').DataTable({
+            'ajax': {
+                'url': 'getOrdenes',
+                'dataSrc': '',
                 data: {
-                    'f1' : f1,
-                    'f2' : f2,
+                    'f1': f1,
+                    'f2': f2,
                 }
             },
             "destroy": true,
@@ -55,7 +55,7 @@
                     "title": "N° ORDEN",
                     "data": "num_orden",
                     "render": function(data, type, row, meta) {
-                        return '<span class="text-primary" onclick="Editar(' + row.id + ')">'+data+'</span>' 
+                        return '<span class="text-primary" onclick="Editar(' + row.id + ')">' + data + '</span>'
 
                     }
                 },
@@ -126,7 +126,7 @@
                 },
                 {
                     "width": "11%",
-                    "targets": [1,5,6]
+                    "targets": [1, 5, 6]
                 },
             ],
         });
@@ -134,7 +134,8 @@
         $("#tblConversion_length").hide();
         $("#tblConversion_filter").hide();
     }
-    function Printer(gPosition){
+
+    function Printer(gPosition) {
         var table = $('#tblConversion').DataTable();
         var row = table.rows().data();
 
@@ -145,6 +146,7 @@
 
         location.href = "doc_printer/" + row.num_orden;
     }
+
     function Editar(gPosition) {
         var table = $('#tblConversion').DataTable();
         var row = table.rows().data();
@@ -188,7 +190,7 @@
             producto = 2;
         } else if (jumborroll == 53) {
             producto = 1;
-        } else if (jumborroll == 94){
+        } else if (jumborroll == 94) {
             producto = 7;
         }
 
@@ -210,21 +212,19 @@
             async: true,
             success: function(response) {
                 if (response == 1) {
-                    mensaje('Orden duplicada, por favor verifique el N°. Orden', 'warning');
-                   
+                        mensaje('¡Orden duplicada!', 'warning');
                 } else {
                     mensaje(response.responseText, 'success');
                     $('#mdlAddOrden').modal('hide');
                     setTimeout(function() {
                         location.reload();
-                    }, 1000);
+                    }, 2000);
                 }
             },
             error: function(response) {
                 mensaje(response.responseText, 'error');
             }
         }).done(function(data) {
-            location.reload();
         });
     });
 
