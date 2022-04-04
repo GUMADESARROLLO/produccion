@@ -78,6 +78,7 @@
 <script src="{{ asset('js/pcoded.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-select.js') }}"></script>
 <script src="{{ asset('js/moment.js') }}"></script>
+<script src="{{ asset('js/es.js') }}"></script>
 <script src="{{ asset('js/Numeral.js') }}"></script>
 <script src="{{ asset('js/daterangepicker.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>

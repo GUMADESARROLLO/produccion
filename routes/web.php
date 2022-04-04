@@ -227,13 +227,6 @@ Route::post('/updateFechafinal', 'User\ProcesoConversionController@updateFechafi
 Route::post('/updateFechaInicial', 'User\ProcesoConversionController@updateFechaInicial')->name('updateFechaInicial');
 Route::post('/addComment', 'User\ProcesoConversionController@addComment')->name('addComment');
 
-
-
-
-
-
-
-
 Route::get('/jsonInfoOrder/{codigo}', 'User\ProcesoConversionController@jsonInfoOrder')->name('/jsonInfoOrder/{codigo}');
 Route::get('/doc/{codigo}', 'User\ProcesoConversionController@doc')->name('doc/{codigo}');
 Route::get('/doc_printer/{codigo}', 'User\ProcesoConversionController@doc_printer')->name('doc_printer/{codigo}');
@@ -243,6 +236,11 @@ Route::get('/getTiemposParos/{codigo}', 'User\ProcesoConversionController@getTie
 
 
 Route::get('/datos_detalles/{codigo}', 'User\ProcesoConversionController@datos_detalles')->name('/datos_detalles/{codigo}');
+
+
+//RUTAS PARA EL DASHBOARD
+Route::get('/dashboard', 'User\DashboardController@index')->name('dashboard');
+Route::get('/dashboard_detalles', 'User\DashboardController@getDetalles')->name('/dashboard_detalles');
 
 
 
