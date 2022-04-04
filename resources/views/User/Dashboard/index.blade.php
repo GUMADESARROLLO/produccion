@@ -10,6 +10,7 @@
 
     }
 
+    
     .dataTables_paginate {
         display: flex;
         align-items: center;
@@ -37,6 +38,7 @@
     u.dotted {
         border-bottom: 1px dashed #999;
         text-decoration: none;
+        font-size: 1.3em;
     }
 
     .dBorder {
@@ -97,6 +99,12 @@
             padding-left: 2.25rem;
         }
     }
+    .DateRange {
+        border: 2px solid #f6c23e !important;
+    }
+    .sizebadge{
+        font-size: 1.2em;
+    }
 </style>
 @endsection
 @section('content')
@@ -109,9 +117,9 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between g-3">
-                            <div class="nk-block-head-content ">
-                            RESUMEN DE PRODUCCION<a href=""></a>
-                            <h3 class="nk-block-title page-title" id="id_name_month">TITULO</h3>
+                            <div class="nk-block-head-content mt-1">
+                                RESUMEN DE PRODUCCION<a href=""></a>
+                                <h3 class="nk-block-title page-title " id="id_name_month">TITULO</h3>
                             </div>
                             <div class="nk-block-head-content">
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> </h3>
@@ -123,8 +131,11 @@
                                         <a href="#" class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 00/00/0000 </span> </a>
                                     </u>
                                 </div>
-                                <div class="nk-block-des text-right text-soft ">
-                                    <span id=""> Información que corresponde al periodo </span>
+                                <div class="nk-block-des text-right text-soft mt-1">                                    
+                                    <span id="R1" class="badge sizebadge badge-pill badge-light DateRange" onClick="getRange('R1')">1 m </span>
+                                    <span id="R3" class="badge sizebadge badge-pill badge-light" onClick="getRange('R3')">3 m </span>
+                                    <span id="R6" class="badge sizebadge badge-pill badge-light" onClick="getRange('R6')">6 m </span>
+                                    <span id="R12" class="badge sizebadge badge-pill badge-light" onClick="getRange('R12')">1 y </span>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +299,7 @@
                             </div>
                         </div>
                         <div class="row g-gs">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="row g-gs ">
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card">
@@ -316,7 +327,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="row g-gs ">
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card">

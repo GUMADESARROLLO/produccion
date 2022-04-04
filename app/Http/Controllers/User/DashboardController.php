@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $from   = $request->input('f1') . ' 00:00:00';
         $to     = $request->input('f2') . ' 23:59:59';
 
-        $ord_humedo         = DetalleOrden::whereBetween('fechaInicio', [$from, $to])->get();
+        $ord_humedo         = DetalleOrden::getOrdenes($from, $to);
 
         $ord_conversion     = detalle_pc_ordenes::getOrdenes($from, $to);
         $hrs_humedo         = DetalleOrden::whereBetween('fechaInicio', [$from, $to])->sum('hrsTrabajadas');

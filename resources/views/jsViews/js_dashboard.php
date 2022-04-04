@@ -2,9 +2,28 @@
     
     $(document).ready(function() {
         moment.locale('es');
-        getInformacion();
+        //const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+        getRange('R1')
     });
 
+    function setRange(r){
+        const startOfMonth = moment().subtract(r, "month").startOf('month').format('YYYY-MM-DD');
+        const endOfMonth   = moment().endOf('month').format('YYYY-MM-DD');
+        var currMonthName  = moment().format('MMMM');
+
+        $("#fecha_hora_inicial").text(startOfMonth);
+        $("#fecha_hora_final").text(endOfMonth);
+        $("#id_name_month").text(currMonthName);
+
+        getInformacion();
+    }
+    function getRange(id){
+        var rango = id.replace(/[\ U,R]/g, '')
+        $('.DateRange').removeClass('DateRange');
+        $("#"+id).addClass('DateRange');
+        setRange(rango)
+
+    }
     $('#fecha_hora_inicial').on('click', function() {
         let fecha_inicial, hora_incial;
         Swal.fire({
@@ -52,17 +71,8 @@
             }
         })
     });
+    
     function getInformacion(){
-        
-        //const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
-        
-        const startOfMonth = moment().subtract(4, "month").startOf('month').format('YYYY-MM-DD');
-        const endOfMonth   = moment().endOf('month').format('YYYY-MM-DD');
-        var currMonthName  = moment().format('MMMM');
-
-        $("#fecha_hora_inicial").text(startOfMonth);
-        $("#fecha_hora_final").text(endOfMonth);
-        $("#id_name_month").text(currMonthName);
         
         
         f1 = $("#fecha_hora_inicial").text();
@@ -141,10 +151,8 @@
                 "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
                 "search": "BUSCAR"
             },
-            'columns': [{
-                    "title": "id",
-                    "data": "numOrden"
-                },
+            'columns': [
+                
                 {
                     "title": "N° ORDEN",
                     "data": "numOrden",
@@ -156,7 +164,19 @@
                 {
                     "title": "PRODUCTO",
                     "data": "nombre"
-                },                
+                },    
+                {
+                    "title": "DESCRIPCION",
+                    "data": "nombre"
+                }, 
+                {
+                    "title": "FECHA INICIO",
+                    "data": "fechaInicio"
+                },
+                {
+                    "title": "FECHA FINAL",
+                    "data": "fechaFinal"
+                },
                 {
                     "title": "PRO. REAL (KG)",
                     "data": "prod_real",
@@ -165,33 +185,50 @@
                 {
                     "title": "PRO. TOTAL (KG)",
                     "data": "prod_total",
-                    "render": function(data, type, row) {
-                        if (data == null) {
-                            return $.fn.dataTable.render.number(',', '.', 2).display(0);
-                        } else {
-                            return $.fn.dataTable.render.number(',', '.', 2).display(data);
+                    "render": $.fn.dataTable.render.number(',', '.', 2)
 
-                        }
-                    }
+                },
+                {
+                    "title": "PROD.REAL TON",
+                    "data": "prod_real_ton",
+                    "render": $.fn.dataTable.render.number(',', '.', 2)
+
+                },
+                {
+                    "title": "COSTO TOTAL C$",
+                    "data": "costo_total",
+                    "render": $.fn.dataTable.render.number(',', '.', 2)
+
+                },
+                {
+                    "title": "T.C",
+                    "data": "tipo_cambio",
+                    "render": $.fn.dataTable.render.number(',', '.', 2)
+
+                },
+                {
+                    "title": "COSTO.TON $",
+                    "data": "costo_total_dolar",
+                    "render": $.fn.dataTable.render.number(',', '.', 2)
 
                 },
             ],
             "columnDefs": [{
                     "className": "dt-center",
-                    "targets": [1, 2]
+                    "targets": [3,4]
                 },
                 {
                     "className": "dt-right",
-                    "targets": [3,4]
+                    "targets": [5,6,7,8,9,10]
                 },
                 {
                     "visible": false,
                     "searchable": false,
-                    "targets": [0]
+                    "targets": []
                 },
                 {
                     "width": "11%",
-                    "targets": [1,2]
+                    "targets": []
                 },
             ],
         });
