@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 });
 
 //RUTAS MENUS
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/resumenCostos', 'HomeController@index')->name('resumenCostos');
 Route::get('/usuario', 'Admin\usuarioController@index')->name('usuario');
 Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('orden-produccion');
 Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');
@@ -239,7 +239,7 @@ Route::get('/datos_detalles/{codigo}', 'User\ProcesoConversionController@datos_d
 
 
 //RUTAS PARA EL DASHBOARD
-Route::get('/dashboard', 'User\DashboardController@index')->name('dashboard');
+Route::get('/home', 'User\DashboardController@index')->name('home');
 Route::get('/dashboard_detalles', 'User\DashboardController@getDetalles')->name('/dashboard_detalles');
 
 
