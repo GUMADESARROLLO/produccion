@@ -4,6 +4,16 @@
         moment.locale('es');
         //const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
         getRange('R1')
+        inicializaControlFecha();
+        $('#tbl_search_conversion').on('keyup', function() {
+            var table = $('#tblConversion').DataTable();
+            table.search(this.value).draw();
+        });
+        $('#tbl_search_humedo').on('keyup', function() {
+            console.log(this.value)
+            var table = $('#tblProcesoHumedo').DataTable();
+            table.search(this.value).draw();
+        });
     });
 
     function setRange(r){
@@ -24,53 +34,7 @@
         setRange(rango)
 
     }
-    $('#fecha_hora_inicial').on('click', function() {
-        let fecha_inicial, hora_incial;
-        Swal.fire({
-            title: 'Fecha inicial',
-            html: '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA INICIAL:</p></div>' +
-                '<div class="form-group col-md-8"><input type="date" class="form-control" id="add_fecha_inicial"></div></div>' ,
-            stopKeydownPropagation: false,
-            confirmButtonText: 'OK',
-            showCancelButton: true,
-            preConfirm: () => {
-                fecha_inicial = $('#add_fecha_inicial').val();
-                if (fecha_inicial == '') {
-                    return swal.showValidationError(
-                        'Seleccione una fecha por favor'
-                    );
-                }else{
-                    $('#fecha_hora_inicial').val(fecha_inicial)
-                }
-            }
-        })
-    });
-
-    $('#fecha_hora_final').on('click', function() {
-        let fecha_final;
     
-
-        Swal.fire({
-            title: 'Fecha Final',
-            html: '<div class="form-row mt-4"><div class="form-group col-md-4"><p class="m-2 font-weight-bold">FECHA FINAL:</p></div>' +
-                '<div class="form-group col-md-8"><input type="date" class="form-control" id="add_fecha_inicial"></div></div>' ,
-            stopKeydownPropagation: false,
-            confirmButtonText: 'OK',
-            showCancelButton: true,
-            preConfirm: () => {
-                fecha_final = $('#add_fecha_inicial').val();
-                if (fecha_final == '') {
-                    return swal.showValidationError(
-                        'Seleccione una fecha por favor'
-                    );
-                }else{
-                    $('#fecha_hora_final').val(fecha_final)
-                    getInformacion();
-                }
-                
-            }
-        })
-    });
     $('#id_search').on('click', function() {
         getInformacion()
     });

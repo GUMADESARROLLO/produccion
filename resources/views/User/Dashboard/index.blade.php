@@ -145,10 +145,10 @@
                                     </div>
                                     
                                     <div class="form-group col-md-1 " > 
-                                            <div class="input-group-prepend" id="id_search">
-                                                <div class="input-group-text "><i class="material-icons text-black">search</i></div>
-                                            </div> 
-                                        </div>
+                                        <div class="input-group-prepend" id="id_search">
+                                            <div class="input-group-text "><i class="material-icons text-black">search</i></div>
+                                        </div> 
+                                    </div>
                                 </div>                                
                                 
                                 <div class="nk-block-des text-right text-soft mt-1">                                    
@@ -326,17 +326,16 @@
                                             <div class="card-header ">
                                                 <h5>ORDENES PROCESO HUMEDO</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
-                                                    <i class="material-icons text-blue">add_circle</i>
+                                                    <div class="input-group "> 
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text"><i class="material-icons text-black">search</i></div>
+                                                        </div>                                            
+                                                        <input type="text" id="tbl_search_humedo" class="form-control bg-white" >
+                                                    </div>
                                                 </button>
+                                                
                                             </div>
-                                            <div class="form-group col-md-12" style="display:none">
-                                                <div class="input-group" style="width: 100%;" id="cont_search">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                        <i class="material-icons text-black ml-1">search</i>
-                                                    </span>
-                                                    <input type="text" id="tbl_search_materia_prima" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                                </div>
-                                            </div>
+                                            
                                             <div class="form-group col-md-12 mb-3">
                                                 <div class="table-responsive">
                                                     <table class="table table-hover" id="tblProcesoHumedo" width="99%"></table>
@@ -354,17 +353,14 @@
                                             <div class="card-header ">
                                                 <h5>ORDENES CONVERSION</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
-                                                    <i class="material-icons text-blue">add_circle</i>
+                                                    <div class="input-group "> 
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text"><i class="material-icons text-black">search</i></div>
+                                                        </div>                                            
+                                                        <input type="text" id="tbl_search_conversion" class="form-control bg-white"  aria-label="Username" aria-describedby="basic-addon1">
+                                                    </div>
                                                 </button>
-                                            </div>
-                                            <div class="form-group col-md-12" style="display:none">
-                                                <div class="input-group" style="width: 100%;" id="cont_search">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                        <i class="material-icons text-black ml-1">search</i>
-                                                    </span>
-                                                    <input type="text" id="tbl_search_materia_prima" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
-                                                </div>
-                                            </div>
+                                            </div>                                            
                                             <div class="form-group col-md-12 mb-3">
                                                 <div class="table-responsive">
                                                     <table class="table table-hover" id="tblConversion" width="99%"></table>
