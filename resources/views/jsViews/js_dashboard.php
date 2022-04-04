@@ -11,8 +11,8 @@
         const endOfMonth   = moment().endOf('month').format('YYYY-MM-DD');
         var currMonthName  = moment().format('MMMM');
 
-        $("#fecha_hora_inicial").text(startOfMonth);
-        $("#fecha_hora_final").text(endOfMonth);
+        $("#fecha_hora_inicial").val(startOfMonth);
+        $("#fecha_hora_final").val(endOfMonth);
         $("#id_name_month").text(currMonthName);
 
         getInformacion();
@@ -40,7 +40,7 @@
                         'Seleccione una fecha por favor'
                     );
                 }else{
-                    $('#fecha_hora_inicial').text(fecha_inicial)
+                    $('#fecha_hora_inicial').val(fecha_inicial)
                 }
             }
         })
@@ -64,19 +64,22 @@
                         'Seleccione una fecha por favor'
                     );
                 }else{
-                    $('#fecha_hora_final').text(fecha_final)
+                    $('#fecha_hora_final').val(fecha_final)
                     getInformacion();
                 }
                 
             }
         })
     });
+    $('#id_search').on('click', function() {
+        getInformacion()
+    });
     
     function getInformacion(){
         
         
-        f1 = $("#fecha_hora_inicial").text();
-        f2 = $("#fecha_hora_final").text();
+        f1 = $("#fecha_hora_inicial").val();
+        f2 = $("#fecha_hora_final").val();
 
         var Fechas = {
             f1: f1,

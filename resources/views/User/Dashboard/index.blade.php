@@ -117,20 +117,35 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between g-3">
-                            <div class="nk-block-head-content mt-1">
+                            <div class="nk-block-head-content mt-1 ">
                                 RESUMEN DE PRODUCCION<a href=""></a>
                                 <h3 class="nk-block-title page-title " id="id_name_month">TITULO</h3>
                             </div>
-                            <div class="nk-block-head-content">
+                            
+                            <div class="nk-block-head-content ">
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> </h3>
-                                <div class="nk-block-des text-right text-soft ">
-                                    <u class="dotted">
-                                        <a href="#" class="text-soft" id='fecha_hora_inicial'> <span id="id_fecha_inicial"> 0000/00/00 </span> </a>
-                                    </u>al
-                                    <u class="dotted">
-                                        <a href="#" class="text-soft" id='fecha_hora_final'><span id="id_fecha_final"> 00/00/0000 </span> </a>
-                                    </u>
-                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <div class="input-group ">                                            
+                                            <input type="text" class="input-fecha form-control" id="fecha_hora_inicial">
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-5">
+                                        <div class="input-group ">                                            
+                                            <input type="text" class="input-fecha form-control" id="fecha_hora_final">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1 " > 
+                                            <a class="btn icon-btn btn-warning " href="#" id="id_search">                                                
+                                                <i class="material-icons text-black">search</i>
+                                            </a>
+                                        </div>
+                                </div>                                
+                                
                                 <div class="nk-block-des text-right text-soft mt-1">                                    
                                     <span id="R1" class="badge sizebadge badge-pill badge-light DateRange" onClick="getRange('R1')">1 m </span>
                                     <span id="R3" class="badge sizebadge badge-pill badge-light" onClick="getRange('R3')">3 m </span>
