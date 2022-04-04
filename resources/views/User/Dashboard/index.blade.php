@@ -125,24 +125,29 @@
                             <div class="nk-block-head-content ">
                                 <h3 class="nk-block-title page-title text-right" id="id_nombre_articulos"> </h3>
 
-                                <div class="form-row">
-                                    <div class="form-group col-md-5">
-                                        <div class="input-group ">                                            
+                                <div class="form-row ">
+                                    <div class="form-group col-md-5 ml-5">
+                                        <div class="input-group ">   
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="material-icons text-black">event</i></div>
+                                            </div>                            
                                             <input type="text" class="input-fecha form-control" id="fecha_hora_inicial">
-                                            
                                         </div>
                                     </div>
 
                                     <div class="form-group col-md-5">
-                                        <div class="input-group ">                                            
-                                            <input type="text" class="input-fecha form-control" id="fecha_hora_final">
-                                            
+                                        <div class="input-group "> 
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="material-icons text-black">event</i></div>
+                                            </div>                                            
+                                            <input type="text" class="input-fecha form-control" id="fecha_hora_final">                                            
                                         </div>
                                     </div>
+                                    
                                     <div class="form-group col-md-1 " > 
-                                            <a class="btn icon-btn btn-warning " href="#" id="id_search">                                                
-                                                <i class="material-icons text-black">search</i>
-                                            </a>
+                                            <div class="input-group-prepend" id="id_search">
+                                                <div class="input-group-text "><i class="material-icons text-black">search</i></div>
+                                            </div> 
                                         </div>
                                 </div>                                
                                 
