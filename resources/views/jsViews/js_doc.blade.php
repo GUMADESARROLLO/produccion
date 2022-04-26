@@ -1,6 +1,8 @@
 <script type="text/javascript">
     var dtConversion;
     var dtRequisas = '';
+    var dtDetalle_TiemposParos = '';
+
 
     $(document).ready(function() {
 
@@ -542,30 +544,17 @@
     function detalles_tiempos_paros() {
 
         $.getJSON("../getTiemposParos/" + id_orden, function(json) {
-            $('#tbl_modal_TiemposParos').DataTable({
+            dtDetalle_TiemposParos = $('#tbl_modal_TiemposParos').DataTable({
                 'data': json,
                 "destroy": true,
+                "ordering": false,
                 "info": false,
                 "bPaginate": false,
-                "lengthMenu": [
-                    [100, -1],
-                    [100, "Todo"]
-                ],
+                "bfilter": false,
+                "searching": false,
                 "language": {
-                    "zeroRecords": "NO HAY COINCIDENCIAS",
-                    "paginate": {
-                        "first": "Primera",
-                        "last": "Última ",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    },
-                    "lengthMenu": "MOSTRAR _MENU_",
-                    "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
-                    "search": "BUSCAR"
+                    "emptyTable": `<p class="text-center">AGREGUE UNA REQUISA</p>`
                 },
-                "order": [
-                    [0, "asc"]
-                ],
                 'columns': [{
                         "title": "ID",
                         "data": "ID_ROW"
@@ -584,16 +573,8 @@
                     },
                 ],
                 "columnDefs": [{
-                        "className": "dt-center",
-                        "targets": []
-                    },
-                    {
                         "className": "dt-right",
                         "targets": [2, 3, ]
-                    },
-                    {
-                        "className": "dt-left",
-                        "targets": []
                     },
                     {
                         "visible": false,
@@ -601,96 +582,93 @@
                         "targets": [0]
                     },
                     {
-                        "width": "10%",
-                        "targets": []
+                        "width": "60%",
+                        "targets": [1]
                     },
                     {
-                        "width": "15%",
-                        "targets": []
+                        "width": "20%",
+                        "targets": [2,3]
                     },
                 ]
             });
             $("#tbl_modal_TiemposParos_length").hide();
             $("#tbl_modal_TiemposParos_filter").hide();
-            $('#tbl_modal_TiemposParos tbody').on('click', "td", function(event) {
-
-                var tbl_mdl_tiempos_paro = $('#tbl_modal_TiemposParos').DataTable();
-
-                var dtaRow = tbl_mdl_tiempos_paro.row(this).data();
-                var visIdx = $(this).index()
-
-                if (visIdx != 0 && visIdx != 3) {
-
-
-                    var valor = $(this).html().trim();
-                    var valor_columna = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
-                    var num_orden = $('#id_num_orden').text();
-                    var ARTICULO = dtaRow['ARTICULO'];
-                    var idturno = (valor_columna == 'DIA') ? 1 : 2
-
-
-                    valor = valor.replace(/[',]+/g, '');
-
-                    Swal.fire({
-                        title: ARTICULO,
-                        text: "Para el Turno de " + valor_columna,
-                        input: 'text',
-                        target: document.getElementById('mdlHorasParo'),
-                        inputPlaceholder: 'Digite la cantidad',
-                        inputAttributes: {
-                            id: 'cantidad',
-                            required: 'true',
-                            onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
-                        },
-                        showCancelButton: true,
-                        confirmButtonText: 'Guardar',
-                        showLoaderOnConfirm: true,
-                        inputValue: valor,
-                        inputValidator: (value) => {
-                            if (!value) {
-                                return 'Digita la cantidad por favor';
-                            }
-
-                            if (isNaN(value)) {
-                                return 'Formato incorrecto';
-                            } else {
-                                $.ajax({
-                                    url: "../GuardarTiempoParo",
-                                    data: {
-                                        id_tipo_tiempo_paro: dtaRow['ID_ROW'],
-                                        num_orden: num_orden,
-                                        cantidad: value,
-                                        idturno: idturno
-                                    },
-                                    type: 'post',
-                                    async: true,
-                                    success: function(response) {
-                                        detalles_tiempos_paros()
-                                    },
-                                    error: function(response) {
-                                        swal("Oops", "No se ha podido guardar!", "error");
-                                    }
-                                }).done(function(data) {
-                                    setTimeout(function() {
-                                        detalles_tiempos_paros()
-                                    }, 2000);
-                                });
-                            }
-                        }
-                    })
-                }
-
-            });
-
-
         })
     }
+
+    $('#tbl_modal_TiemposParos ').on('click', "td", function() {
+        console.log('your click here');
+        console.log($(this).text());
+
+        var dtaRow = dtDetalle_TiemposParos.row(this).data();
+        var visIdx = $(this).index()
+
+        if (visIdx != 0 && visIdx != 3) {
+
+
+            var valor = $(this).html().trim();
+            var valor_columna = $('#tbl_modal_TiemposParos thead tr th').eq($(this).index()).html().trim();
+            var num_orden = $('#id_num_orden').text();
+            var ARTICULO = dtaRow['ARTICULO'];
+            var idturno = (valor_columna == 'DIA') ? 1 : 2;
+
+
+            valor = valor.replace(/[',]+/g, '');
+
+            Swal.fire({
+                title: ARTICULO,
+                text: "Para el Turno de " + valor_columna,
+                input: 'text',
+                target: document.getElementById('mdlHorasParo'),
+                inputPlaceholder: 'Digite la cantidad',
+                inputAttributes: {
+                    id: 'cantidad',
+                    required: 'true',
+                    onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Guardar',
+                showLoaderOnConfirm: true,
+                inputValue: valor,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Digita la cantidad por favor';
+                    }
+
+                    if (isNaN(value)) {
+                        return 'Formato incorrecto';
+                    } else {
+                        $.ajax({
+                            url: "../GuardarTiempoParo",
+                            data: {
+                                id_tipo_tiempo_paro: dtaRow['ID_ROW'],
+                                num_orden: num_orden,
+                                cantidad: value,
+                                idturno: idturno
+                            },
+                            type: 'post',
+                            async: true,
+                            success: function(response) {
+                                //  swal("Exito!", "Guardado exitosamente", "success");
+                            },
+                            error: function(response) {
+                                swal("Oops", "No se ha podido guardar!", "error");
+                            }
+                        }).done(function(data) {
+                            detalles_tiempos_paros();
+                        });
+                    }
+                }
+            })
+        }
+    });
+
 
     $('#id_btn_add_hrs_paro').on('click', function() {
         $('#mdlHorasParo').modal('show');
         detalles_tiempos_paros()
     })
-
+    /**table detalle tiempos paro */
     function mostrarRequisado(numOrden, id_articulo, tipo) {
         dtRequisas = $('#tbRequisas').DataTable({ // Costos por ORDEN
             "ajax": {
@@ -1272,7 +1250,6 @@
                 var peso = $('#id_peso_porcent').text();
                 var merma_kg = 0;
                 id_producto == 2 ? merma_kg = parseFloat(MERMA_row_2_p2) / 0.20 : merma_kg = parseFloat(MERMA_row_2_p2) * 0.20;
-                console.log(LP_FINAL_row_1_p1);
                 LP_INICIAL_row_1_p1 = numeral(LP_INICIAL_row_1_p1).format('0,0.00');
                 LP_INICIAL_row_2_p2 = numeral(LP_INICIAL_row_2_p2).format('0,0.00');
 
@@ -1400,7 +1377,6 @@
 
                 var faltante_P3 = consumoP3 - parseFloat(total_bultos);
                 var faltante_P4 = consumoP4 - parseFloat(total_bultos);
-                console.log(Math.sign(parseFloat(faltante_P3)));
 
                 var sobrante_P3 = parseFloat(total_bultos) - consumoP3;
                 var sobrante_P4 = parseFloat(total_bultos) - consumoP4;
@@ -2081,6 +2057,4 @@
         });
         return container.append(table);
     }
-
-    
 </script>

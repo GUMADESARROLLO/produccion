@@ -78,7 +78,8 @@
     .color-focus {
         color: #0894ff !important;
     }
-    .nav-tabs > .nav-item {
+
+    .nav-tabs>.nav-item {
         padding-left: 3.25rem;
     }
 
@@ -87,15 +88,21 @@
             padding-left: 1.5rem;
         }
     }
+
     @media (min-width: 992px) {
         .nav-tabs .nav-item {
             padding-left: 1.75rem;
         }
     }
+
     @media (min-width: 1200px) {
         .nav-tabs .nav-item {
             padding-left: 2.25rem;
         }
+    }
+
+    .swal2-shown {
+        padding-right: 0px !important;
     }
 </style>
 @endsection
@@ -110,7 +117,7 @@
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content ">
-                                ORDEN PRODUCCION No.<a href="../doc_printer/{{$Orden}}"><i class="material-icons text-danger" >picture_as_pdf</i></a>
+                                ORDEN PRODUCCION No.<a href="../doc_printer/{{$Orden}}"><i class="material-icons text-danger">picture_as_pdf</i></a>
                                 <h3 class="nk-block-title page-title" id="id_num_orden">{{$Orden}}</h3>
                                 <div class="nk-block-des text-soft">
                                     <ul class="breadcrumb">
@@ -257,10 +264,10 @@
                         <div class="row">
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
-                                
+
                                 <div class="card">
                                     <div class="card-header">
-                                    <h5>PRODUCCION</h5>
+                                        <h5>PRODUCCION</h5>
                                     </div>
                                     <div class="form-group col-md-12" style="display:none">
                                         <div class="input-group" style="width: 100%;" id="cont_search">
@@ -281,7 +288,7 @@
                                     <div class="card-header">
                                         <h5>MATERIA PRIMA DIRECTA (M.P)</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='btnInfo'>
-                                        <i class="material-icons text-black">info</i>
+                                            <i class="material-icons text-black">info</i>
                                         </button>
                                     </div>
                                     <div class="form-group col-md-12" style="display:none">
@@ -324,7 +331,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -352,16 +359,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                
 
-                                
+
+
 
                                 <div class="modal fade " id="mdlDetallesOrdes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog custom">
-                                        <div class="modal-content">
+                                        <div class="modal-content ">
                                             <div class="modal-header bg-primary text-white">
                                                 <div class="container ">
-                                                    <h5 class="modal-title d-flex justify-content-center" id="">PROCESO DE CONVERSIÓN - DETALLES DE LA ORDEN</h5>
+                                                    <h5 class="modal-title d-flex justify-content-center" id="">Proceso de Conversión - Detalles de la Orden</h5>
                                                     <h5 class="modal-title d-flex justify-content-center" id="periodo"> </h5>
                                                 </div>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -378,7 +385,7 @@
                                                         <a class="nav-item nav-link" id="navQuimicos" data-toggle="tab" href="#nav-quimicos" role="tab" aria-controls="nav-quimicos" aria-selected="false">QUIMICOS</a>
                                                     </div>
                                                 </nav>
-                                                <div class="tab-content  pt-1" id="nav-tabContent">
+                                                <div class="tab-content  pt-1 overflow-auto" id="nav-tabContent">
                                                     <div class="tab-pane fade show active" id="nav-mp" role="tabpanel" aria-labelledby="navMP">
                                                         <div class="row">
                                                             <div class="col-sm-12">
@@ -413,8 +420,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div id="id_tbl_temp">
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -422,8 +427,8 @@
 
                                 <!-- [ modal proceso conversión] end -->
 
-                                <div class="modal fade modal-fullscreen" id="mdlHorasParo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                <div class="modal fade" id="mdlHorasParo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog custom">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="id_articulo_descripcion"> INGRESO DE TIEMPOS PARO </h5> <span id=""> </span>
@@ -431,7 +436,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body overflow-auto">
                                                 <table class="table table-hover" id="tbl_modal_TiemposParos" width="100%"></table>
                                             </div>
                                         </div>
@@ -439,7 +444,7 @@
                                 </div>
 
 
-                                <div class="modal fade" id="mdlMatPrima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade " id="mdlMatPrima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog custom">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -497,7 +502,7 @@
                                 </div>
 
 
-                                
+
                             </div>
                         </div>
                     </div>
