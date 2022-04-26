@@ -21,8 +21,7 @@
             $.each(json, function(i, item) {
                 switch (item['tipo']) {
                     case 'dtaOrden':
-
-                        $("#id_peso_porcent").text(item['data'].peso_procent)
+                        $("#id_peso_porcent").text(numeral(item['data'].peso_procent).format('0,0.00'))
                         $("#id_nombre_articulos").text(item['data'].nombre)
                         $("#id_fecha_inicial").text(item['data'].fecha_inicio)
                         $("#id_hora_inicial").text(item['data'].hora_inicio)
@@ -32,7 +31,6 @@
                         $("#id_total_bultos_und").text(item['data'].total_bultos_und);
                         $("#id_hrs_total_trabajadas").text(item['data'].hrs_total_trabajadas);
                         $("#comentario").text(item['data'].comentario);
-
                         break;
                     case 'dtaMateria':
                         let table_materia = $('#tblMateriaPrima').DataTable({
@@ -249,7 +247,10 @@
                                 },
                                 {
                                     "title": "KG",
-                                    "data": "KG"
+                                    "data": "KG",
+                                    "render": function(data, type, row,) {
+                                        return $.fn.dataTable.render.number(',', '.', 2).display(data);
+                                    }
                                 },
                                 {
                                     "title": "ID_ARTICULO",
