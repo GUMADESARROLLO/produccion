@@ -598,9 +598,7 @@
     }
 
     $('#tbl_modal_TiemposParos ').on('click', "td", function() {
-        console.log('your click here');
-        console.log($(this).text());
-
+    
         var dtaRow = dtDetalle_TiemposParos.row(this).data();
         var visIdx = $(this).index()
 
@@ -1138,7 +1136,6 @@
     })
     $('nav .nav.nav-tabs a').click(function() {
         var idNav = $(this).attr('id');
-        //console.log(idNav);
         switch (idNav) {
             case 'navMP':
                 table = $('#tblMP');
@@ -1357,7 +1354,6 @@
                         totalRequisadoP3 += parseFloat(element.row_1[j]);
                         totalRequisadoP4 += parseFloat(element.row_2[j]);
                         totalRequisadoP5 += parseFloat(element.row_3[j]);
-                        // console.log('Cantidades= ' + element.row_1[j] + ' ' + element.row_2[j] + ' ' + element.row_3[j]);
                     }
                 });
 
@@ -1562,7 +1558,6 @@
 
                     }
 
-                    //console.log(arrayRequisas3);
                     var totalRequisadoP6 = 0,
                         totalRequisadoP7 = 0,
                         totalRequisadoP8 = 0,

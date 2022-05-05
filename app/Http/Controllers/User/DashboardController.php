@@ -19,6 +19,7 @@ class DashboardController extends Controller
     }
     public function index()
     {
+        $Orden = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
         return view('User.Dashboard.index', compact('Orden'));
     }
     public function getDetalles(Request $request)

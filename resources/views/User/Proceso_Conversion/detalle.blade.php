@@ -104,6 +104,10 @@
     .swal2-shown {
         padding-right: 0px !important;
     }
+
+    body {
+        padding-right: 0 !important;
+    }
 </style>
 @endsection
 @section('content')
