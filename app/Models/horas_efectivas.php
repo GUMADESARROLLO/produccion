@@ -10,7 +10,7 @@ class horas_efectivas extends Model
     protected $fillable = ['numOrden', 'fecha', 'y1_dia','y2_dia', 'y1_noche', 'y2_noche', 'estado', 'created_at','updated_at' ];
     //public $timestamps = false;
 
-    public function calcularHrasEftvs($idOrd)
+    public static function calcularHrasEftvs($idOrd)
     {
         //$horas_efectivas = horas_efectivas::where([['numOrden', $idOrd], ['estado', 1]])->get(); // obtengo las horas efectivas
         $data = array();
