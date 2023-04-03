@@ -110,7 +110,7 @@ class ProcesoConversion extends Model
                 $json['fecha_final']        = strftime('%a %d de %b %G', strtotime($value->fecha_hora_final));
                 $json['hora_final']         = date('h:i a', strtotime($value->fecha_hora_final));
                 $json['hrs_trabajadas']     = number_format($value->Hrs_trabajadas, 2);
-                $json['peso_procent']       = number_format($value->PESO_PORCENT, 2);
+                $json['peso_procent']       = $value->PESO_PORCENT;
                 $json['total_bultos_und']   = number_format($value->TOTAL_BULTOS_UNDS, 2);
 
                 $json['hrs_total_trabajadas']     =  $value->hrs_total_trabajadas;
@@ -175,7 +175,7 @@ class ProcesoConversion extends Model
                 if ($found_key !== false) {
                     $json[$i]['BULTO']              = number_format($datos_productos[$found_key]->PRODUCTO, 2);
                     $json[$i]['PERSO_PORCENT']      = number_format($peso_porcent, 2);
-                    $json[$i]['KG']                 = number_format($datos_productos[$found_key]->PRODUCTO * $peso_porcent, 2);
+                    $json[$i]['KG']                 = $datos_productos[$found_key]->PRODUCTO * $peso_porcent;
                 } else {
                     $json[$i]['BULTO']              = number_format(0.00, 2);
                     $json[$i]['PERSO_PORCENT']      = number_format(0, 2);

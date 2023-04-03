@@ -28,7 +28,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-2">
-                                <a href="{{url('/quimico/nuevo-quimico')}}" class="btn btn-primary btn-sm  float-right">Nuevo Quimico</a>
+                                <a href="{{url('/quimico/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo Quimico</a>
                             </div>
                         </div>
                     </div>
