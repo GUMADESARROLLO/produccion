@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\DB;
 
 class reporteController extends Controller
 {
-    use ModelScopes;
 
     public function __construct()
     {
