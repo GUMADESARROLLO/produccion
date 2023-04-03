@@ -99,6 +99,8 @@
     }
     function getOrdenesProcesoHumedo(datos) {
 
+        console.log(datos)
+
         $('#tblProcesoHumedo').DataTable({
             "data": datos,
             "destroy": true,

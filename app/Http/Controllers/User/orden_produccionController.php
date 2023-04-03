@@ -52,10 +52,15 @@ class orden_produccionController extends Controller
 
                 /** Produccion Real **/
                 $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
+
                 if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
                     $array[$i]['prod_real'] = 0;
+                    $prod_real              = 0;
+                    $merma_total            = 0;
                 } else {
                     $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
+                    $prod_real              = $detalle_prod_real['prod_real'];
+                    $merma_total            = $detalle_prod_real['merma_total'];
                 }
 
                 /** Merma Total **/
@@ -66,8 +71,7 @@ class orden_produccionController extends Controller
                     $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
                 }
 
-
-                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+                $array[$i]['prod_total'] = $prod_real + $merma_total;
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
@@ -77,6 +81,20 @@ class orden_produccionController extends Controller
         }
         return view('User.Orden_Produccion.index', compact(['array']));
     }
+
+    public function isValue($value, $def = false, $is_return = false) {
+        if (is_null($value)
+            || !isset($value)
+            || trim($value) == '(en blanco)'
+            || trim($value) == ''
+            || (is_numeric($value) && !is_numeric($value))
+            || (is_array($value) && count($value) == 0)
+            || (is_object($value) && empty((array)$value))) {
+            return isset($def) ? $def : false;
+        } else {
+            return ($is_return === true) ? $value : true;
+        }
+    }      
 
     public function detalle($idOP)
     {
@@ -1095,6 +1113,8 @@ class orden_produccionController extends Controller
                 $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
                 if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
                     $array[$i]['prod_real'] = 0;
+                    $prod_real              = 0;
+                    $merma_total            = 0;
                 } else {
                     $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
                 }
@@ -1105,10 +1125,12 @@ class orden_produccionController extends Controller
                     $array[$i]['merma_total'] = 0;
                 } else {
                     $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
+                    $prod_real              = $detalle_prod_real['prod_real'];
+                    $merma_total            = $detalle_prod_real['merma_total'];
                 }
 
 
-                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+                $array[$i]['prod_total'] = $prod_real + $merma_total;
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));

@@ -19,7 +19,7 @@ class DashboardController extends Controller
     }
     public function index()
     {
-        return view('User.Dashboard.index', compact('Orden'));
+        return view('User.Dashboard.index');
     }
     public function getDetalles(Request $request)
     {
