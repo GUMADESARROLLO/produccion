@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Models;
 use App\Models\DetalleOrden;
 use App\Models\DetalleCostoSubtotal;
-use App\Traits\ModelScopes;
+use App\Models\horas_efectivas;
 
 class HomeController extends Controller
 {
-    use ModelScopes;
+   
     /**
      * Create a new controller instance.
      *
@@ -37,7 +37,7 @@ class HomeController extends Controller
     {
         $detalle_costo_subtotal = DetalleCostoSubtotal::where('numOrden', $idOP)->get();
         $detalle_orden = DetalleOrden::where('numOrden', $idOP)->get()->first();
-        $hras_efectivas = $this->calcularHrasEftvs($idOP);
+        $hras_efectivas = horas_efectivas::calcularHrasEftvs($idOP);
 
         return view('homed', compact('detalle_orden', 'detalle_costo_subtotal', 'hras_efectivas'));
     }

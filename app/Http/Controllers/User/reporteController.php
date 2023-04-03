@@ -84,7 +84,7 @@ class reporteController extends Controller
         $usuarios   = usuario::usuarioByRole();
 
         $hrasEfectivas = horas_efectivas::where('numOrden', $orden->numOrden)->get();
-        $yk_hrasEftvs = $this->calcularHrasEftvs($numOrden);
+        $yk_hrasEftvs = $horas_efectivas::calcularHrasEftvs($numOrden);
 
         return view('User.Reporte.index', compact([
             'orden', 'tiempoPulpeo', 'tiempoLavado', 'lavado', 'pulpeo', 't_muerto',

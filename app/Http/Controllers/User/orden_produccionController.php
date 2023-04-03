@@ -26,7 +26,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use \Carbon\Carbon;
-use App\Traits\ModelScopes;
 use Exception;
 
 class orden_produccionController extends Controller
@@ -81,19 +80,6 @@ class orden_produccionController extends Controller
         return view('User.Orden_Produccion.index', compact(['array']));
     }
 
-    public function isValue($value, $def = false, $is_return = false) {
-        if (is_null($value)
-            || !isset($value)
-            || trim($value) == '(en blanco)'
-            || trim($value) == ''
-            || (is_numeric($value) && !is_numeric($value))
-            || (is_array($value) && count($value) == 0)
-            || (is_object($value) && empty((array)$value))) {
-            return isset($def) ? $def : false;
-        } else {
-            return ($is_return === true) ? $value : true;
-        }
-    }      
 
     public function detalle($idOP)
     {
@@ -101,7 +87,7 @@ class orden_produccionController extends Controller
         $i = 0;
 
         $mo_directa = $this->calcularManoObraDirecta($idOP);
-        $yk_hrasEftvs = $this->calcularHrasEftvs($idOP);
+        $yk_hrasEftvs = horas_efectivas::calcularHrasEftvs($idOP);
 
         $ord_produccion = orden_produccion::where('numOrden', $idOP)->get()->first();
         $producto = productos::select('nombre')->where('idProducto', $ord_produccion->producto)->get()->first();
