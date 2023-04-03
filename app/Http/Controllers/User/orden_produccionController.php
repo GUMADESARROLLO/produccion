@@ -31,7 +31,6 @@ use Exception;
 
 class orden_produccionController extends Controller
 {
-    use ModelScopes;
     public function __construct()
     {
         $this->middleware('auth');
