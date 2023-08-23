@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <meta charset="UTF-8">
 <title>@yield('title','0000')</title>
-
+<link rel="shortcut icon" href="{{ url('images/ic-inn.png') }}" />
 <style>
     * {
         font-family: Verdana, Arial, sans-serif;
