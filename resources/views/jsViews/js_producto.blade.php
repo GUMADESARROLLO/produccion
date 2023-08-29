@@ -1,62 +1,63 @@
 <script type="text/javascript">
-  var dtProductos;
-
   $(document).ready(function() {
-    dtProductos = $("#tblProductos").DataTable({
-      responsive: true,
-      // "autoWidth": false,
-      "ajax": {
-        "url": "getProductos",
-        'dataSrc': '',
-      },
-      "info": false,
-      "destroy": true,
-      "bPaginate": true,
-      "pagingType": "full",
-      "language": {
-        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-        "zeroRecords": "No hay coincidencias",
-        "loadingRecords": "Cargando datos...",
-        oPaginate: {
-          sNext: ' Siguiente ',
-          sPrevious: ' Anterior ',
-          sFirst: ' Primero ',
-          sLast: ' Ultimo ',
-        },
-      },
-      "columns": [{
-          "title": "CODIDO",
-          "data": "codigo"
-        },
-        {
-          "title": "NOMBRE",
-          "data": "nombre"
-        },
-        {
-          "title": "DESCRIPCIÓN DEL PRODUCTO",
-          "data": "descripcion"
-        }, {
-          "title": "ESTADO",
-          "data": "estado",
-          "render": function(data, type, row) {
-            if (data == 1) {
-              return '<span class="badge badge-success">Activo</span>';
-            } else {
-              return '<span class="badge badge-danger">Inactivo</span>';
-            }
-          }
-        },
-        {
-          "title": "OPCIONES",
-          "data": "idProducto",
-          "render": function(data, type, row) {
-            return '<a href="#!" onclick="deleteProducto('+ data +')"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>'+
-                   '<a href="producto/editar/'+ data +'"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>';
-          }
-        },
-      ]
-    });
+    $.ajax({
+            url: "getProductos",
+            type: 'get',
+            async: false,
+            success: function(response) {
+                $('#tblProductos').DataTable({
+                    "data":response,
+                    "destroy" : true,
+                    "info":    false,
+                    "lengthMenu": [[10,-1], [10,"Todo"]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns": [{
+                        "data": "codigo", "render": function(data, type, row, meta) {
+                          return  `<div class="text-center">
+                                      <h6 class="mb-0 fw-semi-bold">`+row.codigo+`</h6>
+                                    </div>`
+                          }
+                      },
+                      {
+                        "data": "nombre", "render": function(data, type, row, meta) {
+                          return  `<div class="d-flex align-items-center position-relative">
+                                      <div class="flex-1 ms-3" style="text-align: center;">
+                                          <h6 class="mb-0 fw-semi-bold"><div class="stretched-link text-dark">`+row.nombre+`</div></h6>
+                                      </div>
+                                  </div>`
+                          }
+                      },
+                      {
+                        "data": "descripcion", "render": function(data, type, row, meta) {
+                        return  `<div class="d-flex align-items-center position-relative">
+                                  <div class="flex-1 ms-3" style="text-align: center;">
+                                      <h6 class="mb-0 fw-semi-bold"><div class="stretched-link text-dark">`+row.descripcion+`</div></h6>
+                                  </div>
+                              </div>`
+                        }
+                      }, 
+                      {
+                        "data": "idProducto",
+                        "render": function(data, type, row) {
+                          return '<div class="text-center"><a href="#!" onclick="deleteProducto('+ data +')"><i class="far fa-trash-alt text-c-red f-20 m-r-10"></i></a>'+
+                                '<a href="producto/editar/'+ data +'"><i class="far fa-edit text-c-blue f-20 m-r-10"></i></a></div>';
+                        }
+                      },
+                    ]
+                  });
+                }
+              });
 
      $("#tblProductos_filter").hide();
      $("#tblProductos_length").hide();

@@ -14,25 +14,6 @@
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
                 <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-10">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Quimicos</h5>
-                                </div>
-                                <ul class="breadcrumb">
-                                    <!--<li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>-->
-                                    <li class="breadcrumb-item"><a href="javascript:">Quimico</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="{{url('/quimico/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo Quimico</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- [ breadcrumb ] start -->
                 <div class="main-body">
                     <div class="page-wrapper">
@@ -40,8 +21,9 @@
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>Lista de Quimicos</h5>
+                                    <div class="card-header border-secondary">
+                                        <h5><b>LISTA DE QUIMICOS</b></h5>
+                                        <a href="{{url('/quimico/nuevo')}}"><i class="float-right fa fa-plus-circle" style="font-size:20px; color:purple"></i></a>
                                     </div>
                                     <div class="input-group mt-4 ml-2" style="width: 98%;" id="cont_search">
                                         <div class="input-group-prepend">
@@ -49,10 +31,20 @@
                                         </div>
                                         <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
-                                    <div class="card-block table-border-style">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" id="tblQuimicos">
-                                            </table>
+                                    <div class="card-body col-sm-12 p-0 mb-2">	
+                                        <div class="p-0 px-car">
+                                            <div class="flex-between-center scrollbar border border-1 border-300 rounded-2">
+                                                <table class="table table-striped table-bordered table-sm mt-3 fs--1" id="tblQuimicos">
+                                                    <thead>
+                                                        <tr class="text-light text-center" style="background-color: purple;">
+                                                            <th width="100px">CODIGO</th>
+                                                            <th>DESCRIPCION</th>
+                                                            <th width="60px">U/M</th>
+                                                            <th width="100px">ACCIONES</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

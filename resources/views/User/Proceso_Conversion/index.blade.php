@@ -38,11 +38,9 @@
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>Proceso de Conversión</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='btnAdd'>
-                                            <i class="material-icons text-blue">add_circle</i>
-                                        </button>
+                                    <div class="card-header border-secondary">
+                                        <h5><b>PROCESO DE CONVERSION</b></h5>
+                                        <a href="#" id='btnAdd'><i class="float-right fa fa-plus-circle" style="font-size:20px; color:purple"></i></a>
                                     </div>
                                     <div class="form-row mr-3 ml-3 mt-3">
                                         
@@ -54,20 +52,20 @@
 
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
-                                                <input type="text" class="input-fecha form-control" id="id_fecha_desde">
+                                                <input type="date" class="input-fecha form-control" id="id_fecha_desde">
                                                 
                                             </div>
                                         </div>
 
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
-                                                <input type="text" class="input-fecha form-control" id="id_fecha_hasta">
+                                                <input type="date" class="input-fecha form-control" id="id_fecha_hasta">
                                                 
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-1 " > 
-                                            <a class="btn icon-btn btn-warning " href="#" id="id_search">                                                
+                                        <div class="form-group col-md-1 mt-2" > 
+                                            <a class="icon-btn bg-transparent" href="#" id="id_search">                                                
                                                 <i class="material-icons text-black">search</i>
                                             </a>
                                             
@@ -77,11 +75,25 @@
 
                                     </div>
                                     
-                                    <div class="form-group col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" id="tblConversion" width="99%">
-
-                                            </table>
+                                    <div class="card-body col-sm-12 p-0 mb-2">	
+                                        <div class="p-0 px-car">
+                                            <div class="flex-between-center scrollbar border border-1 border-300 rounded-2">
+                                                <table class="table table-striped table-bordered table-sm mt-3 fs--1" id="tblConversion">
+                                                    <thead>
+                                                        <tr class="text-light text-center" style="background-color: purple;">
+                                                            <th>INDEX</th>
+                                                            <th width="80px">N° ORDEN</th>
+                                                            <th>PRODUCTO</th>
+                                                            <th>FECHA INICIAL</th>
+                                                            <th>FECHA FINAL</th>
+                                                            <th width="90px">HORAS TRABAJADAS</th>
+                                                            <th>PESO %</th>
+                                                            <th width="100px">TOTAL DE BULTOS (UNDS)</th>
+                                                            <th width="80px">ACCIONES</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     

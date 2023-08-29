@@ -10,25 +10,6 @@
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
                 <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-10">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Usuarios</h5>
-                                </div>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:">Usuarios</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="{{url('user/nuevo')}}" class="btn btn-primary btn-sm  float-right">Nuevo usuario</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- [ breadcrumb ] start -->
                 <div class="main-body">
                     <div class="page-wrapper">
@@ -36,52 +17,47 @@
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>Lista de usuarios</h5>
+                                    <div class="card-header border-secondary">
+                                        <h5><b>USUARIOS</b></h5>
+                                        <a href="{{url('user/nuevo')}}"><i class="float-right fa fa-plus-circle" style="font-size:20px; color:purple"></i></a>
                                     </div>
                                     <div class="{{ $message['tipo'] }}">{{ $message['mensaje'] }}</div>
-                                    <div class="card-block table-border-style">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>COD. USUARIO</th>
-                                                        <th>NOMBRES</th>
-                                                        <th>APELLIDOS</th>
-                                                        <th>USERNAME</th>
-                                                        <th>ESTADO</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($user as $user)
-                                                    <tr class="unread">
-                                                        <td>{{ $user['id'] }}</td>
-                                                        <td>{{ $user['nombres'] }}</td>
-                                                        <td>{{ $user['apellidos'] }}</td>
-                                                        <td>{{ $user['username'] }}</td>
-                                                        <td>
-                                                            @if ( $user->estado )
-                                                            <span class="badge badge-success">Activo</span>
-                                                            @else
-                                                            <span class="badge badge-danger">Inactivo</span>
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <a href="user/detalle/{{ $user['id']}}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a>
-                                                            <a href="user/edit/{{ $user['id']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                            @if ( $user->estado )
-                                                           <!-- <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a> -->
-                                                           <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="fas fa-toggle-on text-c-success f-30 m-r-10"></i></a>
-                                                            @endif
-                                                            @if ( $user->estado == 0)
-                                                                <a href="#!" onclick="activeUser({{ $user['id'] }})" ><i class="fas fa-toggle-on text-c-red f-30 m-r-10"></i></a>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                    <div class="card-body col-sm-12 p-0 mb-2">	
+                                        <div class="p-0 px-car">
+                                            <div class="flex-between-center scrollbar border border-1 border-300 rounded-2">
+                                                <table class="table table-striped table-bordered table-sm mt-3 fs--1" id="tbl_usuario">
+                                                    <thead>
+                                                        <tr class="text-light text-center" style="background-color: purple;">
+                                                            <th width="140px">COD. USUARIO</th>
+                                                            <th>NOMBRES</th>
+                                                            <th>APELLIDOS</th>
+                                                            <th>USERNAME</th>
+                                                            <th width="140px">ACCIONES</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user as $user)
+                                                        <tr class="unread">
+                                                            <td class="text-center">{{ $user['id'] }}</td>
+                                                            <td>{{ $user['nombres'] }}</td>
+                                                            <td>{{ $user['apellidos'] }}</td>
+                                                            <td>{{ $user['username'] }}</td>
+                                                            <td class="text-center">
+                                                                <a href="user/detalle/{{ $user['id']}}"><i class="fa fa-eye text-c-green f-20 m-r-10"></i></a>
+                                                                <a href="user/edit/{{ $user['id']}}"><i class="far fa-edit text-c-blue f-20 m-r-10"></i></a>
+                                                                @if ( $user->estado )
+                                                            <!-- <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a> -->
+                                                            <a href="#!" onclick="deleteUser({{ $user['id'] }})"><i class="fas fa-toggle-on text-c-success f-20 m-r-10"></i></a>
+                                                                @endif
+                                                                @if ( $user->estado == 0)
+                                                                    <a href="#!" onclick="activeUser({{ $user['id'] }})" ><i class="fas fa-toggle-on text-c-red f-20 m-r-10"></i></a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

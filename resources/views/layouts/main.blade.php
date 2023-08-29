@@ -16,6 +16,10 @@
     <!--Invoice CSS -->
     <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
 
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+
     <!-- datarangepicker -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}">
 
@@ -29,8 +33,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <!-- datatable CSS -->
-<!--<link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">-->
-<!--<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">-->
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -69,6 +73,7 @@
 <!-- [ Content ] end -->
 
 <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.select.min.js') }}"></script>

@@ -8,26 +8,7 @@
     <div class="pcoded-wrapper">
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
-                <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-10">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Roles</h5>
-                                </div>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="home"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{url('/home')}}">Inicio</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:">Roles</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="{{url('rol/crear')}}" class="btn btn-primary btn-sm float-right">Nuevo Rol</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- [ breadcrumb ] start -->                
                 <!-- [ breadcrumb ] start -->
                 <div class="main-body">
                     <div class="page-wrapper">
@@ -35,32 +16,35 @@
                             <!-- [ Tabla Categorias ] start -->
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>Rol</h5>
-                                    </div>  
-                                    <div class="card-block table-border-style">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>COD. ROL</th>
-                                                        <th>DESCRIPCION</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($roles as $rol)
-                                                    <tr class="unread">
-                                                        <td>{{ $rol['id'] }}</td>
-                                                        <td>{{ $rol['descripcion'] }}</td>
-                                                        <td class="text-center">
-                                                            <!-- <a href="rol/{{ $rol['id'] }}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a> -->
-                                                            <a href="rol/edit/{{$rol['id']}}"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                    <div class="card-header border-secondary">
+                                        <h5><b>ROL</b></h5>
+                                        <a href="{{url('rol/crear')}}"><i class="float-right fa fa-plus-circle" style="font-size:20px; color:purple"></i></a>
+                                   </div>  
+                                    <div class="card-body col-sm-12 p-0 mb-2">	
+                                        <div class="p-0 px-car">
+                                            <div class="flex-between-center scrollbar border border-1 border-300 rounded-2">
+                                                <table class="table table-striped table-bordered table-sm mt-3 fs--1" id="tbl_rol">
+                                                    <thead>
+                                                    <tr class="text-light text-center" style="background-color: purple;">
+                                                            <th width="140px">COD. ROL</th>
+                                                            <th>DESCRIPCION</th>
+                                                            <th width="140px">ACCION</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($roles as $rol)
+                                                        <tr class="unread">
+                                                            <td class="text-center">{{ $rol['id'] }}</td>
+                                                            <td>{{ $rol['descripcion'] }}</td>
+                                                            <td class="text-center">
+                                                                <!-- <a href="rol/{{ $rol['id'] }}"><i class="feather icon-eye text-c-green f-30 m-r-10"></i></a> -->
+                                                                <a href="rol/edit/{{$rol['id']}}"><i class="far fa-edit text-c-blue f-20 m-r-10"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

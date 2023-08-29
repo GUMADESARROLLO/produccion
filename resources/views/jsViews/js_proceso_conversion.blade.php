@@ -48,11 +48,9 @@
                 "search": "BUSCAR"
             },
             'columns': [{
-                    "title": "id",
                     "data": "id"
                 },
                 {
-                    "title": "N° ORDEN",
                     "data": "num_orden",
                     "render": function(data, type, row, meta) {
                         return '<span class="text-primary" onclick="Editar(' + row.id + ')">' + data + '</span>'
@@ -60,24 +58,19 @@
                     }
                 },
                 {
-                    "title": "PRODUCTO",
                     "data": "nombre"
                 },
                 {
-                    "title": "FECHA INICIAL",
                     "data": "fecha_hora_inicio"
                 },
                 {
-                    "title": "FECHA FINAL",
                     "data": "fecha_hora_final"
                 },
                 {
-                    "title": "HORAS TRABAJADAS",
                     "data": "Hrs_trabajadas",
                     "render": $.fn.dataTable.render.number(',', '.', 2)
                 },
                 {
-                    "title": "PESO %",
                     "data": "PESO_PORCENT",
                     "render": function(data, type, row) {
                         if (data == null) {
@@ -90,7 +83,6 @@
 
                 },
                 {
-                    "title": "TOTAL DE BULTOS (UNDS)",
                     "data": "TOTAL_BULTOS_UNDS",
                     "render": function(data, type, row) {
                         if (data == null) {
@@ -101,33 +93,20 @@
                     }
                 },
                 {
-                    "title": "ACCIONES",
                     "data": "id",
                     "render": function(data, type, row, meta) {
                         return '<div class="row justify-content-center">' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="material-icons text-danger" onclick="Eliminar(' + row.id + ')">delete</i></div>' +
-                            '<div class="col-3 d-flex justify-content-center"><i class="material-icons text-danger" onclick="Printer(' + row.id + ')">picture_as_pdf</i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="far fa-trash-alt text-c-red f-20 m-r-10" onclick="Eliminar(' + row.id + ')"></i></div>' +
+                            '<div class="col-3 d-flex justify-content-center"><i class="fa fa-file-pdf text-c-blue f-20 m-r-10" onclick="Printer(' + row.id + ')"></i></div>' +
                             '</div>'
                     }
                 },
             ],
             "columnDefs": [{
-                    "className": "dt-center",
-                    "targets": [1, 2, 3, 4]
-                },
-                {
-                    "className": "dt-right",
-                    "targets": [5, 6, 7]
-                },
-                {
                     "visible": false,
                     "searchable": false,
                     "targets": [0]
-                },
-                {
-                    "width": "11%",
-                    "targets": [1, 5, 6]
-                },
+                },                
             ],
         });
 

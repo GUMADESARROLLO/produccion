@@ -169,14 +169,14 @@
                             <div class="col-lg-3">
                                 <div class="row g-gs ">
                                     <div class="col-md-12 col-lg-12 ">
-                                        <div class="card card-bordered border-left-primary">
+                                        <div class="card card-bordered border-left-success">
 
                                             <div class="card-inner">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start mb-0">
                                                             <div class="card-title">
-                                                                <h6 class="text-xs  text-primary text-uppercase mb-1">HORAS TRABAJADAS</h6>
+                                                                <h6 class="text-xs  text-success text-uppercase mb-1">HORAS TRABAJADAS</h6>
                                                             </div>
                                                         </div>
 
@@ -194,7 +194,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-info-circle  fa-2x text-gray-300" id="id_icon_info"></i>
+                                                        <i class="fas fa-info-circle  fa-2x text-secondary" id="id_icon_info"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,13 +207,13 @@
                             <div class="col-lg-3">
                                 <div class="row g-gs">
                                     <div class="col-md-12 col-lg-12">
-                                        <div class="card card-bordered border-left-success">
+                                        <div class="card card-bordered border-left-primary">
                                             <div class="card-inner">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start mb-0">
                                                             <div class="card-title">
-                                                                <h6 class="text-xs font-weight-bold text-success text-uppercase mb-1">COSTOS TOTALES</h6>
+                                                                <h6 class="text-xs font-weight-bold text-primary text-uppercase mb-1">COSTOS TOTALES</h6>
                                                             </div>
                                                         </div>                                                       
                                                         <div class="card-stats">
@@ -234,7 +234,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-info-circle fa-2x text-gray-300" id="id_icon_info_2"></i>
+                                                        <i class="fas fa-info-circle fa-2x text-secondary" id="id_icon_info_2"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -271,7 +271,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300" id="icon_fecha_final"></i>
+                                                        <i class="fas fa-calendar fa-2x text-secondary" id="icon_fecha_final"></i>
 
                                                     </div>
                                                 </div>
@@ -308,7 +308,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-flag fa-2x text-gray-300"></i>
+                                                        <i class="fas fa-flag fa-2x text-secondary"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,7 +324,7 @@
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card">
                                             <div class="card-header ">
-                                                <h5>ORDENES PROCESO HUMEDO</h5>
+                                                <h5><b>ORDENES PROCESO HUMEDO</b></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
                                                     <div class="input-group "> 
                                                         <div class="input-group-prepend">
@@ -338,7 +338,23 @@
                                             
                                             <div class="form-group col-md-12 mb-3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="tblProcesoHumedo" width="99%"></table>
+                                                    <table class="table table-hover" id="tblProcesoHumedo" width="99%">
+                                                        <thead>
+                                                            <tr class="text-light text-center" style="background-color: purple;">
+                                                                <th ></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th ></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -351,7 +367,7 @@
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card">
                                             <div class="card-header ">
-                                                <h5>ORDENES CONVERSION</h5>
+                                                <h5><b>ORDENES CONVERSION</b></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
                                                     <div class="input-group "> 
                                                         <div class="input-group-prepend">
@@ -363,7 +379,19 @@
                                             </div>                                            
                                             <div class="form-group col-md-12 mb-3">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="tblConversion" width="99%"></table>
+                                                    <table class="table table-hover" id="tblConversion" width="99%">
+                                                    <thead>
+                                                            <tr class="text-light text-center" style="background-color: purple;">
+                                                                <th ></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>                                        

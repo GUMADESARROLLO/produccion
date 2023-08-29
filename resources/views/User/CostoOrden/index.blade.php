@@ -18,19 +18,30 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>LISTA DE ORDENES</h5>
-                                    </div>
-                                    <div class="input-group my-4 ml-2" style="width: 98%;" id="cont_search">
+                                    <div class="card-header border-secondary">
+                                        <h5 class="mt-2"><b>LISTA DE ORDENES</b></h5>
+                                        <div class="input-group float-right" style="width: 500px;">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                                        </div>
-                                        <input type="text" id="InputBuscar" class="form-control bg-white" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
+                                        </div>								
+                                        <input type="text" id="InputBuscar" class="form-control" placeholder="Buscar...">
                                     </div>
-                                    <div class="card-block table-border-style">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" id="dtCostoOrden">
-                                            </table>
+                                    </div>
+                                    <div class="card-body col-sm-12 p-0 mb-2">	
+                                        <div class="p-0 px-car">
+                                            <div class="flex-between-center scrollbar border border-1 border-300 rounded-2">
+                                                <table class="table table-striped table-bordered table-sm mt-3 fs--1" id="dtCostoOrden">
+                                                    <thead>
+                                                        <tr class="text-light text-center" style="background-color: purple;">
+                                                            <th width="120px">N° DE ORDEN</th>
+                                                            <th>PRODUCTO</th>
+                                                            <th width="120px">FECHA INICIO</th>
+                                                            <th width="120px">FECHA FINAL</th>
+                                                            <th width="120px">DETALLE</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
