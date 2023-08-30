@@ -26,12 +26,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use \Carbon\Carbon;
-use App\Traits\ModelScopes;
 use Exception;
 
 class orden_produccionController extends Controller
 {
-    use ModelScopes;
     public function __construct()
     {
         $this->middleware('auth');
@@ -52,10 +50,15 @@ class orden_produccionController extends Controller
 
                 /** Produccion Real **/
                 $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
+
                 if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
                     $array[$i]['prod_real'] = 0;
+                    $prod_real              = 0;
+                    $merma_total            = 0;
                 } else {
                     $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
+                    $prod_real              = $detalle_prod_real['prod_real'];
+                    $merma_total            = $detalle_prod_real['merma_total'];
                 }
 
                 /** Merma Total **/
@@ -66,8 +69,7 @@ class orden_produccionController extends Controller
                     $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
                 }
 
-
-                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+                $array[$i]['prod_total'] = $prod_real + $merma_total;
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));
@@ -78,13 +80,14 @@ class orden_produccionController extends Controller
         return view('User.Orden_Produccion.index', compact(['array']));
     }
 
+
     public function detalle($idOP)
     {
         $array = array();
         $i = 0;
 
         $mo_directa = $this->calcularManoObraDirecta($idOP);
-        $yk_hrasEftvs = $this->calcularHrasEftvs($idOP);
+        $yk_hrasEftvs = horas_efectivas::calcularHrasEftvs($idOP);
 
         $ord_produccion = orden_produccion::where('numOrden', $idOP)->get()->first();
         $producto = productos::select('nombre')->where('idProducto', $ord_produccion->producto)->get()->first();
@@ -1095,6 +1098,8 @@ class orden_produccionController extends Controller
                 $detalle_prod_real = DetalleProduccion::select('prod_real')->where('numOrden', $key['numOrden'])->get()->first();
                 if (is_null($detalle_prod_real) || $detalle_prod_real === '') {
                     $array[$i]['prod_real'] = 0;
+                    $prod_real              = 0;
+                    $merma_total            = 0;
                 } else {
                     $array[$i]['prod_real'] = $detalle_prod_real->prod_real;
                 }
@@ -1105,10 +1110,12 @@ class orden_produccionController extends Controller
                     $array[$i]['merma_total'] = 0;
                 } else {
                     $array[$i]['merma_total'] = $detalle_merma_total->merma_total;
+                    $prod_real              = $detalle_prod_real['prod_real'];
+                    $merma_total            = $detalle_prod_real['merma_total'];
                 }
 
 
-                $array[$i]['prod_total'] = $detalle_prod_real['prod_real']  + $detalle_merma_total['merma_total'];
+                $array[$i]['prod_total'] = $prod_real + $merma_total;
 
                 $array[$i]['fechaInicio'] = date('d/m/Y', strtotime($key['fechaInicio']));
                 $array[$i]['fechaFinal'] = date('d/m/Y', strtotime($key['fechaFinal']));

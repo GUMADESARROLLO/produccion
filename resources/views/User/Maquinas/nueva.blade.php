@@ -55,7 +55,7 @@
                                         <form method="post" action="{{url('maquina/guardar')}}">
                                             {{ csrf_field() }}
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="nombre">Nombre de la Maquina</label>
                                                         <input type="text" class="form-control" name="nombre" id="nombre" value="{{old('nombre')}}">

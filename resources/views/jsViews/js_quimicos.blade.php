@@ -1,71 +1,53 @@
 <script type="text/javascript">
     let dtQuimicos;
     $(document).ready(function () {
-        dtQuimicos = $('#tblQuimicos').DataTable({ // Costos por ORDEN
-            "ajax": {
-                "url": "getQuimicos",
-                'dataSrc': '',
-            },
-            "order": [
-                [0, "desc"]
-            ],
-            "destroy": true,
-            "bPaginate": true,
-            "pagingType": "full",
-            "info": "false",
-            "language": {
-                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "search": "BUSCAR",
-                "oPaginate": {
-                    sNext: " Siguiente ",
-                    sPrevious: " Anterior ",
-                    sFirst: "Primero ",
-                    sLast: " Ultimo",
-                },
-            },
-            "columns": [{
-                "title": "CODIGO",
-                "data": "codigo"
-            },
-                {
-                    "title": "DESCRIPCION",
-                    "data": "descripcion"
-                },
-                {
-                    "title": "U/M",
-                    "data": "unidad"
-                },
-                {
-                    "title": "ESTADO",
-                    "data": "estado",
-                    "render": function (data, type, row) {
-                        if (data) {
-                            return '<span class = "badge badge-success"> Activo </span>'
-                        } else {
-                            return '<span class = "badge badge-danger" > Inactivo </span>'
-                        }
-                    }
-                },
-                {
-                    "title": "OPCIONES",
-                    "data": "idQuimico",
-                    "render": function (data, type, row) {
-                        return ' <a href="#!" onclick="deleteQuimico(' + data + ')"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a>' +
-                            ' <a href="quimico/editar-quimico/' + data + '"><i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>';
-                    }
-                },
-            ],
-            "columnDefs": [{
-                "targets": [0],
-                "className": "dt-center",
-            },
-                {
-                    "targets": [1],
-                    "width": '35%',
-                    "className": "dt-center",
-                }]
-        });
+        $.ajax({
+            url: "getQuimicos",
+            type: 'get',
+            async: false,
+            success: function(response) {
+                $('#tblQuimicos').DataTable({
+                    "data":response,
+                    "destroy" : true,
+                    "info":    false,
+                    "lengthMenu": [[10,-1], [10,"Todo"]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns": [{
+                        "data": "codigo", "render": function(data, type, row, meta) {
+                          return  `<div class="text-center">
+                                      <h6 class="mb-0 fw-semi-bold">`+row.codigo+`</h6>
+                                    </div>`
+                          }
+                    },
+                        {
+                            "data": "descripcion"
+                        },
+                        {
+                            "data": "unidad"
+                        },
+                        {
+                            "data": "idQuimico",
+                            "render": function (data, type, row) {
+                                return '<div class="text-center"> <a href="#!" onclick="deleteQuimico(' + data + ')"><i class="far fa-trash-alt text-c-red f-20 m-r-10"></i></a>' +
+                                    ' <a href="quimico/editar-quimico/' + data + '"><i class="far fa-edit text-c-blue f-20 m-r-10"></i></a></div>';
+                            }
+                        },
+                    ],
+                });
+            }
+        })
+           
 
         $("#tblQuimicos_filter").hide();
         $("#tblQuimicos_length").hide();

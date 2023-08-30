@@ -1,7 +1,25 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//inicializaControlFecha();
-
+		$('#tbl_usuario').DataTable({
+			"destroy" : true,
+			"info":    false,
+			"lengthMenu": [[10,-1], [10,"Todo"]],
+			"language": {
+				"zeroRecords": "NO HAY COINCIDENCIAS",
+				"paginate": {
+					"first":      "Primera",
+					"last":       "Última ",
+					"next":       "Siguiente",
+					"previous":   "Anterior"
+				},
+				"lengthMenu": "MOSTRAR _MENU_",
+				"emptyTable": "REALICE UNA BUSQUEDA",
+				"search":     "BUSCAR"
+			},
+		})
+		$("#tbl_usuario_filter").hide();
+	    $("#tbl_usuario_length").hide();
 
 	});
 

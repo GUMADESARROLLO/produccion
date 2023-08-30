@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    var dtMPD, dtQM, dtProduccion;
+    var dtMPD, dtQM ;
     var indicador_1 = 0;
 
     /******** Cargar funcion al inicio del DOM ************/
@@ -10,88 +10,7 @@
             });
         });
 
-        dtProduccion = $('#tblOrder_produccion').DataTable({ // Costos por ORDEN
-            "ajax": {
-                "url": "getOrder_produccion",
-                'dataSrc': '',
-            },
-            "order": [
-                [0, "desc"]
-            ],
-            "destroy": true,
-            "bPaginate": true,
-            "info": false,
-            "pagingType": "full",
-            "language": {
-                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "search": "BUSCAR",
-                "oPaginate": {
-                    sNext: " Siguiente ",
-                    sPrevious: " Anterior ",
-                    sFirst: "Primero ",
-                    sLast: " Ultimo",
-                },
-            },
-            "columns": [{
-                "title": "NO. ORDEN",
-                "data": "numOrden"
-            },
-                {
-                    "title": "PRODUCTO",
-                    "data": "producto"
-                },
-                {
-                    "title": "FECHA INICIO",
-                    "data": "fechaInicio",
-                },
-                {
-                    "title": "FECHA FINAL",
-                    "data": "fechaFinal"
-                },
-                {
-                    "title": "PROD.REAL(kg)",
-                    "data": "prod_real"
-                },
-                {
-                    "title": "PROD.TOTAL(kg)",
-                    "data": "prod_total"
-                },
-                {
-                    "title": "ESTADO",
-                    "data": "estado",
-                    "render": function(data, type, row) {
-                        if (data) {
-                            return '<span class = "badge badge-success"> Activo </span>'
-                        } else {
-                            return '<span class = "badge badge-danger" > Inactivo </span>'
-                        }
-                    }
-                },
-                {
-                    "title": "OPCIONES",
-                    "data": "numOrden",
-                    "render": function(data, type, row) {
-                        return  '<a href="orden-produccion/reporte/' + data + '" title="Agregar datos al reporte"><i class="far fa-calendar-plus text-c-red  f-30 m-r-10"></i></a>' +
-                            '<a href="orden-produccion/editar/' + data + '" title="Editar datos"><i class="feather icon-edit text-c-purple f-30 m-r-10"></i></a>' +
-                            '<a href="orden-produccion/detalle/' + data + '" title="Ver reporte"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
-                    }
-                },
-            ],
-            "columnDefs": [{
-                "targets": [0],
-                "className": "dt-center",
-            }
-            ]
-        });
-
-        $("#tblOrder_produccion_filter").hide();
-        $("#tblOrder_produccion_length").hide();
-        $('#cont_search').show();
-        $('#InputBuscar').on('keyup', function() {
-            var table = $('#tblOrder_produccion').DataTable();
-            table.search(this.value).draw();
-        });
+        indexProduccion();
 
         /****** Fibras - Agregar filas ******/
         dtMPD = $('#dtMPD').DataTable({
@@ -130,6 +49,89 @@
         });
         inicializaControlFecha();
     });
+
+    function indexProduccion(){
+        $.ajax({
+            url: "getOrder_produccion",
+            type: 'get',
+            async: false,
+            success: function(response) {
+                $('#tblOrder_produccion').DataTable({
+                    "data":response,
+                    "destroy" : true,
+                    "info":    false,
+                    "lengthMenu": [[10,-1], [10,"Todo"]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns": [{
+                        "data": "numOrden", "render": function(data, type, row, meta) {
+                            return  `<div class="text-center">
+                                                <h6 class="mb-0 fw-semi-bold">`+row.numOrden+`</h6>
+                                        </div>`
+                            }
+                    },
+                        {
+                            "data": "producto", "render": function(data, type, row, meta) {
+                            return  `   <div class="d-flex align-items-center position-relative">
+                                            <div class="flex-1 ms-3" style="text-align: center;">
+                                                <h5 class="mb-0 fw-semi-bold"><div class="stretched-link text-dark">`+row.producto+`</div></h5>
+                                            </div>
+                                        </div>`
+                            }
+                        },
+                        {
+                            "data": "fechaInicio", "render": function(data, type, row) {
+                                return '<div class="text-center">'+row.fechaInicio+'</div>'                               
+                            }
+                        },
+                        {
+                            "data": "fechaFinal", "render": function(data, type, row) {
+                                return '<div class="text-center">'+row.fechaFinal+'</div>'                               
+                            }
+                        },
+                        {
+                            "data": "prod_real"
+                        },
+                        {
+                            "data": "prod_total"
+                        },
+                        {
+                            "title": "OPCIONES",
+                            "data": "numOrden",
+                            "render": function(data, type, row) {
+                                return  '<div class="text-center"><a href="orden-produccion/reporte/' + data + '" title="Agregar datos al reporte"><i class="fas fa-calendar-alt text-c-purple  f-20 m-r-10" aria-hidden="true"></i></a>' +
+                                    '<a href="orden-produccion/editar/' + data + '" title="Editar datos"><i class="far fa-edit text-c-green f-20 m-r-10"></i></a>' +
+                                    '<a href="orden-produccion/detalle/' + data + '" title="Ver reporte"><i class="fa fa-eye text-c-black f-20 m-r-10"></i></a></div>';
+                            }
+                        },
+                    ],
+                    "columnDefs": [{
+                        "targets": [0],
+                        "className": "dt-center",
+                    }
+                    ]
+                });
+            }
+        });
+
+        $("#tblOrder_produccion_filter").hide();
+        $("#tblOrder_produccion_length").hide();
+        $('#cont_search').show();
+        $('#InputBuscar').on('keyup', function() {
+            var table = $('#tblOrder_produccion').DataTable();
+            table.search(this.value).draw();
+        });
+    }
 
     $('#numOrden').on('change', function() {
         $('#tbody-mp tr').each(function(i) {

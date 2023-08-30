@@ -30,17 +30,6 @@
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
                 <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-10">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">REQUISAS</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- [ breadcrumb ] start -->
                 <div class="main-body">
                     <div class="page-wrapper">
@@ -48,8 +37,9 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5>LISTA DE REQUISAS</h5>
+                                    <div class="card-header border-secondary">
+                                        <h5><b>REQUISAS</b></h5>
+                                        <!--<a href="{{url('requisas/nuevo')}}"><i class="float-right fa fa-plus-circle" style="font-size:20px; color:purple"></i></a>-->
                                     </div>
                                     <div class="input-group mt-4 ml-2" style="width: 98%;" id="cont_search">
                                         <div class="input-group-prepend">
@@ -61,14 +51,14 @@
                                         <div class="table-responsive">
                                             <table class="table table-hover" id="tblRequisas">
                                                 <thead>
-                                                    <tr class="text-center ">
+                                                    <tr class="text-light text-center" style="background-color: purple;">
                                                         <th>#</th>
-                                                        <th>No. Orden</th>
-                                                        <th>Codigo</th>
-                                                        <th>Tipo</th>
-                                                        <th>Turno</th>
-                                                        <th>Fecha Creacion</th>
-                                                        <th>Acciones</th>
+                                                        <th>N° ORDEN</th>
+                                                        <th>CODIGO</th>
+                                                        <th>TIPO</th>
+                                                        <th>TURNO</th>
+                                                        <th>FECHA CREACION</th>
+                                                        <th>ACCIONES</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-dark">

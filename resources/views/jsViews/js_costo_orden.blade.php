@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    var dtHP, dtCostoOrden, dtOrder;
+    var dtHP;
     var indicador_1 = 0;
     $(document).ready(function() {
         dtHP = $('#dtHrsProd').DataTable({
@@ -19,143 +19,10 @@
             }]
         });
 
-        dtCostoOrden = $('#dtCostoOrden').DataTable({ // Costos por ORDEN
-            "ajax": {
-                "url": "getCostoOrden",
-                'dataSrc': '',
-            },
-            "order": [
-                [0, "desc"]
-            ],
-            "info": false,
-            "destroy": true,
-            "bPaginate": true,
-            "pagingType": "full",
-            "language": {
-                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "search": "BUSCAR",
-                "oPaginate": {
-                    sNext: " Siguiente ",
-                    sPrevious: " Anterior ",
-                    sFirst: "Primero ",
-                    sLast: " Ultimo",
-                },
-            },
-            "columns": [{
-                    "title": "#Orden",
-                    "data": "numOrden"
-                },
-                {
-                    "title": "Producto",
-                    "data": "producto"
-                },
-                {
-                    "title": "Fecha Inicio",
-                    "data": "fechaInicio"
-                },
-                {
-                    "title": "Fecha Final",
-                    "data": "fechaFinal"
-                },
-                {
-                    "title": "Detalle",
-                    "data": "numOrden",
-                    "render": function(data, type, row) {
-                        return '<a href="costo-orden/detalle/' + data + '" target="_blank"><i class="feather icon-eye text-c-black f-30 m-r-10"></i></a>';
-                    }
-                },
-            ],
-            "columnDefs": [{
-                "targets": [0],
-                "className": "dt-center",
-            }, {
-                "targets": [1],
-                "width": '35%',
-                "className": "dt-center",
-            }]
-        });
+        
 
-        $("#dtCostoOrden_filter").hide();
-        $("#dtCostoOrden_length").hide();
-        $('#cont_search').show();
-        $('#InputBuscar').on('keyup', function() {
-            var table = $('#dtCostoOrden').DataTable();
-            table.search(this.value).draw();
-        });
-
-        dtOrder = $('#dtOrder').DataTable({ //SOLO COSTOS
-            "ajax": {
-                "url": "getCostos",
-                'dataSrc': '',
-            },
-            "order": [
-                [4, "desc"]
-            ],
-            "destroy": true,
-            "bPaginate": true,
-            "pagingType": "full",
-            "info": false,
-            "language": {
-                "emptyTable": `<p class="text-center">Agrega horas productivas</p>`,
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "search": "BUSCAR",
-                "oPaginate": {
-                    sNext: " Siguiente ",
-                    sPrevious: " Anterior ",
-                    sFirst: "Primero ",
-                    sLast: " Ultimo",
-                },
-            },
-            "columns": [{
-                    "title": "CODIGO",
-                    "data": "codigo"
-                },
-                {
-                    "title": "DESCRIPCION",
-                    "data": "descripcion"
-                },
-                {
-                    "title": "U/M",
-                    "data": "unidad_medida"
-                },
-                {
-                    "title": "Estado",
-                    "data": "estado",
-                    "render": function(data, type, row) {
-                        if (data) {
-                            return '<span class="badge badge-success">Activo</span>'
-                        } else {
-                            '<span class="badge badge-danger">Inactivo</span>'
-                        }
-                    }
-                },
-                {
-                    "title": "Detalle",
-                    "data": "id",
-                    "render": function(data, type, row) {
-                        return '<a href="#!" onclick="deleteCosto(' + data + ')"><i class="feather icon-x-circle text-c-red f-30 m-r-10"></i></a><a href="costos/editar/' + data + '">' +
-                            '<i class="feather icon-edit text-c-blue f-30 m-r-10"></i></a>';
-                    }
-                },
-            ],
-            "columnDefs": [{
-                "targets": [0],
-                "className": "dt-center",
-            }, {
-                "targets": [1],
-                "width": '35%',
-                "className": "dt-center",
-            }]
-        });
-
-        $("#dtOrder_filter").hide();
-        $("#dtOrder_length").hide();
-        $('#cont_search').show();
-        $('#InputBuscar').on('keyup', function() {
-            var table = $('#dtOrder').DataTable();
-            table.search(this.value).draw();
-        });
+       indexCosto();
+       costoOrden();
 
 
 
@@ -168,6 +35,147 @@
             console.log(URLlast);
         });
     });
+
+
+    function indexCosto(){
+        
+        $.ajax({
+            url: "getCostos",
+            type: 'get',
+            async: false,
+            success: function(response) {
+                $('#dtOrder').DataTable({
+                    "data":response,
+                    "destroy" : true,
+                    "info":    false,
+                    "lengthMenu": [[10,-1], [10,"Todo"]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns": [{
+                            "data": "codigo", "render": function(data, type, row, meta) {
+
+                            return  `<div class="text-center" width="1000px">
+                                                <h6 class="mb-0 fw-semi-bold">`+row.codigo+`</h6>
+                                        </div>`
+                            }
+                        },
+                        {
+                            "data": "descripcion", "render": function(data, type, row, meta) {
+
+                                return  `   <div class="d-flex align-items-center position-relative">
+                                                <div class="flex-1 ms-3" style="text-align: center;">
+                                                    <h6 class="mb-0 fw-semi-bold"><div class="stretched-link text-dark">`+row.descripcion+`</div></h6>
+                                                </div>
+                                            </div>`
+                                }
+                        },
+                        {
+                            "data": "unidad_medida",
+                            "render": function(data, type, row) {
+                                return '<div class="text-center">'+row.unidad_medida+'</div>'                               
+                            }
+                        },
+                        {
+                            "data": "id",
+                            "render": function(data, type, row) {
+                                return '<div class="text-center"><a href="costos/editar/' + data + '">' +
+                                    '<i class="far fa-edit" style="font-size:24px"></i></a></div>';
+                            }
+                        },
+                    ],
+                });
+            }
+        });
+
+        $("#dtOrder_filter").hide();
+        $("#dtOrder_length").hide();
+        //$('#cont_search').show();
+        /*$('#InputBuscar').on('keyup', function() {
+            var table = $('#dtOrder').DataTable();
+            table.search(this.value).draw();
+        });*/
+    }
+
+    function costoOrden(){
+        $.ajax({
+            url: "getCostoOrden",
+            type: 'get',
+            async: false,
+            success: function(response) {
+                $('#dtCostoOrden').DataTable({
+                    "data":response,
+                    "destroy" : true,
+                    "info":    false,
+                    "lengthMenu": [[10,-1], [10,"Todo"]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns": [{
+                        "data": "numOrden", "render": function(data, type, row, meta) {
+                            return  `<div class="text-center">
+                                                <h6 class="mb-0 fw-semi-bold">`+row.numOrden+`</h6>
+                                        </div>`
+                            }
+                        },
+                        {
+                            "data": "producto", "render": function(data, type, row, meta) {
+
+                            return  `   <div class="d-flex align-items-center position-relative">
+                                            <div class="flex-1 ms-3" style="text-align: center;">
+                                                <h5 class="mb-0 fw-semi-bold"><div class="stretched-link text-dark">`+row.producto+`</div></h5>
+                                            </div>
+                                        </div>`
+                        }},
+                        {
+                            "data": "fechaInicio", "render": function(data, type, row) {
+                                return '<div class="text-center">'+row.fechaInicio+'</div>'                               
+                            }
+                        },
+                        {
+                            "data": "fechaFinal", "render": function(data, type, row) {
+                                return '<div class="text-center">'+row.fechaFinal+'</div>'                               
+                            }
+                        },
+                        {
+                            "data": "numOrden",
+                            "render": function(data, type, row) {
+                                return '<div class="text-center"><a href="costo-orden/detalle/' + data + '" target="_blank"><i class="fa fa-eye text-c-black f-30 m-r-10"></i></a></div>';
+                            }
+                        },
+                    ],
+                });
+            }
+        });
+
+        $("#dtCostoOrden_filter").hide();
+        $("#dtCostoOrden_length").hide();
+        $('#cont_search').show();
+        $('#InputBuscar').on('keyup', function() {
+            var table = $('#dtCostoOrden').DataTable();
+            table.search(this.value).draw();
+        });
+    }
+
+
     $(document).on('click', '#btnEditar', function() {
         var numOrden = $("#numOrden").val();
         const URLlast = "/produccion/costo-orden/nuevo/" + numOrden;
