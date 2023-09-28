@@ -109,7 +109,7 @@
 @endsection
 @section('content')
 <!-- [ Main Content ] start -->
-<div class="pcoded-main-container">
+<div class="pcoded-main-container" style="background-color:white;">
     <div class="pcoded-wrapper">
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -171,7 +171,7 @@
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card card-bordered border-left-success">
 
-                                            <div class="card-inner">
+                                            <div class="card-inner shadow-lg">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start mb-0">
@@ -208,7 +208,7 @@
                                 <div class="row g-gs">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="card card-bordered border-left-primary">
-                                            <div class="card-inner">
+                                            <div class="card-inner shadow-lg">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start mb-0">
@@ -249,7 +249,7 @@
                                 <div class="row g-gs">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="card card-bordered border-left-info">
-                                            <div class="card-inner">
+                                            <div class="card-inner shadow-lg">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start">
@@ -286,7 +286,7 @@
                                 <div class="row g-gs">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="card card-bordered border-left-warning">
-                                            <div class="card-inner">
+                                            <div class="card-inner shadow-lg">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="card-title-group align-start mb-0">
@@ -318,27 +318,27 @@
 
                             </div>
                         </div>
-                        <div class="row g-gs">
+                        <div class="row g-gs shadow-lg">
                             <div class="col-lg-12">
                                 <div class="row g-gs ">
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card">
-                                            <div class="card-header ">
+                                            <div class="card-header">
                                                 <h5><b>ORDENES PROCESO HUMEDO</b></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
                                                     <div class="input-group "> 
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="material-icons text-black">search</i></div>
+                                                            <div class="input-group-text bg-gray"><i class="material-icons text-black">search</i></div>
                                                         </div>                                            
-                                                        <input type="text" id="tbl_search_humedo" class="form-control bg-white" >
+                                                        <input type="text" id="tbl_search_humedo" class="form-control bg-gray" >
                                                     </div>
                                                 </button>
                                                 
                                             </div>
                                             
-                                            <div class="form-group col-md-12 mb-3">
+                                            <div class="form-group col-md-12 mb-3 shadow-lg">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="tblProcesoHumedo" width="99%">
+                                                    <table class="table table-hover table-secondary" id="tblProcesoHumedo" width="99%">
                                                         <thead>
                                                             <tr class="text-light text-center" style="background-color: purple;">
                                                                 <th ></th>
@@ -362,24 +362,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 shadow-lg">
                                 <div class="row g-gs ">
                                     <div class="col-md-12 col-lg-12 ">
                                         <div class="card">
-                                            <div class="card-header ">
+                                            <div class="card-header  ">
                                                 <h5><b>ORDENES CONVERSION</b></h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='id_btn_add_hrs_paro'>
-                                                    <div class="input-group "> 
+                                                    <div class="input-group"> 
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="material-icons text-black">search</i></div>
+                                                            <div class="input-group-text bg-gray"><i class="material-icons text-black">search</i></div>
                                                         </div>                                            
-                                                        <input type="text" id="tbl_search_conversion" class="form-control bg-white"  aria-label="Username" aria-describedby="basic-addon1">
+                                                        <input type="text" id="tbl_search_conversion" class="form-control bg-gray"  aria-label="Username" aria-describedby="basic-addon1">
                                                     </div>
                                                 </button>
                                             </div>                                            
-                                            <div class="form-group col-md-12 mb-3">
+                                            <div class="form-group col-md-12 mb-3 shadow-lg">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="tblConversion" width="99%">
+                                                    <table class="table table-hover table-secondary" id="tblConversion" width="99%">
                                                     <thead>
                                                             <tr class="text-light text-center" style="background-color: purple;">
                                                                 <th ></th>
