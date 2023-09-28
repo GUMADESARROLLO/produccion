@@ -165,11 +165,11 @@
         if (fechaInicial == '') {
             return mensaje('Por favor seleccione la fecha inicial', 'error');
         }
-        if (jumborroll == 75) {
+        if (jumborroll == 35) {
             producto = 2;
-        } else if (jumborroll == 53) {
+        } else if (jumborroll == 13) {
             producto = 1;
-        } else if (jumborroll == 94) {
+        } else if (jumborroll == 50) {
             producto = 7;
         }
 

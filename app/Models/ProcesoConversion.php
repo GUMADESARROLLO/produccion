@@ -119,6 +119,8 @@ class ProcesoConversion extends Model
                 $i++;
             }
         }
+       
+
 
         return $json;
     }
@@ -158,7 +160,7 @@ class ProcesoConversion extends Model
     }
     public static function get_info_producto($peso_porcent, $id_productor, $num_orden)
     {
-
+        
         $items_productos = DB::table('pc_productos_ordenes')->where('id_producto', $id_productor)->where('TIPO', 'PRODUCTO')->get();
         $datos_productos = DB::table('view_agrupado_detalle_requisas')->where('num_orden', $num_orden)->get()->toArray();
         $json = array();
@@ -185,6 +187,8 @@ class ProcesoConversion extends Model
                 $i++;
             }
         }
+
+        //dd($datos_productos);
 
         return $json;
     }

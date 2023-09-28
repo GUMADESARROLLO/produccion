@@ -52,14 +52,14 @@
 
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
-                                                <input type="date" class="input-fecha form-control" id="id_fecha_desde">
+                                                <input type="date" class="form-control" id="id_fecha_desde">
                                                 
                                             </div>
                                         </div>
 
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
-                                                <input type="date" class="input-fecha form-control" id="id_fecha_hasta">
+                                                <input type="date" class="form-control" id="id_fecha_hasta">
                                                 
                                             </div>
                                         </div>
@@ -119,9 +119,9 @@
                                                         <p class="text-muted">Producto</p>
                                                         <select class="form-control" id="id_select_producto">
                                                             <option value="0">...</option>
-                                                            <option value="53">PAPEL HIGIENICO ECOPLUS</option>
-                                                            <option value="75">PAPEL HIGIENICO GENERICO</option>
-                                                            <option value="94">PAPEL HIGIENICO VUENO</option>
+                                                            <option value="13">PAPEL HIGIENICO ECOPLUS</option>
+                                                            <option value="35">PAPEL HIGIENICO GENERICO</option>
+                                                            <option value="50">PAPEL HIGIENICO VUENO</option>
                                                         </select>
                                                         <small class="">Seleccione el tipo de producto</small>
                                                     </div>
