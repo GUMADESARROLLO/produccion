@@ -142,8 +142,8 @@ class ProcesoConversion extends Model
                 $hras_trabajadas_total  = $hrs_trabajadas > 24?  ($hrs_trabajadas / 2):  $hrs_trabajadas;
 
                 if ($found_key !== false) {
-                    $json[$i]['Dia'] =  (!isset($datos_productos[$found_key]->Dia) || $datos_productos[$found_key]->Dia == 0)? number_format(0.00, 2) : number_format(($hras_trabajadas_total) - (($datos_productos[$found_key]->Dia) / 60), 2);
-                    $json[$i]['Noche'] =(!isset($datos_productos[$found_key]->Noche) || $datos_productos[$found_key]->Noche == 0)? number_format(0.00, 2) : number_format(($hras_trabajadas_total) - (($datos_productos[$found_key]->Noche) / 60), 2);
+                    $json[$i]['Dia'] =  $datos_productos[$found_key]->Dia;//(!isset($datos_productos[$found_key]->Dia) || $datos_productos[$found_key]->Dia == 0)? number_format(0.00, 2) : number_format(($hras_trabajadas_total) - (($datos_productos[$found_key]->Dia) / 60), 2);
+                    $json[$i]['Noche'] =$datos_productos[$found_key]->Noche;//(!isset($datos_productos[$found_key]->Noche) || $datos_productos[$found_key]->Noche == 0)? number_format(0.00, 2) : number_format(($hras_trabajadas_total) - (($datos_productos[$found_key]->Noche) / 60), 2);
                     $json[$i]['Total_Hrs'] =  number_format(($json[$i]['Dia'] +  $json[$i]['Noche']),2);
                     $json[$i]['num_personas']   = number_format($datos_productos[$found_key]->Personal_Dia + $datos_productos[$found_key]->Personal_Noche, 2);
                 } else {
