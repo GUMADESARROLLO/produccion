@@ -111,6 +111,7 @@ class orden_produccionController extends Controller
             ->where('quimico_maquina.numOrden', $idOP)
             ->get();
 
+        
         $horas_efectivas = horas_efectivas::where('numOrden', $idOP);
 
         if (count($mp_directa) > 0 && $totalMPTPACK->total != '') {
@@ -336,11 +337,16 @@ class orden_produccionController extends Controller
 
         //return view('User.Orden_Produccion.editar', compact(['orden', 'usuarios', 'productos']));
 
-        $fibras = fibras::where('estado', 1)->orderBy('idFibra', 'asc')->get();
-        $quimicos = Quimicos::where('estado', 1)->orderBy('idQuimico', 'asc')->get();
+        $fibras = fibras::getFibras($idOP);
+        $quimicos = Quimicos::getQuimicos($idOP);
         $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
         $mp_directa = mp_directa::where('numOrden', $idOP)->get();
         $quimico_maquina = QuimicoMaquina::where('numOrden', $idOP)->get();
+
+        //dd($quimicos);
+        /*foreach($fibras->original as $fb){
+            dd($fb->codigo);
+        }*/
 
         /*$quimico_maquina = QuimicoMaquina::select(
             'quimico_maquina.*',
@@ -905,6 +911,46 @@ class orden_produccionController extends Controller
         }
     }
 
+    public function guardarMPD(Request $request){
+        $id = $request->input('id');
+        $numOrden = $request->input('codigo');
+        $maquina = $request->input('idMaquina');
+        $fibra = $request->input('idFibra');
+        $cantidad = $request->input('cantidad');
+
+        $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
+
+        if ($numOrdenE != null) {
+            $mpE = mp_directa::where([
+                ['numOrden', '=', $numOrden],
+                ['idFibra', '=', $fibra],
+                ['estado', '=', 1]
+            ])->first();
+            if ($mpE != null) {
+                mp_directa::where([
+                    ['numOrden', '=', $numOrden],
+                    ['idFibra', '=', $fibra],
+                    ['estado', '=', 1]
+                ])->update([
+                    'cantidad' => $cantidad
+                ]);
+            } else {
+                $mpd = new mp_directa();
+                $mpd->idMaquina = $maquina;
+                $mpd->idFibra = $fibra;
+                $mpd->numOrden = $numOrden;
+                $mpd->cantidad = $cantidad;
+                $mpd->estado = 1;
+                $mpd->save();
+            }
+            return response("El registro de fibras en la orden ha sido exitoso :)", 200);
+        }else {
+            return response("Error al guardar las fibras, la orden no existe,
+            por favor cree la orden antes de agregar las fibras :(", 400);
+        }
+       
+    }
+
     public function guardarQM(Request $request)
     {
         $i = 0;
@@ -968,6 +1014,45 @@ class orden_produccionController extends Controller
             return response("Error al guardar los quimicos, la orden no existe,
             por favor cree la orden antes de agregar los quimicos :(", 400);
         }
+    }
+
+    public function guardarQuimico(Request $request){
+        $numOrden = $request->input('codigo');
+        $maquina = $request->input('idMaquina');
+        $quimico = $request->input('idQuimico');
+        $cantidad = $request->input('cantidad');
+
+        $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
+
+        if ($numOrdenE != null) {
+            $mpE = QuimicoMaquina::where([
+                ['numOrden', '=', $numOrden],
+                ['idQuimico', '=', $quimico],
+                ['estado', '=', 1]
+            ])->first();
+            if ($mpE != null) {
+                QuimicoMaquina::where([
+                    ['numOrden', '=', $numOrden],
+                    ['idQuimico', '=', $quimico],
+                    ['estado', '=', 1]
+                ])->update([
+                    'cantidad' => $cantidad
+                ]);
+            } else {
+                $mpd = new QuimicoMaquina();
+                $mpd->idMaquina = $maquina;
+                $mpd->idQuimico = $quimico;
+                $mpd->numOrden = $numOrden;
+                $mpd->cantidad = $cantidad;
+                $mpd->estado = 1;
+                $mpd->save();
+            }
+            return response("El registro de quimicos en la orden ha sido exitoso :)", 200);
+        }else {
+            return response("Error al guardar los quimicos, la orden no existe,
+            por favor cree la orden antes de agregar los quimicos :(", 400);
+        }
+       
     }
 
     public function getDataQuimico()
