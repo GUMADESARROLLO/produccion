@@ -18,19 +18,76 @@
                 "language": {
                     "emptyTable": `<p class="text-center">Agrega un quimico</p>`
                 },
-                "columnDefs":[
-                    {
-                        "targets": [ 0 ],
-                        "className": "dt-center",
-                        "visible": false
-                    }
-                ]
+                
         });
         
         inicializaControlFecha();
     });
     
-    $(document).on('click','#quitRowdtQM',function() {
+    $('#dtQM tbody').on('click', "tr", function(event) {
+        var cantidadStr, cantidad, nombre;
+        var numOrden = $("#numOrden").val();
+        var idMaquina, idQuimico, id;
+        //var data = dtMPD.rows(this).data();
+        var fila = $(this);
+                
+        idMaquina = fila.find('td:eq(0)').text();
+        idQuimico = fila.find('td:eq(2)').text();
+        nombre = fila.find('td:eq(3)').text();
+        cantidadStr = fila.find('td:eq(4)').text();
+        cantidad = parseFloat(cantidadStr).toFixed(2);
+        //console.log(idFibra);
+        Swal.fire({
+            title: nombre,
+            text: "Ingrese la cantidad",
+            input: 'text',
+            inputPlaceholder: 'Digite la cantidad',
+            inputAttributes: {
+                id: 'cantidad',
+                required: 'true',
+                onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            showLoaderOnConfirm: true,
+            inputValue: cantidad,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Digita la cantidad por favor';
+                }
+                value = value.replace(/[',]+/g, '');
+                if (isNaN(value)) {
+                    return 'Formato incorrecto';
+                } else {
+                    $.ajax({
+                        url: "../../guardarqm",
+                        data: {
+                            codigo: numOrden,
+                            idMaquina: idMaquina,
+                            idQuimico: idQuimico,
+                            cantidad: value
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            
+                            swal("Exito!", "Guardado exitosamente", "success");
+                        },
+                        error: function(response) {
+                            swal("Oops", "No se ha podido guardar!", "error");
+                        }
+                    }).done(function(data) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    });
+                }
+            }
+        })
+        
+    });
+
+    /*$(document).on('click','#quitRowdtQM',function() {
         var select_row = dtQM.row(".selected").data();
         indexData = select_row[0];
     
@@ -57,7 +114,7 @@
             dtQM.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
-    } );
+    } );*/
     
     function deleteORDP(idORD) {
         swal({
@@ -81,7 +138,7 @@
         })
     }
     
-    $(document).on('click','.add-row-dt-qm',function() {
+    /*$(document).on('click','.add-row-dt-qm',function() {
         var numOrden = $("#numOrden").val();
         var option1 = '';
         var option2 = '';
@@ -110,10 +167,10 @@
                 `<input class="input-dt qm-cant" type="text" placeholder="Cantidad" id="cantidadq-`+indicador_1+`">`,
             ]).draw(false);
         })
-    });
+    });*/
     
     
-    $(document).on('click','#btnactualizar',function() {
+    /*$(document).on('click','#btnactualizar',function() {
         codigo = $('#numOrden').val();
         var last_row = dtQM.row(":last").data();
         var array = new Array();
@@ -159,7 +216,7 @@
             });
             
         }
-    });
+    });*/
     
     
     </script>

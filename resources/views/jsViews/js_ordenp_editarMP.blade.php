@@ -30,7 +30,70 @@
         inicializaControlFecha();
     });
 
-    $(document).on('click', '#quitRowdtMP', function () {
+    $('#dtMPD tbody').on('click', "tr", function(event) {
+        var cantidadStr, cantidad, nombre;
+        var numOrden = $("#numOrden").val();
+        var idMaquina, idFibra, id;
+        //var data = dtMPD.rows(this).data();
+        var fila = $(this);
+                
+        idMaquina = fila.find('td:eq(0)').text();
+        idFibra = fila.find('td:eq(2)').text();
+        nombre = fila.find('td:eq(3)').text();
+        cantidadStr = fila.find('td:eq(4)').text();
+        cantidad = parseFloat(cantidadStr).toFixed(2);
+        //console.log(idFibra);
+        Swal.fire({
+            title: nombre,
+            text: "Ingrese la cantidad",
+            input: 'text',
+            inputPlaceholder: 'Digite la cantidad',
+            inputAttributes: {
+                id: 'cantidad',
+                required: 'true',
+                onkeypress: 'soloNumeros(event.keyCode, event, $(this).val())'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            showLoaderOnConfirm: true,
+            inputValue: cantidad,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Digita la cantidad por favor';
+                }
+                value = value.replace(/[',]+/g, '');
+                if (isNaN(value)) {
+                    return 'Formato incorrecto';
+                } else {
+                    $.ajax({
+                        url: "../../guardarmpd",
+                        data: {
+                            codigo: numOrden,
+                            idMaquina: idMaquina,
+                            idFibra: idFibra,
+                            cantidad: value
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            
+                            swal("Exito!", "Guardado exitosamente", "success");
+                        },
+                        error: function(response) {
+                            swal("Oops", "No se ha podido guardar!", "error");
+                        }
+                    }).done(function(data) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    });
+                }
+            }
+        })
+        
+    });
+
+    /*$(document).on('click', '#quitRowdtMP', function () {
         var select_row = dtMPD.row(".selected").data();
         var indexData = select_row[0];
 
@@ -56,7 +119,7 @@
             dtMPD.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
-    });
+    });*/
 
     function deleteORDP(idORD) {
         swal({
@@ -80,7 +143,7 @@
         })
     }
 
-    $(document).on('click', '.add-row-dt-mp', function () {
+    /*$(document).on('click', '.add-row-dt-mp', function () {
         var numOrden = $("#numOrden").val();
         var option1 = '';
         var option2 = '';
@@ -109,10 +172,10 @@
                 `<input class="input-dt" type="text" placeholder="Cantidad" id="cantidad-` + indicador_1 + `">`,
             ]).draw(false);
         })
-    });
+    });*/
 
 
-    $(document).on('click','#btnactualizar',function() {
+    /*$(document).on('click','#btnactualizar',function() {
         codigo = $('#numOrden').val();
         var last_row = dtMPD.row(":last").data();
         var array = new Array();
@@ -157,11 +220,11 @@
             });
 
         }
-    });
-
-    /*$(document).on('click', '#btnactualizar', function (data) {
-        $("#formdataord").submit();
     });*/
+
+    $(document).on('click', '#btnactualizar', function (data) {
+        $("#formdataord").submit();
+    });
 
     $(document).on('click', '#btnrequisa', function requi() {
         var numOrden = $("#numOrden").val();

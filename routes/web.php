@@ -75,7 +75,7 @@ Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actua
 Route::get('orden-produccion/nueva', 'User\orden_produccionController@crear')->name('produccion/nueva');
 Route::post('orden-produccion/guardar', 'User\orden_produccionController@guardar')->name('orden-produccion/guardar');
 Route::post('orden-produccion/actualizar', 'User\orden_produccionController@actualizar')->name('orden-produccion/actualizar');
-Route::post('guardarmp-directa', 'User\orden_produccionController@guardarMP')->name('guardarmp-directa');
+Route::post('guardarmpd', 'User\orden_produccionController@guardarMPD')->name('guardarmpd');
 Route::get('orden-produccion/editar/{id}', 'User\orden_produccionController@editar')->name('orden-produccion/editar/{id}');
 Route::get('orden-produccion/detalle/{id}', 'User\orden_produccionController@detalle')->name('orden-produccion/detalle/{id}');
 Route::get('data-mp', 'User\orden_produccionController@getDataMateriaPrima')->name('data-mp');
@@ -83,7 +83,7 @@ Route::post('eliminar-mp', 'User\orden_produccionController@eliminarMateriaPrima
 Route::get('orden-produccion/reporte/{id}', 'User\reporteController@reporte')->name('orden-produccion/reporte/{id}');
 Route::post('guardar-costos-indirectos-fab', 'User\orden_produccionController@guardarCostosIndirectosFabricacion')->name('guardar-costos-indirectos-fab');
 Route::post('cargarmp-directa', 'User\orden_produccionController@cargarMateriaPrimadirecta')->name('cargarmp-directa');
-Route::post('guardarqm-directa', 'User\orden_produccionController@guardarQM')->name('guardarqm-directa');
+Route::post('guardarqm', 'User\orden_produccionController@guardarQuimico')->name('guardarqm');
 Route::get('data-qm', 'User\orden_produccionController@getDataQuimico')->name('data-qm');
 Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')->name('cargarqm-directa');
 Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->name('eliminar-qm');

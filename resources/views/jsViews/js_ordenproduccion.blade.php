@@ -104,11 +104,7 @@
             "language": {
                 "emptyTable": `<p class="text-center">Agrega una fibra</p>`
             },
-            "columnDefs": [{
-                "targets": [0],
-                "className": "dt-center",
-                "visible": false
-            }]
+           
         });
 
         /****** Quimicos - Agregar filas ******/
@@ -131,91 +127,7 @@
         inicializaControlFecha();
     });
 
-    $('#numOrden').on('change', function() {
-        $('#tbody-mp tr').each(function(i) {
-            $(this).addClass('selected');
-            dtMPD.row('.selected').remove().draw(false);
-            //$(this).remove();
-        });
-        $('#tbody-qm tr').each(function(i) {
-            $(this).addClass('selected');
-            dtQM.row('.selected').remove().draw(false);
-        });
-    });
-
-    /****** Fibras - Añadir o remover filas ******/
-    $('#dtMPD tbody').on('click', 'tr', function(e) {
-        e.preventDefault();
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        } else {
-            dtMPD.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-        $('#tbody-mp tr td').children().each(function(i) {
-            $(this).on('keypress', function(e) {
-                soloNumeros(e.keyCode, e, $(this).val());
-            });
-        });
-    });
-
-    /****** Quimicos - Añadir o remover filas ******/
-    $('#dtQM tbody').on('click', 'tr', function(e) {
-        e.preventDefault();
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        } else {
-            dtQM.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-        $('#tbody-qm tr td').children().each(function(i) {
-            $(this).on('keypress', function(e) {
-                soloNumeros(e.keyCode, e, $(this).val());
-            });
-        });
-    });
-
-    /********** Fibras - Eliminar registro de la bd ***********/
-    $(document).on('click', '#quitRowdtBATH', function() {
-        var numOrden = $("#numOrden").val();
-        var select_row = dtMPD.row(".selected").data();
-        indexData = select_row[0];
-        console.log(indexData);
-        $.ajax({
-            url: "../eliminar-mp",
-            data: {
-                id: indexData,
-            },
-            type: 'post',
-            async: true,
-            success: function(resultado) {
-                mensaje('Se elimino con exito la fila :)', 'success')
-            }
-        }).done(function(data) {
-            dtMPD.row('.selected').remove().draw(false);
-        });
-    });
-
-    /********** Quimicos - Eliminar registro de la bd ***********/
-    $(document).on('click', '#quitRowdtBATHQ', function() {
-        var numOrden = $("#numOrden").val();
-        var select_rowq = dtQM.row(".selected").data();
-        indexData = select_rowq[0];
-        console.log(indexData);
-        $.ajax({
-            url: "../eliminar-qm",
-            data: {
-                id: indexData,
-            },
-            type: 'post',
-            async: true,
-            success: function(resultado) {
-                mensaje('Se elimino con exito la fila :)', 'success')
-            }
-        }).done(function(data) {
-            dtQM.row('.selected').remove().draw(false);
-        });
-    });
+    
 
     /********** Fibras - Obtener lista de maquinas y fibras ***********/
     $(document).on('click', '.add-row-dt-mp', function() {
