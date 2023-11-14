@@ -1,6 +1,7 @@
 <script type="text/javascript">
     var dtQM;
     var indicador_1 = 0;
+    //new DataTable('#dtQM');
     $(document).ready(function() {
         $(function () {
             $('.datetimepicker_').datetimepicker({
@@ -8,19 +9,63 @@
             });
         });
     
-        dtQM = $('#dtQM').DataTable({
-                "destroy":true,
-                "ordering": false,
-                "info": false,
-                "bPaginate": false,
-                "bfilter": false,
-                "searching": false,
-                "language": {
-                    "emptyTable": `<p class="text-center">Agrega un quimico</p>`
-                },
-                
+        var numOrden = $("#numOrden").val();
+        $.ajax({
+            url: `../../getQuimicos`,
+            data:{
+                idOP : numOrden
+            },
+            type: 'get',
+            async: true,
+            success: function(data) {
+               
+                $('#dtQM').DataTable({
+                    "data":data,
+                    "destroy":true,
+                    "info": false,
+                    "order": 1,
+                    "lengthMenu": [[10], [10]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns":[
+                        
+                        { "title": "idM", "data": "idMaquina" },
+                        { "title": "MAQUINA", "data": "maquina" },
+                        { "title": "idQ", "data": "idQuimico" },
+                        { "title": "DESCRIPCION", "data": "descripcion" },
+                        { "title": "CANTIDAD", "data": "cantidad" },
+                        
+                        
+
+                    ],
+                    "columnDefs": [
+                        {
+                            "visible": false,
+                            "searchable": false,
+                            "targets": [0,2]
+                        },
+                        {"className": "dt-right", "targets": [4]},
+                    ],
+                    
+                });
+                $("#dtQM_length").hide();
+                $("#dtQM_filter").hide();
+            }
         });
-        
+
+       
+       
+       
         inicializaControlFecha();
     });
     
@@ -28,15 +73,17 @@
         var cantidadStr, cantidad, nombre;
         var numOrden = $("#numOrden").val();
         var idMaquina, idQuimico, id;
-        //var data = dtMPD.rows(this).data();
+        
         var fila = $(this);
+
+        var rowData = $('#dtQM').DataTable().row(fila).data();
                 
-        idMaquina = fila.find('td:eq(0)').text();
-        idQuimico = fila.find('td:eq(2)').text();
-        nombre = fila.find('td:eq(3)').text();
-        cantidadStr = fila.find('td:eq(4)').text();
+        idMaquina = rowData.idMaquina;
+        idQuimico = rowData.idQuimico;
+        nombre = rowData.descripcion;
+        cantidadStr = rowData.cantidad;
         cantidad = parseFloat(cantidadStr).toFixed(2);
-        //console.log(idFibra);
+        
         Swal.fire({
             title: nombre,
             text: "Ingrese la cantidad",
@@ -81,6 +128,152 @@
                             location.reload();
                         }, 2000);
                     });
+                }
+            }
+        })
+        
+    });
+
+    $('#dtMO tbody').on('click', "tr", function(event) {
+        var cantidadStr1, cantidadStr2, dia, noche, nombre;
+        var numOrden = $("#numOrden").val();
+        var idMaquina, idQuimico, id;
+        
+        var fila = $(this);
+
+        //idMaquina = rowData.idMaquina;
+        idActividad = fila.find('td:eq(0)').text();
+        nombre = fila.find('td:eq(1)').text();
+        cantidadStr = fila.find('td:eq(2)').text();
+        dia = parseInt(cantidadStr);
+        cantidadStr2 = fila.find('td:eq(3)').text();
+        noche = parseInt(cantidadStr2);
+
+        Swal.fire({
+            title: nombre,
+            html:
+                '<div class="row"><div class="col-xl-6"><h5>DIA</h5><input id="dia" class="swal2-input" placeholder="Digite la cantidad - DIA" value="'+dia+'" onkeypress="soloNumeros(event.keyCode, event, $(this).val())"></div>' +
+                '<div class="col-xl-6"><h5>NOCHE</h5><input id="noche" class="swal2-input" placeholder="Digite la cantidad - NOCHE" value="'+noche+'" onkeypress="soloNumeros(event.keyCode, event, $(this).val())"></div></div>',
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                var dia = $('#dia').val();
+                var noche = $('#noche').val();
+                
+                dia = dia.replace(/[',]+/g, '');
+                if (isNaN(dia)) {
+                    return 'Formato incorrecto';
+                } else {
+                    $.ajax({
+                        url: "../../actualizarMO",
+                        data: {
+                            codigo: numOrden,
+                            idActividad: idActividad,
+                            dia: dia,
+                            noche: noche
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            swal("Exito!", "Guardado exitosamente", "success");
+                        },
+                        error: function(response) {
+                            swal("Oops", "No se ha podido guardar!", "error");
+                        }
+                    }).done(function(data) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    });
+                }
+                return { dia: dia, noche: noche };
+            }, 
+            inputValidator: (value) => {
+                // Acceder a las variables cantidad y otroCampo
+                var { dia, noche } = Swal.getPopup().querySelector('input')._preConfirmResult;
+
+                // Realizar validaciones adicionales si es necesario
+                if (dia.length === 0) {
+                    return 'Debe ingresar un valor en el campo "otroCampo"';
+                }
+
+                // Realizar validaciones adicionales si es necesario
+                if (noche.length === 0) {
+                    return 'Debe ingresar un valor en el campo "otroCampo"';
+                }
+            }
+        })
+        
+    });
+
+    $('#dtCI tbody').on('click', "tr", function(event) {
+        var cantidadStr1, cantidadStr2, dia, noche, nombre;
+        var numOrden = $("#numOrden").val();
+        var idMaquina, idQuimico, id;
+        
+        var fila = $(this);
+
+        //idMaquina = rowData.idMaquina;
+        idActividad = fila.find('td:eq(0)').text();
+        nombre = fila.find('td:eq(1)').text();
+        cantidadStr = fila.find('td:eq(2)').text();
+        dia = parseFloat(cantidadStr).toFixed(2);
+        cantidadStr2 = fila.find('td:eq(3)').text();
+        noche = parseFloat(cantidadStr2).toFixed(2);
+
+        Swal.fire({
+            title: nombre,
+            html:
+                '<div class="row"><div class="col-xl-6"><h5>DIA</h5><input id="dia" class="swal2-input" placeholder="Digite la cantidad - DIA" value="'+dia+'" onkeypress="soloNumeros(event.keyCode, event, $(this).val())"></div>' +
+                '<div class="col-xl-6"><h5>NOCHE</h5><input id="noche" class="swal2-input" placeholder="Digite la cantidad - NOCHE" value="'+noche+'" onkeypress="soloNumeros(event.keyCode, event, $(this).val())"></div></div>',
+            showCancelButton: true,
+            confirmButtonText: 'Guardar',
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                var dia = $('#dia').val();
+                var noche = $('#noche').val();
+                
+                dia = dia.replace(/[',]+/g, '');
+                if (isNaN(dia)) {
+                    return 'Formato incorrecto';
+                } else {
+                    $.ajax({
+                        url: "../../actualizarCI",
+                        data: {
+                            codigo: numOrden,
+                            idActividad: idActividad,
+                            dia: dia,
+                            noche: noche
+                        },
+                        type: 'post',
+                        async: true,
+                        success: function(response) {
+                            swal("Exito!", "Guardado exitosamente", "success");
+                        },
+                        error: function(response) {
+                            swal("Oops", "No se ha podido guardar!", "error");
+                        }
+                    }).done(function(data) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    });
+                }
+                return { dia: dia, noche: noche };
+            }, 
+            inputValidator: (value) => {
+                // Acceder a las variables cantidad y otroCampo
+                var { dia, noche } = Swal.getPopup().querySelector('input')._preConfirmResult;
+
+                // Realizar validaciones adicionales si es necesario
+                if (dia.length === 0) {
+                    return 'Debe ingresar un valor en el campo "otroCampo"';
+                }
+
+                // Realizar validaciones adicionales si es necesario
+                if (noche.length === 0) {
+                    return 'Debe ingresar un valor en el campo "otroCampo"';
                 }
             }
         })

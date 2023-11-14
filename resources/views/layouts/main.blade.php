@@ -35,6 +35,9 @@
     <!-- datatable CSS -->
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select.dataTables.min.css') }}">
+
 
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

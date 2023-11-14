@@ -28,34 +28,48 @@ class Quimicos extends Model
         return $this->hasMany('App\Models\QuimicoMaquina', 'idQuimico', 'idQuimico');
     }
 
+    public function maquina(){
+        return $this->hasMany('App\Models\maquinas', 'idMaquina', 'idMaquina');
+    } 
+
     public static function getQuimicos($numOrden){
         $array = array();
         $i = 0;
-
+        
         $qui = Quimicos::orderBy('idMaquina')->get();
 
         foreach($qui as $q){
             $cantidad = 0.00;
-
-            foreach($q->quimicoM as $mq){
-                if($numOrden == $mq->numOrden){
-                    if($q->idQuimico == $mq->idQuimico){
-                        $cantidad = $mq->cantidad;
+            $maquina = "";
+           
+            if($q->estado == 1){
+                foreach($q->maquina as $m){
+                    if($q->idMaquina == $m->idMaquina){
+                        $maquina = $m->nombre;
                     }
                 }
-            }
+                foreach($q->quimicoM as $mq){
+                    if($numOrden == $mq->numOrden){
+                        if($q->idQuimico == $mq->idQuimico){
+                            $cantidad = $mq->cantidad;
+                        }
+                    }
+                }
 
-            $array[$i]['idQuimico'] = $q->idQuimico;
-            $array[$i]['codigo'] = $q->codigo;
-            $array[$i]['descripcion'] = $q->descripcion;
-            $array[$i]['unidad'] = $q->unidad;
-            $array[$i]['estado'] = $q->estado;
-            $array[$i]['idMaquina'] = $q->idMaquina;
-            $array[$i]['cantidad'] = number_format($cantidad,2,'.',',');
-            
-            $i++;
+                $array[$i]['idQuimico'] = $q->idQuimico;
+                $array[$i]['codigo'] = $q->codigo;
+                $array[$i]['descripcion'] = $q->descripcion;
+                $array[$i]['unidad'] = $q->unidad;
+                $array[$i]['estado'] = $q->estado;
+                $array[$i]['maquina'] = $maquina;
+                $array[$i]['idMaquina'] = $q->idMaquina;
+                $array[$i]['cantidad'] = number_format($cantidad,2,'.',',');
+                
+                $i++;
+            }
         }
 
-        return response()->json($array);
+        return $array;
+        
     }
 }

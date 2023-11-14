@@ -8,23 +8,57 @@
             });
         });
 
-        dtMPD = $('#dtMPD').DataTable({
-            "destroy": true,
-            "ordering": false,
-            "info": false,
-            "bPaginate": false,
-            "bfilter": false,
-            "searching": false,
-            "language": {
-                "emptyTable": `<p class="text-center">Agrega una fibra</p>`
+        var numOrden = $("#numOrden").val();
+        $.ajax({
+            url: `../../getFibras`,
+            data:{
+                idOP : numOrden
             },
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "className": "dt-center",
-                    "visible": false
-                }
-            ]
+            type: 'get',
+            async: true,
+            success: function(data) {
+                $('#dtMPD').DataTable({
+                    "data":data,
+                    "destroy":true,
+                    "info": false,
+                    "order": 1,
+                    "lengthMenu": [[10], [10]],
+                    "language": {
+                        "zeroRecords": "NO HAY COINCIDENCIAS",
+                        "paginate": {
+                            "first":      "Primera",
+                            "last":       "Última ",
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
+                        },
+                        "lengthMenu": "MOSTRAR _MENU_",
+                        "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                        "search":     "BUSCAR"
+                    },
+                    "columns":[
+                        
+                        { "title": "idM", "data": "idMaquina" },
+                        { "title": "MAQUINA", "data": "maquina" },
+                        { "title": "idF", "data": "idFibra" },
+                        { "title": "DESCRIPCION", "data": "descripcion" },
+                        { "title": "CANTIDAD", "data": "cantidad" },
+                        
+                        
+
+                    ],
+                    "columnDefs": [
+                        {
+                            "visible": false,
+                            "searchable": false,
+                            "targets": [0,2]
+                        },
+                        {"className": "dt-right", "targets": [4]},
+                    ],
+                    
+                });
+                $("#dtMPD_length").hide();
+                $("#dtMPD_filter").hide();
+            }
         });
 
         inicializaControlFecha();
@@ -34,15 +68,15 @@
         var cantidadStr, cantidad, nombre;
         var numOrden = $("#numOrden").val();
         var idMaquina, idFibra, id;
-        //var data = dtMPD.rows(this).data();
         var fila = $(this);
+
+        var rowData = $('#dtMPD').DataTable().row(fila).data();
                 
-        idMaquina = fila.find('td:eq(0)').text();
-        idFibra = fila.find('td:eq(2)').text();
-        nombre = fila.find('td:eq(3)').text();
-        cantidadStr = fila.find('td:eq(4)').text();
+        idMaquina = rowData.idMaquina;
+        idFibra = rowData.idFibra;
+        nombre = rowData.descripcion;
+        cantidadStr = rowData.cantidad;
         cantidad = parseFloat(cantidadStr).toFixed(2);
-        //console.log(idFibra);
         Swal.fire({
             title: nombre,
             text: "Ingrese la cantidad",
