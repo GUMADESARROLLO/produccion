@@ -86,7 +86,7 @@ class ProcesoConversion extends Model
             'tipo' => 'dtaTiemposParos',
             'data' => ProcesoConversion::get_tiempos_paro($data_orden['num_orden'], $data_orden['hrs_trabajadas'])
         );
-
+        
         $array_merge = array_merge($Array_Info, $Array_Producto, $Array_Materia, $Array_Tiempos_Paros);
         //$array_merge = array_merge($Array_Tiempos_Paros);
         return $array_merge;
@@ -161,11 +161,11 @@ class ProcesoConversion extends Model
     public static function get_info_producto($peso_porcent, $id_productor, $num_orden)
     {
         
-        $items_productos = DB::table('pc_productos_ordenes')->where('id_producto', $id_productor)->where('TIPO', 'PRODUCTO')->get();
+        $items_productos = DB::table('pc_productos_ordenes')->where('id_producto', 7)->where('TIPO', 'PRODUCTO')->get();
         $datos_productos = DB::table('view_agrupado_detalle_requisas')->where('num_orden', $num_orden)->get()->toArray();
         $json = array();
         $i = 0;
-        //DD($datos_productos);
+        //DD($items_productos);
         if (count($items_productos) > 0) {
             foreach ($items_productos as $key => $value) {
 
@@ -188,8 +188,8 @@ class ProcesoConversion extends Model
             }
         }
 
-        //dd($datos_productos);
-
+        //dd($items_productos);
+        
         return $json;
     }
     public static function get_materia_prima($peso_porcent, $id_productor, $num_orden)
