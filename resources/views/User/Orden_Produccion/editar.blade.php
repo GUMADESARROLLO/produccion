@@ -186,6 +186,15 @@
                                                 </div>
                                             </form>
                                         </div>
+                                        
+                                    </div>
+                                </div>
+                                <!-- [ Tabla Categorias ] end -->
+                            </div>
+                            <div class="row">
+                                <!-- [ Tabla Categorias ] start -->
+                                
+                                    <div class="col-xl-6">
                                         <div class="row mt-3">
                                             <!-- [ Tabla Materia Prima Directa ] start -->
                                             <div class="col-xl-12">
@@ -195,59 +204,28 @@
                                                     </div>
                                                     <div class="card-block table-border-style">
                                                         <div class="table-responsive">
-                                                            <table class="table table-hover" id="dtMPD" 
-                                                                   width="100%">
+                                                            <table class="table table-hover" id="dtMPD" width="100%">
                                                                 <thead>
-                                                                <tr class="text-light text-center" style="background-color: purple;">
-                                                                    <th style="display: none;">IDMAQUINA</th>
-                                                                    <th>MAQUINA</th>
-                                                                    <th style="display: none;">IDFIBRA</th>
-                                                                    <th>DESCRIPCION</th>
-                                                                    <th class="text-center">CANTIDAD</th>
-                                                                </tr>
+                                                                    <tr class="text-light text-center" style="background-color: purple;">
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                    </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    <td>
-                                                                    </td> 
-                                                                
-                                                                    @foreach ($fibras->original as $key => $fb)
-                                                                        @foreach ($maquinas as $key => $m)
-                                                                        
-                                                                            <tr>   
-                                                                                                                                      
-                                                                                @if ($fb['idMaquina'] == $m->idMaquina)
-                                                                                    <td style="display: none;">
-                                                                                        {{ $m->idMaquina }}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{ $m->nombre }}
-                                                                                    </td>
-                                                                                    <td style="display: none;">
-                                                                                        {{ $fb['idFibra'] }}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{$fb['descripcion']}}
-                                                                                    </td>  
-                                                                                    <td>
-                                                                                        <div class="text-right">{{$fb['cantidad']}}</div>
-                                                                                    </td>               
-                                                                                @endif
-                                                                            
-                                                                            </tr>
-                                                                            
-                                                                        @endforeach
-                                                                    @endforeach
-
-                                                                
-                                                                </tbody>
+                                                                <tbody></tbody>
                                                             </table>
+                                                           
                                                         </div>                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- [ Tabla Materia Prima Directa ] end -->
                                         </div>
+                                    </div>
 
+                                    <div class="col-xl-6">
                                         <div class="row mt-3">
                                             <!-- [ Tabla Quimicos por Maquina ] start -->
                                             <div class="col-xl-12">
@@ -259,40 +237,15 @@
                                                         <div class="table-responsive">
                                                             <table class="table table-hover" id="dtQM" >
                                                                 <thead>
-                                                                <tr class="text-light text-center" style="background-color: purple;">
-                                                                    <th style="display: none;">IDQM</th>
-                                                                    <th>MAQUINA</th>
-                                                                    <th style="display: none;">IDFB</th>
-                                                                    <th>QUIMICO</th>
-                                                                    <th class="text-center">CANTIDAD</th>
-                                                                </tr>
+                                                                    <tr class="text-light text-center" style="background-color: purple;">
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                        <th></th>
+                                                                    </tr>
                                                                 </thead>
-                                                                <tbody id="tbody-qm">
-                                                                    
-                                                                    @foreach ($quimicos->original as $key => $q)
-                                                                        @foreach ($maquinas as $key => $m)
-                                                                   
-                                                                            <tr>
-                                                                                @if ($m->idMaquina == $q['idMaquina'])
-                                                                                    <td style="display: none;">
-                                                                                        {{ $m->idMaquina }}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{ $m->nombre }}
-                                                                                    </td>
-                                                                                    <td style="display: none;">
-                                                                                        {{ $q['idQuimico'] }}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{ $q['descripcion'] }}
-                                                                                    </td>
-                                                                                    <td><div class="text-right">{{$q['cantidad']}}</div></td>
-                                                                                @endif
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    @endforeach
-                                                               
-                                                                </tbody>
+                                                                <tbody></tbody>
                                                             </table>
                                                         </div>
                                                         
@@ -302,8 +255,105 @@
                                             <!-- [ Tabla Quimicos por Maquina ] end -->
                                         </div>
                                     </div>
+                               
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Mano de obra directa</h5>
+                                        </div>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="dtMO" 
+                                                                    width="100%">
+                                                                    <thead>
+                                                                    <tr class="text-light text-center" style="background-color: purple;">
+                                                                        <th style="display: none;">ID ACTIVIDAD</th>
+                                                                        <th>DESCRIPCION DE LA ACTIVIDAD</th>
+                                                                        <th colspan="3">N° PERSONAS</th>                                                                   
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($mano_obra as $mo)
+                                                                            <tr>
+                                                                                <td style="display: none;">{{$mo['idActividad']}}</td>
+                                                                                <td>{{$mo['descripcion']}}</td>
+                                                                                <td>
+                                                                                    <div class="text-right">
+                                                                                        {{$mo['dia']}}
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="text-right">
+                                                                                        {{$mo['noche']}}
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="text-right">
+                                                                                        {{$mo['total']}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    
+                                                                    </tbody>
+                                                </table>
+                                            
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- [ Tabla Categorias ] end -->
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Costo inderecto de fabricación</h5>
+                                        </div>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="dtCI" 
+                                                                    width="100%">
+                                                                    <thead>
+                                                                    <tr class="text-light text-center" style="background-color: purple;">
+                                                                        <th style="display: none;">ID ACTIVIDAD</th>
+                                                                        <th>DESCRIPCION DE LA ACTIVIDAD</th>
+                                                                        <th >DÍA</th>
+                                                                        <th >NOCHE</th>
+                                                                        <th >HORAS</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($costo_indirecto as $ci)
+                                                                            <tr>
+                                                                                <td style="display: none;">{{$ci['idActividad']}}</td>
+                                                                                <td>{{$ci['descripcion']}}</td>
+                                                                                <td>
+                                                                                    <div class="text-right">
+                                                                                        {{$ci['dia']}}
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="text-right">
+                                                                                        {{$ci['noche']}}
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="text-right">
+                                                                                        {{$ci['horas']}}
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                </table>
+                                            
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 

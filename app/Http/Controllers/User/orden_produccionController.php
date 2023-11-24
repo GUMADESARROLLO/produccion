@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\actividad;
 use App\Models\Admin\usuario;
 use App\Models\consumo_agua;
 use App\Models\ConsumoGas;
+use App\Models\costoIndirecto;
 use App\Models\DetalleProduccion;
 use App\Models\electricidad;
 use App\Models\fibras;
 use App\Models\horas_efectivas;
 use App\Models\jumboroll;
 use App\Models\jumboroll_detalle;
+use App\Models\manoObra;
 use App\Models\maquinas;
 use App\Models\mp_directa;
 use App\Models\orden_produccion;
@@ -325,6 +328,18 @@ class orden_produccionController extends Controller
 
     }
 
+    public function getQuimicos(Request $request){
+        $idOP = $request->input('idOP');
+        $quimicos = Quimicos::getQuimicos($idOP);
+        return response()->json($quimicos);
+    }
+
+    public function getFibras(Request $request){
+        $idOP = $request->input('idOP');
+        $fibra = fibras::getFibras($idOP);
+        return response()->json($fibra);
+    }
+    
     public function editar($idOP)
     {
         $fibras = array();
@@ -342,7 +357,10 @@ class orden_produccionController extends Controller
         $maquinas = maquinas::where('estado', 1)->orderBy('idMaquina', 'asc')->get();
         $mp_directa = mp_directa::where('numOrden', $idOP)->get();
         $quimico_maquina = QuimicoMaquina::where('numOrden', $idOP)->get();
+        $costo_indirecto = actividad::getCostoI($idOP);
+        $mano_obra = actividad::getManoO($idOP);
 
+        //dd($mano_obra);
         //dd($quimicos);
         /*foreach($fibras->original as $fb){
             dd($fb->codigo);
@@ -380,7 +398,9 @@ class orden_produccionController extends Controller
             'productos',
             'maquinas',
             'quimicos',
-            'quimico_maquina'
+            'quimico_maquina',
+            'costo_indirecto',
+            'mano_obra'
         ));
     }
 
@@ -946,6 +966,92 @@ class orden_produccionController extends Controller
             return response("El registro de fibras en la orden ha sido exitoso :)", 200);
         }else {
             return response("Error al guardar las fibras, la orden no existe,
+            por favor cree la orden antes de agregar las fibras :(", 400);
+        }
+       
+    }
+
+    public function actualizarMO(Request $request){
+        $idActividad = $request->input('idActividad');
+        $numOrden = $request->input('codigo');
+        $dia = $request->input('dia');
+        $noche = $request->input('noche');
+        $total = "0";
+
+
+        $total = number_format($dia,2, '.',',') +  number_format($noche,2, '.',',');
+        $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
+
+        if ($numOrdenE != null) {
+            $ci = manoObra::where([
+                ['numOrden', '=', $numOrden],
+                ['idActividad', '=', $idActividad]
+            ])->first();
+            if ($ci != null) {
+                manoObra::where([
+                    ['numOrden', '=', $numOrden],
+                    ['idActividad', '=', $idActividad]
+                ])->update([
+                    'dia' => $dia,
+                    'noche' => $noche,
+                    'total' => $total
+                ]);
+            } else {
+                $ci = new manoObra();
+                $ci->idActividad = $idActividad;
+                $ci->numOrden = $numOrden;
+                $ci->dia = $dia;
+                $ci->noche = $noche;
+                $ci->total = $total;
+                
+                $ci->save();
+            }
+            return response("El registro ha sido exitoso :)", 200);
+        }else {
+            return response("Error al guardar, la orden no existe,
+            por favor cree la orden antes de agregar las fibras :(", 400);
+        }
+       
+    }
+
+    public function actualizarCI(Request $request){
+        $idActividad = $request->input('idActividad');
+        $numOrden = $request->input('codigo');
+        $dia = $request->input('dia');
+        $noche = $request->input('noche');
+        $horas = "0";
+
+
+        $horas = number_format($dia,2, '.',',') +  number_format($noche,2, '.',',');
+        $numOrdenE = orden_produccion::where('numOrden', '=', $numOrden)->first();
+
+        if ($numOrdenE != null) {
+            $ci = costoIndirecto::where([
+                ['numOrden', '=', $numOrden],
+                ['idActividad', '=', $idActividad]
+            ])->first();
+            if ($ci != null) {
+                costoIndirecto::where([
+                    ['numOrden', '=', $numOrden],
+                    ['idActividad', '=', $idActividad]
+                ])->update([
+                    'dia' => $dia,
+                    'noche' => $noche,
+                    'horas' => $horas
+                ]);
+            } else {
+                $ci = new costoIndirecto();
+                $ci->idActividad = $idActividad;
+                $ci->numOrden = $numOrden;
+                $ci->dia = $dia;
+                $ci->noche = $noche;
+                $ci->horas = $horas;
+                
+                $ci->save();
+            }
+            return response("El registro ha sido exitoso :)", 200);
+        }else {
+            return response("Error al guardar, la orden no existe,
             por favor cree la orden antes de agregar las fibras :(", 400);
         }
        

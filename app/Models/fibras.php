@@ -24,6 +24,10 @@ class fibras extends Model
                     ->withPivot('cantidad', 'estado')->withTimestamps();
     }
 
+    public function maquina(){
+        return $this->hasMany('App\Models\maquinas', 'idMaquina', 'idMaquina');
+    } 
+
     public function materia_prima(){
         return $this->hasMany('App\Models\mp_directa', 'idFibra', 'idFibra');
     }
@@ -32,31 +36,40 @@ class fibras extends Model
         $array = array();
         $i = 0;
 
-        $fib = fibras::get();
+        $fib = fibras::orderBy('idMaquina')->get();
 
         foreach($fib as $fb){
             $cantidad = 0.00;
-
-            foreach($fb->materia_prima as $mp){
-                if($numOrden == $mp->numOrden){
-                    if($mp->idFibras == $fb->idFibras){
-                        $cantidad = $mp->cantidad;
+            $maquina = "";
+            if($fb->estado == 1){
+                foreach($fb->maquina as $m){
+                    if($fb->idMaquina == $m->idMaquina){
+                        $maquina = $m->nombre;
                     }
                 }
-            }
+                foreach($fb->materia_prima as $mp){
+                    if($numOrden == $mp->numOrden){
+                        if($mp->idFibras == $fb->idFibras){
+                            $cantidad = $mp->cantidad;
+                        }
+                    }
+                }
 
-            $array[$i]['idFibra'] = $fb->idFibra;
-            $array[$i]['codigo'] = $fb->codigo;
-            $array[$i]['descripcion'] = $fb->descripcion;
-            $array[$i]['unidad'] = $fb->unidad;
-            $array[$i]['estado'] = $fb->estado;
-            $array[$i]['idMaquina'] = $fb->idMaquina;
-            $array[$i]['cantidad'] = number_format($cantidad,2,'.',',');
-            
-            $i++;
+                $array[$i]['idFibra'] = $fb->idFibra;
+                $array[$i]['codigo'] = $fb->codigo;
+                $array[$i]['descripcion'] = $fb->descripcion;
+                $array[$i]['unidad'] = $fb->unidad;
+                $array[$i]['estado'] = $fb->estado;
+                $array[$i]['maquina'] = $maquina;
+                $array[$i]['idMaquina'] = $fb->idMaquina;
+                $array[$i]['cantidad'] = number_format($cantidad,2,'.',',');
+                
+                $i++;
+            }
         }
 
-        return response()->json($array);
+        return $array;
+        
     }
 
 }

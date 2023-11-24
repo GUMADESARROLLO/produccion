@@ -109,15 +109,21 @@
 
         /****** Quimicos - Agregar filas ******/
         dtQM = $('#dtQM').DataTable({
-            "destroy": true,
-            "ordering": false,
-            "info": false,
-            "bPaginate": false,
-            "bfilter": false,
-            "searching": false,
-            "language": {
-                "emptyTable": `<p class="text-center">Agrega un Quimico</p>`
-            },
+            "destroy":true,
+                "info": false,
+                "lengthMenu": [[5,10,50,-1], [5,10,100,"Todo"]],
+                "language": {
+                    "zeroRecords": "NO HAY COINCIDENCIAS",
+                    "paginate": {
+                        "first":      "Primera",
+                        "last":       "Última ",
+                        "next":       "Siguiente",
+                        "previous":   "Anterior"
+                    },
+                    "lengthMenu": "MOSTRAR _MENU_",
+                    "emptyTable": "REALICE UNA BUSQUEDA UTILIZANDO LOS FILTROS DE FECHA",
+                    "search":     "BUSCAR"
+                },
             "columnDefs": [{
                 "targets": [0],
                 "className": "dt-center",

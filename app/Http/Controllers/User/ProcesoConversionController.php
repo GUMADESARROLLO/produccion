@@ -56,6 +56,7 @@ class ProcesoConversionController extends Controller
     public function jsonInfoOrder($Orden)
     {
         $obj = ProcesoConversion::getJson($Orden);
+        
         return response()->json($obj);
     }
 
