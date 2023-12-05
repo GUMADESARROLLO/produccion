@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 //RUTAS MENUS
 Route::get('/resumenCostos', 'HomeController@index')->name('resumenCostos');
 Route::get('/usuario', 'Admin\usuarioController@index')->name('usuario');
-Route::get('/orden-produccion', 'User\orden_produccionController@index')->name('orden-produccion');
+Route::get('/orden-produccion', 'User\OrdenProduccionController@index')->name('orden-produccion');
 Route::get('/configuracion', 'User\configuracionController@index')->name('configuracion');
 //Route::get('/turno', 'User\configuracionController@turno')->name('turno');
 Route::get('/fibras', 'User\fibrasController@index')->name('fibras');
@@ -72,28 +72,28 @@ Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actua
 
 
 //RUTAS PRODUCCION
-Route::get('orden-produccion/nueva', 'User\orden_produccionController@crear')->name('produccion/nueva');
-Route::get('getProduccionQuimicos', 'user\orden_produccionController@getQuimicos')->name('getProduccionQuimicos');
-Route::get('getProduccionFibras', 'user\orden_produccionController@getFibras')->name('getProduccionFibras');
-Route::post('actualizarMO','user\orden_produccionController@actualizarMO','')->name('actualizarMO');
-Route::post('actualizarCI','user\orden_produccionController@actualizarCI','')->name('actualizarCI');
-Route::post('orden-produccion/guardar', 'User\orden_produccionController@guardar')->name('orden-produccion/guardar');
-Route::post('orden-produccion/actualizar', 'User\orden_produccionController@actualizar')->name('orden-produccion/actualizar');
-Route::post('guardarmpd', 'User\orden_produccionController@guardarMPD')->name('guardarmpd');
-Route::get('orden-produccion/editar/{id}', 'User\orden_produccionController@editar')->name('orden-produccion/editar/{id}');
-Route::get('orden-produccion/detalle/{id}', 'User\orden_produccionController@detalle')->name('orden-produccion/detalle/{id}');
-Route::get('data-mp', 'User\orden_produccionController@getDataMateriaPrima')->name('data-mp');
-Route::post('eliminar-mp', 'User\orden_produccionController@eliminarMateriaPrima')->name('eliminar-mp');
+Route::get('orden-produccion/nueva', 'User\OrdenProduccionController@crear')->name('produccion/nueva');
+Route::get('getProduccionQuimicos', 'User\OrdenProduccionController@getQuimicos')->name('getProduccionQuimicos');
+Route::get('getProduccionFibras', 'User\OrdenProduccionController@getFibras')->name('getProduccionFibras');
+Route::post('actualizarMO','User\OrdenProduccionController@actualizarMO','')->name('actualizarMO');
+Route::post('actualizarCI','User\OrdenProduccionController@actualizarCI','')->name('actualizarCI');
+Route::post('orden-produccion/guardar', 'User\OrdenProduccionController@guardar')->name('orden-produccion/guardar');
+Route::post('orden-produccion/actualizar', 'User\OrdenProduccionController@actualizar')->name('orden-produccion/actualizar');
+Route::post('guardarmpd', 'User\OrdenProduccionController@guardarMPD')->name('guardarmpd');
+Route::get('orden-produccion/editar/{id}', 'User\OrdenProduccionController@editar')->name('orden-produccion/editar/{id}');
+Route::get('orden-produccion/detalle/{id}', 'User\OrdenProduccionController@detalle')->name('orden-produccion/detalle/{id}');
+Route::get('data-mp', 'User\OrdenProduccionController@getDataMateriaPrima')->name('data-mp');
+Route::post('eliminar-mp', 'User\OrdenProduccionController@eliminarMateriaPrima')->name('eliminar-mp');
 Route::get('orden-produccion/reporte/{id}', 'User\reporteController@reporte')->name('orden-produccion/reporte/{id}');
-Route::post('guardar-costos-indirectos-fab', 'User\orden_produccionController@guardarCostosIndirectosFabricacion')->name('guardar-costos-indirectos-fab');
-Route::post('cargarmp-directa', 'User\orden_produccionController@cargarMateriaPrimadirecta')->name('cargarmp-directa');
-Route::post('guardarqm', 'User\orden_produccionController@guardarQuimico')->name('guardarqm');
-Route::get('data-qm', 'User\orden_produccionController@getDataQuimico')->name('data-qm');
-Route::post('cargarqm-directa', 'User\orden_produccionController@cargarQuimico')->name('cargarqm-directa');
-Route::post('eliminar-qm', 'User\orden_produccionController@eliminarQuimico')->name('eliminar-qm');
+Route::post('guardar-costos-indirectos-fab', 'User\OrdenProduccionController@guardarCostosIndirectosFabricacion')->name('guardar-costos-indirectos-fab');
+Route::post('cargarmp-directa', 'User\OrdenProduccionController@cargarMateriaPrimadirecta')->name('cargarmp-directa');
+Route::post('guardarqm', 'User\OrdenProduccionController@guardarQuimico')->name('guardarqm');
+Route::get('data-qm', 'User\OrdenProduccionController@getDataQuimico')->name('data-qm');
+Route::post('cargarqm-directa', 'User\OrdenProduccionController@cargarQuimico')->name('cargarqm-directa');
+Route::post('eliminar-qm', 'User\OrdenProduccionController@eliminarQuimico')->name('eliminar-qm');
 //Add by xochilt
-Route::get('getData/{idOrd}', 'User\orden_produccionController@getData')->name('getData/{idOrd}');
-Route::get('getOrder_produccion', 'User\orden_produccionController@getOrdersProductions')->name('getOrder_produccion');
+Route::get('getData/{idOrd}', 'User\OrdenProduccionController@getData')->name('getData/{idOrd}');
+Route::get('getOrder_produccion', 'User\OrdenProduccionController@getOrdersProductions')->name('getOrder_produccion');
 
 
 //RUTAS MI INVENTARIO
