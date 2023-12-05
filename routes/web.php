@@ -73,10 +73,10 @@ Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actua
 
 //RUTAS PRODUCCION
 Route::get('orden-produccion/nueva', 'User\OrdenProduccionController@crear')->name('produccion/nueva');
-Route::get('getQuimicos', 'user\OrdenProduccionController@getQuimicos')->name('getQuimicos');
-Route::get('getFibras', 'user\OrdenProduccionController@getFibras')->name('getFibras');
-Route::post('actualizarMO','user\OrdenProduccionController@actualizarMO','')->name('actualizarMO');
-Route::post('actualizarCI','user\OrdenProduccionController@actualizarCI','')->name('actualizarCI');
+Route::get('getProduccionQuimicos', 'User\OrdenProduccionController@getQuimicos')->name('getProduccionQuimicos');
+Route::get('getProduccionFibras', 'User\OrdenProduccionController@getFibras')->name('getProduccionFibras');
+Route::post('actualizarMO','User\OrdenProduccionController@actualizarMO','')->name('actualizarMO');
+Route::post('actualizarCI','User\OrdenProduccionController@actualizarCI','')->name('actualizarCI');
 Route::post('orden-produccion/guardar', 'User\OrdenProduccionController@guardar')->name('orden-produccion/guardar');
 Route::post('orden-produccion/actualizar', 'User\OrdenProduccionController@actualizar')->name('orden-produccion/actualizar');
 Route::post('guardarmpd', 'User\OrdenProduccionController@guardarMPD')->name('guardarmpd');

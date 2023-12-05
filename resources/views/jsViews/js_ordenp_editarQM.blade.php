@@ -11,7 +11,7 @@
     
         var numOrden = $("#numOrden").val();
         $.ajax({
-            url: `../../getQuimicos`,
+            url: `../../getProduccionQuimicos`,
             data:{
                 idOP : numOrden
             },
