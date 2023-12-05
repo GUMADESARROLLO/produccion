@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Validator;
 use \Carbon\Carbon;
 use Exception;
 
-class orden_produccionController extends Controller
+class OrdenProduccionController extends Controller
 {
     public function __construct()
     {
