@@ -10,7 +10,7 @@
 
         var numOrden = $("#numOrden").val();
         $.ajax({
-            url: `../../getFibras`,
+            url: `../../getProduccionFibras`,
             data:{
                 idOP : numOrden
             },

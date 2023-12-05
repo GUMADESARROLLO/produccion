@@ -73,8 +73,8 @@ Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actua
 
 //RUTAS PRODUCCION
 Route::get('orden-produccion/nueva', 'User\orden_produccionController@crear')->name('produccion/nueva');
-Route::get('getQuimicos', 'user\orden_produccionController@getQuimicos')->name('getQuimicos');
-Route::get('getFibras', 'user\orden_produccionController@getFibras')->name('getFibras');
+Route::get('getProduccionQuimicos', 'user\orden_produccionController@getQuimicos')->name('getProduccionQuimicos');
+Route::get('getProduccionFibras', 'user\orden_produccionController@getFibras')->name('getProduccionFibras');
 Route::post('actualizarMO','user\orden_produccionController@actualizarMO','')->name('actualizarMO');
 Route::post('actualizarCI','user\orden_produccionController@actualizarCI','')->name('actualizarCI');
 Route::post('orden-produccion/guardar', 'User\orden_produccionController@guardar')->name('orden-produccion/guardar');
