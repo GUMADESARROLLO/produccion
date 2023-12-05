@@ -241,13 +241,8 @@ Route::get('/getTiemposParos/{codigo}', 'User\ProcesoConversionController@getTie
 
 Route::get('/datos_detalles/{codigo}', 'User\ProcesoConversionController@datos_detalles')->name('/datos_detalles/{codigo}');
 
-
 //RUTAS PARA EL DASHBOARD
 Route::get('/home', 'User\DashboardController@index')->name('home');
 Route::get('/dashboard_detalles', 'User\DashboardController@getDetalles')->name('/dashboard_detalles');
-
-
-
-
 
 Auth::routes();
