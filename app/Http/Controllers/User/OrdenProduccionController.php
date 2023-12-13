@@ -24,6 +24,7 @@ use App\Models\Quimicos;
 use App\Models\tiempo_lavado;
 use App\Models\tiempo_pulpeo;
 use App\Models\tiempos_muertos;
+use App\Models\Logs_access;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -40,6 +41,8 @@ class OrdenProduccionController extends Controller
 
     public function index()
     {
+        Logs_access::add("orden-produccion");
+
         $array = array();
         $i = 0;
         $ord_produccion = orden_produccion::where('estado', 1)->orderBy('numOrden', 'DESC')->get();
@@ -219,6 +222,7 @@ class OrdenProduccionController extends Controller
 
     public function crear()
     {
+        Logs_access::add("orden-produccion/nueva");
         /*$productos = productos::where('estado', 1)->get()->toArray();
         $usuarios = usuario::usuarioByRole();
         return view('User.Orden_Produccion.crear', compact(['productos', 'usuarios']));*/
@@ -342,6 +346,7 @@ class OrdenProduccionController extends Controller
     
     public function editar($idOP)
     {
+        Logs_access::add("orden-produccion/editar");
         $fibras = array();
         $quimicos = array();
         $i = 0;

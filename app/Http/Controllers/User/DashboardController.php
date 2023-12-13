@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\detalle_pc_ordenes;
 use App\Models\orden_produccion;
 use App\Models\DetalleOrden;
+use App\Models\Logs_access;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class DashboardController extends Controller
 {
     public function __construct()
@@ -19,7 +19,11 @@ class DashboardController extends Controller
     }
     public function index()
     {
+        Logs_access::add("DashBoard");
+
         return view('User.Dashboard.index');
+
+       
     }
     public function getDetalles(Request $request)
     {

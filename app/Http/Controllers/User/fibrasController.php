@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\fibras;
+use App\Models\Logs_access;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +54,9 @@ class fibrasController extends Controller
     }
 
     public function editarFibras($idFibra) {
+        
+        Logs_access::add("orden-produccion/editarFibras");
+
         $fibra  = fibras::where('idFibra', $idFibra)->where('estado', 1)->get()->toArray();
         return view('User.Fibras.editar', compact(['fibra']));
     }

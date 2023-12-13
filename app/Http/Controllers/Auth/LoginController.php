@@ -7,7 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Logs_access;
 class LoginController extends Controller
 {
     /*
@@ -84,6 +84,9 @@ class LoginController extends Controller
             if ($this->attemptLogin($request)) {
                 $rol = DB::table('usuario_rol')->where('usuario_id', $queryResult)->pluck('rol_id');
                 $request->session()->put('rol', $rol);
+
+                Logs_access::add("Login");
+
 
                 return $this->sendLoginResponse($request);
             }

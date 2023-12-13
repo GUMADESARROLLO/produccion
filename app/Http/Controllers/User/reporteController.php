@@ -19,6 +19,7 @@ use App\Models\inventario_solicitud;
 use App\Models\jumboroll_detalle;
 use App\Models\horas_efectivas;
 use App\Models\Admin\usuario;
+use App\Models\Logs_access;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -61,6 +62,8 @@ class reporteController extends Controller
 
     public function reporte($numOrden)
     {
+        Logs_access::add("orden-produccion/reporte");
+
         $array = array();
         $i = 0;
         $orden = orden_produccion::where('numOrden', $numOrden)->get()->first();
