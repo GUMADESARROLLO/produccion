@@ -7,13 +7,14 @@ use App\Models\Costo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Logs_access;
 //use Redirect;
 
 class CostoController extends Controller
 {
     public function index()
     {
+        Logs_access::add("Costo/Home");
         $costo = costo::where('estado', 1)->orderBy('id', 'asc')->get();
         return view('User.Costo.index', compact('costo'));
     }
@@ -54,6 +55,7 @@ class CostoController extends Controller
 
     public function editarCosto($id)
     {
+        Logs_access::add("Costo/Editar");
         $costo = costo::where('id', $id)->where('estado', 1)->get()->toArray();
         return view('User.Costo.editar', compact(['costo']));
     }

@@ -82,6 +82,7 @@ class CostoOrdenController extends Controller
 
     public function editarCostoOrden($id)
     {
+        Logs_access::add("Costo-orden/Editar");
         //$costoOrden = costoOrden::where('id', $id)->where('estado', 1)->get()->toArray();
         //$ordenes = orden_produccion::where('estado', 1)->orderBy('idOrden', 'asc')->get();
         //$costos = costo::where('estado', 1)->orderBy('id', 'asc')->get();
