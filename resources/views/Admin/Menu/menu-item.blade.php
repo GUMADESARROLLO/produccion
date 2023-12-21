@@ -13,7 +13,7 @@
     </div>
     <ol class="dd-list">
         @foreach ($item["submenu"] as $submenu)
-        @include("admin.menu.menu-item",[ "item" => $submenu ])
+        @include("Admin.menu.menu-item",[ "item" => $submenu ])
         @endforeach
     </ol>
 </li>
