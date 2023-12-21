@@ -63,11 +63,11 @@ Route::get('/rol', 'Admin\RolController@index')->name('rol');
 Route::get('rol/crear', 'Admin\RolController@crear')->name('crear_rol');
 Route::post('guardar_rol', 'Admin\RolController@guardar')->name('guardar_rol');
 Route::get('menu', 'Admin\MenuRolController@index')->name('menu');
-Route::get('menu/crear', 'Admin\Menu_controller@index')->name('menu/crear');
+Route::get('menu/crear', 'Admin\menu_controller@index')->name('menu/crear');
 Route::get('menu-rol', 'Admin\MenuRolController@index')->name('menu-rol');
 Route::post('menu-rol', 'Admin\MenuRolController@guardar')->name('guardar_menu_rol');
 Route::post('menu/guardar', 'Admin\menu_controller@guardar')->name('menu/guardar');
-Route::post('menu/guardar-orden', 'Admin\menu_controller@guardarOrden')->name('guardar-orden');
+Route::post('menu/guardar-orden', 'Admin\@guardarOrden')->name('guardar-orden');
 Route::get('rol/edit/{id}','Admin\RolController@editar')->name('rol/edit/{id}');
 Route::post('rol/actualizar', 'Admin\RolController@actualizar')->name('rol/actualizar');
 
