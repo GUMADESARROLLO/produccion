@@ -18,4 +18,6 @@ class Logs_access extends Model
         $obj->description   = $Mod;      
         $obj->save();
     }
+
+    
 }

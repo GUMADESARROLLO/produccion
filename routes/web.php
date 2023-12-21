@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -246,3 +247,6 @@ Route::get('/home', 'User\DashboardController@index')->name('home');
 Route::get('/dashboard_detalles', 'User\DashboardController@getDetalles')->name('/dashboard_detalles');
 
 Auth::routes();
+
+Route::get('Accesos', 'User\LogsAccessController@getHome')->name('getHome');
+Route::post('getDataLogs', 'User\LogsAccessController@getDataLogs')->name('getDataLogs');
