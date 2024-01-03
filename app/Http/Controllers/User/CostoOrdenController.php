@@ -9,6 +9,7 @@ use App\Models\DetalleOrden;
 use App\Models\TipoCambio;
 use App\Models\orden_produccion;
 use App\Models\DetalleCostoSubtotal;
+use App\Models\Logs_access;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
