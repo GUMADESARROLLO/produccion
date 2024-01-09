@@ -25,7 +25,7 @@
                                         <input type="text" id="InputBuscar" class="form-control bg-white mt-2" placeholder="Buscar..." aria-label="Username" aria-describedby="basic-addon1">
                                         <div class="form-row ">
                                             
-                                            <div class="form-group col-md-5 ml-5 mt-2">
+                                            <div class="form-group col-md-3 ml-5 mt-2">
                                                 <div class="input-group ">   
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text"><i class="material-icons text-black">event</i></div>
@@ -34,6 +34,7 @@
                                                 </div>
                                             </div>
 
+                                           
                                             <div class="form-group col-md-5 mt-2">
                                                 <div class="input-group "> 
                                                     <div class="input-group-prepend">
@@ -43,10 +44,20 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="form-group col-md-1 mt-2" > 
+                                            <div class="form-group col-md-1 mt-2 " > 
                                                 <div class="input-group-prepend" id="id_search">
                                                     <div class="input-group-text "><i class="material-icons text-black">search</i></div>
                                                 </div> 
+                                            </div>
+                                            <div class="form-group col-md-2 mt-2">
+                                                <div class="input-group">
+                                                    <select class="custom-select" id="frm_lab_row" name="frm_lab_row">
+                                                        <option value="5" selected>5</option>
+                                                        <option value="10">1</option>
+                                                        <option value="20">2</option>
+                                                        <option value="-1">Todos</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>    
                                     </div>

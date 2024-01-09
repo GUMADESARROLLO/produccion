@@ -9,12 +9,16 @@
     });
   });
   function getRange(id){
-        var rango = id.replace(/[\ U,R]/g, '')
-        $('.DateRange').removeClass('DateRange');
-        $("#"+id).addClass('DateRange');
-        setRange(rango)
+      var rango = id.replace(/[\ U,R]/g, '')
+      $('.DateRange').removeClass('DateRange');
+      $("#"+id).addClass('DateRange');
+      setRange(rango)
 
-    }
+  }
+  $( "#frm_lab_row").change(function() {
+      var table = $('#tblProductos').DataTable();
+      table.page.len(this.value).draw();
+  });
     
   function setRange(r){
         const startOfMonth = moment().subtract(r, "month").startOf('month').format('YYYY-MM-DD');
