@@ -311,6 +311,7 @@ class OrdenProduccionController extends Controller
                         $ordProd->fechaFinal = date("Y-m-d", strtotime($request->input('fecha02')));
                         $ordProd->horaInicio = date("H:i", strtotime($request->input('hora01')));
                         $ordProd->horaFinal = date("H:i", strtotime($request->input('hora02')));
+                        $ordProd->tipo_cambio = 36.6243;
                         $ordProd->estado = 1;
                         $ordProd->save();
 
