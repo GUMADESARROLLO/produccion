@@ -7,8 +7,12 @@
             table.search(this.value).draw();
         });
 
-
         inicializaControlFecha();
+        const primerDiaDelMes = moment().startOf('month').format('YYYY-MM-DD');
+        const ultimoDiaDelMes = moment().endOf('month').format('YYYY-MM-DD');
+        $("#id_fecha_desde").val(primerDiaDelMes);
+        $("#id_fecha_hasta").val(ultimoDiaDelMes);
+
         getOrdenes();
 
         $("#id_search").on('click', function() {
@@ -20,6 +24,7 @@
 
         f1 = $("#id_fecha_desde").val();
         f2 = $("#id_fecha_hasta").val();
+
 
         $('#tblConversion').DataTable({
             'ajax': {

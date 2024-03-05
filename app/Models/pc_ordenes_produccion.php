@@ -14,8 +14,11 @@ class pc_ordenes_produccion extends Model
     protected $fillable = ['num_orden', 'id_productor', 'id_jr', 'fecha_hora_inicio', 'fecha_hora_final', 'comentario', 'estado'];
     public    $timestamps = false;
 
-    public static function guardar($data, $orden)
+    public static function guardar(Request $request)
     {
+        $data = $request->input('data')[0];
+        $orden = $request->input('num_orden');
+
         $ordenExist = pc_ordenes_produccion::where('num_orden', $orden)->where('estado', 'S')->first();
 
         if ($ordenExist) {
@@ -23,20 +26,19 @@ class pc_ordenes_produccion extends Model
         }
         try {
             DB::transaction(function () use ($data) {
-
-                $array = array();
-                $i = 0;
+                
                 $orden = new pc_ordenes_produccion();
 
-                foreach ($data as $dataO) {
-                    $orden->num_orden          =   $dataO['num_orden'];
-                    $orden->id_productor       =   $dataO['id_productor'];
-                    $orden->id_jr              =   $dataO['id_jr'];
-                    $orden->fecha_hora_inicio  =   $dataO['fecha_hora_inicio'];
-                    $orden->fecha_hora_final   =   $dataO['fecha_hora_final'];
-                    $orden->estado             =   'S';
-                    $orden->save();
-                };
+                $dtInit = date('Y-m-d h:i:s', strtotime($data['fecha_hora_inicio']));        
+                
+                $orden->num_orden          =   $data['num_orden'];
+                $orden->id_productor       =   $data['id_productor'];
+                $orden->id_jr              =   $data['id_jr'];
+                $orden->fecha_hora_inicio  =   $dtInit;
+                $orden->fecha_hora_final   =   $dtInit;
+                $orden->estado             =   'S';
+                $orden->save();
+
                 return response()->json($orden);
             });
         } catch (Exception $e) {

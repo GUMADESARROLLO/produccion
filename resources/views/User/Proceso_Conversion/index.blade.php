@@ -53,7 +53,6 @@
                                         <div class="form-group col-md-2">
                                             <div class="input-group ">                                            
                                                 <input type="date" class="form-control" id="id_fecha_desde">
-                                                
                                             </div>
                                         </div>
 
@@ -129,7 +128,7 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <p class="text-muted m-2">Fecha Inicial</p>
-                                                        <input type="text" class="input-fecha form-control" id="fecha_inicial">
+                                                        <input type="date" class="input-fecha form-control" id="fecha_inicial" >
                                                         <small class="">Indique la fecha en que inicia</small>
                                                     </div>
                                                     <div class="form-group col-md-6">
