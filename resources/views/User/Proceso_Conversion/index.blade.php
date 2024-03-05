@@ -79,16 +79,16 @@
                                             <div class="flex-between-center scrollbar border border-1 border-300 rounded-2">
                                                 <table class="table table-striped table-bordered table-sm mt-3 fs--1" id="tblConversion">
                                                     <thead>
-                                                        <tr class="text-light text-center" style="background-color: purple;">
-                                                            <th>INDEX</th>
-                                                            <th width="80px">N° ORDEN</th>
-                                                            <th>PRODUCTO</th>
-                                                            <th>FECHA INICIAL</th>
-                                                            <th>FECHA FINAL</th>
-                                                            <th width="90px">HORAS TRABAJADAS</th>
-                                                            <th>PESO %</th>
-                                                            <th width="100px">TOTAL DE BULTOS (UNDS)</th>
-                                                            <th width="80px">ACCIONES</th>
+                                                        <tr class="text-light" style="background-color: purple;">
+                                                            <th class='text-center'>INDEX</th>
+                                                            <th class='text-center' width="80px">N° ORDEN</th>
+                                                            <th class='text-center'>PRODUCTO</th>
+                                                            <th class='text-center'>FECHA INICIAL</th>
+                                                            <th class='text-center'>FECHA FINAL</th>
+                                                            <th class='text-center' width="90px">HORAS TRABAJADAS</th>
+                                                            <th class='text-center'>PESO %</th>
+                                                            <th class='text-center' width="100px">TOTAL DE BULTOS (UNDS)</th>
+                                                            <th class='text-center' width="80px">ACCIONES</th>
                                                         </tr>
                                                     </thead>
                                                 </table>

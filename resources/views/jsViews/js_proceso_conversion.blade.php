@@ -107,12 +107,17 @@
                     }
                 },
             ],
-            "columnDefs": [{
+            "columnDefs": [
+                {
                     "visible": false,
                     "searchable": false,
                     "targets": [0]
-                },                
+                },
+                {"className": "dt-center","targets": [0,1,2,3,4]},
+                {"className": "dt-right","targets": [5,6,7]},
+                
             ],
+           
         });
 
         $("#tblConversion_length").hide();
